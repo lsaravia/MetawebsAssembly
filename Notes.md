@@ -16,3 +16,23 @@ Motifs provide a novel framework for exploring community assembly by explicitly 
 
 For example, the tri-trophic chain motif (Fig. 1) may show a pattern of over-representation in the regional network due to the fact that generalist top predators exist in the regional pool (e.g. a generalist top predator may only occur in one local food web, but all of the tri-trophic chains that it is part of will be present in the regional network). However, we know that low productivity (Kaunzinger and Morin 1998) and small ecosystem size among other factors (Post 2002), can reduce the probability that a species will establish at a high trophic level. As a result, the tri-trophic motif may be under-represented in local food webs. Conversely, if local ecosystems are large and/or productive, top predators may frequently be present and the tri-trophic chain motif may be over-represented showing the same pattern as the regional network. Within the metacommunity framework (Leibold et  al. 2004), this above scenario is similar to the species sorting concept. However, instead of variation in local conditions driving the establishment of individual species, our approach focuses on the number of motifs and as a result provides a potential mechanism for the assembly of food web networks (e.g. low productivity or ecosystem size precludes long chain lengths at local scales). An alternative mechanism for over-representation of the tri-trophic chain motif in the regional network and under-representation in local scale networks is that higher level consumers are poor dispersers. These are just a few examples of how ecological theory can inform our predictions of motif patterns during community assembly.
 
+------------
+
+@Stouffer2011
+
+Compartments in food webs act directly to
+buffer the propagation of extinctions throughout the community
+and augment the long-term persistence of its constituent species.
+
+
+------------
+
+@Gilarranz2017
+
+We show that in the absence of perturbations, modularity is negatively correlated with metapopulation size (number of compartments). However, even when a small local perturbation occurs, this negative effect is offset by a buffering effect that
+protects the majority of the nodes from the perturbation. 
+
+------------
+@Kortsch2015
+
+We detected considerable differences in structural properties and link configuration between the boreal and the arctic food webs, the latter being more modular and less connected. We found that a main characteristic of the boreal fish moving poleward into the arctic region of the Barents Sea is high generalism, a property that increases connectance and reduces modularity in the arctic marine food web. Our results reveal that habitats form natural boundaries for food web modules, and that generalists play an important functional role in coupling pelagic and benthic modules. We posit that these habitat couplers have the potential to promote the transfer of energy and matter between habitats, but also the spread of pertubations [I DO not think so!!]
