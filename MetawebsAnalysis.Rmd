@@ -14,93 +14,287 @@ load(".RData")
 oldcd <-getwd()
 
 
-require(pander)
-require(plyr)
-require(dplyr)
-panderOptions('table.split.table',Inf)
-panderOptions('table.style', 'multiline')
-options("scipen"=6, "digits"=4)
-
-#Load package
-library(poweRlaw) 
-source("R/dist_fun.r")
+# require(pander)
+# require(plyr)
+# require(dplyr)
+# panderOptions('table.split.table',Inf)
+# panderOptions('table.style', 'multiline')
+# options("scipen"=6, "digits"=4)
 # 
-# Load functions for discrete distributions
+# #Load package
+# library(poweRlaw) 
+# source("R/dist_fun.r")
 # # 
-# Load functions for continuous ht distributions
+# # Load functions for discrete distributions
+# # # 
+# # Load functions for continuous ht distributions
+# # 
 # 
-
-source("R/powerlaw/discpowerexp.R")
-source("R/powerlaw/discexp.R")
-source("R/powerlaw/zeta.R")
-# 
-# Load functions for continuous ht distributions
-# 
-source("R/powerlaw/powerexp.R")
-source("R/powerlaw/exp.R")
-source("R/powerlaw/pareto.R")
-#
+# source("R/powerlaw/discpowerexp.R")
+# source("R/powerlaw/discexp.R")
+# source("R/powerlaw/zeta.R")
+# # 
+# # Load functions for continuous ht distributions
+# # 
+# source("R/powerlaw/powerexp.R")
+# source("R/powerlaw/exp.R")
+# source("R/powerlaw/pareto.R")
+# #
 
 ```
 
 
-# Modularity Analysis 
+# Modularity Analysis - Local  
 
-```{r ModularityAnalysis, eval=T,echo=F,message=T,warning=T}
+```{r ModularityAnalysisLocal, eval=T,echo=F,message=T,warning=T}
+
+source("R/small_world_fun.r")
 
 require(igraph)
 require(dplyr)
+require(stringr)
 
-
-dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
-
-redl <- as.matrix(dtot %>% filter(Network=="Local") %>% dplyr::select(2:3))
-redl <- graph_from_edgelist(redl, directed  = T)
-
-
-# Add degree distribution
 #
-net3 <- redl
-deg <- degree(net3, mode="all")
-V(net3)$size <- deg*.6+1
+# Read data and trim species names to avoid duplicates 
+#
+dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
+dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
 
-# Add Trophic position
+#
+# Select local food web - Potter Cove
+#
+dtot1 <- as.matrix(dtot %>% filter(Network=="Local") %>% dplyr::select(Prey_name,Predator_name))
+redl <- graph_from_edgelist(dtot1, directed  = T)
+
+modulos<-cluster_spinglass(redl)
+degree_distribution(redl)
+websTbl <- calc_topological_indices(redl) %>% mutate(Network="Local",Groups=max(modulos$membership),Modularity=modulos$modularity)
+
+#
+# Make short names 
+#
+require(vegan)
+spnames <- make.cepnames(V(redl)$name)
+
+
+#
+# Calculate Trophic Position
 #
 require(NetIndices)
-troph.net3<-TrophInd(get.adjacency(net3,sparse=F))
-
-# Build a layout
-#
+troph.net2<-TrophInd(get.adjacency(redl,sparse=F))
 layout.matrix.1<-matrix(
-  nrow=length(V(net3)),  # Rows equal to the number of vertices
+  nrow=length(V(redl)),  # Rows equal to the number of vertices
   ncol=2
 )
-layout.matrix.1[,1]<-runif(length(V(net3))) # randomly assign along x-axis
-layout.matrix.1[,2]<-troph.net3$TL # y-axis value based on trophic level
-write.table(layout.matrix.1,file="Figures/PotterCoveFullLayout.txt", sep="\t",col.names = F,row.names = F)
-
 
 # 
 # Add colors to nodes 
 #
 require(RColorBrewer)
 
-colTL <-as.numeric(cut(troph.net3$TL,11))
+colTL <-as.numeric(cut(troph.net2$TL,11))
 colnet <- brewer.pal(11,"RdYlGn")
-V(net3)$color <- colnet[12-colTL]
+V(redl)$color <- colnet[12-colTL]
 
-# png("Figures/FullNetworkPC.png",width=6,height=6,units="in",res=600)
-# par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0))
+#
+# Plot modules
+#
+layout.matrix.1[,2]<-jitter(troph.net2$TL,0.4) # y-axis value based on trophic level
+layout.matrix.1[,1]<-jitter(modulos$membership,1) # randomly assign along x-axis
 
-layout.matrix.2 <- as.matrix(read.table("Figures/PotterCoveFullLayout.txt",sep="\t"))
+png("Figures/LocalFoodWeb.png",width=6,height=6,units="in",res=600)
+par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0))
 
-plot(net3, edge.arrow.size=.3, edge.curved=0,vertex.label.font=2,vertex.label.dist=.1,
-     vertex.frame.color="#555555",
-     vertex.label.color="black",
-     vertex.label.cex=.6, layout=layout.matrix.2,edge.color="grey80") 
+plot(redl, vertex.color=vertex_attr(redl)$cor,vertex.label=NA,
+     vertex.size=log(3*igraph::degree(redl)),
+     edge.width=.3,edge.arrow.size=.4, 
+     edge.color="grey50",
+     edge.curved=0.3, layout=layout.matrix.1)
+
 dev.off()
 
-save.image()
+```
+
+# Modularity Analysis - Regional
+
+```{r ModularityAnalysisRegional, eval=T,echo=F,message=T,warning=T}
+
+source("R/small_world_fun.r")
+
+require(igraph)
+require(dplyr)
+require(stringr)
+
+#
+# Read data and trim species names to avoid duplicates 
+#
+dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
+dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
+
+#
+# Select food web 
+#
+dtot1 <- as.matrix(dtot %>% filter(Network=="Regional") %>% dplyr::select(Prey_name,Predator_name))
+redl <- graph_from_edgelist(dtot1, directed  = T)
+
+modulos<-cluster_spinglass(redl)
+websTbl <- bind_rows(websTbl, data.frame(calc_topological_indices(redl) %>% mutate(Network="Regional",Groups=max(modulos$membership),Modularity=modulos$modularity)))
+#
+# Make short names to check duplicates!!!!!!!!!! 
+#
+require(vegan)
+spnames <- make.cepnames(V(redl)$name)
+
+matrix(c(V(redl)$name[grep("Euchanta",spnames)], # Sinonims
+V(redl)$name[grep("Notoanta",spnames)],
+V(redl)$name[grep("Eunospic",spnames)],
+V(redl)$name[grep("Scoljoub",spnames)], # "Scolymasta joubini" <- "Scolymastra joubini" 
+V(redl)$name[grep("Clavfran",spnames)],
+V(redl)$name[grep("Mycaacer",spnames)],
+V(redl)$name[grep("Troplong",spnames)],
+V(redl)$name[grep("Iphicycl",spnames)], # Espacio en el nombre
+V(redl)$name[grep("Dolllong",spnames)],
+V(redl)$name[grep("Galiglac",spnames)],
+V(redl)$name[grep("Moroinge",spnames)],
+V(redl)$name[grep("Calaacut",spnames)],
+V(redl)$name[grep("Vibianta",spnames)],
+V(redl)$name[grep("Vibisteb",spnames)],
+V(redl)$name[grep("Gymnnich",spnames)],
+V(redl)$name[grep("Cliopyra",spnames)],
+V(redl)$name[grep("Vibianta",spnames)],
+V(redl)$name[grep("Vibisteb",spnames)],
+V(redl)$name[grep("Gymnnich",spnames)]),ncol=2,byrow=T)
+
+
+#
+# Calculate Trophic Position
+#
+V(redl)$name[grep("Detritus",spnames)]
+
+require(NetIndices)
+troph.net2<-TrophInd(get.adjacency(redl,sparse=F),Dead="Detritus")
+layout.matrix.1<-matrix(
+  nrow=length(V(redl)),  # Rows equal to the number of vertices
+  ncol=2
+)
+max(troph.net2)
+# 
+# Add colors to nodes 
+#
+require(RColorBrewer)
+
+colTL <-as.numeric(cut(troph.net2$TL,11))
+colnet <- brewer.pal(11,"RdYlGn")
+V(redl)$color <- colnet[12-colTL]
+
+#
+# Plot modules
+#
+layout.matrix.1[,2]<-jitter(troph.net2$TL,0.4) # y-axis value based on trophic level
+layout.matrix.1[,1]<-jitter(modulos$membership,1) # randomly assign along x-axis
+
+png("Figures/RegionalFoodWeb.png",width=6,height=6,units="in",res=600)
+par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0))
+
+plot(redl, vertex.color=vertex_attr(redl)$cor,vertex.label=NA,
+     vertex.size=log(3*igraph::degree(redl)),
+     edge.width=.3,edge.arrow.size=.4, 
+     edge.color="grey50",
+     edge.curved=0.3, layout=layout.matrix.1)
+
+dev.off()
+
+```
+
+
+# Modularity Analysis - MetaWEB!
+
+```{r ModularityAnalysisMetaWeb, eval=T,echo=F,message=T,warning=T}
+
+source("R/small_world_fun.r")
+
+require(igraph)
+require(dplyr)
+require(stringr)
+
+#
+# Read data and trim species names to avoid duplicates 
+#
+dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
+dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
+
+#
+# Select food web 
+#
+dtot1 <- as.matrix(dtot %>% filter(Network=="Meta") %>% dplyr::select(Prey_name,Predator_name))
+redl <- graph_from_edgelist(dtot1, directed  = T)
+
+# Select only a connected subgraph graph 
+V(redl)$comp <- components(redl)$membership
+redm <- induced_subgraph(redl,V(redl)$comp==1)
+
+# Unconnected components 
+redd <- induced_subgraph(redl,V(redl)$comp==2)
+
+# Delete cannibalistic 
+redl <- simplify(redm)
+
+modulos<-cluster_spinglass(redl)
+
+for( i in 1:length(modulos$csize)){
+  if(modulos$csize[i]<10){
+    cat("Group",i, "\n")
+    print(degree(redl,V(redl)[modulos$membership==i]))
+  }
+}
+ngroups <- length(modulos$csize[modulos$csize>=10])
+modulos<-cluster_spinglass(redl,spins=ngroups)
+
+
+websTbl <- bind_rows(websTbl, data.frame(calc_topological_indices(redl) %>% mutate(Network="Meta",Groups=max(modulos$membership),Modularity=modulos$modularity)))
+#
+# Make short names to check duplicates!!!!!!!!!! 
+#
+require(vegan)
+spnames <- make.cepnames(V(redl)$name)
+
+#
+# Calculate Trophic Position
+#
+V(redl)$name[grep("Detritus",spnames)]
+V(redl)[V(redl)$name=="Necromass"]
+
+require(NetIndices)
+troph.net2<-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Detritus","Necromass"))
+layout.matrix.1<-matrix(
+  nrow=length(V(redl)),  # Rows equal to the number of vertices
+  ncol=2
+)
+# 
+# Add colors to nodes 
+#
+require(RColorBrewer)
+
+colTL <-as.numeric(cut(troph.net2$TL,11))
+colnet <- brewer.pal(11,"RdYlGn")
+V(redl)$color <- colnet[12-colTL]
+
+#
+# Plot modules
+#
+layout.matrix.1[,2]<-jitter(troph.net2$TL,0.4) # y-axis value based on trophic level
+layout.matrix.1[,1]<-jitter(modulos$membership,1) # randomly assign along x-axis
+
+png("Figures/MetaFoodWeb.png",width=6,height=6,units="in",res=600)
+par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0))
+
+plot(redl, vertex.color=vertex_attr(redl)$cor,vertex.label=NA,
+     vertex.size=log(3*igraph::degree(redl)),
+     edge.width=.3,edge.arrow.size=.4, 
+     edge.color="grey50",
+     edge.curved=0.3, layout=layout.matrix.1)
+
+dev.off()
 
 ```
 
