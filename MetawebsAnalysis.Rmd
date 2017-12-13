@@ -66,27 +66,55 @@ dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_tri
 dtot1 <- as.matrix(dtot %>% filter(Network=="Local") %>% dplyr::select(Prey_name,Predator_name))
 redl <- graph_from_edgelist(dtot1, directed  = T)
 
-modulos<-cluster_spinglass(redl)
-degree_distribution(redl)
-websTbl <- calc_topological_indices(redl) %>% mutate(Network="Local",Groups=max(modulos$membership),Modularity=modulos$modularity)
-
 #
 # Make short names 
 #
 require(vegan)
 spnames <- make.cepnames(V(redl)$name)
 
+# Test if there are duplicated species
+#
+V(redl)$name[grep(".1",spnames)]
+
+
+#
+# Run modularity 
+#
+set.seed(123)
+modulos<-cluster_spinglass(redl)
+websTbl <- calc_topological_indices(redl)  %>% mutate(Network="Local",Groups=length(modulos$csize),Modularity=modulos$modularity)
+
+#
+# Add the modulos object to a vector  
+#
+mod_by_red <- vector(mode="list", length=3)
+mod_by_red[[1]] <- modulos
+
+#
+# Compare with random networks
+#
+tbl <- data.frame()
+tbl <- calc_modularity_random(redl,1000)
+#saveRDS(tbl,"tbl.rds")
+tbl <- readRDS("tbl.rds")
+websTbl <- websTbl %>% bind_cols(tbl)
+
+# Check for detritos
+# 
+grep("detr", V(redl)$name, ignore.case = TRUE, value=TRUE  )
+grep("necr", V(redl)$name, ignore.case = TRUE, value=TRUE  )
 
 #
 # Calculate Trophic Position
 #
 require(NetIndices)
-troph.net2<-TrophInd(get.adjacency(redl,sparse=F))
+troph.net2<-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Detritus","Necromass"))
 layout.matrix.1<-matrix(
   nrow=length(V(redl)),  # Rows equal to the number of vertices
   ncol=2
 )
 
+# Plot the red
 # 
 # Add colors to nodes 
 #
@@ -112,7 +140,7 @@ plot(redl, vertex.color=vertex_attr(redl)$cor,vertex.label=NA,
      edge.curved=0.3, layout=layout.matrix.1)
 
 dev.off()
-
+save.image()
 ```
 
 # Modularity Analysis - Regional
@@ -136,43 +164,54 @@ dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_tri
 #
 dtot1 <- as.matrix(dtot %>% filter(Network=="Regional") %>% dplyr::select(Prey_name,Predator_name))
 redl <- graph_from_edgelist(dtot1, directed  = T)
+redl <- simplify(redl)
 
-modulos<-cluster_spinglass(redl)
-websTbl <- bind_rows(websTbl, data.frame(calc_topological_indices(redl) %>% mutate(Network="Regional",Groups=max(modulos$membership),Modularity=modulos$modularity)))
 #
-# Make short names to check duplicates!!!!!!!!!! 
+# Make short names 
 #
 require(vegan)
 spnames <- make.cepnames(V(redl)$name)
 
-matrix(c(V(redl)$name[grep("Euchanta",spnames)], # Sinonims
-V(redl)$name[grep("Notoanta",spnames)],
-V(redl)$name[grep("Eunospic",spnames)],
-V(redl)$name[grep("Scoljoub",spnames)], # "Scolymasta joubini" <- "Scolymastra joubini" 
-V(redl)$name[grep("Clavfran",spnames)],
-V(redl)$name[grep("Mycaacer",spnames)],
-V(redl)$name[grep("Troplong",spnames)],
-V(redl)$name[grep("Iphicycl",spnames)], # Espacio en el nombre
-V(redl)$name[grep("Dolllong",spnames)],
-V(redl)$name[grep("Galiglac",spnames)],
-V(redl)$name[grep("Moroinge",spnames)],
-V(redl)$name[grep("Calaacut",spnames)],
-V(redl)$name[grep("Vibianta",spnames)],
-V(redl)$name[grep("Vibisteb",spnames)],
-V(redl)$name[grep("Gymnnich",spnames)],
-V(redl)$name[grep("Cliopyra",spnames)],
-V(redl)$name[grep("Vibianta",spnames)],
-V(redl)$name[grep("Vibisteb",spnames)],
-V(redl)$name[grep("Gymnnich",spnames)]),ncol=2,byrow=T)
+# Test if there are duplicated species
+#
+V(redl)$name[grep(".1",spnames)]
 
+V(redl)$name[which_loop(redl)]
+
+#
+# Run modularity 
+#
+set.seed(123)
+modulos<-cluster_spinglass(redl)
+websTbl1 <- calc_topological_indices(redl)  %>% mutate(Network="Regional",Groups=length(modulos$csize),Modularity=modulos$modularity)
+
+#
+# Add the modulos object to a vector  
+#
+mod_by_red[[2]] <- modulos
+
+#
+# Compare with random networks
+#
+tbl <- data.frame()
+tbl <- calc_modularity_random(redl,1000)
+#saveRDS(tbl,"tbl.rds")
+tbl <- readRDS("tbl.rds")
+websTbl1 <- websTbl1 %>% bind_cols(tbl)
+websTbl <- bind_rows(websTbl,websTbl1)
+
+rm(websTbl1)
+
+# Check for detritos
+# 
+grep("detr", V(redl)$name, ignore.case = TRUE, value=TRUE  )
+grep("necr", V(redl)$name, ignore.case = TRUE, value=TRUE  )
 
 #
 # Calculate Trophic Position
 #
-V(redl)$name[grep("Detritus",spnames)]
-
 require(NetIndices)
-troph.net2<-TrophInd(get.adjacency(redl,sparse=F),Dead="Detritus")
+troph.net2<-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Detritus","Necromass"))
 layout.matrix.1<-matrix(
   nrow=length(V(redl)),  # Rows equal to the number of vertices
   ncol=2
@@ -203,6 +242,7 @@ plot(redl, vertex.color=vertex_attr(redl)$cor,vertex.label=NA,
      edge.curved=0.3, layout=layout.matrix.1)
 
 dev.off()
+save.image()
 
 ```
 
@@ -239,24 +279,50 @@ redd <- induced_subgraph(redl,V(redl)$comp==2)
 # Delete cannibalistic 
 redl <- simplify(redm)
 
-modulos<-cluster_spinglass(redl)
-
-for( i in 1:length(modulos$csize)){
-  if(modulos$csize[i]<10){
-    cat("Group",i, "\n")
-    print(degree(redl,V(redl)[modulos$membership==i]))
-  }
-}
-ngroups <- length(modulos$csize[modulos$csize>=10])
-modulos<-cluster_spinglass(redl,spins=ngroups)
-
-
-websTbl <- bind_rows(websTbl, data.frame(calc_topological_indices(redl) %>% mutate(Network="Meta",Groups=max(modulos$membership),Modularity=modulos$modularity)))
 #
-# Make short names to check duplicates!!!!!!!!!! 
+# Make short names 
 #
 require(vegan)
 spnames <- make.cepnames(V(redl)$name)
+
+# Test if there are duplicated species
+#
+V(redl)$name[grep(".1",spnames)]
+
+#
+# Run modularity 
+#
+set.seed(123)
+modulos<-cluster_spinglass(redl)
+websTbl1 <- calc_topological_indices(redl)  %>% mutate(Network="Meta",Groups=length(modulos$csize),Modularity=modulos$modularity)
+
+#
+# Add the modulos object to a vector  
+#
+mod_by_red[[3]] <- modulos
+
+# Print species by module
+#
+# for( i in 1:length(modulos$csize)){
+#   if(modulos$csize[i]<10){
+#     cat("Group",i, "\n")
+#     print(degree(redl,V(redl)[modulos$membership==i]))
+#   }
+# }
+
+#
+# Compare with random networks
+#
+tbl <- data.frame()
+tbl <- calc_modularity_random(redl,1000)
+#saveRDS(tbl,"tbl.rds")
+tbl <- readRDS("tbl.rds")
+websTbl1 <- websTbl1 %>% bind_cols(tbl)
+
+websTbl <- bind_rows(websTbl,websTbl1)
+
+rm(websTbl1)
+
 
 #
 # Calculate Trophic Position
@@ -296,6 +362,7 @@ plot(redl, vertex.color=vertex_attr(redl)$cor,vertex.label=NA,
 
 dev.off()
 
+save.image()
 ```
 
 
