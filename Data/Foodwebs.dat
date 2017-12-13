@@ -19,14 +19,14 @@ Local	Notothenia coriiceps	Phaeurus antarcticus
 Local	Notothenia coriiceps	Lambia antarctica 
 Local	Notothenia coriiceps	Monostroma hariotii
 Local	Notothenia coriiceps	Urospora penicilliformis
-Local	Notothenia coriiceps	Detritus
+Local	Notothenia coriiceps	Aged detritus
 Local	Notothenia coriiceps	Nereidae 
 Local	Notothenia coriiceps	Margarella antarctica
 Local	Notothenia coriiceps	Doris kerguelenensis
 Local	Notothenia coriiceps	Eatoniella sp.
 Local	Notothenia coriiceps	Nacella concinna
 Local	Notothenia coriiceps	Dacrydyum sp.
-Local	Notothenia coriiceps	Laternulla elliptica
+Local	Notothenia coriiceps	Laternula elliptica
 Local	Notothenia coriiceps	Neobuccinum eatoni
 Local	Notothenia coriiceps	Euphausia superba
 Local	Notothenia coriiceps	Paradexamine sp.
@@ -37,7 +37,7 @@ Local	Notothenia coriiceps	Hyperiidea
 Local	Notothenia coriiceps	Bovallia gigantea
 Local	Notothenia coriiceps	Cheirimedon femoratus
 Local	Notothenia coriiceps	Waldeckia obesa
-Local	Notothenia coriiceps	Pseudorchomene plebs
+Local	Notothenia coriiceps	Hippo-Orcho
 Local	Notothenia coriiceps	Serolis sp.
 Local	Notothenia coriiceps	Glyptonotus antarcticus
 Local	Notothenia coriiceps	Hemiarthrum setulosum
@@ -46,16 +46,15 @@ Local	Notothenia coriiceps	Squids
 Local	Notothenia coriiceps	Copepoda
 Local	Notothenia coriiceps	Ascidiacea
 Local	Notothenia coriiceps	Octopoda
-Local	Notothenia coriiceps	Salpa thompsoni
-Local	Notothenia coriiceps	Palmaria decipiens
-Local	Notothenia rossii	Detritus
+Local	Notothenia coriiceps	Salpa sp.
+Local	Notothenia rossii	Palmaria decipiens
+Local	Notothenia rossii	Aged detritus
 Local	Notothenia rossii	Nereidae 
 Local	Notothenia rossii	Doris kerguelenensis
 Local	Notothenia rossii	Euphausia superba
 Local	Notothenia rossii	Hyperiidea
 Local	Notothenia rossii	Squids
 Local	Notothenia rossii	Octopoda
-Local	Notothenia rossii	Nereidae 
 Local	Lepidonotothen nudifrons	Euphausia superba
 Local	Lepidonotothen nudifrons	Pariphimedia integricauda
 Local	Lepidonotothen nudifrons	Cheirimedon femoratus
@@ -63,7 +62,7 @@ Local	Lepidonotothen nudifrons	Gitanopsis antarctica
 Local	Lepidonotothen nudifrons	Prostebbingia gracilis
 Local	Lepidonotothen nudifrons	Waldeckia obesa
 Local	Lepidonotothen nudifrons	Margarella antarctica
-Local	Trematomus newnesi	Austrodoris kerguelenensis
+Local	Trematomus newnesi	Doris kerguelenensis
 Local	Trematomus newnesi	Eatoniella sp.
 Local	Trematomus newnesi	Nacella concinna
 Local	Trematomus newnesi	Neobuccinum eatoni
@@ -71,7 +70,7 @@ Local	Trematomus newnesi	Euphausia superba
 Local	Trematomus newnesi	Gondogeneia antarctica
 Local	Trematomus newnesi	Hyperiidea
 Local	Trematomus newnesi	Bovallia gigantea
-Local	Trematomus newnesi	Salpa thompsoni
+Local	Trematomus newnesi	Salpa sp.
 Local	Trematomus newnesi	Nereidae 
 Local	Trematomus bernacchii	Margarella antarctica
 Local	Trematomus bernacchii	Doris kerguelenensis
@@ -80,6 +79,7 @@ Local	Trematomus bernacchii	Nacella concinna
 Local	Trematomus bernacchii	Neobuccinum eatoni
 Local	Trematomus bernacchii	Glyptonotus antarcticus
 Local	Trematomus bernacchii	Nereidae 
+Local	Harpagifer antarcticus 	Nereidae 
 Local	Harpagifer antarcticus 	Margarella antarctica
 Local	Harpagifer antarcticus 	Doris kerguelenensis
 Local	Harpagifer antarcticus 	Eatoniella sp.
@@ -90,12 +90,11 @@ Local	Harpagifer antarcticus 	Paradexamine sp.
 Local	Harpagifer antarcticus 	Eurymera monticulosa
 Local	Harpagifer antarcticus 	Pontogeneiella sp.
 Local	Harpagifer antarcticus 	Gondogeneia antarctica
-Local	Harpagifer antarcticus 	Euphausia superba
 Local	Parachaenichthys charcoti	Euphausia superba
 Local	Chaenocephalus aceratus 	Ophionotus victoriae
 Local	Chaenocephalus aceratus 	Octopoda
 Local	Chaenocephalus aceratus 	Mysida
-Local	Chaenocephalus aceratus 	Salpa thompsoni
+Local	Chaenocephalus aceratus 	Salpa sp.
 Local	Protomyctophum sp.	Georgiella confluens 
 Local	Nereidae	Gigartina skottsbergii
 Local	Nereidae	Iridaea cordata
@@ -103,10 +102,11 @@ Local	Nereidae	Desmarestia menziesii
 Local	Nereidae	Geminocarpus geminatus
 Local	Nereidae	Phaeurus antarcticus 
 Local	Nereidae	Haliclonidae
-Local	Margarella antarctica	Mycale acerata
+Local	Margarella antarctica	Stylo-Myca
 Local	Margarella antarctica	Rosella sp.
 Local	Margarella antarctica	Dendrilla antarctica
 Local	Margarella antarctica	Palmaria decipiens
+Local	Doris kerguelenensis	Bryozoa
 Local	Doris kerguelenensis	Palmaria decipiens
 Local	Doris kerguelenensis	Nereidae 
 Local	Doris kerguelenensis	Haliclonidae
@@ -115,7 +115,7 @@ Local	Doris kerguelenensis	Rosella sp.
 Local	Doris kerguelenensis	Dendrilla antarctica
 Local	Eatoniella sp.	Epiphytic diatoms
 Local	Eatoniella sp.	Benthic diatoms
-Local	Eatoniella sp.	Detritus
+Local	Eatoniella sp.	Fresh detritus
 Local	Nacella concinna	Ascoseira mirabilis 
 Local	Nacella concinna	Ulothrix sp.
 Local	Nacella concinna	Epiphytic diatoms
@@ -131,19 +131,19 @@ Local	Laevilacunaria antarctica	Desmarestia menziesii
 Local	Laevilacunaria antarctica	Monostroma hariotii
 Local	Dacrydyum sp.	Phytoplankton
 Local	Dacrydyum sp.	Zooplankton
-Local	Laternulla elliptica	Phytoplankton
-Local	Laternulla elliptica	Detritus
-Local	Laternulla elliptica	Zooplankton
-Local	Neobuccinum eatoni	Laternulla elliptica
+Local	Laternula elliptica	Phytoplankton
+Local	Laternula elliptica	Aged detritus
+Local	Laternula elliptica	Zooplankton
+Local	Neobuccinum eatoni	Laternula elliptica
 Local	Neobuccinum eatoni	Necromass
 Local	Euphausia superba	Phytoplankton
 Local	Euphausia superba	Zooplankton
-Local	Paradexamine sp.	Detritus
+Local	Paradexamine sp.	Fresh detritus
 Local	Paradexamine sp.	Necromass
 Local	Eurymera monticulosa	Palmaria decipiens
 Local	Eurymera monticulosa	Epiphytic diatoms
 Local	Eurymera monticulosa	Benthic diatoms
-Local	Eurymera monticulosa	Detritus
+Local	Eurymera monticulosa	Fresh detritus
 Local	Pontogeneiella sp.	Palmaria decipiens
 Local	Pontogeneiella sp.	Epiphytic diatoms
 Local	Pontogeneiella sp.	Benthic diatoms
@@ -172,8 +172,8 @@ Local	Bovallia gigantea	Gitanopsis antarctica
 Local	Bovallia gigantea	Prostebbingia gracilis
 Local	Bovallia gigantea	Waldeckia obesa
 Local	Bovallia gigantea	Gondogeneia antarctica
-Local	Cheirimedon femoratus	Detritus
-Local	Gitanopsis antarctica	Detritus
+Local	Cheirimedon femoratus	Fresh detritus
+Local	Gitanopsis antarctica	Fresh detritus
 Local	Gitanopsis antarctica	Necromass
 Local	Prostebbingia gracilis	Gigartina skottsbergii
 Local	Prostebbingia gracilis	Iridaea cordata
@@ -197,13 +197,13 @@ Local	Plakarthrium puncattissimum	Curdiea racovitzae
 Local	Plakarthrium puncattissimum	Ascoseira mirabilis 
 Local	Plakarthrium puncattissimum	Epiphytic diatoms
 Local	Plakarthrium puncattissimum	Benthic diatoms
-Local	Plakarthrium puncattissimum	Detritus
+Local	Plakarthrium puncattissimum	Fresh detritus
 Local	Hemiarthrum setulosum	Epiphytic diatoms
 Local	Hemiarthrum setulosum	Benthic diatoms
 Local	Ophionotus victoriae	Benthic diatoms
-Local	Ophionotus victoriae	Detritus
+Local	Ophionotus victoriae	Fresh detritus
 Local	Ophionotus victoriae	Nereidae 
-Local	Ophionotus victoriae	Laternulla elliptica
+Local	Ophionotus victoriae	Laternula elliptica
 Local	Ophionotus victoriae	Neobuccinum eatoni
 Local	Ophionotus victoriae	Euphausia superba
 Local	Ophionotus victoriae	Paradexamine sp.
@@ -215,29 +215,29 @@ Local	Ophionotus victoriae	Cheirimedon femoratus
 Local	Ophionotus victoriae	Gitanopsis antarctica
 Local	Ophionotus victoriae	Prostebbingia gracilis
 Local	Ophionotus victoriae	Waldeckia obesa
-Local	Ophionotus victoriae	Pseudorchomene plebs
+Local	Ophionotus victoriae	Hippo-Orcho
 Local	Ophionotus victoriae	Oradarea bidentata
 Local	Ophionotus victoriae	Squids
 Local	Ophionotus victoriae	Copepoda
 Local	Ophionotus victoriae	Ascidiacea
 Local	Ophionotus victoriae	Hydrozoa
 Local	Ophionotus victoriae	Bryozoa
-Local	Ophionotus victoriae	Detritus
 Local	Ophionotus victoriae	Necromass
-Local	Ophionotus victoriae	Haliclonidae sp.
-Local	Ophionotus victoriae	Mycale acerata
+Local	Ophionotus victoriae	Haliclonidae
+Local	Ophionotus victoriae	Stylo-Myca
 Local	Ophionotus victoriae	Rosella sp.
 Local	Odontaster  validus	Benthic diatoms
 Local	Odontaster  validus	Nereidae 
 Local	Odontaster  validus	Doris kerguelenensis
 Local	Odontaster  validus	Neobuccinum eatoni
-Local	Odontaster  validus	Detritus
-Local	Odontaster  validus	Haliclonidae sp.
+Local	Odontaster  validus	Fresh detritus
+Local	Odontaster  validus	Haliclonidae
 Local	Odontaster  validus	Stylo-Myca
+Local	Odontaster  validus	Laternula elliptica
 Local	Odontaster  validus	Rosella sp.
 Local	Diplasterias brucei	Neobuccinum eatoni
 Local	Odontaster meridionalis	Neobuccinum eatoni
-Local	Odontaster meridionalis	Haliclonidae sp.
+Local	Odontaster meridionalis	Haliclonidae
 Local	Odontaster meridionalis	Stylo-Myca
 Local	Odontaster meridionalis	Rosella sp.
 Local	Perknaster fuscus antarticus	Neobuccinum eatoni
@@ -253,7 +253,7 @@ Local	Sterechinus neumayeri	Waldeckia obesa
 Local	Sterechinus neumayeri	Oradarea bidentata
 Local	Sterechinus neumayeri	Hydrozoa
 Local	Sterechinus neumayeri	Bryozoa
-Local	Sterechinus neumayeri	Haliclonidae sp.
+Local	Sterechinus neumayeri	Haliclonidae
 Local	Sterechinus neumayeri	Stylo-Myca
 Local	Sterechinus neumayeri	Rosella sp.
 Local	Squids	Euphausia superba
@@ -275,39 +275,1954 @@ Local	Parborlasia corrugatus	Bovallia gigantea
 Local	Parborlasia corrugatus	Serolis sp.
 Local	Parborlasia corrugatus	Glyptonotus antarcticus
 Local	Parborlasia corrugatus	Necromass
-Local	Parborlasia corrugatus	Haliclonidae sp.
+Local	Parborlasia corrugatus	Haliclonidae
 Local	Parborlasia corrugatus	Stylo-Myca
 Local	Parborlasia corrugatus	Rosella sp.
-Local	Salpa thompsoni	Phytoplankton
-Local	Salpa thompsoni	Detritus
-Local	Salpa thompsoni	Nereidae 
-Local	Salpa thompsoni	Oligochaeta
-Local	Salpa thompsoni	Zooplankton
+Local	Salpa sp.	Phytoplankton
+Local	Salpa sp.	Aged detritus
+Local	Salpa sp.	Nereidae 
+Local	Salpa sp.	Oligochaeta
+Local	Salpa sp.	Zooplankton
 Local	Mysida	Phytoplankton
 Local	Mysida	Zooplankton
 Local	Zooplankton	Phytoplankton
-Local	Haliclonidae sp.	Benthic diatoms
-Local	Haliclonidae sp.	Phytoplankton
-Local	Haliclonidae sp.	Detritus
-Local	Haliclonidae sp.	Zooplankton
+Local	Haliclonidae	Benthic diatoms
+Local	Haliclonidae	Phytoplankton
+Local	Haliclonidae	Fresh detritus
+Local	Haliclonidae	Zooplankton
 Local	Stylo-Myca	Benthic diatoms
 Local	Stylo-Myca	Phytoplankton
-Local	Stylo-Myca	Detritus
+Local	Stylo-Myca	Fresh detritus
 Local	Stylo-Myca	Zooplankton
 Local	Rosella sp.	Benthic diatoms
 Local	Rosella sp.	Phytoplankton
-Local	Rosella sp.	Detritus
+Local	Rosella sp.	Fresh detritus
 Local	Rosella sp.	Zooplankton
 Local	Dendrilla antarctica	Benthic diatoms
 Local	Dendrilla antarctica	Phytoplankton
-Local	Dendrilla antarctica	Detritus
+Local	Dendrilla antarctica	Fresh detritus
 Local	Dendrilla antarctica	Zooplankton
 Local	Urticinopsis antarctica	Odontaster  validus
 Local	Urticinopsis antarctica	Odontaster meridionalis
 Local	Urticinopsis antarctica	Perknaster fuscus antarticus
 Local	Urticinopsis antarctica	Sterechinus neumayeri
-Local	Malacobelmnon daytoni	Phytoplankton
-Local	Malacobelmnon daytoni	Zooplankton
+Local	Malacobelemnon daytoni	Phytoplankton
+Local	Malacobelemnon daytoni	Zooplankton
+Regional	Cassidulinoides parkerianus	Bacillariophyta
+Regional	Cassidulinoides parkerianus	Detritus
+Regional	Cassidulinoides parkerianus	Sediment
+Regional	Cibicides refulgens	Bacillariophyta
+Regional	Cibicides refulgens	Detritus
+Regional	Cibicides refulgens	Sediment
+Regional	Globocassidulina crassa	Bacillariophyta
+Regional	Globocassidulina crassa	Detritus
+Regional	Globocassidulina crassa	Sediment
+Regional	Lenticulina antarctica	Bacillariophyta
+Regional	Lenticulina antarctica	Detritus
+Regional	Lenticulina antarctica	Sediment
+Regional	Neogloboquadriana pachyderma	Bacillariophyta
+Regional	Neogloboquadriana pachyderma	Detritus
+Regional	Neogloboquadriana pachyderma	Sediment
+Regional	Euphausia crystallorophias	Phytoplankton
+Regional	Euphausia frigida	Bacillariophyta
+Regional	Euphausia frigida	Zooplankton
+Regional	Euphausia frigida	Tintinnidae
+Regional	Euphausia frigida	Foraminifera
+Regional	Euphausia frigida	Phytoplankton
+Regional	Euphausia frigida	Copepoda
+Regional	Euphausia frigida	Pteropoda
+Regional	Thysanoessa macrura	Bacillariophyta
+Regional	Thysanoessa macrura	Zooplankton
+Regional	Thysanoessa macrura	Siphonophora
+Regional	Thysanoessa macrura	Tintinnidae
+Regional	Thysanoessa macrura	Foraminifera
+Regional	Thysanoessa macrura	Phytoplankton
+Regional	Thysanoessa macrura	Copepoda
+Regional	Thysanoessa macrura	Pteropoda
+Regional	Euphausia superba	Bacillariophyta
+Regional	Euphausia superba	Fragilariopsis
+Regional	Euphausia superba	Entomoneis sp.
+Regional	Euphausia superba	Nitzschia sp.
+Regional	Euphausia superba	Chaetoceros sp.
+Regional	Euphausia superba	Zooplankton
+Regional	Euphausia superba	Distephanus sp.
+Regional	Euphausia superba	Copepoda
+Regional	Euphausia superba	Oithona sp.
+Regional	Ampelisca richardsoni	Detritus
+Regional	Ampelisca richardsoni	Bacillariophyta
+Regional	Abyssorchomene rossi	Detritus
+Regional	Abyssorchomene rossi	Bacillariophyta
+Regional	Abyssorchomene rossi	Polychaeta
+Regional	Abyssorchomene rossi	Copepoda
+Regional	Abyssorchomene rossi	Porifera
+Regional	Abyssorchomene plebs 	Crustacea
+Regional	Abyssorchomene plebs 	Euphausia superba
+Regional	Abyssorchomene plebs 	Detritus
+Regional	Abyssorchomene plebs 	Bacillariophyta
+Regional	Abyssorchomene nodimanus	Polychaeta
+Regional	Abyssorchomene nodimanus	Holothuria
+Regional	Abyssorchomene nodimanus	Fish
+Regional	Abyssorchomene nodimanus	Octopoda
+Regional	Abyssorchomene nodimanus	Detritus
+Regional	Eusirus antarcticus	Copepoda
+Regional	Eusirus perdentatus	Crustacea
+Regional	Eusirus perdentatus	Amphipoda
+Regional	Eusirus perdentatus	Polychaeta
+Regional	Eusirus perdentatus	Detritus
+Regional	Alexandrella mixta	Ophiuroidea
+Regional	Tryphosella murrayi	Mysidacea
+Regional	Tryphosella murrayi	Dolloidraco longedorsalis
+Regional	Tryphosella murrayi	Fish
+Regional	Tryphosella murrayi	Crustacea
+Regional	Tryphosella murrayi	Amphipoda
+Regional	Waldeckia obesa 	Amphipoda
+Regional	Waldeckia obesa 	Eurythenes gryllus
+Regional	Waldeckia obesa 	Ophiuroidea
+Regional	Waldeckia obesa 	Hydrozoa
+Regional	Waldeckia obesa 	Cnidaria
+Regional	Waldeckia obesa 	Porifera
+Regional	Waldeckia obesa 	Polychaeta
+Regional	Waldeckia obesa 	Holothuria
+Regional	Waldeckia obesa 	Isopoda
+Regional	Waldeckia obesa 	Crustacea
+Regional	Waldeckia obesa 	Detritus
+Regional	Waldeckia obesa 	Necromass
+Regional	Parschisturella ceruviata 	Detritus
+Regional	Paramoera walkeri	Ophiuroidea
+Regional	Epimeriella walkeri	Holothuria
+Regional	Epimeriella walkeri	Crustacea
+Regional	Epimeriella walkeri	Porifera
+Regional	Epimeriella walkeri	Cnidaria
+Regional	Epimeriella walkeri	Bacillariophyta
+Regional	Epimeriella walkeri	Detritus
+Regional	Cyllopus lucasii	Bacillariophyta
+Regional	Cyllopus lucasii	Zooplankton
+Regional	Cyllopus lucasii	Tintinnidae
+Regional	Cyllopus lucasii	Copepoda
+Regional	Cyllopus lucasii	Oithona sp.
+Regional	Cyllopus lucasii	Oncaea sp.
+Regional	Cyllopus lucasii	Calanus propinquus
+Regional	Cyllopus lucasii	Metridia gerlachei
+Regional	Cyllopus lucasii	Ostracoda
+Regional	Cyllopus lucasii	Euphausia superba
+Regional	Cyllopus lucasii	Coelenterata
+Regional	Cyllopus lucasii	Pelagobia longicirrata
+Regional	Cyllopus lucasii	Eukrohnia hamata
+Regional	Hyperiella dilatata	Bacillariophyta
+Regional	Hyperiella dilatata	Zooplankton
+Regional	Hyperiella dilatata	Tintinnidae
+Regional	Hyperiella dilatata	Copepoda
+Regional	Hyperiella dilatata	Oithona sp.
+Regional	Hyperiella dilatata	Oncaea sp.
+Regional	Hyperiella dilatata	Coelenterata
+Regional	Vibilia antarctica	Zooplankton
+Regional	Vibilia stebbingi	Zooplankton
+Regional	Hyperia macrocephala	Pteropoda
+Regional	Hyperia macrocephala	Limacina helicina 
+Regional	Hyperia macrocephala	Salpa thompsoni
+Regional	Hyperia macrocephala	Coelenterata
+Regional	Hyperia macrocephala	Scyphozoa
+Regional	Epimeria similis	Hydrozoa
+Regional	Epimeria similis	Polychaeta
+Regional	Epimeria similis	Cnidaria
+Regional	Epimeria similis	Porifera
+Regional	Epimeria similis	Bacillariophyta
+Regional	Epimeria similis	Foraminifera
+Regional	Epimeria robusta	Euphausiacea
+Regional	Epimeria robusta	Holothuria
+Regional	Epimeria robusta	Zooplankton
+Regional	Epimeria robusta	Crustacea
+Regional	Epimeria robusta	Amphipoda
+Regional	Epimeria robusta	Cnidaria
+Regional	Epimeria robusta	Polychaeta
+Regional	Epimeria robusta	Taeniogyrus contortus
+Regional	Epimeria macrodonta	Cnidaria
+Regional	Epimeria macrodonta	Hydrozoa
+Regional	Epimeria macrodonta	Urticinopsis antarctica
+Regional	Epimeria macrodonta	Anthozoa
+Regional	Epimeria macrodonta	Crustacea
+Regional	Epimeria macrodonta	Euphausiacea
+Regional	Epimeria macrodonta	Pantopoda
+Regional	Epimeria macrodonta	Holothuria
+Regional	Epimeria macrodonta	Foraminifera
+Regional	Epimeria macrodonta	Bacillariophyta
+Regional	Epimeria macrodonta	Ostracoda
+Regional	Epimeria macrodonta	Porifera
+Regional	Epimeria macrodonta	Sediment
+Regional	Epimeria macrodonta	Squid
+Regional	Epimeria rubrieques	Euphausiacea
+Regional	Epimeria rubrieques	Zooplankton
+Regional	Epimeria rubrieques	Crustacea
+Regional	Epimeria rubrieques	Amphipoda
+Regional	Epimeria rubrieques	Cnidaria
+Regional	Epimeria rubrieques	Hydrozoa
+Regional	Epimeria rubrieques	Clavularia sp.
+Regional	Epimeria rubrieques	Polychaeta
+Regional	Epimeria rubrieques	Taeniogyrus contortus
+Regional	Epimeria georgiana	Crustacea
+Regional	Epimeria georgiana	Mysidacea
+Regional	Epimeria georgiana	Amphipoda
+Regional	Epimeria georgiana	Polychaeta
+Regional	Epimeria georgiana	Holothuria
+Regional	Epimeria georgiana	Hydrozoa
+Regional	Epimeria georgiana	Bacillariophyta
+Regional	Epimeria georgiana	Zooplankton
+Regional	Epimeria georgiana	Foraminifera
+Regional	Melphidippa antarctica	Euchaeta antarctica
+Regional	Melphidippa antarctica	Crustacea
+Regional	Melphidippa antarctica	Euphausiacea
+Regional	Melphidippa antarctica	Mysidacea
+Regional	Melphidippa antarctica	Porifera
+Regional	Melphidippa antarctica	Cnidaria
+Regional	Melphidippa antarctica	Holothuria
+Regional	Oediceroides emarginatus	Phytoplankton
+Regional	Oediceroides emarginatus	Crustacea
+Regional	Oediceroides emarginatus	Amphipoda
+Regional	Oediceroides calmani	Phytoplankton
+Regional	Oediceroides calmani	Crustacea
+Regional	Oediceroides calmani	Amphipoda
+Regional	Maxilliphimedia longipes	Cnidaria
+Regional	Maxilliphimedia longipes	Urticinopsis antarctica
+Regional	Maxilliphimedia longipes	Anthozoa
+Regional	Maxilliphimedia longipes	Hydrozoa
+Regional	Gnathiphimedia mandibularis	Bryozoa
+Regional	Gnathiphimedia mandibularis	Brachiopoda
+Regional	Gnathiphimedia mandibularis	Porifera
+Regional	Echiniphimedia hodgsoni	Porifera
+Regional	Echiniphimedia hodgsoni	Detritus
+Regional	Iphimediella cyclogena	Holothuria
+Regional	Iphimediella cyclogena	Polychaeta
+Regional	Paraceradocus gibber	Amphipoda
+Regional	Paraceradocus gibber	Bacillariophyta
+Regional	Paraceradocus gibber	Detritus
+Regional	Liljeborgia georgiana	Crustacea
+Regional	Liljeborgia georgiana	Amphipoda
+Regional	Liljeborgia georgiana	Euphausiacea
+Regional	Liljeborgia georgiana	Copepoda
+Regional	Liljeborgia georgiana	Polychaeta
+Regional	Liljeborgia georgiana	Eucranta mollis
+Regional	Liljeborgia georgiana	Eunoe spica
+Regional	Liljeborgia georgiana	Cnidaria
+Regional	Liljeborgia georgiana	Porifera
+Regional	Momoculodes scabriculosus	Detritus
+Regional	Uristes gigas	Crustacea
+Regional	Uristes gigas	Amphipoda
+Regional	Uristes gigas	Euphausiacea
+Regional	Uristes gigas	Porifera
+Regional	Uristes gigas	Bacillariophyta
+Regional	Eurythenes gryllus	Amphipoda
+Regional	Eurythenes gryllus	Eurythenes gryllus
+Regional	Eurythenes gryllus	Ophiuroidea
+Regional	Eurythenes gryllus	Hydrozoa
+Regional	Eurythenes gryllus	Urticinopsis antarctica
+Regional	Eurythenes gryllus	Anthozoa
+Regional	Eurythenes gryllus	Porifera
+Regional	Eurythenes gryllus	Polychaeta
+Regional	Eurythenes gryllus	Holothuria
+Regional	Eurythenes gryllus	Isopoda
+Regional	Eurythenes gryllus	Crustacea
+Regional	Eurythenes gryllus	Detritus
+Regional	Bathypanoploea schellenbergi	Urticinopsis antarctica
+Regional	Bathypanoploea schellenbergi	Anthozoa
+Regional	Bathypanoploea schellenbergi	Bacillariophyta
+Regional	Bathypanoploea schellenbergi	Crustacea
+Regional	Bathypanoploea schellenbergi	Holothuria
+Regional	Bathypanoploea schellenbergi	Bryozoa
+Regional	Pseudorchomene coatsi	Detritus
+Regional	Heterophoxus videns	Polychaeta
+Regional	Heterophoxus videns	Eucranta mollis
+Regional	Heterophoxus videns	Eunoe spica
+Regional	Heterophoxus videns	Laetmonice producta
+Regional	Heterophoxus videns	Tanaidacea
+Regional	Heterophoxus videns	Copepoda
+Regional	Heterophoxus videns	Porifera
+Regional	Heterophoxus videns	Bacillariophyta
+Regional	Heterophoxus videns	Foraminifera
+Regional	Heterophoxus videns	Nematoda
+Regional	Heterophoxus videns	Crustacea
+Regional	Haplocheira plumosa	Phytoplankton
+Regional	Haplocheira plumosa	Detritus
+Regional	Oradarea edentata	Phytoplankton
+Regional	Djerboa furcipes	Phytoplankton
+Regional	Rhachotropis antarctica	Euphausiacea
+Regional	Rhachotropis antarctica	Copepoda
+Regional	Rhachotropis antarctica	Amphipoda
+Regional	Rhachotropis antarctica	Polychaeta
+Regional	Rhachotropis antarctica	Bacillariophyta
+Regional	Rhachotropis antarctica	Cnidaria
+Regional	Notocrangon antarcticus	Bacillariophyta
+Regional	Notocrangon antarcticus	Foraminifera
+Regional	Notocrangon antarcticus	Porifera
+Regional	Notocrangon antarcticus	Gastropoda
+Regional	Notocrangon antarcticus	Bivalvia
+Regional	Notocrangon antarcticus	Yoldiella eightsi
+Regional	Notocrangon antarcticus	Polychaeta
+Regional	Notocrangon antarcticus	Mysidacea
+Regional	Notocrangon antarcticus	Holothuria
+Regional	Chorismus antarcticus	Bacillariophyta
+Regional	Chorismus antarcticus	Corethron sp.
+Regional	Chorismus antarcticus	Zooplankton
+Regional	Chorismus antarcticus	Foraminifera
+Regional	Chorismus antarcticus	Porifera
+Regional	Chorismus antarcticus	Nematoda
+Regional	Chorismus antarcticus	Gastropoda
+Regional	Chorismus antarcticus	Yoldiella eightsi
+Regional	Chorismus antarcticus	Polychaeta
+Regional	Chorismus antarcticus	Eucranta mollis
+Regional	Chorismus antarcticus	Eunoe spica
+Regional	Chorismus antarcticus	Laetmonice producta
+Regional	Chorismus antarcticus	Eulagisca gigantea
+Regional	Chorismus antarcticus	Barrukia cristata
+Regional	Chorismus antarcticus	Amphipoda
+Regional	Chorismus antarcticus	Isopoda
+Regional	Chorismus antarcticus	Taeniogyrus contortus
+Regional	Nematocarcinus lanceopes	Bacillariophyta
+Regional	Nematocarcinus lanceopes	Zooplankton
+Regional	Nematocarcinus lanceopes	Tintinnidae
+Regional	Nematocarcinus lanceopes	Phytoplankton
+Regional	Nematocarcinus lanceopes	Euchaeta antarctica
+Regional	Rhincalanus gigas	Bacillariophyta
+Regional	Rhincalanus gigas	SilicioZooplanktons
+Regional	Rhincalanus gigas	Zooplankton
+Regional	Rhincalanus gigas	Tintinnidae
+Regional	Rhincalanus gigas	Oithona sp.
+Regional	Rhincalanus gigas	Oncaea sp.
+Regional	Rhincalanus gigas	Coelenterata
+Regional	Calanus propinquus 	Bacillariophyta
+Regional	Calanus propinquus 	SilicioZooplanktons
+Regional	Calanus propinquus 	Zooplankton
+Regional	Calanus propinquus 	Tintinnidae
+Regional	Calanus propinquus 	Euchaeta antarctica
+Regional	Calanus propinquus 	Oithona sp.
+Regional	Calanus propinquus 	Copepoda
+Regional	Calanus propinquus 	Coelenterata
+Regional	Calanoides acutus 	Bacillariophyta
+Regional	Calanoides acutus 	SilicioZooplanktons
+Regional	Calanoides acutus 	Zooplankton
+Regional	Calanoides acutus 	Tintinnidae
+Regional	Calanoides acutus 	Copepoda
+Regional	Calanoides acutus 	Oithona sp.
+Regional	Calanoides acutus 	Oncaea sp.
+Regional	Calanoides acutus 	Pelagobia longicirrata
+Regional	Metridia gerlachei 	Bacillariophyta
+Regional	Metridia gerlachei 	SilicioZooplanktons
+Regional	Metridia gerlachei 	Zooplankton
+Regional	Metridia gerlachei 	Tintinnidae
+Regional	Metridia gerlachei 	Copepoda
+Regional	Metridia gerlachei 	Oithona sp.
+Regional	Metridia gerlachei 	Oncaea sp.
+Regional	Euchaeta antarctica	Bacillariophyta
+Regional	Euchaeta antarctica	SilicioZooplanktons
+Regional	Euchaeta antarctica	Zooplankton
+Regional	Euchaeta antarctica	Tintinnidae
+Regional	Euchaeta antarctica	Copepoda
+Regional	Euchaeta antarctica	Oithona sp.
+Regional	Euchaeta antarctica	Oncaea sp.
+Regional	Euchaeta antarctica	Metridia gerlachei
+Regional	Euchaeta antarctica	Euchaeta antarctica
+Regional	Euchaeta antarctica	Cyllopus lucasii
+Regional	Euchaeta antarctica	Coelenterata
+Regional	Euchaeta antarctica	Pelagobia longicirrata
+Regional	Euchaeta antarctica	Eukrohnia hamata
+Regional	Mysida	Bacillariophyta
+Regional	Mysida	Detritus
+Regional	Mysida	Zooplankton
+Regional	Eucopia australis	Bacillariophyta
+Regional	Eucopia australis	Detritus
+Regional	Eucopia australis	Zooplankton
+Regional	Euchaetomera antarcticus	Bacillariophyta
+Regional	Euchaetomera antarcticus	Detritus
+Regional	Euchaetomera antarcticus	Zooplankton
+Regional	Antarctomysis maxima	Bacillariophyta
+Regional	Antarctomysis maxima	Detritus
+Regional	Antarctomysis maxima	Zooplankton
+Regional	Ceratoserolis meridionalis	Polychaeta
+Regional	Ceratoserolis meridionalis	Crustacea
+Regional	Frontoserolis bouvieri	Polychaeta
+Regional	Frontoserolis bouvieri	Crustacea
+Regional	Natatolana obtusata	Detritus
+Regional	Natatolana oculata	Detritus
+Regional	Natatolana meridionalis	Detritus
+Regional	Gnathia calva	Zooplankton
+Regional	Glyptonotus antarcticus	Isopoda
+Regional	Glyptonotus antarcticus	Glyptonotus antarcticus
+Regional	Glyptonotus antarcticus	Asteroidea
+Regional	Glyptonotus antarcticus	Gastropoda
+Regional	Glyptonotus antarcticus	Euphausia superba
+Regional	Glyptonotus antarcticus	Polychaeta
+Regional	Glyptonotus antarcticus	Echinoidea
+Regional	Glyptonotus antarcticus	Ophiuroidea
+Regional	Glyptonotus antarcticus	Detritus
+Regional	Glyptonotus antarcticus	Limacina helicina 
+Regional	Austrosisignum grande	Detritus
+Regional	Austrosisignum grande	Bacillariophyta
+Regional	Aega antarctica	Detritus
+Regional	Arcturidae	Detritus
+Regional	Myodocopia	Sediment
+Regional	Myodocopia	Detritus
+Regional	Myodocopia	Zooplankton
+Regional	Alacia hettacra	Detritus
+Regional	Alacia hettacra	Bacillariophyta
+Regional	Alacia hettacra	Phytoplankton
+Regional	Alacia belgicae	Detritus
+Regional	Alacia belgicae	Bacillariophyta
+Regional	Alacia belgicae	Phytoplankton
+Regional	Metaconchoecia isocheira	Detritus
+Regional	Metaconchoecia isocheira	Bacillariophyta
+Regional	Metaconchoecia isocheira	Phytoplankton
+Regional	Boroecia antipoda	Detritus
+Regional	Boroecia antipoda	Bacillariophyta
+Regional	Boroecia antipoda	Phytoplankton
+Regional	Podocopida	Zooplankton
+Regional	Podocopida	Detritus
+Regional	Podocopida	Bacillariophyta
+Regional	Nototanais antarcticus	Detritus
+Regional	Nototanais antarcticus	Bacillariophyta
+Regional	Nototanais antarcticus	Bacteria
+Regional	Nototanais antarcticus	Sediment
+Regional	Peraeospinosus pushkini	Sediment
+Regional	Peraeospinosus pushkini	Detritus
+Regional	Peraeospinosus pushkini	Bacillariophyta
+Regional	Peraeospinosus pushkini	Porifera
+Regional	Nototanais dimorphus	Bacillariophyta
+Regional	Nototanais dimorphus	Bacteria
+Regional	Nototanais dimorphus	Detritus
+Regional	Eudorella splendida	Detritus
+Regional	Eudorella splendida	Bacillariophyta
+Regional	Eudorella splendida	Bacteria
+Regional	Eudorella splendida	Sediment
+Regional	Vaunthompsonia indermis	Detritus
+Regional	Vaunthompsonia indermis	Bacillariophyta
+Regional	Vaunthompsonia indermis	Bacteria
+Regional	Vaunthompsonia indermis	Sediment
+Regional	Camylaspis maculata	Bacillariophyta
+Regional	Diastylis mawsoni	Detritus
+Regional	Ekleptostylis debroyeri	Detritus
+Regional	Pentanymphon antarcticum	Bryozoa
+Regional	Pentanymphon antarcticum	Porifera
+Regional	Pentanymphon antarcticum	Gastropoda
+Regional	Pentanymphon antarcticum	Polychaeta
+Regional	Pentanymphon antarcticum	Ophiuroidea
+Regional	Pentanymphon antarcticum	Ctenophora
+Regional	Ammothea carolinensis	Bryozoa
+Regional	Ammothea carolinensis	Porifera
+Regional	Ammothea carolinensis	Gastropoda
+Regional	Ammothea carolinensis	Polychaeta
+Regional	Ammothea carolinensis	Ophiuroidea
+Regional	Ammothea carolinensis	Ctenophora
+Regional	Colossendeis sp.	Bryozoa
+Regional	Colossendeis sp.	Porifera
+Regional	Colossendeis sp.	Gastropoda
+Regional	Colossendeis sp.	Polychaeta
+Regional	Colossendeis sp.	Ophiuroidea
+Regional	Colossendeis sp.	Ctenophora
+Regional	Nymphon gracillimum	Bryozoa
+Regional	Nymphon gracillimum	Porifera
+Regional	Nymphon gracillimum	Gastropoda
+Regional	Nymphon gracillimum	Polychaeta
+Regional	Nymphon gracillimum	Ophiuroidea
+Regional	Nymphon gracillimum	Ctenophora
+Regional	Pelagobia longicirrata	Bacillariophyta
+Regional	Pelagobia longicirrata	Ostracoda
+Regional	Rhynchonereella bongraini	Bacillariophyta
+Regional	Rhynchonereella bongraini	Ostracoda
+Regional	Laetmonice producta	Detritus
+Regional	Laetmonice producta	Polychaeta
+Regional	Laetmonice producta	Crustacea
+Regional	Laetmonice producta	Amphipoda
+Regional	Laetmonice producta	Ophiuroidea
+Regional	Harmothoe spinosa	Holothuria
+Regional	Harmothoe spinosa	Detritus
+Regional	Harmothoe spinosa	Hydrozoa
+Regional	Harmothoe spinosa	Bryozoa
+Regional	Harmothoe spinosa	Gastropoda
+Regional	Harmothoe spinosa	Polychaeta
+Regional	Harmothoe spinosa	Pantopoda
+Regional	Harmothoe spinosa	Crustacea
+Regional	Harmothoe spinosa	Isopoda
+Regional	Harmothoe spinosa	Amphipoda
+Regional	Harmothoe spinosa	Ophiuroidea
+Regional	Harmothoe crosetensis	Detritus
+Regional	Harmothoe crosetensis	Polychaeta
+Regional	Harmothoe crosetensis	Crustacea
+Regional	Harmothoe crosetensis	Isopoda
+Regional	Harmothoe crosetensis	Amphipoda
+Regional	Harmothoe crosetensis	Holothuria
+Regional	Harmothoe crosetensis	Ophiuroidea
+Regional	Polyeunoa laevis 	Detritus
+Regional	Polyeunoa laevis 	Urticinopsis antarctica
+Regional	Polyeunoa laevis 	Anthozoa
+Regional	Polyeunoa laevis 	Crustacea
+Regional	Barrukia cristata	Detritus
+Regional	Barrukia cristata	Bivalvia
+Regional	Barrukia cristata	Polychaeta
+Regional	Barrukia cristata	Ophiuroidea
+Regional	Eulagisca gigantea	Detritus
+Regional	Eulagisca gigantea	Bryozoa
+Regional	Eulagisca gigantea	Pantopoda
+Regional	Eulagisca gigantea	Crustacea
+Regional	Eulagisca gigantea	Amphipoda
+Regional	Eulagisca gigantea	Ophiuroidea
+Regional	Eulagisca gigantea	Hydrozoa
+Regional	Eunoe spica	Detritus
+Regional	Eunoe spica	Bivalvia
+Regional	Eunoe spica	Polychaeta
+Regional	Eunoe spica	Pantopoda
+Regional	Eunoe spica	Crustacea
+Regional	Eunoe spica	Isopoda
+Regional	Eunoe spica	Holothuria
+Regional	Eunoe spica	Fish
+Regional	Eunoe spica	Amphipoda
+Regional	Eunoe hartmanae	Detritus
+Regional	Eunoe hartmanae	Hydrozoa
+Regional	Eunoe hartmanae	Bryozoa
+Regional	Eunoe hartmanae	Polychaeta
+Regional	Eunoe hartmanae	Ophiuroidea
+Regional	Eunoe hartmanae	Amphipoda
+Regional	Eunoe spica spicoides	Detritus
+Regional	Eunoe spica spicoides	Bryozoa
+Regional	Eunoe spica spicoides	Hydrozoa
+Regional	Eunoe spica spicoides	Bivalvia
+Regional	Eunoe spica spicoides	Gastropoda
+Regional	Eunoe spica spicoides	Polychaeta
+Regional	Eunoe spica spicoides	Pantopoda
+Regional	Eunoe spica spicoides	Crustacea
+Regional	Eunoe spica spicoides	Isopoda
+Regional	Eunoe spica spicoides	Amphipoda
+Regional	Eunoe spica spicoides	Holothuria
+Regional	Eunoe spica spicoides	Crinoidea
+Regional	Eunoe spica spicoides	Fish
+Regional	Eucranta mollis	Detritus
+Regional	Eucranta mollis	Crustacea
+Regional	Promachocrinus kerguelensis	Detritus
+Regional	Promachocrinus kerguelensis	Sediment
+Regional	Promachocrinus kerguelensis	Phytoplankton
+Regional	Anthometra adriani	Sediment
+Regional	Anthometra adriani	Detritus
+Regional	Anthometra adriani	Phytoplankton
+Regional	Acodontaster conspicuus	Homaxinella balfourensis
+Regional	Acodontaster conspicuus	Rossella racovitzae
+Regional	Acodontaster conspicuus	Scolymastra joubini
+Regional	Acodontaster conspicuus	Tetilla leptoderma
+Regional	Acodontaster conspicuus	Haliclona dancoi
+Regional	Acodontaster conspicuus	Mycale acerata
+Regional	Acodontaster conspicuus	Kirkpatrickia variolosa
+Regional	Bathybiaster loripes	Detritus
+Regional	Cuenotaster involutus	Detritus
+Regional	Diplasterias brucei	Yoldiella eightsi
+Regional	Diplasterias brucei	Gastropoda
+Regional	Diplasterias brucei	Detritus
+Regional	Luidiaster gerlachei	Ophiuroidea
+Regional	Luidiaster gerlachei	Detritus
+Regional	Labidiaster annulatus	Ophiuroidea
+Regional	Labidiaster annulatus	Gastropoda
+Regional	Labidiaster annulatus	Amphipoda
+Regional	Labidiaster annulatus	Bivalvia
+Regional	Labidiaster annulatus	Crinoidea
+Regional	Labidiaster annulatus	Polychaeta
+Regional	Labidiaster annulatus	Asteroidea
+Regional	Labidiaster annulatus	Isopoda
+Regional	Labidiaster annulatus	Echinoidea
+Regional	Lophaster gaini	Bivalvia
+Regional	Lophaster gaini	Adamussium colbecki
+Regional	Lophaster gaini	Yoldiella eightsi
+Regional	Notasterias armata	Bivalvia
+Regional	Notasterias armata	Adamussium colbecki
+Regional	Notasterias armata	Yoldiella eightsi
+Regional	Solaster sp.	Bivalvia
+Regional	Solaster sp.	Polychaeta
+Regional	Solaster sp.	Sediment
+Regional	Solaster sp.	Detritus
+Regional	Odontaster meridionalis	Porifera
+Regional	Odontaster meridionalis	Detritus
+Regional	Odontaster validus	Detritus
+Regional	Odontaster validus	Amphipoda
+Regional	Odontaster validus	Isopoda
+Regional	Odontaster validus	Glyptonotus antarcticus
+Regional	Odontaster validus	Asteroidea
+Regional	Odontaster validus	Adamussium colbecki
+Regional	Odontaster validus	Gastropoda
+Regional	Odontaster validus	Bivalvia
+Regional	Odontaster validus	Laternula elliptica
+Regional	Odontaster validus	Yoldiella eightsi
+Regional	Odontaster validus	Hydrozoa
+Regional	Odontaster validus	Ophiuroidea
+Regional	Odontaster validus	Bryozoa
+Regional	Odontaster validus	Porifera
+Regional	Odontaster validus	Homaxinella balfourensis
+Regional	Odontaster validus	Rossella racovitzae
+Regional	Odontaster validus	Rossella nuda
+Regional	Odontaster validus	Scolymastra joubini
+Regional	Odontaster validus	Tetilla leptoderma
+Regional	Odontaster validus	Ostracoda
+Regional	Odontaster validus	Echinoidea
+Regional	Odontaster validus	Sterechinus neumayeri
+Regional	Odontaster validus	Polychaeta
+Regional	Odontaster validus	Bacillariophyta
+Regional	Pteraster affinis aculeatus	Adamussium colbecki
+Regional	Perknaster densus	Detritus
+Regional	Perknaster fuscus antarcticus	Detritus
+Regional	Perknaster fuscus antarcticus	Porifera
+Regional	Perknaster fuscus antarcticus	Tetilla leptoderma
+Regional	Perknaster fuscus antarcticus	Scolymastra joubini
+Regional	Perknaster fuscus antarcticus	Mycale acerata
+Regional	Macroptychaster accrescens	Asteroidea
+Regional	Macroptychaster accrescens	Odontaster validus
+Regional	Macroptychaster accrescens	Echinoidea
+Regional	Macroptychaster accrescens	Sterechinus neumayeri
+Regional	Macroptychaster accrescens	Ophiuroidea
+Regional	Macroptychaster accrescens	Gastropoda
+Regional	Macroptychaster accrescens	Bivalvia
+Regional	Lysasterias perrieri	Bivalvia
+Regional	Lysasterias perrieri	Ostracoda
+Regional	Lysasterias perrieri	Ophiuroidea
+Regional	Lysasterias perrieri	Detritus
+Regional	Psilaster charcoti	Detritus
+Regional	Psilaster charcoti	Sediment
+Regional	Psilaster charcoti	Ascidiacea
+Regional	Psilaster charcoti	Fish
+Regional	Porania antarctica 	Detritus
+Regional	Porania antarctica 	Bacillariophyta
+Regional	Porania antarctica 	Ostracoda
+Regional	Ophionotus victoriae	Bacillariophyta
+Regional	Ophionotus victoriae	Foraminifera
+Regional	Ophionotus victoriae	Porifera
+Regional	Ophionotus victoriae	Hydrozoa
+Regional	Ophionotus victoriae	Nematoda
+Regional	Ophionotus victoriae	Bivalvia
+Regional	Ophionotus victoriae	Polychaeta
+Regional	Ophionotus victoriae	Amphipoda
+Regional	Ophionotus victoriae	Mysidacea
+Regional	Ophionotus victoriae	Euphausiacea
+Regional	Ophionotus victoriae	Crustacea
+Regional	Ophionotus victoriae	Bryozoa
+Regional	Ophionotus victoriae	Ophiuroidea
+Regional	Ophionotus victoriae	Echinoidea
+Regional	Ophionotus victoriae	Urticinopsis antarctica
+Regional	Ophionotus victoriae	Anthozoa
+Regional	Ophionotus victoriae	Detritus
+Regional	Ophionotus victoriae	Sediment
+Regional	Ophioceres incipiens	Bacillariophyta
+Regional	Ophioceres incipiens	SilicioZooplanktons
+Regional	Ophioceres incipiens	Zooplankton
+Regional	Ophioceres incipiens	Foraminifera
+Regional	Ophioceres incipiens	Porifera
+Regional	Ophioceres incipiens	Polychaeta
+Regional	Ophioceres incipiens	Crustacea
+Regional	Ophioceres incipiens	Urticinopsis antarctica
+Regional	Ophioceres incipiens	Anthozoa
+Regional	Ophioceres incipiens	Sediment
+Regional	Ophioceres incipiens	Detritus
+Regional	Ophiurolepis brevirima	Bacillariophyta
+Regional	Ophiurolepis brevirima	SilicioZooplanktons
+Regional	Ophiurolepis brevirima	Zooplankton
+Regional	Ophiurolepis brevirima	Foraminifera
+Regional	Ophiurolepis brevirima	Porifera
+Regional	Ophiurolepis brevirima	Cnidaria
+Regional	Ophiurolepis brevirima	Bivalvia
+Regional	Ophiurolepis brevirima	Polychaeta
+Regional	Ophiurolepis brevirima	Eunoe spica
+Regional	Ophiurolepis brevirima	Ostracoda
+Regional	Ophiurolepis brevirima	Amphipoda
+Regional	Ophiurolepis brevirima	Euphausiacea
+Regional	Ophiurolepis brevirima	Crustacea
+Regional	Ophiurolepis brevirima	Bryozoa
+Regional	Ophiurolepis brevirima	Detritus
+Regional	Ophiurolepis brevirima	Sediment
+Regional	Ophiurolepis gelida	Bacillariophyta
+Regional	Ophiurolepis gelida	SilicioZooplanktons
+Regional	Ophiurolepis gelida	Zooplankton
+Regional	Ophiurolepis gelida	Foraminifera
+Regional	Ophiurolepis gelida	Porifera
+Regional	Ophiurolepis gelida	Nematoda
+Regional	Ophiurolepis gelida	Bivalvia
+Regional	Ophiurolepis gelida	Polychaeta
+Regional	Ophiurolepis gelida	Amphipoda
+Regional	Ophiurolepis gelida	Euphausiacea
+Regional	Ophiurolepis gelida	Crustacea
+Regional	Ophiurolepis gelida	Bryozoa
+Regional	Ophiurolepis gelida	Detritus
+Regional	Ophiurolepis gelida	Sediment
+Regional	Ophiosparte gigas	Bacillariophyta
+Regional	Ophiosparte gigas	Foraminifera
+Regional	Ophiosparte gigas	Porifera
+Regional	Ophiosparte gigas	Cnidaria
+Regional	Ophiosparte gigas	Nematoda
+Regional	Ophiosparte gigas	Gastropoda
+Regional	Ophiosparte gigas	Laternula elliptica
+Regional	Ophiosparte gigas	Bivalvia
+Regional	Ophiosparte gigas	Adamussium colbecki
+Regional	Ophiosparte gigas	Yoldiella eightsi
+Regional	Ophiosparte gigas	Polychaeta
+Regional	Ophiosparte gigas	Eunoe spica
+Regional	Ophiosparte gigas	Pantopoda
+Regional	Ophiosparte gigas	Ostracoda
+Regional	Ophiosparte gigas	Mysidacea
+Regional	Ophiosparte gigas	Isopoda
+Regional	Ophiosparte gigas	Amphipoda
+Regional	Ophiosparte gigas	Euphausia crystallorophias
+Regional	Ophiosparte gigas	Euphausia superba
+Regional	Ophiosparte gigas	Chorismus antarcticus
+Regional	Ophiosparte gigas	Bryozoa
+Regional	Ophiosparte gigas	Promachocrinus kerguelensis
+Regional	Ophiosparte gigas	Odontaster validus
+Regional	Ophiosparte gigas	Ophiurolepis gelida
+Regional	Ophiosparte gigas	Ophionotus victoriae
+Regional	Ophiosparte gigas	Ophiosparte gigas
+Regional	Ophiosparte gigas	Ophiacantha 
+Regional	Ophiosparte gigas	Ophiocten 
+Regional	Ophiosparte gigas	Ophiuroidea
+Regional	Ophiosparte gigas	Sterechinus neumayeri
+Regional	Ophiosparte gigas	Fish
+Regional	Ophiosparte gigas	Detritus
+Regional	Ophiosparte gigas	Sediment
+Regional	Ophioperla koehleri	Euphausiacea
+Regional	Ophioperla koehleri	Polychaeta
+Regional	Ophioperla koehleri	Ophiuroidea
+Regional	Ophioperla koehleri	Porifera
+Regional	Ophioperla koehleri	Crinoidea
+Regional	Ophioperla koehleri	Foraminifera
+Regional	Ophioperla koehleri	Copepoda
+Regional	Ophioperla koehleri	Echinoidea
+Regional	Ophiacantha antarctica	Copepoda
+Regional	Ophiacantha antarctica	Bacillariophyta
+Regional	Ophiacantha antarctica	Foraminifera
+Regional	Ophiacantha pentacis	Copepoda
+Regional	Ophiacantha vivipara	Copepoda
+Regional	Astrotoma agassizii	Bacillariophyta
+Regional	Astrotoma agassizii	SilicioZooplanktons
+Regional	Astrotoma agassizii	Zooplankton
+Regional	Astrotoma agassizii	Foraminifera
+Regional	Astrotoma agassizii	Porifera
+Regional	Astrotoma agassizii	Hydrozoa
+Regional	Astrotoma agassizii	Cnidaria
+Regional	Astrotoma agassizii	Bivalvia
+Regional	Astrotoma agassizii	Polychaeta
+Regional	Astrotoma agassizii	Ostracoda
+Regional	Astrotoma agassizii	Calanoides acutus
+Regional	Astrotoma agassizii	Calanus propinquus
+Regional	Astrotoma agassizii	Euchaeta antarctica
+Regional	Astrotoma agassizii	Mysidacea
+Regional	Astrotoma agassizii	Euphausiacea
+Regional	Astrotoma agassizii	Crustacea
+Regional	Astrotoma agassizii	Bryozoa
+Regional	Astrotoma agassizii	Eukrohnia hamata
+Regional	Astrotoma agassizii	Echinoidea
+Regional	Astrotoma agassizii	Holothuria
+Regional	Astrotoma agassizii	Fish
+Regional	Astrotoma agassizii	Sediment
+Regional	Astrotoma agassizii	Detritus
+Regional	Astrochlamys bruneus	Coelenterata
+Regional	Astrochlamys bruneus	Zooplankton
+Regional	Astrochlamys bruneus	Euchaeta antarctica
+Regional	Gorgonocephalus chiliensis	Copepoda
+Regional	Sterechinus neumayeri	Bryozoa
+Regional	Sterechinus neumayeri	Bacillariophyta
+Regional	Sterechinus neumayeri	Foraminifera
+Regional	Sterechinus neumayeri	Polychaeta
+Regional	Sterechinus neumayeri	Porifera
+Regional	Sterechinus neumayeri	Detritus
+Regional	Sterechinus antarcticus	Bryozoa
+Regional	Sterechinus antarcticus	Bacillariophyta
+Regional	Sterechinus antarcticus	Foraminifera
+Regional	Sterechinus antarcticus	Porifera
+Regional	Sterechinus antarcticus	Detritus
+Regional	Ctenocidaris gigantea	Bivalvia
+Regional	Ctenocidaris gigantea	Bryozoa
+Regional	Ctenocidaris gigantea	Crustacea
+Regional	Ctenocidaris gigantea	Zooplankton
+Regional	Ctenocidaris gigantea	Hydrozoa
+Regional	Ctenocidaris gigantea	Polychaeta
+Regional	Ctenocidaris gigantea	Porifera
+Regional	Ctenocidaris gigantea	Detritus
+Regional	Ctenocidaris spinosa	Yoldiella eightsi
+Regional	Ctenocidaris spinosa	Bryozoa
+Regional	Ctenocidaris spinosa	Zooplankton
+Regional	Ctenocidaris spinosa	Foraminifera
+Regional	Ctenocidaris spinosa	Hydrozoa
+Regional	Ctenocidaris spinosa	Polychaeta
+Regional	Ctenocidaris spinosa	Porifera
+Regional	Ctenocidaris spinosa	Detritus
+Regional	Notocidaris mortenseni	Bryozoa
+Regional	Notocidaris mortenseni	Zooplankton
+Regional	Notocidaris mortenseni	Hydrozoa
+Regional	Notocidaris mortenseni	Porifera
+Regional	Notocidaris mortenseni	Detritus
+Regional	Abatus curvidens	Detritus
+Regional	Abatus cavernosus 	Detritus
+Regional	Abatus nimrodi	Detritus
+Regional	Abatus shackeltoni	Detritus
+Regional	Austrocidaris canaliculata	Foraminifera
+Regional	Austrocidaris canaliculata	Gastropoda
+Regional	Aporocidaris milleri	Polychaeta
+Regional	Aporocidaris milleri	Foraminifera
+Regional	Aporocidaris milleri	Hydrozoa
+Regional	Aporocidaris milleri	Gastropoda
+Regional	Aporocidaris milleri	Amphipoda
+Regional	Ctenocidaris perrieri	Polychaeta
+Regional	Ctenocidaris perrieri	Bryozoa
+Regional	Ctenocidaris perrieri	Eunoe spica
+Regional	Ctenocidaris perrieri	Porifera
+Regional	Ctenocidaris perrieri	Foraminifera
+Regional	Ctenocidaris gilberti	Porifera
+Regional	Ctenocidaris gilberti	Foraminifera
+Regional	Ctenocidaris gilberti	Bryozoa
+Regional	Mesothuria lactea	Detritus
+Regional	Achlyonice violaecuspidata	Detritus
+Regional	Bathyplotes gourdoni	Detritus
+Regional	Bathyplotes bongraini	Detritus
+Regional	Scotoplanes globosa	Detritus
+Regional	Molpadia musculus	Detritus
+Regional	Ypsilocucumis turricata	Detritus
+Regional	Psolidium incertum	Detritus
+Regional	Trachythyone parva	Detritus
+Regional	Ekmocucumis steineni	Detritus
+Regional	Ekmocucumis steineni	Phytoplankton
+Regional	Abyssocucumis liouvillei	Detritus
+Regional	Abyssocucumis liouvillei	Phytoplankton
+Regional	Psolus dubiosus	Detritus
+Regional	Psolus dubiosus	Phytoplankton
+Regional	Psolus charcoti	Detritus
+Regional	Psolus charcoti	Phytoplankton
+Regional	Psolus antarcticus	Detritus
+Regional	Psolus antarcticus	Phytoplankton
+Regional	Echinopsolus acanthocola	Detritus
+Regional	Echinopsolus acanthocola	Phytoplankton
+Regional	Ekmocucumis turqueti	Detritus
+Regional	Ekmocucumis turqueti	Phytoplankton
+Regional	Taeniogyrus contortus	Detritus
+Regional	Taeniogyrus contortus	Phytoplankton
+Regional	Silicularia rosea	Bacillariophyta
+Regional	Silicularia rosea	Tintinnidae
+Regional	Silicularia rosea	Zooplankton
+Regional	Silicularia rosea	Nematoda
+Regional	Silicularia rosea	Detritus
+Regional	Silicularia rosea	Crustacea
+Regional	Tubularia ralphii	Copepoda
+Regional	Tubularia ralphii	Zooplankton
+Regional	Tubularia ralphii	Detritus
+Regional	Oswaldella antarctica	Bacillariophyta
+Regional	Monocaulus parvula	Bacillariophyta
+Regional	Monocaulus parvula	Amphipoda
+Regional	Monocaulus parvula	Copepoda
+Regional	Monocaulus parvula	Zooplankton
+Regional	Monocaulus parvula	Hydrozoa
+Regional	Monocaulus parvula	Detritus
+Regional	Bargmannia sp.	Euphausiacea
+Regional	Bargmannia sp.	Zooplankton
+Regional	Solmundella bitentaculata	Pteropoda
+Regional	Solmundella bitentaculata	Limacina helicina 
+Regional	Solmundella bitentaculata	Salpa thompsoni
+Regional	Solmundella bitentaculata	Eukrohnia hamata
+Regional	Solmundella bitentaculata	Polychaeta
+Regional	Solmundella bitentaculata	Euphausiacea
+Regional	Dipulmaris antarctica	Copepoda
+Regional	Dipulmaris antarctica	Zooplankton
+Regional	Dipulmaris antarctica	Ctenophora
+Regional	Dipulmaris antarctica	Pteropoda
+Regional	Dipulmaris antarctica	Limacina helicina 
+Regional	Dipulmaris antarctica	Clione antarctica
+Regional	Desmonema glaciale	Euphausiacea
+Regional	Desmonema glaciale	Fish
+Regional	Desmonema glaciale	Asteroidea
+Regional	Desmonema glaciale	Odontaster validus
+Regional	Desmonema glaciale	Nemertini
+Regional	Urticinopsis antarctica	Asteroidea
+Regional	Urticinopsis antarctica	Odontaster validus
+Regional	Urticinopsis antarctica	Perknaster fuscus
+Regional	Urticinopsis antarctica	Diplasterias brucei
+Regional	Urticinopsis antarctica	Echinoidea
+Regional	Urticinopsis antarctica	Sterechinus neumayeri
+Regional	Isotealia antarctica	Bacillariophyta
+Regional	Isotealia antarctica	Copepoda
+Regional	Isotealia antarctica	Polychaeta
+Regional	Isotealia antarctica	Ctenophora
+Regional	Isotealia antarctica	Eunoe spica
+Regional	Edwardsia meridionalis	Bacillariophyta
+Regional	Edwardsia meridionalis	Copepoda
+Regional	Edwardsia meridionalis	Zooplankton
+Regional	Edwardsia meridionalis	Polychaeta
+Regional	Edwardsia meridionalis	Tanaidacea
+Regional	Edwardsia meridionalis	Detritus
+Regional	Primnoisis antarctica	Zooplankton
+Regional	Primnoisis antarctica	Phytoplankton
+Regional	Gersemia antarctica	Bacillariophyta
+Regional	Gersemia antarctica	Foraminifera
+Regional	Gersemia antarctica	Detritus
+Regional	Clavularia frankliniana	Bacillariophyta
+Regional	Clavularia frankliniana	Foraminifera
+Regional	Clavularia frankliniana	Phytoplankton
+Regional	Clavularia frankliniana	Nematoda
+Regional	Clavularia frankliniana	Zooplankton
+Regional	Primnoella sp.	Phytoplankton
+Regional	Primnoella sp.	Detritus
+Regional	Alcyonium antarcticum	Phytoplankton
+Regional	Anthomastus bathyproctus	Bacillariophyta
+Regional	Anthomastus bathyproctus	Detritus
+Regional	Anthomastus bathyproctus	Salpa thompsoni
+Regional	Nuttallochiton mirandus	Bryozoa
+Regional	Nuttallochiton mirandus	Porifera
+Regional	Nuttallochiton mirandus	Foraminifera
+Regional	Callochiton gaussi	Bryozoa
+Regional	Notaeolidia gigas	Hydrozoa
+Regional	Notaeolidia gigas	Tubularia
+Regional	Notaeolidia gigas	Urticinopsis antarctica
+Regional	Notaeolidia gigas	Anthozoa
+Regional	Notaeolidia gigas	Clavularia frankliniana
+Regional	Doris kerguelenensis	Rossella racovitzae
+Regional	Doris kerguelenensis	Rossella nuda
+Regional	Doris kerguelenensis	Scolymastra joubini
+Regional	Doris kerguelenensis	Tetilla leptoderma
+Regional	Doris kerguelenensis	Haliclona dancoi
+Regional	Doris kerguelenensis	Mycale acerata
+Regional	Doris kerguelenensis	Polymastia invaginata
+Regional	Doris kerguelenensis	Haliclona tenella
+Regional	Doris kerguelenensis	Calyx arcuarius
+Regional	Doris kerguelenensis	Isodyctia steifera
+Regional	Trophon longstaffi	Bivalvia
+Regional	Trophon longstaffi	Yoldiella eightsi
+Regional	Tritonia antarctica	Sediment
+Regional	Tritonia antarctica	Cephalodiscus sp.
+Regional	Aegires albus	Porifera
+Regional	Bathydoris clavigera	Porifera
+Regional	Bathydoris clavigera	Echinoidea
+Regional	Bathydoris clavigera	Urticinopsis antarctica
+Regional	Bathydoris clavigera	Anthozoa
+Regional	Bathydoris clavigera	Foraminifera
+Regional	Bathydoris clavigera	Hydrozoa
+Regional	Bathydoris clavigera	Sediment
+Regional	Tritoniella belli	Ascidiacea
+Regional	Tritoniella belli	Porifera
+Regional	Tritoniella belli	Bryozoa
+Regional	Tritoniella belli	Cephalodiscus sp.
+Regional	Tritoniella belli	Detritus
+Regional	Harpovoluta charcoti	Phytoplankton
+Regional	Puncturella conica	Porifera
+Regional	Puncturella conica	Foraminifera
+Regional	Puncturella conica	Bryozoa
+Regional	Puncturella conica	Bacillariophyta
+Regional	Puncturella conica	Sediment
+Regional	Neobuccinum eatoni	Bivalvia
+Regional	Neobuccinum eatoni	Adamussium colbecki
+Regional	Neobuccinum eatoni	Laternula elliptica
+Regional	Neobuccinum eatoni	Crustacea
+Regional	Neobuccinum eatoni	Fish
+Regional	Marseniopsis mollis	Yoldiella eightsi
+Regional	Marseniopsis mollis	Cnemidocarpa verrucosa
+Regional	Parmaphorella mawsoni	Sediment
+Regional	Parmaphorella mawsoni	Bacillariophyta
+Regional	Parmaphorella mawsoni	Porifera
+Regional	Parmaphorella mawsoni	Detritus
+Regional	Amauropis rossiana	Philobrya sublaevis
+Regional	Amauropis rossiana	Trophon longstaffi
+Regional	Amauropis rossiana	Cyclocardia astartoides
+Regional	Amauropis rossiana	Euphausia superba
+Regional	Pontiothauma ergata	Nemertini
+Regional	Cylichna sp.	Polychaeta
+Regional	Cylichna sp.	Scaphopoda
+Regional	Clione limacina	Limacina helicina 
+Regional	Clione limacina	Clione antarctica
+Regional	Clione antarctica	Limacina helicina 
+Regional	Clione antarctica	Clione antarctica
+Regional	Clio pyramidata	Copepoda
+Regional	Clio pyramidata	Oithona sp.
+Regional	Clio pyramidata	Pelagobia longicirrata
+Regional	Clio pyramidata	Gnathia calva
+Regional	Limacina helicina antarctica	Zooplankton
+Regional	Pareledone charcoti	Yoldiella eightsi
+Regional	Pareledone charcoti	Crustacea
+Regional	Pareledone charcoti	Fish
+Regional	Pareledone charcoti	Polychaeta
+Regional	Pareledone charcoti	Eukrohnia hamata
+Regional	Pareledone charcoti	Siphonophora
+Regional	Pareledone charcoti	Glyptonotus antarcticus
+Regional	Pareledone charcoti	Sterechinus neumayeri
+Regional	Pareledone antarctica	Isopoda
+Regional	Psychroteuthis glacialis 	Chionodraco hamatus
+Regional	Psychroteuthis glacialis 	Chaenodraco wilsoni
+Regional	Psychroteuthis glacialis 	Crustacea
+Regional	Psychroteuthis glacialis 	Fish
+Regional	Psychroteuthis glacialis 	Myctophidae
+Regional	Psychroteuthis glacialis 	Euphausia superba
+Regional	Psychroteuthis glacialis 	Pleuragramma antarcticum
+Regional	Psychroteuthis glacialis 	Psychroteuthis glacialis
+Regional	Moroteuthis ingens	Copepoda
+Regional	Moroteuthis ingens	Epimeria robusta
+Regional	Moroteuthis ingens	Squid
+Regional	Moroteuthis ingens	Myctophidae
+Regional	Moroteuthis ingens	Electrona antarctica
+Regional	Moroteuthis ingens	Cyllopus lucasii
+Regional	Alluroteuthis antarcticus	Euphausia superba
+Regional	Alluroteuthis antarcticus	Pleuragramma antarcticum
+Regional	Alluroteuthis antarcticus	Psychroteuthis glacialis
+Regional	Galiteuthis glacialis	Euphausia superba
+Regional	Kondakovia longimama	Euphausia superba
+Regional	Gonatus antarcticus	Cyllopus lucasii
+Regional	Gonatus antarcticus	Fish
+Regional	Gonatus antarcticus	Euphausia superba
+Regional	Mesonychoteuthis hamiltoni	Squid
+Regional	Mesonychoteuthis hamiltoni	Eukrohnia hamata
+Regional	Martialia hyadesi	Euphausia superba
+Regional	Martialia hyadesi	Gonatus antarcticus
+Regional	Martialia hyadesi	Gymnoscopelus nicholsi
+Regional	Martialia hyadesi	Chionodraco hamatus
+Regional	Martialia hyadesi	Protomyctophum bolini
+Regional	Martialia hyadesi	Psychroteuthis glacialis
+Regional	Cyclocardia astartoides	Bacillariophyta
+Regional	Cyclocardia astartoides	Detritus
+Regional	Yolida eightsi	Detritus
+Regional	Yolida eightsi	Bacillariophyta
+Regional	Laternula elliptica	Bacillariophyta
+Regional	Laternula elliptica	Detritus
+Regional	Limopsis lillei	Bacillariophyta
+Regional	Limopsis lillei	Detritus
+Regional	Limopsis marionensis	Bacillariophyta
+Regional	Limopsis marionensis	Detritus
+Regional	Lissarca notorcadensis	Bacillariophyta
+Regional	Lissarca notorcadensis	Detritus
+Regional	Propeleda longicaudata	Bacillariophyta
+Regional	Propeleda longicaudata	Detritus
+Regional	Cadulus (polychides) dalli antarcticum	Bacillariophyta
+Regional	Cadulus (polychides) dalli antarcticum	Detritus
+Regional	Dentalium (Fissidentalium) majorinum	Bacillariophyta
+Regional	Dentalium (Fissidentalium) majorinum	Detritus
+Regional	Cinachyra antarctica	Bacteria
+Regional	Cinachyra antarctica	Phytoplankton
+Regional	Cinachyra antarctica	Detritus
+Regional	Cinachyra barbata	Bacteria
+Regional	Cinachyra barbata	Phytoplankton
+Regional	Cinachyra barbata	Detritus
+Regional	Iophon radiatus	Bacteria
+Regional	Iophon radiatus	Phytoplankton
+Regional	Iophon radiatus	Detritus
+Regional	Kirkpatrickia variolosa	Bacteria
+Regional	Kirkpatrickia variolosa	Phytoplankton
+Regional	Kirkpatrickia variolosa	Detritus
+Regional	Rossella racovitzae	Bacteria
+Regional	Rossella racovitzae	Phytoplankton
+Regional	Rossella racovitzae	Detritus
+Regional	Stylocordyla borealis	Bacteria
+Regional	Stylocordyla borealis	Phytoplankton
+Regional	Stylocordyla borealis	Detritus
+Regional	Homaxinella balfourensis	Bacteria
+Regional	Homaxinella balfourensis	Phytoplankton
+Regional	Homaxinella balfourensis	Detritus
+Regional	Scolymastra joubini	Bacteria
+Regional	Scolymastra joubini	Phytoplankton
+Regional	Scolymastra joubini	Detritus
+Regional	Tetilla leptoderma	Bacteria
+Regional	Tetilla leptoderma	Phytoplankton
+Regional	Tetilla leptoderma	Detritus
+Regional	Haliclona dancoi	Bacteria
+Regional	Haliclona dancoi	Phytoplankton
+Regional	Haliclona dancoi	Detritus
+Regional	Mycale acerata	Bacteria
+Regional	Mycale acerata	Phytoplankton
+Regional	Mycale acerata	Detritus
+Regional	Rossella antarctica	Bacteria
+Regional	Rossella antarctica	Phytoplankton
+Regional	Rossella antarctica	Detritus
+Regional	Haliclona tenella	Bacteria
+Regional	Haliclona tenella	Phytoplankton
+Regional	Haliclona tenella	Detritus
+Regional	Calyx arcuarius	Bacteria
+Regional	Calyx arcuarius	Phytoplankton
+Regional	Calyx arcuarius	Detritus
+Regional	Isodyctia steifera	Bacteria
+Regional	Isodyctia steifera	Phytoplankton
+Regional	Isodyctia steifera	Detritus
+Regional	Axociella nidificata	Bacteria
+Regional	Axociella nidificata	Phytoplankton
+Regional	Axociella nidificata	Detritus
+Regional	Rossella nuda	Bacteria
+Regional	Rossella nuda	Phytoplankton
+Regional	Rossella nuda	Detritus
+Regional	Beroe cucumis	Ctenophora
+Regional	Beroe cucumis	Pelagobia longicirrata
+Regional	Lyrocteis flavopallidus	Phytoplankton
+Regional	Mertensiid ctenophore	Pteropoda
+Regional	Mertensiid ctenophore	Clione antarctica
+Regional	Mertensiid ctenophore	Zooplankton
+Regional	Mertensiid ctenophore	Copepoda
+Regional	Mertensiid ctenophore	Euchaeta antarctica
+Regional	Mertensiid ctenophore	Mysidacea
+Regional	Callianira antarctica	Zooplankton
+Regional	Callianira antarctica	Copepoda
+Regional	Baseodiscus antarcticus	Porifera
+Regional	Baseodiscus antarcticus	Homaxinella balfourensis
+Regional	Baseodiscus antarcticus	Bacillariophyta
+Regional	Baseodiscus antarcticus	Polychaeta
+Regional	Baseodiscus antarcticus	Fish
+Regional	Baseodiscus antarcticus	Actinaria
+Regional	Baseodiscus antarcticus	Asteroidea
+Regional	Baseodiscus antarcticus	Ctenophora
+Regional	Baseodiscus antarcticus	Crustacea
+Regional	Baseodiscus antarcticus	Bivalvia
+Regional	Baseodiscus antarcticus	Adamussium colbecki
+Regional	Lineus longifissus	Homaxinella balfourensis
+Regional	Lineus longifissus	Bacillariophyta
+Regional	Lineus longifissus	Polychaeta
+Regional	Lineus longifissus	Fish
+Regional	Lineus longifissus	Actinaria
+Regional	Lineus longifissus	Asteroidea
+Regional	Lineus longifissus	Ctenophora
+Regional	Lineus longifissus	Crustacea
+Regional	Lineus longifissus	Bivalvia
+Regional	Lineus longifissus	Adamussium colbecki
+Regional	Lineus longifissus	Porifera
+Regional	Parborlasia corrugatus	Homaxinella balfourensis
+Regional	Parborlasia corrugatus	Bacillariophyta
+Regional	Parborlasia corrugatus	Polychaeta
+Regional	Parborlasia corrugatus	Fish
+Regional	Parborlasia corrugatus	Actinaria
+Regional	Parborlasia corrugatus	Asteroidea
+Regional	Parborlasia corrugatus	Ctenophora
+Regional	Parborlasia corrugatus	Crustacea
+Regional	Parborlasia corrugatus	Bivalvia
+Regional	Parborlasia corrugatus	Adamussium colbecki
+Regional	Phascolion strombi	Detritus
+Regional	Golfingia nordenskojoeldi	Detritus
+Regional	Golfingia mawsoni	Detritus
+Regional	Golfingia ohlini	Detritus
+Regional	Golfingia anderssoni	Detritus
+Regional	Golfingia margaritacea margaritacea	Detritus
+Regional	Alomasoma belyaevi	Detritus
+Regional	Echiurus antarcticus	Detritus
+Regional	Hamingia sp.	Detritus
+Regional	Maxmuelleria faex	Detritus
+Regional	Alcyonidium sp.	Nanoplankton
+Regional	Alcyonidium sp.	Bacillariophyta
+Regional	Alcyonidium sp.	Detritus
+Regional	Camptoplites tricornis	Nanoplankton
+Regional	Camptoplites tricornis	Bacillariophyta
+Regional	Camptoplites tricornis	Detritus
+Regional	Nematroflustra flagellata	Nanoplankton
+Regional	Nematroflustra flagellata	Bacillariophyta
+Regional	Nematroflustra flagellata	Detritus
+Regional	Cellarinella sp.	Nanoplankton
+Regional	Cellarinella sp.	Bacillariophyta
+Regional	Cellarinella sp.	Detritus
+Regional	Melicerita obliqua	Nanoplankton
+Regional	Melicerita obliqua	Bacillariophyta
+Regional	Melicerita obliqua	Detritus
+Regional	Systenopora contracta	Nanoplankton
+Regional	Systenopora contracta	Bacillariophyta
+Regional	Systenopora contracta	Detritus
+Regional	Reteporella hippocrepis	Nanoplankton
+Regional	Reteporella hippocrepis	Bacillariophyta
+Regional	Reteporella hippocrepis	Detritus
+Regional	Pemmatoporella sp.	Nanoplankton
+Regional	Pemmatoporella sp.	Bacillariophyta
+Regional	Pemmatoporella sp.	Detritus
+Regional	Isoschizoporella tricuspis	Nanoplankton
+Regional	Isoschizoporella tricuspis	Bacillariophyta
+Regional	Isoschizoporella tricuspis	Detritus
+Regional	Bostrychopora dentata	Nanoplankton
+Regional	Bostrychopora dentata	Bacillariophyta
+Regional	Bostrychopora dentata	Detritus
+Regional	Liothyrella uva	Detritus
+Regional	Magellania joubini	Detritus
+Regional	Magellania fragilis	Detritus
+Regional	Crania lecointei	Detritus
+Regional	Composothyris racovitzae	Detritus
+Regional	Liothyrella uva antarctica	Detritus
+Regional	Eukrohnia hamata	Copepoda
+Regional	Eukrohnia hamata	Calanus propinquus
+Regional	Eukrohnia hamata	Metridia gerlachei
+Regional	Sagitta gazellae	Euchaeta antarctica
+Regional	Sagitta gazellae	Metridia gerlachei
+Regional	Sagitta marri	Copepoda
+Regional	Sagitta marri	Oithona sp.
+Regional	Sagitta marri	Oncaea sp.
+Regional	Sagitta marri	Metridia gerlachei
+Regional	Sagitta marri	Ostracoda
+Regional	Sagitta marri	Pelagobia longicirrata
+Regional	Cephalodiscus sp.	Detritus
+Regional	Molgula pedunculata	Bacillariophyta
+Regional	Molgula pedunculata	Detritus
+Regional	Molgula pedunculata	Nanoplankton
+Regional	Molgula pedunculata	Bacteria
+Regional	Ascidia challengeri	Bacillariophyta
+Regional	Ascidia challengeri	Detritus
+Regional	Ascidia challengeri	Nanoplankton
+Regional	Ascidia challengeri	Bacteria
+Regional	Corella eumyota	Bacillariophyta
+Regional	Corella eumyota	Detritus
+Regional	Corella eumyota	Nanoplankton
+Regional	Corella eumyota	Bacteria
+Regional	Aplidium vastum 	Bacillariophyta
+Regional	Aplidium vastum 	Detritus
+Regional	Aplidium vastum 	Nanoplankton
+Regional	Aplidium vastum 	Bacteria
+Regional	Synoicum adareanum	Bacillariophyta
+Regional	Synoicum adareanum	Detritus
+Regional	Synoicum adareanum	Nanoplankton
+Regional	Synoicum adareanum	Bacteria
+Regional	Cnemidocarpa verrucosa	Bacillariophyta
+Regional	Cnemidocarpa verrucosa	Detritus
+Regional	Cnemidocarpa verrucosa	Nanoplankton
+Regional	Cnemidocarpa verrucosa	Bacteria
+Regional	Salpa thompsoni	Bacillariophyta
+Regional	Salpa thompsoni	SilicioZooplanktons
+Regional	Salpa thompsoni	Zooplankton
+Regional	Salpa thompsoni	Tintinnidae
+Regional	Salpa thompsoni	Foraminifera
+Regional	Salpa thompsoni	Phytoplankton
+Regional	Salpa thompsoni	Detritus
+Regional	Salpa thompsoni	Copepoda
+Regional	Salpa thompsoni	Oithona sp.
+Regional	Salpa thompsoni	Oncaea sp.
+Regional	Salpa thompsoni	Euchaeta antarctica
+Regional	Salpa thompsoni	Calanus propinquus
+Regional	Salpa thompsoni	Metridia gerlachei
+Regional	Salpa thompsoni	Limacina helicina 
+Regional	Salpa thompsoni	Pelagobia longicirrata
+Regional	Salpa thompsoni	Eukrohnia hamata
+Regional	Salpa gerlachei	Phytoplankton
+Regional	Salpa gerlachei	Bacillariophyta
+Regional	Ihlea racovitzai	Phytoplankton
+Regional	Ihlea racovitzai	Bacillariophyta
+Regional	Artedidraco orianae	Epimeria macrodonta
+Regional	Artedidraco orianae	Epimeria robusta
+Regional	Artedidraco orianae	Iphimediella cyclogena
+Regional	Artedidraco orianae	Liljeborgia georgiana
+Regional	Artedidraco orianae	Cyllopus lucasii
+Regional	Artedidraco orianae	Copepoda
+Regional	Artedidraco orianae	Gnathia calva
+Regional	Artedidraco orianae	Isopoda
+Regional	Artedidraco orianae	Natatolana obtusata
+Regional	Artedidraco orianae	Euphausiacea
+Regional	Artedidraco orianae	Ostracoda
+Regional	Artedidraco orianae	Pantopoda
+Regional	Artedidraco orianae	Polychaeta
+Regional	Artedidraco orianae	Eunoe spica
+Regional	Artedidraco loennbergi	Crustacea
+Regional	Artedidraco loennbergi	Amphipoda
+Regional	Artedidraco loennbergi	Isopoda
+Regional	Artedidraco loennbergi	Tanaidacea
+Regional	Artedidraco loennbergi	Cumacea
+Regional	Artedidraco loennbergi	Copepoda
+Regional	Artedidraco loennbergi	Polychaeta
+Regional	Artedidraco loennbergi	Gastropoda
+Regional	Artedidraco loennbergi	Actinaria
+Regional	Artedidraco shackletoni	Crustacea
+Regional	Artedidraco shackletoni	Isopoda
+Regional	Artedidraco shackletoni	Polychaeta
+Regional	Artedidraco skottsbergi	Crustacea
+Regional	Artedidraco skottsbergi	Amphipoda
+Regional	Artedidraco skottsbergi	Isopoda
+Regional	Artedidraco skottsbergi	Cumacea
+Regional	Artedidraco skottsbergi	Ostracoda
+Regional	Artedidraco skottsbergi	Polychaeta
+Regional	Artedidraco skottsbergi	Gastropoda
+Regional	Artedidraco skottsbergi	Urticinopsis antarctica
+Regional	Artedidraco skottsbergi	Anthozoa
+Regional	Dolloidraco longedorsalis	Crustacea
+Regional	Dolloidraco longedorsalis	Amphipoda
+Regional	Dolloidraco longedorsalis	Isopoda
+Regional	Dolloidraco longedorsalis	Tanaidacea
+Regional	Dolloidraco longedorsalis	Mysidacea
+Regional	Dolloidraco longedorsalis	Euphausiacea
+Regional	Dolloidraco longedorsalis	Cumacea
+Regional	Dolloidraco longedorsalis	Ostracoda
+Regional	Dolloidraco longedorsalis	Copepoda
+Regional	Dolloidraco longedorsalis	Polychaeta
+Regional	Dolloidraco longedorsalis	Bivalvia
+Regional	Dolloidraco longedorsalis	Gastropoda
+Regional	Dolloidraco longedorsalis	Scaphopoda
+Regional	Dolloidraco longedorsalis	Hydrozoa
+Regional	Dolloidraco longedorsalis	Urticinopsis antarctica
+Regional	Dolloidraco longedorsalis	Anthozoa
+Regional	Dolloidraco longedorsalis	Actinaria
+Regional	Pogonophryne marmorata	Epimeria macrodonta
+Regional	Pogonophryne marmorata	Epimeria robusta
+Regional	Pogonophryne marmorata	Iphimediella cyclogena
+Regional	Pogonophryne marmorata	Liljeborgia georgiana
+Regional	Pogonophryne marmorata	Cyllopus lucasii
+Regional	Pogonophryne marmorata	Isopoda
+Regional	Pogonophryne marmorata	Zooplankton
+Regional	Pogonophryne marmorata	Euphausiacea
+Regional	Pogonophryne marmorata	Polychaeta
+Regional	Pogonophryne phyllopogon	Crustacea
+Regional	Pogonophryne phyllopogon	Amphipoda
+Regional	Pogonophryne phyllopogon	Isopoda
+Regional	Pogonophryne phyllopogon	Mysidacea
+Regional	Pogonophryne phyllopogon	Polychaeta
+Regional	Pogonophryne phyllopogon	Crinoidea
+Regional	Pogonophryne permitini	Crustacea
+Regional	Pogonophryne permitini	Amphipoda
+Regional	Pogonophryne permitini	Isopoda
+Regional	Pogonophryne permitini	Mysidacea
+Regional	Pogonophryne permitini	Polychaeta
+Regional	Pogonophryne permitini	Hydrozoa
+Regional	Pogonophryne permitini	Scaphopoda
+Regional	Pogonophryne scotti	Fish
+Regional	Pogonophryne barsukovi	Fish
+Regional	Cygnodraco mawsoni	Crustacea
+Regional	Cygnodraco mawsoni	Amphipoda
+Regional	Cygnodraco mawsoni	Decapoda
+Regional	Cygnodraco mawsoni	Mysidacea
+Regional	Cygnodraco mawsoni	Euphausia crystallorophias
+Regional	Cygnodraco mawsoni	Pteropoda
+Regional	Cygnodraco mawsoni	Fish
+Regional	Gerlachea australis	Crustacea
+Regional	Gerlachea australis	Amphipoda
+Regional	Gerlachea australis	Mysidacea
+Regional	Gerlachea australis	Euphausiacea
+Regional	Gerlachea australis	Euphausia crystallorophias
+Regional	Gymnodraco acuticeps	Euphausiacea
+Regional	Gymnodraco acuticeps	Amphipoda
+Regional	Gymnodraco acuticeps	Polychaeta
+Regional	Gymnodraco acuticeps	Zooplankton
+Regional	Gymnodraco acuticeps	Fish
+Regional	Prionodraco evansii	Copepoda
+Regional	Prionodraco evansii	Euphausiacea
+Regional	Prionodraco evansii	Eukrohnia hamata
+Regional	Prionodraco evansii	Mysidacea
+Regional	Prionodraco evansii	Cumacea
+Regional	Prionodraco evansii	Isopoda
+Regional	Prionodraco evansii	Amphipoda
+Regional	Prionodraco evansii	Ostracoda
+Regional	Prionodraco evansii	Polychaeta
+Regional	Racovitzia glacialis	Amphipoda
+Regional	Racovitzia glacialis	Isopoda
+Regional	Racovitzia glacialis	Tanaidacea
+Regional	Racovitzia glacialis	Mysidacea
+Regional	Racovitzia glacialis	Polychaeta
+Regional	Racovitzia glacialis	Fish
+Regional	Chaenodraco wilsoni	Euphausiacea
+Regional	Chaenodraco wilsoni	Mysidacea
+Regional	Chionodraco hamatus	Euphausiacea
+Regional	Chionodraco hamatus	Copepoda
+Regional	Chionodraco hamatus	Fish
+Regional	Chionodraco myersi	Euphausiacea
+Regional	Chionodraco myersi	Fish
+Regional	Cryodraco antarcticus	Euphausiacea
+Regional	Cryodraco antarcticus	Pleuragramma antarcticum
+Regional	Dacodraco hunteri	Nototheniidae
+Regional	Pagetopsis maculatus	Crustacea
+Regional	Pagetopsis maculatus	Euphausiacea
+Regional	Pagetopsis maculatus	Euphausia crystallorophias
+Regional	Pagetopsis maculatus	Euphausia superba
+Regional	Pagetopsis maculatus	Fish
+Regional	Aethotaxis mitopteryx	Crustacea
+Regional	Aethotaxis mitopteryx	Amphipoda
+Regional	Aethotaxis mitopteryx	Isopoda
+Regional	Aethotaxis mitopteryx	Mysidacea
+Regional	Aethotaxis mitopteryx	Cumacea
+Regional	Aethotaxis mitopteryx	Copepoda
+Regional	Aethotaxis mitopteryx	Polychaeta
+Regional	Dissostichus mawsoni	Fish
+Regional	Dissostichus mawsoni	Myctophidae
+Regional	Dissostichus mawsoni	Bathylagus antarcticus
+Regional	Dissostichus mawsoni	Nototheniidae
+Regional	Dissostichus mawsoni	Dissostichus mawsoni
+Regional	Dissostichus mawsoni	Harpagifer antarcticus
+Regional	Dissostichus mawsoni	Macrourus whitsoni
+Regional	Dissostichus mawsoni	Octopoda
+Regional	Dissostichus mawsoni	Galiteuthis glacialis
+Regional	Dissostichus mawsoni	Gonatus antarcticus
+Regional	Dissostichus mawsoni	Kondakovia longimama
+Regional	Dissostichus mawsoni	Moroteuthis ingens
+Regional	Dissostichus mawsoni	Vampryoteuthis
+Regional	Dissostichus mawsoni	Crustacea
+Regional	Dissostichus mawsoni	Amphipoda
+Regional	Trematomus eulepidotus	Zooplankton
+Regional	Trematomus eulepidotus	Fish
+Regional	Trematomus eulepidotus	Isopoda
+Regional	Trematomus eulepidotus	Cyllopus lucasii
+Regional	Trematomus eulepidotus	Amphipoda
+Regional	Trematomus eulepidotus	Epimeria robusta
+Regional	Trematomus eulepidotus	Mysidacea
+Regional	Trematomus eulepidotus	Euphausia superba
+Regional	Trematomus eulepidotus	Euphausia crystallorophias
+Regional	Trematomus eulepidotus	Copepoda
+Regional	Trematomus eulepidotus	Metridia gerlachei
+Regional	Trematomus eulepidotus	Euchaeta antarctica
+Regional	Trematomus eulepidotus	Oncaea curvata
+Regional	Trematomus eulepidotus	Ostracoda
+Regional	Trematomus eulepidotus	Crustacea
+Regional	Trematomus eulepidotus	Polychaeta
+Regional	Trematomus eulepidotus	Gastropoda
+Regional	Trematomus lepidorhinus 	Isopoda
+Regional	Trematomus lepidorhinus 	Amphipoda
+Regional	Trematomus lepidorhinus 	Epimeria robusta
+Regional	Trematomus lepidorhinus 	Mysidacea
+Regional	Trematomus lepidorhinus 	Mysida
+Regional	Trematomus lepidorhinus 	Decapoda
+Regional	Trematomus lepidorhinus 	Euphausia crystallorophias
+Regional	Trematomus lepidorhinus 	Euphausia superba
+Regional	Trematomus lepidorhinus 	Copepoda
+Regional	Trematomus lepidorhinus 	Metridia gerlachei
+Regional	Trematomus lepidorhinus 	Ostracoda
+Regional	Trematomus lepidorhinus 	Crustacea
+Regional	Trematomus lepidorhinus 	Polychaeta
+Regional	Trematomus lepidorhinus 	Eunoe spica
+Regional	Trematomus lepidorhinus 	Laternula elliptica
+Regional	Trematomus lepidorhinus 	Gastropoda
+Regional	Trematomus loennbergii	Crustacea
+Regional	Trematomus loennbergii	Amphipoda
+Regional	Trematomus loennbergii	Isopoda
+Regional	Trematomus loennbergii	Mysidacea
+Regional	Trematomus loennbergii	Euphausia crystallorophias
+Regional	Trematomus loennbergii	Euphausia superba
+Regional	Trematomus loennbergii	Cumacea
+Regional	Trematomus loennbergii	Copepoda
+Regional	Trematomus loennbergii	Polychaeta
+Regional	Trematomus loennbergii	Gastropoda
+Regional	Trematomus loennbergii	Pteropoda
+Regional	Trematomus loennbergii	Cyllopus lucasii
+Regional	Trematomus loennbergii	Eukrohnia hamata
+Regional	Trematomus loennbergii	Fish
+Regional	Trematomus loennbergii	Bryozoa
+Regional	Trematomus loennbergii	Salpa thompsoni
+Regional	Trematomus nicolai	Isopoda
+Regional	Trematomus nicolai	Tanaidacea
+Regional	Trematomus nicolai	Amphipoda
+Regional	Trematomus nicolai	Epimeria robusta
+Regional	Trematomus nicolai	Mysidacea
+Regional	Trematomus nicolai	Mysida
+Regional	Trematomus nicolai	Euphausia superba
+Regional	Trematomus nicolai	Euphausia crystallorophias
+Regional	Trematomus nicolai	Copepoda
+Regional	Trematomus nicolai	Calanoides acutus
+Regional	Trematomus nicolai	Metridia gerlachei
+Regional	Trematomus nicolai	Crustacea
+Regional	Trematomus nicolai	Gastropoda
+Regional	Trematomus pennellii	Fish
+Regional	Trematomus pennellii	Isopoda
+Regional	Trematomus pennellii	Gnathia calva
+Regional	Trematomus pennellii	Ceratoserolis meridionalis
+Regional	Trematomus pennellii	Natatolana obtusata
+Regional	Trematomus pennellii	Aega antarctica
+Regional	Trematomus pennellii	Glyptonotus antarcticus
+Regional	Trematomus pennellii	Tanaidacea
+Regional	Trematomus pennellii	Amphipoda
+Regional	Trematomus pennellii	Epimeria robusta
+Regional	Trematomus pennellii	Cyllopus lucasii
+Regional	Trematomus pennellii	Decapoda
+Regional	Trematomus pennellii	Euphausia crystallorophias
+Regional	Trematomus pennellii	Euphausia superba
+Regional	Trematomus pennellii	Copepoda
+Regional	Trematomus pennellii	Ostracoda
+Regional	Trematomus pennellii	Crustacea
+Regional	Trematomus pennellii	Pentanymphon antarcticum
+Regional	Trematomus pennellii	Polychaeta
+Regional	Trematomus pennellii	Bivalvia
+Regional	Trematomus pennellii	Gastropoda
+Regional	Trematomus pennellii	Urticinopsis antarctica
+Regional	Trematomus pennellii	Anthozoa
+Regional	Trematomus pennellii	Hydrozoa
+Regional	Trematomus scotti	Zooplankton
+Regional	Trematomus scotti	Crinoidea
+Regional	Trematomus scotti	Isopoda
+Regional	Trematomus scotti	Gnathia calva
+Regional	Trematomus scotti	Natatolana obtusata
+Regional	Trematomus scotti	Tanaidacea
+Regional	Trematomus scotti	Cumacea
+Regional	Trematomus scotti	Amphipoda
+Regional	Trematomus scotti	Epimeria robusta
+Regional	Trematomus scotti	Cyllopus lucasii
+Regional	Trematomus scotti	Mysidacea
+Regional	Trematomus scotti	Euphausia crystallorophias
+Regional	Trematomus scotti	Euphausia superba
+Regional	Trematomus scotti	Copepoda
+Regional	Trematomus scotti	Metridia gerlachei
+Regional	Trematomus scotti	Calanoides acutus
+Regional	Trematomus scotti	Calanus propinquus
+Regional	Trematomus scotti	Euchaeta antarctica
+Regional	Trematomus scotti	Ostracoda
+Regional	Trematomus scotti	Pantopoda
+Regional	Trematomus scotti	Polychaeta
+Regional	Trematomus scotti	Eunoe hartmanae
+Regional	Trematomus scotti	Eunoe spica
+Regional	Trematomus scotti	Gastropoda
+Regional	Trematomus scotti	Hydrozoa
+Regional	Pleuragramma antarcticum	Cyllopus lucasii
+Regional	Pleuragramma antarcticum	Copepoda
+Regional	Pleuragramma antarcticum	Euphausiacea
+Regional	Pleuragramma antarcticum	Salpa thompsoni
+Regional	Pleuragramma antarcticum	Myctophidae
+Regional	Notothenia marmorata	Ctenophora
+Regional	Notothenia marmorata	Hydrozoa
+Regional	Notothenia marmorata	Euphausia superba
+Regional	Notothenia marmorata	Crustacea
+Regional	Notothenia marmorata	Amphipoda
+Regional	Notothenia marmorata	Salpa thompsoni
+Regional	Notothenia marmorata	Fish
+Regional	Notothenia coriiceps	Porifera
+Regional	Notothenia coriiceps	Polychaeta
+Regional	Notothenia coriiceps	Gastropoda
+Regional	Notothenia coriiceps	Zooplankton
+Regional	Notothenia coriiceps	Bivalvia
+Regional	Notothenia coriiceps	Octopoda
+Regional	Notothenia coriiceps	Epimeria robusta
+Regional	Notothenia coriiceps	Cyllopus lucasii
+Regional	Notothenia coriiceps	Isopoda
+Regional	Notothenia coriiceps	Copepoda
+Regional	Notothenia coriiceps	Euphausiacea
+Regional	Notothenia coriiceps	Salpa thompsoni
+Regional	Notothenia coriiceps	Fish
+Regional	Trematomus bernacchii	Crustacea
+Regional	Trematomus bernacchii	Amphipoda
+Regional	Trematomus bernacchii	Isopoda
+Regional	Trematomus bernacchii	Copepoda
+Regional	Trematomus bernacchii	Cyllopus lucasii
+Regional	Trematomus bernacchii	Gastropoda
+Regional	Trematomus bernacchii	Echiurida
+Regional	Trematomus bernacchii	Sipunculida
+Regional	Trematomus bernacchii	Zooplankton
+Regional	Trematomus bernacchii	Fish
+Regional	Trematomus bernacchii	Bryozoa
+Regional	Trematomus bernacchii	Hydrozoa
+Regional	Trematomus bernacchii	Polychaeta
+Regional	Trematomus bernacchii	Ostracoda
+Regional	Trematomus bernacchii	Metridia gerlachei
+Regional	Trematomus bernacchii	Epimeria robusta
+Regional	Trematomus bernacchii	Tanaidacea
+Regional	Trematomus bernacchii	Yoldiella eightsi
+Regional	Trematomus hansoni	Zooplankton
+Regional	Trematomus hansoni	Fish
+Regional	Trematomus hansoni	Trematomus pennellii
+Regional	Trematomus hansoni	Trematomus eulepidotus
+Regional	Trematomus hansoni	Isopoda
+Regional	Trematomus hansoni	Ceratoserolis meridionalis
+Regional	Trematomus hansoni	Cyllopus lucasii
+Regional	Trematomus hansoni	Amphipoda
+Regional	Trematomus hansoni	Decapoda
+Regional	Trematomus hansoni	Euphausia superba
+Regional	Trematomus hansoni	Euphausia crystallorophias
+Regional	Trematomus hansoni	Copepoda
+Regional	Trematomus hansoni	Metridia gerlachei
+Regional	Trematomus hansoni	Pantopoda
+Regional	Trematomus hansoni	Pentanymphon antarcticum
+Regional	Trematomus hansoni	Polychaeta
+Regional	Trematomus hansoni	Gastropoda
+Regional	Trematomus hansoni	Neobuccinum eatoni
+Regional	Macrourus holotrachis	Octopoda
+Regional	Macrourus holotrachis	Squid
+Regional	Macrourus holotrachis	Fish
+Regional	Macrourus holotrachis	Crustacea
+Regional	Macrourus holotrachis	Amphipoda
+Regional	Macrourus whitsoni	Octopoda
+Regional	Macrourus whitsoni	Squid
+Regional	Macrourus whitsoni	Fish
+Regional	Macrourus whitsoni	Crustacea
+Regional	Macrourus whitsoni	Polychaeta
+Regional	Macrourus whitsoni	Amphipoda
+Regional	Electrona antarctica	Amphipoda
+Regional	Electrona antarctica	Eukrohnia hamata
+Regional	Electrona antarctica	Copepoda
+Regional	Electrona antarctica	Calanus propinquus
+Regional	Electrona antarctica	Oncaea sp.
+Regional	Electrona antarctica	Metridia gerlachei
+Regional	Electrona antarctica	Euchaeta antarctica
+Regional	Electrona antarctica	Rhincalanus gigas
+Regional	Electrona antarctica	Euphausiacea
+Regional	Electrona antarctica	Euphausia frigida
+Regional	Electrona antarctica	Euphausia superba
+Regional	Electrona antarctica	Pelagobia longicirrata
+Regional	Electrona antarctica	Thysanoessa macrura
+Regional	Electrona antarctica	Gastropoda
+Regional	Electrona antarctica	Ostracoda
+Regional	Electrona antarctica	Polychaeta
+Regional	Harpagifer antarcticus	Crustacea
+Regional	Harpagifer antarcticus	Epimeria robusta
+Regional	Harpagifer antarcticus	Oradarea edentata
+Regional	Harpagifer antarcticus	Djerboa furcipes
+Regional	Harpagifer antarcticus	Notocrangon antarcticus
+Regional	Harpagifer antarcticus	Natatolana meridionalis
+Regional	Harpagifer antarcticus	Isopoda
+Regional	Harpagifer antarcticus	Euphausia superba
+Regional	Harpagifer antarcticus	Gastropoda
+Regional	Harpagifer antarcticus	Bivalvia
+Regional	Harpagifer antarcticus	Chiton
+Regional	Harpagifer antarcticus	Polychaeta
+Regional	Harpagifer antarcticus	Detritus
+Regional	Harpagifer antarcticus	Sediment
+Regional	Harpagifer antarcticus	Amphipoda
+Regional	Bathylagus antarcticus	Foraminifera
+Regional	Bathylagus antarcticus	Copepoda
+Regional	Bathylagus antarcticus	Oithona sp.
+Regional	Bathylagus antarcticus	Oncaea sp.
+Regional	Bathylagus antarcticus	Euchaeta antarctica
+Regional	Bathylagus antarcticus	Metridia gerlachei
+Regional	Bathylagus antarcticus	Zooplankton
+Regional	Bathylagus antarcticus	Euphausia superba
+Regional	Bathylagus antarcticus	Limacina helicina 
+Regional	Bathylagus antarcticus	Coelenterata
+Regional	Bathylagus antarcticus	Pelagobia longicirrata
+Regional	Bathylagus antarcticus	Eukrohnia hamata
+Regional	Bathylagus antarcticus	Sagitta marri
+Regional	Notolepis coatsi	Copepoda
+Regional	Notolepis coatsi	Oithona sp.
+Regional	Notolepis coatsi	Oncaea sp.
+Regional	Notolepis coatsi	Euchaeta antarctica
+Regional	Notolepis coatsi	Metridia gerlachei
+Regional	Notolepis coatsi	Notocrangon antarcticus
+Regional	Notolepis coatsi	Euphausia superba
+Regional	Notolepis coatsi	Limacina helicina 
+Regional	Notolepis coatsi	Coelenterata
+Regional	Notolepis coatsi	Pelagobia longicirrata
+Regional	Notolepis coatsi	Eukrohnia hamata
+Regional	Notolepis coatsi	Sagitta marri
+Regional	Notolepis coatsi	Salpa thompsoni
+Regional	Gymnoscopelus braueri	Euchaeta antarctica
+Regional	Gymnoscopelus braueri	Metridia gerlachei
+Regional	Gymnoscopelus braueri	Zooplankton
+Regional	Gymnoscopelus braueri	Euphausia superba
+Regional	Gymnoscopelus braueri	Limacina helicina 
+Regional	Gymnoscopelus braueri	Coelenterata
+Regional	Gymnoscopelus braueri	Pelagobia longicirrata
+Regional	Gymnoscopelus braueri	Eukrohnia hamata
+Regional	Gymnoscopelus braueri	Sagitta marri
+Regional	Gymnoscopelus braueri	Salpa thompsoni
+Regional	Gymnoscopelus braueri	Copepoda
+Regional	Gymnoscopelus braueri	Cyllopus lucasii
+Regional	Gymnoscopelus braueri	Clio pyramidata
+Regional	Gymnoscopelus opisthopterus	Metridia gerlachei
+Regional	Gymnoscopelus opisthopterus	Zooplankton
+Regional	Gymnoscopelus opisthopterus	Euphausia superba
+Regional	Gymnoscopelus opisthopterus	Limacina helicina 
+Regional	Gymnoscopelus opisthopterus	Coelenterata
+Regional	Gymnoscopelus opisthopterus	Pelagobia longicirrata
+Regional	Gymnoscopelus opisthopterus	Eukrohnia hamata
+Regional	Gymnoscopelus opisthopterus	Sagitta marri
+Regional	Gymnoscopelus opisthopterus	Salpa thompsoni
+Regional	Gymnoscopelus opisthopterus	Copepoda
+Regional	Gymnoscopelus opisthopterus	Cyllopus lucasii
+Regional	Gymnoscopelus opisthopterus	Clio pyramidata
+Regional	Gymnoscopelus opisthopterus	Oithona sp.
+Regional	Gymnoscopelus nicholsi	Amphipoda
+Regional	Gymnoscopelus nicholsi	Chaetognatha
+Regional	Gymnoscopelus nicholsi	Copepoda
+Regional	Gymnoscopelus nicholsi	Calanus propinquus
+Regional	Gymnoscopelus nicholsi	Oncaea sp.
+Regional	Gymnoscopelus nicholsi	Metridia gerlachei
+Regional	Gymnoscopelus nicholsi	Euchaeta antarctica
+Regional	Gymnoscopelus nicholsi	Rhincalanus gigas
+Regional	Gymnoscopelus nicholsi	Euphausiacea
+Regional	Gymnoscopelus nicholsi	Euphausia frigida
+Regional	Gymnoscopelus nicholsi	Euphausia superba
+Regional	Gymnoscopelus nicholsi	Thysanoessa macrura
+Regional	Gymnoscopelus nicholsi	Ostracoda
+Regional	Gymnoscopelus nicholsi	Fish
+Regional	Gymnoscopelus nicholsi	Protomyctophum bolini
+Regional	Gymnoscopelus nicholsi	Euphausia crystallorophias
+Regional	Protomyctophum bolini	Copepoda
+Regional	Protomyctophum bolini	Calanus propinquus
+Regional	Protomyctophum bolini	Oncaea sp.
+Regional	Protomyctophum bolini	Metridia gerlachei
+Regional	Protomyctophum bolini	Euchaeta antarctica
+Regional	Protomyctophum bolini	Rhincalanus gigas
+Regional	Protomyctophum bolini	Euphausiacea
+Regional	Protomyctophum bolini	Chaetognatha
+Regional	Protomyctophum bolini	Gastropoda
+Regional	Protomyctophum bolini	Thysanoessa macrura
+Regional	Protomyctophum bolini	Ostracoda
+Regional	Fulmarus glacialoides	Euphausia superba
+Regional	Fulmarus glacialoides	Notocrangon antarcticus
+Regional	Fulmarus glacialoides	Cyllopus lucasii
+Regional	Fulmarus glacialoides	Vibilia antarctica
+Regional	Fulmarus glacialoides	Vibilia stebbingi
+Regional	Fulmarus glacialoides	Amphipoda
+Regional	Fulmarus glacialoides	Eurythenes gryllus
+Regional	Fulmarus glacialoides	Crustacea
+Regional	Fulmarus glacialoides	Electrona antarctica
+Regional	Fulmarus glacialoides	Gymnoscopelus opisthopterus
+Regional	Fulmarus glacialoides	Gymnoscopelus braueri
+Regional	Fulmarus glacialoides	Notolepis coatsi
+Regional	Fulmarus glacialoides	Protomyctophum bolini
+Regional	Fulmarus glacialoides	Fish
+Regional	Fulmarus glacialoides	Galiteuthis glacialis
+Regional	Fulmarus glacialoides	Gonatus antarcticus
+Regional	Fulmarus glacialoides	Psychroteuthis glacialis
+Regional	Fulmarus glacialoides	Salpa thompsoni
+Regional	Thalassoica antarctica	Euphausia superba
+Regional	Thalassoica antarctica	Notocrangon antarcticus
+Regional	Thalassoica antarctica	Cyllopus lucasii
+Regional	Thalassoica antarctica	Vibilia antarctica
+Regional	Thalassoica antarctica	Vibilia stebbingi
+Regional	Thalassoica antarctica	Amphipoda
+Regional	Thalassoica antarctica	Eurythenes gryllus
+Regional	Thalassoica antarctica	Crustacea
+Regional	Thalassoica antarctica	Electrona antarctica
+Regional	Thalassoica antarctica	Gymnoscopelus braueri
+Regional	Thalassoica antarctica	Gymnoscopelus nicholsi
+Regional	Thalassoica antarctica	Gymnoscopelus opisthopterus
+Regional	Thalassoica antarctica	Notolepis coatsi
+Regional	Thalassoica antarctica	Protomyctophum bolini
+Regional	Thalassoica antarctica	Fish
+Regional	Thalassoica antarctica	Galiteuthis glacialis
+Regional	Thalassoica antarctica	Gonatus antarcticus
+Regional	Thalassoica antarctica	Psychroteuthis glacialis
+Regional	Thalassoica antarctica	Detritus
+Regional	Halobaena caerulea	Euphausia superba
+Regional	Halobaena caerulea	Euphausia frigida
+Regional	Halobaena caerulea	Thysanoessa macrura
+Regional	Halobaena caerulea	Notocrangon antarcticus
+Regional	Halobaena caerulea	Cyllopus lucasii
+Regional	Halobaena caerulea	Vibilia antarctica
+Regional	Halobaena caerulea	Vibilia stebbingi
+Regional	Halobaena caerulea	Amphipoda
+Regional	Halobaena caerulea	Eurythenes gryllus
+Regional	Halobaena caerulea	Crustacea
+Regional	Halobaena caerulea	Electrona antarctica
+Regional	Halobaena caerulea	Gymnoscopelus opisthopterus
+Regional	Halobaena caerulea	Gymnoscopelus braueri
+Regional	Halobaena caerulea	Notolepis coatsi
+Regional	Halobaena caerulea	Protomyctophum bolini
+Regional	Halobaena caerulea	Fish
+Regional	Halobaena caerulea	Pteropoda
+Regional	Halobaena caerulea	Salpa thompsoni
+Regional	Halobaena caerulea	Detritus
+Regional	Daption capense	Euphausia superba
+Regional	Daption capense	Notocrangon antarcticus
+Regional	Daption capense	Cyllopus lucasii
+Regional	Daption capense	Vibilia antarctica
+Regional	Daption capense	Vibilia stebbingi
+Regional	Daption capense	Amphipoda
+Regional	Daption capense	Electrona antarctica
+Regional	Daption capense	Gymnoscopelus nicholsi
+Regional	Daption capense	Gymnoscopelus braueri
+Regional	Daption capense	Gymnoscopelus opisthopterus
+Regional	Daption capense	Notolepis coatsi
+Regional	Daption capense	Protomyctophum bolini
+Regional	Daption capense	Fish
+Regional	Daption capense	Galiteuthis glacialis
+Regional	Daption capense	Gonatus antarcticus
+Regional	Daption capense	Psychroteuthis glacialis
+Regional	Daption capense	Salpa thompsoni
+Regional	Pagodroma nivea	Euphausia superba
+Regional	Pagodroma nivea	Notocrangon antarcticus
+Regional	Pagodroma nivea	Cyllopus lucasii
+Regional	Pagodroma nivea	Vibilia antarctica
+Regional	Pagodroma nivea	Vibilia stebbingi
+Regional	Pagodroma nivea	Eurythenes gryllus
+Regional	Pagodroma nivea	Crustacea
+Regional	Pagodroma nivea	Electrona antarctica
+Regional	Pagodroma nivea	Gymnoscopelus braueri
+Regional	Pagodroma nivea	Notolepis coatsi
+Regional	Pagodroma nivea	Protomyctophum bolini
+Regional	Pagodroma nivea	Fish
+Regional	Pagodroma nivea	Galiteuthis glacialis
+Regional	Pagodroma nivea	Psychroteuthis glacialis
+Regional	Pagodroma nivea	Detritus
+Regional	Pterodroma brevirostris	Euphausia superba
+Regional	Pterodroma brevirostris	Notocrangon antarcticus
+Regional	Pterodroma brevirostris	Cyllopus lucasii
+Regional	Pterodroma brevirostris	Vibilia antarctica
+Regional	Pterodroma brevirostris	Eurythenes gryllus
+Regional	Pterodroma brevirostris	Electrona antarctica
+Regional	Pterodroma brevirostris	Gymnoscopelus braueri
+Regional	Pterodroma brevirostris	Notolepis coatsi
+Regional	Pterodroma brevirostris	Protomyctophum bolini
+Regional	Pterodroma brevirostris	Fish
+Regional	Pterodroma brevirostris	Galiteuthis glacialis
+Regional	Macronectes halli	Nototheniidae
+Regional	Macronectes halli	Galiteuthis glacialis
+Regional	Macronectes halli	Gonatus antarcticus
+Regional	Macronectes halli	Kondakovia longimama
+Regional	Macronectes halli	Martialia hyadesi
+Regional	Macronectes halli	Psychroteuthis glacialis
+Regional	Macronectes halli	Squid
+Regional	Macronectes halli	Detritus
+Regional	Macronectes halli	Vampryoteuthis
+Regional	Macronectes halli	Crustacea
+Regional	Macronectes giganteus	Nototheniidae
+Regional	Macronectes giganteus	Galiteuthis glacialis
+Regional	Macronectes giganteus	Gonatus antarcticus
+Regional	Macronectes giganteus	Kondakovia longimama
+Regional	Macronectes giganteus	Crustacea
+Regional	Macronectes giganteus	Detritus
+Regional	Procellaria aequinoctialis	Euphausia superba
+Regional	Procellaria aequinoctialis	Vibilia antarctica
+Regional	Procellaria aequinoctialis	Electrona antarctica
+Regional	Procellaria aequinoctialis	Fish
+Regional	Procellaria aequinoctialis	Galiteuthis glacialis
+Regional	Procellaria aequinoctialis	Gonatus antarcticus
+Regional	Procellaria aequinoctialis	Kondakovia longimama
+Regional	Procellaria aequinoctialis	Psychroteuthis glacialis
+Regional	Procellaria aequinoctialis	Salpa thompsoni
+Regional	Oceanites oceanicus	Euphausia superba
+Regional	Oceanites oceanicus	Cyllopus lucasii
+Regional	Oceanites oceanicus	Vibilia antarctica
+Regional	Oceanites oceanicus	Crustacea
+Regional	Oceanites oceanicus	Electrona antarctica
+Regional	Oceanites oceanicus	Protomyctophum bolini
+Regional	Oceanites oceanicus	Fish
+Regional	Oceanites oceanicus	Salpa thompsoni
+Regional	Sterna vittata	Euphausia superba
+Regional	Sterna vittata	Electrona antarctica
+Regional	Sterna paradisaea	Euphausia superba
+Regional	Sterna paradisaea	Thysanoessa macrura
+Regional	Sterna paradisaea	Cyllopus lucasii
+Regional	Sterna paradisaea	Vibilia antarctica
+Regional	Sterna paradisaea	Amphipoda
+Regional	Sterna paradisaea	Electrona antarctica
+Regional	Pachyptila desolata	Euphausia superba
+Regional	Pachyptila desolata	Thysanoessa macrura
+Regional	Pachyptila desolata	Notocrangon antarcticus
+Regional	Pachyptila desolata	Cyllopus lucasii
+Regional	Pachyptila desolata	Vibilia antarctica
+Regional	Pachyptila desolata	Crustacea
+Regional	Pachyptila desolata	Electrona antarctica
+Regional	Pachyptila desolata	Gymnoscopelus braueri
+Regional	Pachyptila desolata	Notolepis coatsi
+Regional	Pachyptila desolata	Protomyctophum bolini
+Regional	Pachyptila desolata	Fish
+Regional	Pachyptila desolata	Salpa thompsoni
+Regional	Pachyptila desolata	Calanoides acutus
+Regional	Pachyptila desolata	Calanus propinquus
+Regional	Pachyptila desolata	Rhincalanus gigas
+Regional	Pachyptila desolata	Metridia gerlachei
+Regional	Pachyptila desolata	Euchaeta antarctica
+Regional	Pachyptila desolata	Copepoda
+Regional	Pachyptila desolata	Primno macropa
+Regional	Pachyptila desolata	Amphipoda
+Regional	Pachyptila desolata	Euphausia frigida
+Regional	Pachyptila desolata	Octopoda
+Regional	Pachyptila desolata	Gymnoscopelus nicholsi
+Regional	Aptenodytes forsteri	Euphausia superba
+Regional	Aptenodytes forsteri	Thysanoessa macrura
+Regional	Aptenodytes forsteri	Electrona antarctica
+Regional	Aptenodytes forsteri	Gymnoscopelus braueri
+Regional	Aptenodytes forsteri	Gymnoscopelus opisthopterus
+Regional	Aptenodytes forsteri	Notolepis coatsi
+Regional	Aptenodytes forsteri	Protomyctophum bolini
+Regional	Aptenodytes forsteri	Fish
+Regional	Aptenodytes forsteri	Galiteuthis glacialis
+Regional	Aptenodytes forsteri	Gonatus antarcticus
+Regional	Aptenodytes forsteri	Kondakovia longimama
+Regional	Aptenodytes forsteri	Psychroteuthis glacialis
+Regional	Pygoscelis adeliae	Euphausia superba
+Regional	Pygoscelis adeliae	Thysanoessa macrura
+Regional	Pygoscelis adeliae	Cyllopus lucasii
+Regional	Pygoscelis adeliae	Electrona antarctica
+Regional	Pygoscelis adeliae	Kondakovia longimama
+Regional	Pygoscelis adeliae	Psychroteuthis glacialis
+Regional	Lobodon carcinophagus 	Euphausia superba
+Regional	Lobodon carcinophagus 	Euphausiacea
+Regional	Lobodon carcinophagus 	Crustacea
+Regional	Lobodon carcinophagus 	Fish
+Regional	Lobodon carcinophagus 	Squid
+Regional	Lobodon carcinophagus 	Mysidacea
+Regional	Lobodon carcinophagus 	Nematoda
+Regional	Hydrurga leptonyx 	Fish
+Regional	Hydrurga leptonyx 	Squid
+Regional	Hydrurga leptonyx 	Euphausiacea
+Regional	Hydrurga leptonyx 	Amphipoda
+Regional	Hydrurga leptonyx 	Kondakovia longimama
+Regional	Hydrurga leptonyx 	Psychroteuthis glacialis
+Regional	Arctocephalus gazella 	Euphausiacea
+Regional	Arctocephalus gazella 	Fish
+Regional	Arctocephalus gazella 	Myctophidae
+Regional	Arctocephalus gazella 	Nototheniidae
+Regional	Arctocephalus gazella 	Dissostichus mawsoni
+Regional	Arctocephalus gazella 	Pygoscelis adeliae
+Regional	Arctocephalus gazella 	Amphipoda
+Regional	Arctocephalus gazella 	Nematoda
+Regional	Arctocephalus gazella 	Electrona antarctica
+Regional	Arctocephalus gazella 	Gymnoscopelus nicholsi
+Regional	Arctocephalus gazella 	Gymnoscopelus braueri
+Regional	Arctocephalus gazella 	Pleuragramma antarcticum
+Regional	Arctocephalus gazella 	Protomyctophum bolini
+Regional	Arctocephalus gazella 	Trematomus eulepidotus
+Regional	Arctocephalus gazella 	Chaenodraco wilsoni
+Regional	Arctocephalus gazella 	Chionodraco
+Regional	Mirounga leonina 	Myctophidae
+Regional	Mirounga leonina 	Gymnoscopelus nicholsi
+Regional	Mirounga leonina 	Electrona antarctica
+Regional	Mirounga leonina 	Nototheniidae
+Regional	Mirounga leonina 	Pleuragramma antarcticum
+Regional	Mirounga leonina 	Trematomus hansoni
+Regional	Mirounga leonina 	Trematomus eulepidotus
+Regional	Mirounga leonina 	Trematomus scotti
+Regional	Mirounga leonina 	Trematomus pennellii
+Regional	Mirounga leonina 	Dissostichus mawsoni
+Regional	Mirounga leonina 	Chionodraco hamatus
+Regional	Mirounga leonina 	Chionodraco
+Regional	Mirounga leonina 	Fish
+Regional	Mirounga leonina 	Squid
+Regional	Mirounga leonina 	Alluroteuthis antarcticus
+Regional	Mirounga leonina 	Galiteuthis glacialis
+Regional	Mirounga leonina 	Gonatus antarcticus
+Regional	Mirounga leonina 	Kondakovia longimama
+Regional	Mirounga leonina 	Martialia hyadesi
+Regional	Mirounga leonina 	Mesonychoteuthis hamiltoni
+Regional	Mirounga leonina 	Moroteuthis ingens
+Regional	Mirounga leonina 	Psychroteuthis glacialis
+Regional	Ommatophoca rossii 	Fish
+Regional	Ommatophoca rossii 	Squid
+Regional	Ommatophoca rossii 	Psychroteuthis glacialis
+Regional	Ommatophoca rossii 	Galiteuthis glacialis
+Regional	Ommatophoca rossii 	Alluroteuthis antarcticus
+Regional	Ommatophoca rossii 	Kondakovia longimama
+Regional	Leptonychotes weddelli	Squid
+Regional	Leptonychotes weddelli	Octopoda
+Regional	Leptonychotes weddelli	Euphausia crystallorophias
+Regional	Leptonychotes weddelli	Pleuragramma antarcticum
+Regional	Leptonychotes weddelli	Aethotaxis mitopteryx
+Regional	Leptonychotes weddelli	Dissostichus mawsoni
+Regional	Leptonychotes weddelli	Trematomus hansoni
+Regional	Leptonychotes weddelli	Fish
+Regional	Balaenoptera musculus	Dissostichus mawsoni
+Regional	Balaenoptera musculus	Champsocephalus gunnari 
+Regional	Balaenoptera musculus	Myctophidae
+Regional	Balaenoptera musculus	Fish
+Regional	Balaenoptera musculus	Squid
+Regional	Balaenoptera musculus	Zooplankton
+Regional	Balaenoptera musculus	Euphausiacea
+Regional	Balaenoptera physalus	Dissostichus mawsoni
+Regional	Balaenoptera physalus	Champsocephalus gunnari 
+Regional	Balaenoptera physalus	Myctophidae
+Regional	Balaenoptera physalus	Fish
+Regional	Balaenoptera physalus	Squid
+Regional	Balaenoptera physalus	Zooplankton
+Regional	Balaenoptera physalus	Euphausiacea
+Regional	Balaenoptera acutorostrata	Myctophidae
+Regional	Balaenoptera acutorostrata	Fish
+Regional	Balaenoptera acutorostrata	Zooplankton
+Regional	Balaenoptera acutorostrata	Euphausiacea
+Regional	Physeter macrocephalus	Dissostichus mawsoni
+Regional	Physeter macrocephalus	Champsocephalus gunnari 
+Regional	Physeter macrocephalus	Myctophidae
+Regional	Physeter macrocephalus	Fish
+Regional	Physeter macrocephalus	Crustacea
+Regional	Physeter macrocephalus	Euphausiacea
+Regional	Physeter macrocephalus	Squid
+Regional	Megaptera novaeangliae	Euphausiacea
+Regional	Orcinus orca	Squid
+Regional	Orcinus orca	Balaenoptera acutorostrata
+Regional	Orcinus orca	Ommatophoca rossii 
+Regional	Orcinus orca	Leptonychotes weddelli
+Regional	Orcinus orca	Arctocephalus gazella 
+Regional	Orcinus orca	Mirounga leonina 
+Regional	Orcinus orca	Lobodon carcinophagus 
+Regional	Orcinus orca	Hydrurga leptonyx 
+Regional	Orcinus orca	Pygoscelis adeliae
+Regional	Orcinus orca	Thalassoica antarctica
+Regional	Orcinus orca	Halobaena caerulea
+Regional	Orcinus orca	Dissostichus mawsoni
+Regional	Orcinus orca	Myctophidae
+Regional	Orcinus orca	Fish
+Regional	Lagenorhynchus cruciger	Dissostichus mawsoni
+Regional	Lagenorhynchus cruciger	Champsocephalus gunnari 
+Regional	Lagenorhynchus cruciger	Myctophidae
+Regional	Lagenorhynchus cruciger	Fish
+Regional	Lagenorhynchus cruciger	Squid
+Regional	Lagenorhynchus cruciger	Euphausiacea
+Regional	Tursiops truncatus	Fish
+Regional	Tursiops truncatus	Dissostichus mawsoni
+Regional	Tursiops truncatus	Champsocephalus gunnari 
+Regional	Tursiops truncatus	Myctophidae
+Regional	Tursiops truncatus	Euphausiacea
+Regional	Tursiops truncatus	Squid
+Regional	Notothenia coriiceps	Waldeckia obesa
+Regional	Lepidonotothen nudifrons	Waldeckia obesa
+Regional	Bovallia gigantea	Waldeckia obesa
+Regional	Ophionotus victoriae	Waldeckia obesa
+Regional	Sterechinus neumayeri	Waldeckia obesa
 Meta	Trematomus bernacchii	Echiurida
 Meta	Echiurus antarcticus	Detritus
 Meta	Harpagifer antarcticus 	Chiton
@@ -552,9 +2467,9 @@ Meta	Rosella sp.	Zooplankton
 Meta	Dendrilla antarctica	Benthic diatoms
 Meta	Dendrilla antarctica	Detritus
 Meta	Dendrilla antarctica	Zooplankton
-Meta	Cnidaria	Odontaster  validus
+Meta	Cnidaria	Odontaster validus
 Meta	Cnidaria	Odontaster meridionalis
-Meta	Cnidaria	Perknaster fuscus antarticus
+Meta	Cnidaria	Perknaster fuscus antarcticus
 Meta	Cnidaria	Sterechinus neumayeri
 Meta	Cnidaria	Phytoplankton
 Meta	Cnidaria	Zooplankton
@@ -4368,10 +6283,10 @@ Meta	Labidiaster annulatus	Isopoda
 Meta	Labidiaster annulatus	Euphausiacea
 Meta	Labidiaster annulatus	Crustacea
 Meta	Labidiaster annulatus	Bryozoa
-Meta	Labidiaster annulatus	Odontaster  validus
+Meta	Labidiaster annulatus	Odontaster validus
 Meta	Labidiaster annulatus	Diplasterias brucei
 Meta	Labidiaster annulatus	Odontaster meridionalis
-Meta	Labidiaster annulatus	Perknaster fuscus antarticus
+Meta	Labidiaster annulatus	Perknaster fuscus antarcticus
 Meta	Labidiaster annulatus	Perknaster aurorae
 Meta	Labidiaster annulatus	Sterechinus neumayeri
 Meta	Labidiaster annulatus	Detritus
@@ -5388,7 +7303,7 @@ Meta	Gondogeneia antarctica	Monostroma hariotii
 Meta	Gondogeneia antarctica	Epiphytic diatoms
 Meta	Gondogeneia antarctica	Benthic diatoms
 Meta	Uristes georgianus	Macroalgae
-Meta	Yoldia eightsiii	Macroalgae
+Meta	Aequiyoldia eightsii	Macroalgae
 Meta	Terebellidae	Detritus
 Meta	Nereidae	Georgiella confluens 
 Meta	Nereidae	Gigartina skottsbergii
@@ -5401,7 +7316,7 @@ Meta	Holothuroidea	Detritus
 Meta	Sterechinus neumayeri	Detritus
 Meta	Gondogeneia antarctica	Detritus
 Meta	Uristes georgianus	Detritus
-Meta	Yoldia eightsiii	Detritus
+Meta	Aequiyoldia eightsii	Detritus
 Meta	Ommatophoca rossii	Psychroteuthis glacialis
 Meta	Ommatophoca rossii	Alluroteuthis antarcticus
 Meta	Ommatophoca rossii	Galiteuthis armata
@@ -5411,13 +7326,13 @@ Meta	Ommatophoca rossii	Chiroteuthis sp.
 Meta	Ommatophoca rossii	Pleuragramma antarcticum
 Meta	Mirounga leonina	Euphausia crystallorophias
 Meta	Mirounga leonina	Mysida
-Meta	Odontaster  validus	Benthic diatoms
-Meta	Odontaster  validus	Nereidae 
-Meta	Odontaster  validus	Doris kerguelenensis
-Meta	Odontaster  validus	Neobuccinum eatoni
-Meta	Odontaster  validus	Detritus
-Meta	Odontaster  validus	Haliclona anonyma
-Meta	Odontaster  validus	Rosella sp.
+Meta	Odontaster validus	Benthic diatoms
+Meta	Odontaster validus	Nereidae 
+Meta	Odontaster validus	Doris kerguelenensis
+Meta	Odontaster validus	Neobuccinum eatoni
+Meta	Odontaster validus	Detritus
+Meta	Odontaster validus	Haliclona anonyma
+Meta	Odontaster validus	Rosella sp.
 Meta	Odontaster validus	Homaxinella balfourensis
 Meta	Odontaster validus	Mycale acerata
 Meta	Odontaster validus	Haliclona penicillata
@@ -7290,9 +9205,9 @@ Meta	Trophon longstaffi	Limatula hodgsoni
 Meta	Sterechinus neumayeri	Dendrilla antarctica
 Meta	Macroptychaster accrescens	Odontaster validus
 Meta	Macroptychaster accrescens	Sterechinus neumayeri
-Meta	Urticinopsis antarctica	Odontaster  validus
+Meta	Urticinopsis antarctica	Odontaster validus
 Meta	Urticinopsis antarctica	Odontaster meridionalis
-Meta	Urticinopsis antarctica	Perknaster fuscus antarticus
+Meta	Urticinopsis antarctica	Perknaster fuscus antarcticus
 Meta	Urticinopsis antarctica	Sterechinus neumayeri
 Meta	Urticinopsis antarctica	Urticinopsis antarctica
 Meta	Urticinopsis antarctica	Malacobelemnon daytoni
@@ -7654,7 +9569,7 @@ Meta	Electrona antarctica	Euphausia sp.
 Meta	Electrona antarctica	Electrona antarctica
 Meta	Electrona antarctica	Gymnoscopelus nicholsi
 Meta	Electrona antarctica	Gymnoscopelus braueri
-Meta	Electrona antarctica	Neopageotopsis ionah
+Meta	Electrona antarctica	Neopagetopsis ionah
 Meta	Electrona antarctica	Protomyctophum bolini
 Meta	Gymnoscopelus braueri	Psychroteuthis glacialis
 Meta	Gymnoscopelus braueri	Gaetanus sp.
@@ -7671,7 +9586,7 @@ Meta	Gymnoscopelus braueri	Neobuccinum eatoni
 Meta	Gymnoscopelus braueri	Electrona antarctica
 Meta	Gymnoscopelus braueri	Gymnoscopelus nicholsi
 Meta	Gymnoscopelus braueri	Gymnoscopelus braueri
-Meta	Gymnoscopelus braueri	Neopageotopsis ionah
+Meta	Gymnoscopelus braueri	Neopagetopsis ionah
 Meta	Gymnoscopelus braueri	Protomyctophum bolini
 Meta	Gymnoscopelus braueri	Nereidae
 Meta	Gymnoscopelus nicholsi	Psychroteuthis glacialis
@@ -7689,7 +9604,7 @@ Meta	Gymnoscopelus nicholsi	Ostracoda
 Meta	Gymnoscopelus nicholsi	Electrona antarctica
 Meta	Gymnoscopelus nicholsi	Gymnoscopelus nicholsi
 Meta	Gymnoscopelus nicholsi	Gymnoscopelus braueri
-Meta	Gymnoscopelus nicholsi	Neopageotopsis ionah
+Meta	Gymnoscopelus nicholsi	Neopagetopsis ionah
 Meta	Gymnoscopelus nicholsi	Protomyctophum bolini
 Meta	Protomyctophum bolini	Psychroteuthis glacialis
 Meta	Protomyctophum bolini	Copepoda
@@ -7706,7 +9621,7 @@ Meta	Protomyctophum bolini	Ostracoda
 Meta	Protomyctophum bolini	Electrona antarctica
 Meta	Protomyctophum bolini	Gymnoscopelus nicholsi
 Meta	Protomyctophum bolini	Gymnoscopelus braueri
-Meta	Protomyctophum bolini	Neopageotopsis ionah
+Meta	Protomyctophum bolini	Neopagetopsis ionah
 Meta	Protomyctophum bolini	Protomyctophum bolini
 Meta	Paradiplospinus gracilis	Psychroteuthis glacialis
 Meta	Paradiplospinus gracilis	Chaetognatha
@@ -7733,7 +9648,7 @@ Meta	Paradiplospinus gracilis	Ostracoda
 Meta	Paradiplospinus gracilis	Electrona antarctica
 Meta	Paradiplospinus gracilis	Gymnoscopelus nicholsi
 Meta	Paradiplospinus gracilis	Gymnoscopelus braueri
-Meta	Paradiplospinus gracilis	Neopageotopsis ionah
+Meta	Paradiplospinus gracilis	Neopagetopsis ionah
 Meta	Paradiplospinus gracilis	Protomyctophum bolini
 Meta	Paradiplospinus gracilis	Nereidae
 Meta	Arctocephalus gazella	Euphausiacea
@@ -8010,7 +9925,7 @@ Meta	Notocrangon antarcticus	Foraminifera
 Meta	Notocrangon antarcticus	Porifera
 Meta	Notocrangon antarcticus	Gastropoda
 Meta	Notocrangon antarcticus	Bivalvia
-Meta	Notocrangon antarcticus	Yoldiella eightsi
+Meta	Notocrangon antarcticus	Aequiyoldia eightsii
 Meta	Notocrangon antarcticus	Polychaeta
 Meta	Notocrangon antarcticus	Mysidacea
 Meta	Notocrangon antarcticus	Holothuria
@@ -8021,7 +9936,7 @@ Meta	Chorismus antarcticus	Foraminifera
 Meta	Chorismus antarcticus	Porifera
 Meta	Chorismus antarcticus	Nematoda
 Meta	Chorismus antarcticus	Gastropoda
-Meta	Chorismus antarcticus	Yoldiella eightsi
+Meta	Chorismus antarcticus	Aequiyoldia eightsii
 Meta	Chorismus antarcticus	Polychaeta
 Meta	Chorismus antarcticus	Eucranta mollis
 Meta	Chorismus antarcticus	Eunoe spica
@@ -8241,7 +10156,7 @@ Meta	Acodontaster conspicuus	Homaxinella balfourensis
 Meta	Acodontaster conspicuus	Scolymastra joubini
 Meta	Bathybiaster loripes	Detritus
 Meta	Cuenotaster involutus	Detritus
-Meta	Diplasterias brucei	Yoldiella eightsi
+Meta	Diplasterias brucei	Aequiyoldia eightsii
 Meta	Diplasterias brucei	Gastropoda
 Meta	Diplasterias brucei	Detritus
 Meta	Luidiaster gerlachei	Ophiuroidea
@@ -8254,10 +10169,10 @@ Meta	Labidiaster annulatus	Asteroidea
 Meta	Labidiaster annulatus	Echinoidea
 Meta	Lophaster gaini	Bivalvia
 Meta	Lophaster gaini	Adamussium colbecki
-Meta	Lophaster gaini	Yoldiella eightsi
+Meta	Lophaster gaini	Aequiyoldia eightsii
 Meta	Notasterias armata	Bivalvia
 Meta	Notasterias armata	Adamussium colbecki
-Meta	Notasterias armata	Yoldiella eightsi
+Meta	Notasterias armata	Aequiyoldia eightsii
 Meta	Solaster sp.	Bivalvia
 Meta	Solaster sp.	Polychaeta
 Meta	Solaster sp.	Sediment
@@ -8271,7 +10186,7 @@ Meta	Odontaster validus	Asteroidea
 Meta	Odontaster validus	Adamussium colbecki
 Meta	Odontaster validus	Gastropoda
 Meta	Odontaster validus	Bivalvia
-Meta	Odontaster validus	Yoldiella eightsi
+Meta	Odontaster validus	Aequiyoldia eightsii
 Meta	Odontaster validus	Hydrozoa
 Meta	Odontaster validus	Ophiuroidea
 Meta	Odontaster validus	Porifera
@@ -8364,7 +10279,7 @@ Meta	Ophiosparte gigas	Cnidaria
 Meta	Ophiosparte gigas	Gastropoda
 Meta	Ophiosparte gigas	Bivalvia
 Meta	Ophiosparte gigas	Adamussium colbecki
-Meta	Ophiosparte gigas	Yoldiella eightsi
+Meta	Ophiosparte gigas	Aequiyoldia eightsii
 Meta	Ophiosparte gigas	Polychaeta
 Meta	Ophiosparte gigas	Eunoe spica
 Meta	Ophiosparte gigas	Pantopoda
@@ -8437,7 +10352,7 @@ Meta	Ctenocidaris gigantea	Hydrozoa
 Meta	Ctenocidaris gigantea	Polychaeta
 Meta	Ctenocidaris gigantea	Porifera
 Meta	Ctenocidaris gigantea	Detritus
-Meta	Ctenocidaris spinosa	Yoldiella eightsi
+Meta	Ctenocidaris spinosa	Aequiyoldia eightsii
 Meta	Ctenocidaris spinosa	Bryozoa
 Meta	Ctenocidaris spinosa	Zooplankton
 Meta	Ctenocidaris spinosa	Foraminifera
@@ -8569,7 +10484,7 @@ Meta	Doris kerguelenensis	Scolymastra joubini
 Meta	Doris kerguelenensis	Haliclona tenella
 Meta	Doris kerguelenensis	Isodyctia steifera
 Meta	Trophon longstaffi	Bivalvia
-Meta	Trophon longstaffi	Yoldiella eightsi
+Meta	Trophon longstaffi	Aequiyoldia eightsii
 Meta	Tritonia challengeriana	Sediment
 Meta	Tritonia challengeriana	Cephalodiscus
 Meta	Aegires albus	Porifera
@@ -8595,7 +10510,7 @@ Meta	Neobuccinum eatoni	Bivalvia
 Meta	Neobuccinum eatoni	Adamussium colbecki
 Meta	Neobuccinum eatoni	Crustacea
 Meta	Neobuccinum eatoni	Fish
-Meta	Marseniopsis mollis	Yoldiella eightsi
+Meta	Marseniopsis mollis	Aequiyoldia eightsii
 Meta	Marseniopsis mollis	Cnemidocarpa verrucosa
 Meta	Parmaphorella mawsoni	Sediment
 Meta	Parmaphorella mawsoni	Bacillariophyta
@@ -8616,7 +10531,7 @@ Meta	Clio pyramidata	Oithona
 Meta	Clio pyramidata	Pelegobia longicirrata
 Meta	Clio pyramidata	Gnathia calva
 Meta	Limacina helicina antarctica	Zooplankton
-Meta	Pareledone charcoti	Yoldiella eightsi
+Meta	Pareledone charcoti	Aequiyoldia eightsii
 Meta	Pareledone charcoti	Crustacea
 Meta	Pareledone charcoti	Fish
 Meta	Pareledone charcoti	Polychaeta
@@ -9130,7 +11045,7 @@ Meta	Trematomus bernacchii	Hydrozoa
 Meta	Trematomus bernacchii	Polychaeta
 Meta	Trematomus bernacchii	Metridia gerlachei
 Meta	Trematomus bernacchii	Epimeria robusta
-Meta	Trematomus bernacchii	Yoldiella eightsi
+Meta	Trematomus bernacchii	Aequiyoldia eightsii
 Meta	Trematomus hansoni	Zooplankton
 Meta	Trematomus hansoni	Fish
 Meta	Trematomus hansoni	Trematomus pennellii
@@ -9225,26 +11140,26 @@ Meta	Gymnoscopelus nicholsi	Fish
 Meta	Protomyctophum bolini	Oncaea
 Meta	Protomyctophum bolini	Gastropoda
 Meta	Fulmarus glacialoides	Notocrangon antarcticus
-Meta	Fulmarus glacialoides	Vibillia stebbingi
+Meta	Fulmarus glacialoides	Vibilia stebbingi
 Meta	Fulmarus glacialoides	Amphipoda
 Meta	Fulmarus glacialoides	Fish
 Meta	Thalassoica antarctica	Notocrangon antarcticus
-Meta	Thalassoica antarctica	Vibillia stebbingi
+Meta	Thalassoica antarctica	Vibilia stebbingi
 Meta	Thalassoica antarctica	Amphipoda
 Meta	Thalassoica antarctica	Fish
 Meta	Thalassoica antarctica	Detritus
 Meta	Halobaena caerulea	Notocrangon antarcticus
-Meta	Halobaena caerulea	Vibillia stebbingi
+Meta	Halobaena caerulea	Vibilia stebbingi
 Meta	Halobaena caerulea	Amphipoda
 Meta	Halobaena caerulea	Crustacea
 Meta	Halobaena caerulea	Fish
 Meta	Halobaena caerulea	Detritus
 Meta	Daption capense	Notocrangon antarcticus
-Meta	Daption capense	Vibillia stebbingi
+Meta	Daption capense	Vibilia stebbingi
 Meta	Daption capense	Amphipoda
 Meta	Daption capense	Fish
 Meta	Pagodroma nivea	Notocrangon antarcticus
-Meta	Pagodroma nivea	Vibillia stebbingi
+Meta	Pagodroma nivea	Vibilia stebbingi
 Meta	Pagodroma nivea	Fish
 Meta	Pagodroma nivea	Detritus
 Meta	Pterodroma brevirostris	Notocrangon antarcticus
@@ -9390,1918 +11305,3 @@ Meta	Tursiops truncatus	Champsocephalus gunnari
 Meta	Tursiops truncatus	Myctophidae
 Meta	Tursiops truncatus	Euphausiacea
 Meta	Tursiops truncatus	Squid
-Regional	Cassidulinoides parkerianus	Bacillariophyta
-Regional	Cassidulinoides parkerianus	Detritus
-Regional	Cassidulinoides parkerianus	Sediment
-Regional	Cibicides refulgens	Bacillariophyta
-Regional	Cibicides refulgens	Detritus
-Regional	Cibicides refulgens	Sediment
-Regional	Globocassidulina crassa	Bacillariophyta
-Regional	Globocassidulina crassa	Detritus
-Regional	Globocassidulina crassa	Sediment
-Regional	Lenticulina antarctica	Bacillariophyta
-Regional	Lenticulina antarctica	Detritus
-Regional	Lenticulina antarctica	Sediment
-Regional	Neogloboquadriana pachyderma	Bacillariophyta
-Regional	Neogloboquadriana pachyderma	Detritus
-Regional	Neogloboquadriana pachyderma	Sediment
-Regional	Euphausia crystallorophias	Phytoplankton
-Regional	Euphausia frigida	Bacillariophyta
-Regional	Euphausia frigida	Zooplankton
-Regional	Euphausia frigida	Tintinnidae
-Regional	Euphausia frigida	Foraminifera
-Regional	Euphausia frigida	Phytoplankton
-Regional	Euphausia frigida	Copepoda
-Regional	Euphausia frigida	Pteropoda
-Regional	Thysanoessa macrura	Bacillariophyta
-Regional	Thysanoessa macrura	Zooplankton
-Regional	Thysanoessa macrura	Siphonophora
-Regional	Thysanoessa macrura	Tintinnidae
-Regional	Thysanoessa macrura	Foraminifera
-Regional	Thysanoessa macrura	Phytoplankton
-Regional	Thysanoessa macrura	Copepoda
-Regional	Thysanoessa macrura	Pteropoda
-Regional	Euphausia superba	Bacillariophyta
-Regional	Euphausia superba	Fragilariopsis
-Regional	Euphausia superba	Entomoneis sp.
-Regional	Euphausia superba	Nitzschia sp.
-Regional	Euphausia superba	Chaetoceros sp.
-Regional	Euphausia superba	Zooplankton
-Regional	Euphausia superba	Distephanus sp.
-Regional	Euphausia superba	Copepoda
-Regional	Euphausia superba	Oithona
-Regional	Ampelisca richardsoni	Detritus
-Regional	Ampelisca richardsoni	Bacillariophyta
-Regional	Abyssorchomene rossi	Detritus
-Regional	Abyssorchomene rossi	Bacillariophyta
-Regional	Abyssorchomene rossi	Polychaeta
-Regional	Abyssorchomene rossi	Copepoda
-Regional	Abyssorchomene rossi	Porifera
-Regional	Abyssorchomene plebs 	Crustacea
-Regional	Abyssorchomene plebs 	Euphausia superba
-Regional	Abyssorchomene plebs 	Detritus
-Regional	Abyssorchomene plebs 	Bacillariophyta
-Regional	Abyssorchomene nodimanus	Polychaeta
-Regional	Abyssorchomene nodimanus	Holothuria
-Regional	Abyssorchomene nodimanus	Fish
-Regional	Abyssorchomene nodimanus	Octopoda
-Regional	Abyssorchomene nodimanus	Detritus
-Regional	Eusirus antarcticus	Copepoda
-Regional	Eusirus perdentatus	Crustacea
-Regional	Eusirus perdentatus	Amphipoda
-Regional	Eusirus perdentatus	Polychaeta
-Regional	Eusirus perdentatus	Detritus
-Regional	Alexandrella mixta	Ophiuroidea
-Regional	Tryphosella murrayi	Mysidacea
-Regional	Tryphosella murrayi	Dolloidraco longedorsalis
-Regional	Tryphosella murrayi	Fish
-Regional	Tryphosella murrayi	Crustacea
-Regional	Tryphosella murrayi	Amphipoda
-Regional	Waldeckia obesa 	Amphipoda
-Regional	Waldeckia obesa 	Eurythenes gryllus
-Regional	Waldeckia obesa 	Ophiuroidea
-Regional	Waldeckia obesa 	Hydrozoa
-Regional	Waldeckia obesa 	Cnidaria
-Regional	Waldeckia obesa 	Porifera
-Regional	Waldeckia obesa 	Polychaeta
-Regional	Waldeckia obesa 	Holothuria
-Regional	Waldeckia obesa 	Isopoda
-Regional	Waldeckia obesa 	Crustacea
-Regional	Waldeckia obesa 	Detritus
-Regional	Waldeckia obesa 	Necromass
-Regional	Parschisturella ceruviata 	Detritus
-Regional	Paramoera walkeri	Ophiuroidea
-Regional	Epimeriella walkeri	Holothuria
-Regional	Epimeriella walkeri	Crustacea
-Regional	Epimeriella walkeri	Porifera
-Regional	Epimeriella walkeri	Cnidaria
-Regional	Epimeriella walkeri	Bacillariophyta
-Regional	Epimeriella walkeri	Detritus
-Regional	Cyllopus lucasii	Bacillariophyta
-Regional	Cyllopus lucasii	Zooplankton
-Regional	Cyllopus lucasii	Tintinnidae
-Regional	Cyllopus lucasii	Copepoda
-Regional	Cyllopus lucasii	Oithona sp.
-Regional	Cyllopus lucasii	Oncaea sp.
-Regional	Cyllopus lucasii	Calanus propinquus
-Regional	Cyllopus lucasii	Metridia gerlachei
-Regional	Cyllopus lucasii	Ostracoda
-Regional	Cyllopus lucasii	Euphausia superba
-Regional	Cyllopus lucasii	Coelenterata
-Regional	Cyllopus lucasii	Pelegobia longicirrata
-Regional	Cyllopus lucasii	Eukrohnia hamata
-Regional	Hyperiella dilatata	Bacillariophyta
-Regional	Hyperiella dilatata	Zooplankton
-Regional	Hyperiella dilatata	Tintinnidae
-Regional	Hyperiella dilatata	Copepoda
-Regional	Hyperiella dilatata	Oithona sp.
-Regional	Hyperiella dilatata	Oncaea sp.
-Regional	Hyperiella dilatata	Coelenterata
-Regional	Vibilia antarctica	Zooplankton
-Regional	Vibilia stebbingi	Zooplankton
-Regional	Hyperia macrocephala	Pteropoda
-Regional	Hyperia macrocephala	Limacina helicina 
-Regional	Hyperia macrocephala	Salpa thompsoni
-Regional	Hyperia macrocephala	Coelenterata
-Regional	Hyperia macrocephala	Scyphozoa
-Regional	Epimeria similis	Hydrozoa
-Regional	Epimeria similis	Polychaeta
-Regional	Epimeria similis	Cnidaria
-Regional	Epimeria similis	Porifera
-Regional	Epimeria similis	Bacillariophyta
-Regional	Epimeria similis	Foraminifera
-Regional	Epimeria robusta	Euphausiacea
-Regional	Epimeria robusta	Holothuria
-Regional	Epimeria robusta	Zooplankton
-Regional	Epimeria robusta	Crustacea
-Regional	Epimeria robusta	Amphipoda
-Regional	Epimeria robusta	Cnidaria
-Regional	Epimeria robusta	Polychaeta
-Regional	Epimeria robusta	Taeniogyrus contortus
-Regional	Epimeria macrodonta	Cnidaria
-Regional	Epimeria macrodonta	Hydrozoa
-Regional	Epimeria macrodonta	Urticinopsis antarctica
-Regional	Epimeria macrodonta	Anthozoa
-Regional	Epimeria macrodonta	Crustacea
-Regional	Epimeria macrodonta	Euphausiacea
-Regional	Epimeria macrodonta	Pantopoda
-Regional	Epimeria macrodonta	Holothuria
-Regional	Epimeria macrodonta	Foraminifera
-Regional	Epimeria macrodonta	Bacillariophyta
-Regional	Epimeria macrodonta	Ostracoda
-Regional	Epimeria macrodonta	Porifera
-Regional	Epimeria macrodonta	Sediment
-Regional	Epimeria macrodonta	Squid
-Regional	Epimeria rubrieques	Euphausiacea
-Regional	Epimeria rubrieques	Zooplankton
-Regional	Epimeria rubrieques	Crustacea
-Regional	Epimeria rubrieques	Amphipoda
-Regional	Epimeria rubrieques	Cnidaria
-Regional	Epimeria rubrieques	Hydrozoa
-Regional	Epimeria rubrieques	Clavularia sp.
-Regional	Epimeria rubrieques	Polychaeta
-Regional	Epimeria rubrieques	Taeniogyrus contortus
-Regional	Epimeria georgiana	Crustacea
-Regional	Epimeria georgiana	Mysidacea
-Regional	Epimeria georgiana	Amphipoda
-Regional	Epimeria georgiana	Polychaeta
-Regional	Epimeria georgiana	Holothuria
-Regional	Epimeria georgiana	Hydrozoa
-Regional	Epimeria georgiana	Bacillariophyta
-Regional	Epimeria georgiana	Zooplankton
-Regional	Epimeria georgiana	Foraminifera
-Regional	Melphidippa antarctica	Euchaeta antarctica
-Regional	Melphidippa antarctica	Crustacea
-Regional	Melphidippa antarctica	Euphausiacea
-Regional	Melphidippa antarctica	Mysidacea
-Regional	Melphidippa antarctica	Porifera
-Regional	Melphidippa antarctica	Cnidaria
-Regional	Melphidippa antarctica	Holothuria
-Regional	Oediceroides emarginatus	Phytoplankton
-Regional	Oediceroides emarginatus	Crustacea
-Regional	Oediceroides emarginatus	Amphipoda
-Regional	Oediceroides calmani	Phytoplankton
-Regional	Oediceroides calmani	Crustacea
-Regional	Oediceroides calmani	Amphipoda
-Regional	Maxilliphimedia longipes	Cnidaria
-Regional	Maxilliphimedia longipes	Urticinopsis antarctica
-Regional	Maxilliphimedia longipes	Anthozoa
-Regional	Maxilliphimedia longipes	Hydrozoa
-Regional	Gnathiphimedia mandibularis	Bryozoa
-Regional	Gnathiphimedia mandibularis	Brachiopoda
-Regional	Gnathiphimedia mandibularis	Porifera
-Regional	Echiniphimedia hodgsoni	Porifera
-Regional	Echiniphimedia hodgsoni	Detritus
-Regional	Iphimediella cyclogena	Holothuria
-Regional	Iphimediella cyclogena	Polychaeta
-Regional	Paraceradocus gibber	Amphipoda
-Regional	Paraceradocus gibber	Bacillariophyta
-Regional	Paraceradocus gibber	Detritus
-Regional	Liljeborgia georgiana	Crustacea
-Regional	Liljeborgia georgiana	Amphipoda
-Regional	Liljeborgia georgiana	Euphausiacea
-Regional	Liljeborgia georgiana	Copepoda
-Regional	Liljeborgia georgiana	Polychaeta
-Regional	Liljeborgia georgiana	Eucranta mollis
-Regional	Liljeborgia georgiana	Eunoe spica
-Regional	Liljeborgia georgiana	Cnidaria
-Regional	Liljeborgia georgiana	Porifera
-Regional	Momoculodes scabriculosus	Detritus
-Regional	Uristes gigas	Crustacea
-Regional	Uristes gigas	Amphipoda
-Regional	Uristes gigas	Euphausiacea
-Regional	Uristes gigas	Porifera
-Regional	Uristes gigas	Bacillariophyta
-Regional	Eurythenes gryllus	Amphipoda
-Regional	Eurythenes gryllus	Eurythenes gryllus
-Regional	Eurythenes gryllus	Ophiuroidea
-Regional	Eurythenes gryllus	Hydrozoa
-Regional	Eurythenes gryllus	Urticinopsis antarctica
-Regional	Eurythenes gryllus	Anthozoa
-Regional	Eurythenes gryllus	Porifera
-Regional	Eurythenes gryllus	Polychaeta
-Regional	Eurythenes gryllus	Holothuria
-Regional	Eurythenes gryllus	Isopoda
-Regional	Eurythenes gryllus	Crustacea
-Regional	Eurythenes gryllus	Detritus
-Regional	Bathypanoploea schellenbergi	Urticinopsis antarctica
-Regional	Bathypanoploea schellenbergi	Anthozoa
-Regional	Bathypanoploea schellenbergi	Bacillariophyta
-Regional	Bathypanoploea schellenbergi	Crustacea
-Regional	Bathypanoploea schellenbergi	Holothuria
-Regional	Bathypanoploea schellenbergi	Bryozoa
-Regional	Pseudorchomene coatsi	Detritus
-Regional	Heterophoxus videns	Polychaeta
-Regional	Heterophoxus videns	Eucranta mollis
-Regional	Heterophoxus videns	Eunoe spica
-Regional	Heterophoxus videns	Laetmonice producta
-Regional	Heterophoxus videns	Tanaidacea
-Regional	Heterophoxus videns	Copepoda
-Regional	Heterophoxus videns	Porifera
-Regional	Heterophoxus videns	Bacillariophyta
-Regional	Heterophoxus videns	Foraminifera
-Regional	Heterophoxus videns	Nematoda
-Regional	Heterophoxus videns	Crustacea
-Regional	Haplocheira plumosa	Phytoplankton
-Regional	Haplocheira plumosa	Detritus
-Regional	Oradarea edentata	Phytoplankton
-Regional	Djerboa furcipes	Phytoplankton
-Regional	Rhachotropis antarctica	Euphausiacea
-Regional	Rhachotropis antarctica	Copepoda
-Regional	Rhachotropis antarctica	Amphipoda
-Regional	Rhachotropis antarctica	Polychaeta
-Regional	Rhachotropis antarctica	Bacillariophyta
-Regional	Rhachotropis antarctica	Cnidaria
-Regional	Notocrangon antarcticus	Bacillariophyta
-Regional	Notocrangon antarcticus	Foraminifera
-Regional	Notocrangon antarcticus	Porifera
-Regional	Notocrangon antarcticus	Gastropoda
-Regional	Notocrangon antarcticus	Bivalvia
-Regional	Notocrangon antarcticus	Yoldiella eightsi
-Regional	Notocrangon antarcticus	Polychaeta
-Regional	Notocrangon antarcticus	Mysidacea
-Regional	Notocrangon antarcticus	Holothuria
-Regional	Chorismus antarcticus	Bacillariophyta
-Regional	Chorismus antarcticus	Corethron sp.
-Regional	Chorismus antarcticus	Zooplankton
-Regional	Chorismus antarcticus	Foraminifera
-Regional	Chorismus antarcticus	Porifera
-Regional	Chorismus antarcticus	Nematoda
-Regional	Chorismus antarcticus	Gastropoda
-Regional	Chorismus antarcticus	Yoldiella eightsi
-Regional	Chorismus antarcticus	Polychaeta
-Regional	Chorismus antarcticus	Eucranta mollis
-Regional	Chorismus antarcticus	Eunoe spica
-Regional	Chorismus antarcticus	Laetmonice producta
-Regional	Chorismus antarcticus	Eulagisca gigantea
-Regional	Chorismus antarcticus	Barrukia cristata
-Regional	Chorismus antarcticus	Amphipoda
-Regional	Chorismus antarcticus	Isopoda
-Regional	Chorismus antarcticus	Taeniogyrus contortus
-Regional	Nematocarcinus lanceopes	Bacillariophyta
-Regional	Nematocarcinus lanceopes	Zooplankton
-Regional	Nematocarcinus lanceopes	Tintinnidae
-Regional	Nematocarcinus lanceopes	Phytoplankton
-Regional	Nematocarcinus lanceopes	Euchaeta antarctica
-Regional	Rhincalanus gigas	Bacillariophyta
-Regional	Rhincalanus gigas	SilicioZooplanktons
-Regional	Rhincalanus gigas	Zooplankton
-Regional	Rhincalanus gigas	Tintinnidae
-Regional	Rhincalanus gigas	Oithona
-Regional	Rhincalanus gigas	Oncaea
-Regional	Rhincalanus gigas	Coelenterata
-Regional	Calanus propinquus 	Bacillariophyta
-Regional	Calanus propinquus 	SilicioZooplanktons
-Regional	Calanus propinquus 	Zooplankton
-Regional	Calanus propinquus 	Tintinnidae
-Regional	Calanus propinquus 	Euchaeta antarctica
-Regional	Calanus propinquus 	Oithona
-Regional	Calanus propinquus 	Copepoda
-Regional	Calanus propinquus 	Coelenterata
-Regional	Calanoides acutus 	Bacillariophyta
-Regional	Calanoides acutus 	SilicioZooplanktons
-Regional	Calanoides acutus 	Zooplankton
-Regional	Calanoides acutus 	Tintinnidae
-Regional	Calanoides acutus 	Copepoda
-Regional	Calanoides acutus 	Oithona
-Regional	Calanoides acutus 	Oncaea
-Regional	Calanoides acutus 	Pelegobia longicirrata
-Regional	Metridia gerlachei 	Bacillariophyta
-Regional	Metridia gerlachei 	SilicioZooplanktons
-Regional	Metridia gerlachei 	Zooplankton
-Regional	Metridia gerlachei 	Tintinnidae
-Regional	Metridia gerlachei 	Copepoda
-Regional	Metridia gerlachei 	Oithona
-Regional	Metridia gerlachei 	Oncaea
-Regional	Euchaeta antarctica	Bacillariophyta
-Regional	Euchaeta antarctica	SilicioZooplanktons
-Regional	Euchaeta antarctica	Zooplankton
-Regional	Euchaeta antarctica	Tintinnidae
-Regional	Euchaeta antarctica	Copepoda
-Regional	Euchaeta antarctica	Oithona
-Regional	Euchaeta antarctica	Oncaea
-Regional	Euchaeta antarctica	Metridia gerlachei
-Regional	Euchaeta antarctica	Euchaeta antarctica
-Regional	Euchaeta antarctica	Cyllopus lucasii
-Regional	Euchaeta antarctica	Coelenterata
-Regional	Euchaeta antarctica	Pelegobia longicirrata
-Regional	Euchaeta antarctica	Eukrohnia hamata
-Regional	Mysida	Bacillariophyta
-Regional	Mysida	Detritus
-Regional	Mysida	Zooplankton
-Regional	Eucopia australis	Bacillariophyta
-Regional	Eucopia australis	Detritus
-Regional	Eucopia australis	Zooplankton
-Regional	Euchaetomera antarcticus	Bacillariophyta
-Regional	Euchaetomera antarcticus	Detritus
-Regional	Euchaetomera antarcticus	Zooplankton
-Regional	Antarctomysis maxima	Bacillariophyta
-Regional	Antarctomysis maxima	Detritus
-Regional	Antarctomysis maxima	Zooplankton
-Regional	Ceratoserolis meridionalis	Polychaeta
-Regional	Ceratoserolis meridionalis	Crustacea
-Regional	Frontoserolis bouvieri	Polychaeta
-Regional	Frontoserolis bouvieri	Crustacea
-Regional	Natatolana obtusata	Detritus
-Regional	Natatolana oculata	Detritus
-Regional	Natatolana meridionalis	Detritus
-Regional	Gnathia calva	Zooplankton
-Regional	Glyptonotus antarcticus	Isopoda
-Regional	Glyptonotus antarcticus	Glyptonotus antarcticus
-Regional	Glyptonotus antarcticus	Asteroidea
-Regional	Glyptonotus antarcticus	Gastropoda
-Regional	Glyptonotus antarcticus	Euphausia superba
-Regional	Glyptonotus antarcticus	Polychaeta
-Regional	Glyptonotus antarcticus	Echinoidea
-Regional	Glyptonotus antarcticus	Ophiuroidea
-Regional	Glyptonotus antarcticus	Detritus
-Regional	Glyptonotus antarcticus	Limacina helicina 
-Regional	Austrosisignum grande	Detritus
-Regional	Austrosisignum grande	Bacillariophyta
-Regional	Aega antarctica	Detritus
-Regional	Arcturidae	Detritus
-Regional	Myodocopia	Sediment
-Regional	Myodocopia	Detritus
-Regional	Myodocopia	Zooplankton
-Regional	Alacia hettacra	Detritus
-Regional	Alacia hettacra	Bacillariophyta
-Regional	Alacia hettacra	Phytoplankton
-Regional	Alacia belgicae	Detritus
-Regional	Alacia belgicae	Bacillariophyta
-Regional	Alacia belgicae	Phytoplankton
-Regional	Metaconchoecia isocheira	Detritus
-Regional	Metaconchoecia isocheira	Bacillariophyta
-Regional	Metaconchoecia isocheira	Phytoplankton
-Regional	Boroecia antipoda	Detritus
-Regional	Boroecia antipoda	Bacillariophyta
-Regional	Boroecia antipoda	Phytoplankton
-Regional	Podocopida	Zooplankton
-Regional	Podocopida	Detritus
-Regional	Podocopida	Bacillariophyta
-Regional	Nototanais antarcticus	Detritus
-Regional	Nototanais antarcticus	Bacillariophyta
-Regional	Nototanais antarcticus	Bacteria
-Regional	Nototanais antarcticus	Sediment
-Regional	Peraeospinosus pushkini	Sediment
-Regional	Peraeospinosus pushkini	Detritus
-Regional	Peraeospinosus pushkini	Bacillariophyta
-Regional	Peraeospinosus pushkini	Porifera
-Regional	Nototanais dimorphus	Bacillariophyta
-Regional	Nototanais dimorphus	Bacteria
-Regional	Nototanais dimorphus	Detritus
-Regional	Eudorella splendida	Detritus
-Regional	Eudorella splendida	Bacillariophyta
-Regional	Eudorella splendida	Bacteria
-Regional	Eudorella splendida	Sediment
-Regional	Vaunthompsonia indermis	Detritus
-Regional	Vaunthompsonia indermis	Bacillariophyta
-Regional	Vaunthompsonia indermis	Bacteria
-Regional	Vaunthompsonia indermis	Sediment
-Regional	Camylaspis maculata	Bacillariophyta
-Regional	Diastylis mawsoni	Detritus
-Regional	Ekleptostylis debroyeri	Detritus
-Regional	Pentanymphon antarcticum	Bryozoa
-Regional	Pentanymphon antarcticum	Porifera
-Regional	Pentanymphon antarcticum	Gastropoda
-Regional	Pentanymphon antarcticum	Polychaeta
-Regional	Pentanymphon antarcticum	Ophiuroidea
-Regional	Pentanymphon antarcticum	Ctenophora
-Regional	Ammothea carolinensis	Bryozoa
-Regional	Ammothea carolinensis	Porifera
-Regional	Ammothea carolinensis	Gastropoda
-Regional	Ammothea carolinensis	Polychaeta
-Regional	Ammothea carolinensis	Ophiuroidea
-Regional	Ammothea carolinensis	Ctenophora
-Regional	Colossendeis sp.	Bryozoa
-Regional	Colossendeis sp.	Porifera
-Regional	Colossendeis sp.	Gastropoda
-Regional	Colossendeis sp.	Polychaeta
-Regional	Colossendeis sp.	Ophiuroidea
-Regional	Colossendeis sp.	Ctenophora
-Regional	Nymphon gracillimum	Bryozoa
-Regional	Nymphon gracillimum	Porifera
-Regional	Nymphon gracillimum	Gastropoda
-Regional	Nymphon gracillimum	Polychaeta
-Regional	Nymphon gracillimum	Ophiuroidea
-Regional	Nymphon gracillimum	Ctenophora
-Regional	Pelagobia longicirrata	Bacillariophyta
-Regional	Pelagobia longicirrata	Ostracoda
-Regional	Rhynchonereella bongraini	Bacillariophyta
-Regional	Rhynchonereella bongraini	Ostracoda
-Regional	Laetmonice producta	Detritus
-Regional	Laetmonice producta	Polychaeta
-Regional	Laetmonice producta	Crustacea
-Regional	Laetmonice producta	Amphipoda
-Regional	Laetmonice producta	Ophiuroidea
-Regional	Harmothoe spinosa	Holothuria
-Regional	Harmothoe spinosa	Detritus
-Regional	Harmothoe spinosa	Hydrozoa
-Regional	Harmothoe spinosa	Bryozoa
-Regional	Harmothoe spinosa	Gastropoda
-Regional	Harmothoe spinosa	Polychaeta
-Regional	Harmothoe spinosa	Pantopoda
-Regional	Harmothoe spinosa	Crustacea
-Regional	Harmothoe spinosa	Isopoda
-Regional	Harmothoe spinosa	Amphipoda
-Regional	Harmothoe spinosa	Ophiuroidea
-Regional	Harmothoe crosetensis	Detritus
-Regional	Harmothoe crosetensis	Polychaeta
-Regional	Harmothoe crosetensis	Crustacea
-Regional	Harmothoe crosetensis	Isopoda
-Regional	Harmothoe crosetensis	Amphipoda
-Regional	Harmothoe crosetensis	Holothuria
-Regional	Harmothoe crosetensis	Ophiuroidea
-Regional	Polyeunoa laevis 	Detritus
-Regional	Polyeunoa laevis 	Urticinopsis antarctica
-Regional	Polyeunoa laevis 	Anthozoa
-Regional	Polyeunoa laevis 	Crustacea
-Regional	Barrukia cristata	Detritus
-Regional	Barrukia cristata	Bivalvia
-Regional	Barrukia cristata	Polychaeta
-Regional	Barrukia cristata	Ophiuroidea
-Regional	Eulagisca gigantea	Detritus
-Regional	Eulagisca gigantea	Bryozoa
-Regional	Eulagisca gigantea	Pantopoda
-Regional	Eulagisca gigantea	Crustacea
-Regional	Eulagisca gigantea	Amphipoda
-Regional	Eulagisca gigantea	Ophiuroidea
-Regional	Eulagisca gigantea	Hydrozoa
-Regional	Eunoe spica	Detritus
-Regional	Eunoe spica	Bivalvia
-Regional	Eunoe spica	Polychaeta
-Regional	Eunoe spica	Pantopoda
-Regional	Eunoe spica	Crustacea
-Regional	Eunoe spica	Isopoda
-Regional	Eunoe spica	Holothuria
-Regional	Eunoe spica	Fish
-Regional	Eunoe spica	Amphipoda
-Regional	Eunoe hartmanae	Detritus
-Regional	Eunoe hartmanae	Hydrozoa
-Regional	Eunoe hartmanae	Bryozoa
-Regional	Eunoe hartmanae	Polychaeta
-Regional	Eunoe hartmanae	Ophiuroidea
-Regional	Eunoe hartmanae	Amphipoda
-Regional	Eunoe spica spicoides	Detritus
-Regional	Eunoe spica spicoides	Bryozoa
-Regional	Eunoe spica spicoides	Hydrozoa
-Regional	Eunoe spica spicoides	Bivalvia
-Regional	Eunoe spica spicoides	Gastropoda
-Regional	Eunoe spica spicoides	Polychaeta
-Regional	Eunoe spica spicoides	Pantopoda
-Regional	Eunoe spica spicoides	Crustacea
-Regional	Eunoe spica spicoides	Isopoda
-Regional	Eunoe spica spicoides	Amphipoda
-Regional	Eunoe spica spicoides	Holothuria
-Regional	Eunoe spica spicoides	Crinoidea
-Regional	Eunoe spica spicoides	Fish
-Regional	Eucranta mollis	Detritus
-Regional	Eucranta mollis	Crustacea
-Regional	Promachocrinus kerguelensis	Detritus
-Regional	Promachocrinus kerguelensis	Sediment
-Regional	Promachocrinus kerguelensis	Phytoplankton
-Regional	Anthometra adriani	Sediment
-Regional	Anthometra adriani	Detritus
-Regional	Anthometra adriani	Phytoplankton
-Regional	Acodontaster conspicuus	Homaxinella balfourensis
-Regional	Acodontaster conspicuus	Rossella racovitzae
-Regional	Acodontaster conspicuus	Scolymastra joubini
-Regional	Acodontaster conspicuus	Tetilla leptoderma
-Regional	Acodontaster conspicuus	Haliclona dancoi
-Regional	Acodontaster conspicuus	Mycale acerata
-Regional	Acodontaster conspicuus	Kirkpatrickia variolosa
-Regional	Bathybiaster loripes	Detritus
-Regional	Cuenotaster involutus	Detritus
-Regional	Diplasterias brucei	Yoldiella eightsi
-Regional	Diplasterias brucei	Gastropoda
-Regional	Diplasterias brucei	Detritus
-Regional	Luidiaster gerlachei	Ophiuroidea
-Regional	Luidiaster gerlachei	Detritus
-Regional	Labidiaster annulatus	Ophiuroidea
-Regional	Labidiaster annulatus	Gastropoda
-Regional	Labidiaster annulatus	Amphipoda
-Regional	Labidiaster annulatus	Bivalvia
-Regional	Labidiaster annulatus	Crinoidea
-Regional	Labidiaster annulatus	Polychaeta
-Regional	Labidiaster annulatus	Asteroidea
-Regional	Labidiaster annulatus	Isopoda
-Regional	Labidiaster annulatus	Echinoidea
-Regional	Lophaster gaini	Bivalvia
-Regional	Lophaster gaini	Adamussium colbecki
-Regional	Lophaster gaini	Yoldiella eightsi
-Regional	Notasterias armata	Bivalvia
-Regional	Notasterias armata	Adamussium colbecki
-Regional	Notasterias armata	Yoldiella eightsi
-Regional	Solaster sp.	Bivalvia
-Regional	Solaster sp.	Polychaeta
-Regional	Solaster sp.	Sediment
-Regional	Solaster sp.	Detritus
-Regional	Odontaster meridionalis	Porifera
-Regional	Odontaster meridionalis	Detritus
-Regional	Odontaster validus	Detritus
-Regional	Odontaster validus	Amphipoda
-Regional	Odontaster validus	Isopoda
-Regional	Odontaster validus	Glyptonotus antarcticus
-Regional	Odontaster validus	Asteroidea
-Regional	Odontaster validus	Adamussium colbecki
-Regional	Odontaster validus	Gastropoda
-Regional	Odontaster validus	Bivalvia
-Regional	Odontaster validus	Laternula elliptica
-Regional	Odontaster validus	Yoldiella eightsi
-Regional	Odontaster validus	Hydrozoa
-Regional	Odontaster validus	Ophiuroidea
-Regional	Odontaster validus	Bryozoa
-Regional	Odontaster validus	Porifera
-Regional	Odontaster validus	Homaxinella balfourensis
-Regional	Odontaster validus	Rossella racovitzae
-Regional	Odontaster validus	Rossella nuda
-Regional	Odontaster validus	Scolymastra joubini
-Regional	Odontaster validus	Tetilla leptoderma
-Regional	Odontaster validus	Ostracods
-Regional	Odontaster validus	Echinoidea
-Regional	Odontaster validus	Sterechinus neumayeri
-Regional	Odontaster validus	Polychaeta
-Regional	Odontaster validus	Bacillariophyta
-Regional	Pteraster affinis aculeatus	Adamussium colbecki
-Regional	Perknaster densus	Detritus
-Regional	Perknaster fuscus antarcticus	Detritus
-Regional	Perknaster fuscus antarcticus	Porifera
-Regional	Perknaster fuscus antarcticus	Tetilla leptoderma
-Regional	Perknaster fuscus antarcticus	Scolymastra joubini
-Regional	Perknaster fuscus antarcticus	Mycale acerata
-Regional	Macroptychaster accrescens	Asteroidea
-Regional	Macroptychaster accrescens	Odontaster validus
-Regional	Macroptychaster accrescens	Echinoidea
-Regional	Macroptychaster accrescens	Sterechinus neumayeri
-Regional	Macroptychaster accrescens	Ophiuroidea
-Regional	Macroptychaster accrescens	Gastropoda
-Regional	Macroptychaster accrescens	Bivalvia
-Regional	Lysasterias perrieri	Bivalvia
-Regional	Lysasterias perrieri	Ostracoda
-Regional	Lysasterias perrieri	Ophiuroidea
-Regional	Lysasterias perrieri	Detritus
-Regional	Psilaster charcoti	Detritus
-Regional	Psilaster charcoti	Sediment
-Regional	Psilaster charcoti	Ascidiacea
-Regional	Psilaster charcoti	Fish
-Regional	Porania antarctica 	Detritus
-Regional	Porania antarctica 	Bacillariophyta
-Regional	Porania antarctica 	Ostracoda
-Regional	Ophionotus victoriae	Bacillariophyta
-Regional	Ophionotus victoriae	Foraminifera
-Regional	Ophionotus victoriae	Porifera
-Regional	Ophionotus victoriae	Hydrozoa
-Regional	Ophionotus victoriae	Nematoda
-Regional	Ophionotus victoriae	Bivalvia
-Regional	Ophionotus victoriae	Polychaeta
-Regional	Ophionotus victoriae	Amphipoda
-Regional	Ophionotus victoriae	Mysidacea
-Regional	Ophionotus victoriae	Euphausiacea
-Regional	Ophionotus victoriae	Crustacea
-Regional	Ophionotus victoriae	Bryozoa
-Regional	Ophionotus victoriae	Ophiuroidea
-Regional	Ophionotus victoriae	Echinoidea
-Regional	Ophionotus victoriae	Urticinopsis antarctica
-Regional	Ophionotus victoriae	Anthozoa
-Regional	Ophionotus victoriae	Detritus
-Regional	Ophionotus victoriae	Sediment
-Regional	Ophioceres incipiens	Bacillariophyta
-Regional	Ophioceres incipiens	SilicioZooplanktons
-Regional	Ophioceres incipiens	Zooplankton
-Regional	Ophioceres incipiens	Foraminifera
-Regional	Ophioceres incipiens	Porifera
-Regional	Ophioceres incipiens	Polychaeta
-Regional	Ophioceres incipiens	Crustacea
-Regional	Ophioceres incipiens	Urticinopsis antarctica
-Regional	Ophioceres incipiens	Anthozoa
-Regional	Ophioceres incipiens	Sediment
-Regional	Ophioceres incipiens	Detritus
-Regional	Ophiurolepis brevirima	Bacillariophyta
-Regional	Ophiurolepis brevirima	SilicioZooplanktons
-Regional	Ophiurolepis brevirima	Zooplankton
-Regional	Ophiurolepis brevirima	Foraminifera
-Regional	Ophiurolepis brevirima	Porifera
-Regional	Ophiurolepis brevirima	Cnidaria
-Regional	Ophiurolepis brevirima	Bivalvia
-Regional	Ophiurolepis brevirima	Polychaeta
-Regional	Ophiurolepis brevirima	Eunoe spica
-Regional	Ophiurolepis brevirima	Ostracoda
-Regional	Ophiurolepis brevirima	Amphipoda
-Regional	Ophiurolepis brevirima	Euphausiacea
-Regional	Ophiurolepis brevirima	Crustacea
-Regional	Ophiurolepis brevirima	Bryozoa
-Regional	Ophiurolepis brevirima	Detritus
-Regional	Ophiurolepis brevirima	Sediment
-Regional	Ophiurolepis gelida	Bacillariophyta
-Regional	Ophiurolepis gelida	SilicioZooplanktons
-Regional	Ophiurolepis gelida	Zooplankton
-Regional	Ophiurolepis gelida	Foraminifera
-Regional	Ophiurolepis gelida	Porifera
-Regional	Ophiurolepis gelida	Nematoda
-Regional	Ophiurolepis gelida	Bivalvia
-Regional	Ophiurolepis gelida	Polychaeta
-Regional	Ophiurolepis gelida	Amphipoda
-Regional	Ophiurolepis gelida	Euphausiacea
-Regional	Ophiurolepis gelida	Crustacea
-Regional	Ophiurolepis gelida	Bryozoa
-Regional	Ophiurolepis gelida	Detritus
-Regional	Ophiurolepis gelida	Sediment
-Regional	Ophiosparte gigas	Bacillariophyta
-Regional	Ophiosparte gigas	Foraminifera
-Regional	Ophiosparte gigas	Porifera
-Regional	Ophiosparte gigas	Cnidaria
-Regional	Ophiosparte gigas	Nematoda
-Regional	Ophiosparte gigas	Gastropoda
-Regional	Ophiosparte gigas	Laternula elliptica
-Regional	Ophiosparte gigas	Bivalvia
-Regional	Ophiosparte gigas	Adamussium colbecki
-Regional	Ophiosparte gigas	Yoldiella eightsi
-Regional	Ophiosparte gigas	Polychaeta
-Regional	Ophiosparte gigas	Eunoe spica
-Regional	Ophiosparte gigas	Pantopoda
-Regional	Ophiosparte gigas	Ostracoda
-Regional	Ophiosparte gigas	Mysidacea
-Regional	Ophiosparte gigas	Isopoda
-Regional	Ophiosparte gigas	Amphipoda
-Regional	Ophiosparte gigas	Euphausia crystallorophias
-Regional	Ophiosparte gigas	Euphausia superba
-Regional	Ophiosparte gigas	Chorismus antarcticus
-Regional	Ophiosparte gigas	Bryozoa
-Regional	Ophiosparte gigas	Promachocrinus kerguelensis
-Regional	Ophiosparte gigas	Odontaster validus
-Regional	Ophiosparte gigas	Ophiurolepis gelida
-Regional	Ophiosparte gigas	Ophionotus victoriae
-Regional	Ophiosparte gigas	Ophiosparte gigas
-Regional	Ophiosparte gigas	Ophiacantha 
-Regional	Ophiosparte gigas	Ophiocten 
-Regional	Ophiosparte gigas	Ophiuroidea
-Regional	Ophiosparte gigas	Sterechinus neumayeri
-Regional	Ophiosparte gigas	Fish
-Regional	Ophiosparte gigas	Detritus
-Regional	Ophiosparte gigas	Sediment
-Regional	Ophioperla koehleri	Euphausiacea
-Regional	Ophioperla koehleri	Polychaeta
-Regional	Ophioperla koehleri	Ophiuroidea
-Regional	Ophioperla koehleri	Porifera
-Regional	Ophioperla koehleri	Crinoidea
-Regional	Ophioperla koehleri	Foraminifera
-Regional	Ophioperla koehleri	Copepoda
-Regional	Ophioperla koehleri	Echinoidea
-Regional	Ophiacantha antarctica	Copepoda
-Regional	Ophiacantha antarctica	Bacillariophyta
-Regional	Ophiacantha antarctica	Foraminifera
-Regional	Ophiacantha pentacis	Copepoda
-Regional	Ophiacantha vivipara	Copepoda
-Regional	Astrotoma agassizii	Bacillariophyta
-Regional	Astrotoma agassizii	SilicioZooplanktons
-Regional	Astrotoma agassizii	Zooplankton
-Regional	Astrotoma agassizii	Foraminifera
-Regional	Astrotoma agassizii	Porifera
-Regional	Astrotoma agassizii	Hydrozoa
-Regional	Astrotoma agassizii	Cnidaria
-Regional	Astrotoma agassizii	Bivalvia
-Regional	Astrotoma agassizii	Polychaeta
-Regional	Astrotoma agassizii	Ostracoda
-Regional	Astrotoma agassizii	Calanoides acutus
-Regional	Astrotoma agassizii	Calanus propinquus
-Regional	Astrotoma agassizii	Euchaeta antarctica
-Regional	Astrotoma agassizii	Mysidacea
-Regional	Astrotoma agassizii	Euphausiacea
-Regional	Astrotoma agassizii	Crustacea
-Regional	Astrotoma agassizii	Bryozoa
-Regional	Astrotoma agassizii	Eukrohnia hamata
-Regional	Astrotoma agassizii	Echinoidea
-Regional	Astrotoma agassizii	Holothuria
-Regional	Astrotoma agassizii	Fish
-Regional	Astrotoma agassizii	Sediment
-Regional	Astrotoma agassizii	Detritus
-Regional	Astrochlamys bruneus	Coelenterata
-Regional	Astrochlamys bruneus	Zooplankton
-Regional	Astrochlamys bruneus	Euchaeta antarctica
-Regional	Gorgonocephalus chiliensis	Copepoda
-Regional	Sterechinus neumayeri	Bryozoa
-Regional	Sterechinus neumayeri	Bacillariophyta
-Regional	Sterechinus neumayeri	Foraminifera
-Regional	Sterechinus neumayeri	Polychaeta
-Regional	Sterechinus neumayeri	Porifera
-Regional	Sterechinus neumayeri	Detritus
-Regional	Sterechinus antarcticus	Bryozoa
-Regional	Sterechinus antarcticus	Bacillariophyta
-Regional	Sterechinus antarcticus	Foraminifera
-Regional	Sterechinus antarcticus	Porifera
-Regional	Sterechinus antarcticus	Detritus
-Regional	Ctenocidaris gigantea	Bivalvia
-Regional	Ctenocidaris gigantea	Bryozoa
-Regional	Ctenocidaris gigantea	Crustacea
-Regional	Ctenocidaris gigantea	Zooplankton
-Regional	Ctenocidaris gigantea	Hydrozoa
-Regional	Ctenocidaris gigantea	Polychaeta
-Regional	Ctenocidaris gigantea	Porifera
-Regional	Ctenocidaris gigantea	Detritus
-Regional	Ctenocidaris spinosa	Yoldiella eightsi
-Regional	Ctenocidaris spinosa	Bryozoa
-Regional	Ctenocidaris spinosa	Zooplankton
-Regional	Ctenocidaris spinosa	Foraminifera
-Regional	Ctenocidaris spinosa	Hydrozoa
-Regional	Ctenocidaris spinosa	Polychaeta
-Regional	Ctenocidaris spinosa	Porifera
-Regional	Ctenocidaris spinosa	Detritus
-Regional	Notocidaris mortenseni	Bryozoa
-Regional	Notocidaris mortenseni	Zooplankton
-Regional	Notocidaris mortenseni	Hydrozoa
-Regional	Notocidaris mortenseni	Porifera
-Regional	Notocidaris mortenseni	Detritus
-Regional	Abatus curvidens	Detritus
-Regional	Abatus cavernosus 	Detritus
-Regional	Abatus nimrodi	Detritus
-Regional	Abatus shackeltoni	Detritus
-Regional	Austrocidaris canaliculata	Foraminifera
-Regional	Austrocidaris canaliculata	Gastropoda
-Regional	Aporocidaris milleri	Polychaeta
-Regional	Aporocidaris milleri	Foraminifera
-Regional	Aporocidaris milleri	Hydrozoa
-Regional	Aporocidaris milleri	Gastropoda
-Regional	Aporocidaris milleri	Amphipoda
-Regional	Ctenocidaris perrieri	Polychaeta
-Regional	Ctenocidaris perrieri	Bryozoa
-Regional	Ctenocidaris perrieri	Eunoe spica
-Regional	Ctenocidaris perrieri	Porifera
-Regional	Ctenocidaris perrieri	Foraminifera
-Regional	Ctenocidaris gilberti	Porifera
-Regional	Ctenocidaris gilberti	Foraminifera
-Regional	Ctenocidaris gilberti	Bryozoa
-Regional	Mesothuria lactea	Detritus
-Regional	Achlyonice violaecuspidata	Detritus
-Regional	Bathyplotes gourdoni	Detritus
-Regional	Bathyplotes bongraini	Detritus
-Regional	Scotoplanes globosa	Detritus
-Regional	Molpadia musculus	Detritus
-Regional	Ypsilocucumis turricata	Detritus
-Regional	Psolidium incertum	Detritus
-Regional	Trachythyone parva	Detritus
-Regional	Ekmocucumis steineni	Detritus
-Regional	Ekmocucumis steineni	Phytoplankton
-Regional	Abyssocucumis liouvillei	Detritus
-Regional	Abyssocucumis liouvillei	Phytoplankton
-Regional	Psolus dubiosus	Detritus
-Regional	Psolus dubiosus	Phytoplankton
-Regional	Psolus charcoti	Detritus
-Regional	Psolus charcoti	Phytoplankton
-Regional	Psolus antarcticus	Detritus
-Regional	Psolus antarcticus	Phytoplankton
-Regional	Echinopsolus acanthocola	Detritus
-Regional	Echinopsolus acanthocola	Phytoplankton
-Regional	Ekmocucumis turqueti	Detritus
-Regional	Ekmocucumis turqueti	Phytoplankton
-Regional	Taeniogyrus contortus	Detritus
-Regional	Taeniogyrus contortus	Phytoplankton
-Regional	Silicularia rosea	Bacillariophyta
-Regional	Silicularia rosea	Tintinnidae
-Regional	Silicularia rosea	Zooplankton
-Regional	Silicularia rosea	Nematoda
-Regional	Silicularia rosea	Detritus
-Regional	Silicularia rosea	Crustacea
-Regional	Tubularia ralphii	Copepoda
-Regional	Tubularia ralphii	Zooplankton
-Regional	Tubularia ralphii	Detritus
-Regional	Oswaldella antarctica	Bacillariophyta
-Regional	Monocaulus parvula	Bacillariophyta
-Regional	Monocaulus parvula	Amphipoda
-Regional	Monocaulus parvula	Copepoda
-Regional	Monocaulus parvula	Zooplankton
-Regional	Monocaulus parvula	Hydrozoa
-Regional	Monocaulus parvula	Detritus
-Regional	Bargmannia sp.	Euphausiacea
-Regional	Bargmannia sp.	Zooplankton
-Regional	Solmundella bitentaculata	Pteropoda
-Regional	Solmundella bitentaculata	Limacina helicina 
-Regional	Solmundella bitentaculata	Salpa thompsoni
-Regional	Solmundella bitentaculata	Eukrohnia hamata
-Regional	Solmundella bitentaculata	Polychaeta
-Regional	Solmundella bitentaculata	Euphausiacea
-Regional	Dipulmaris antarctica	Copepoda
-Regional	Dipulmaris antarctica	Zooplankton
-Regional	Dipulmaris antarctica	Ctenophora
-Regional	Dipulmaris antarctica	Pteropoda
-Regional	Dipulmaris antarctica	Limacina helicina 
-Regional	Dipulmaris antarctica	Clione antarctica
-Regional	Desmonema glaciale	Euphausiacea
-Regional	Desmonema glaciale	Fish
-Regional	Desmonema glaciale	Asteroidea
-Regional	Desmonema glaciale	Odontaster validus
-Regional	Desmonema glaciale	Nemertini
-Regional	Urticinopsis antarctica	Asteroidea
-Regional	Urticinopsis antarctica	Odontaster validus
-Regional	Urticinopsis antarctica	Perknaster fuscus
-Regional	Urticinopsis antarctica	Diplasterias brucei
-Regional	Urticinopsis antarctica	Echinoidea
-Regional	Urticinopsis antarctica	Sterechinus neumayeri
-Regional	Isotealia antarctica	Bacillariophyta
-Regional	Isotealia antarctica	Copepoda
-Regional	Isotealia antarctica	Polychaeta
-Regional	Isotealia antarctica	Ctenophora
-Regional	Isotealia antarctica	Eunoe spica
-Regional	Edwardsia meridionalis	Bacillariophyta
-Regional	Edwardsia meridionalis	Copepoda
-Regional	Edwardsia meridionalis	Zooplankton
-Regional	Edwardsia meridionalis	Polychaeta
-Regional	Edwardsia meridionalis	Tanaidacea
-Regional	Edwardsia meridionalis	Detritus
-Regional	Primnoisis antarctica	Zooplankton
-Regional	Primnoisis antarctica	Phytoplankton
-Regional	Gersemia antarctica	Bacillariophyta
-Regional	Gersemia antarctica	Foraminifera
-Regional	Gersemia antarctica	Detritus
-Regional	Clavularia frankliniana	Bacillariophyta
-Regional	Clavularia frankliniana	Foraminifera
-Regional	Clavularia frankliniana	Phytoplankton
-Regional	Clavularia frankliniana	Nematoda
-Regional	Clavularia frankliniana	Zooplankton
-Regional	Primnoella sp.	Phytoplankton
-Regional	Primnoella sp.	Detritus
-Regional	Alcyonium antarcticum	Phytoplankton
-Regional	Anthomastus bathyproctus	Bacillariophyta
-Regional	Anthomastus bathyproctus	Detritus
-Regional	Anthomastus bathyproctus	Salpa thompsoni
-Regional	Nuttallochiton mirandus	Bryozoa
-Regional	Nuttallochiton mirandus	Porifera
-Regional	Nuttallochiton mirandus	Foraminifera
-Regional	Callochiton gaussi	Bryozoa
-Regional	Notaeolidia gigas	Hydrozoa
-Regional	Notaeolidia gigas	Tubularia
-Regional	Notaeolidia gigas	Urticinopsis antarctica
-Regional	Notaeolidia gigas	Anthozoa
-Regional	Notaeolidia gigas	Clavularia frankliniana
-Regional	Doris kerguelenensis	Rossella racovitzae
-Regional	Doris kerguelenensis	Rossella nuda
-Regional	Doris kerguelenensis	Scolymastra joubini
-Regional	Doris kerguelenensis	Tetilla leptoderma
-Regional	Doris kerguelenensis	Haliclona dancoi
-Regional	Doris kerguelenensis	Mycale acerata
-Regional	Doris kerguelenensis	Polymastia invaginata
-Regional	Doris kerguelenensis	Haliclona tenella
-Regional	Doris kerguelenensis	Calyx arcuarius
-Regional	Doris kerguelenensis	Isodyctia steifera
-Regional	Trophon longstaffi	Bivalvia
-Regional	Trophon longstaffi	Yoldiella eightsi
-Regional	Tritonia antarctica	Sediment
-Regional	Tritonia antarctica	Cephalodiscus
-Regional	Aegires albus	Porifera
-Regional	Bathydoris clavigera	Porifera
-Regional	Bathydoris clavigera	Echinoidea
-Regional	Bathydoris clavigera	Urticinopsis antarctica
-Regional	Bathydoris clavigera	Anthozoa
-Regional	Bathydoris clavigera	Foraminifera
-Regional	Bathydoris clavigera	Hydrozoa
-Regional	Bathydoris clavigera	Sediment
-Regional	Tritoniella belli	Ascidiacea
-Regional	Tritoniella belli	Porifera
-Regional	Tritoniella belli	Bryozoa
-Regional	Tritoniella belli	Cephalodiscus
-Regional	Tritoniella belli	Detritus
-Regional	Harpovoluta charcoti	Phytoplankton
-Regional	Puncturella conica	Porifera
-Regional	Puncturella conica	Foraminifera
-Regional	Puncturella conica	Bryozoa
-Regional	Puncturella conica	Bacillariophyta
-Regional	Puncturella conica	Sediment
-Regional	Neobuccinum eatoni	Bivalvia
-Regional	Neobuccinum eatoni	Adamussium colbecki
-Regional	Neobuccinum eatoni	Laternula elliptica
-Regional	Neobuccinum eatoni	Crustacea
-Regional	Neobuccinum eatoni	Fish
-Regional	Marseniopsis mollis	Yoldiella eightsi
-Regional	Marseniopsis mollis	Cnemidocarpa verrucosa
-Regional	Parmaphorella mawsoni	Sediment
-Regional	Parmaphorella mawsoni	Bacillariophyta
-Regional	Parmaphorella mawsoni	Porifera
-Regional	Parmaphorella mawsoni	Detritus
-Regional	Amauropis rossiana	Philobrya sublaevis
-Regional	Amauropis rossiana	Trophon longstaffi
-Regional	Amauropis rossiana	Cyclocardia astartoides
-Regional	Amauropis rossiana	Euphausia superba
-Regional	Pontiothauma ergata	Nemertini
-Regional	Cylichna sp.	Polychaeta
-Regional	Cylichna sp.	Scaphopoda
-Regional	Clione limacina	Limacina helicina 
-Regional	Clione limacina	Clione antarctica
-Regional	Clione antarctica	Limacina helicina 
-Regional	Clione antarctica	Clione antarctica
-Regional	Clio pyramidata	Copepoda
-Regional	Clio pyramidata	Oithona
-Regional	Clio pyramidata	Pelegobia longicirrata
-Regional	Clio pyramidata	Gnathia calva
-Regional	Limacina helicina antarctica	Zooplankton
-Regional	Pareledone charcoti	Yoldiella eightsi
-Regional	Pareledone charcoti	Crustacea
-Regional	Pareledone charcoti	Fish
-Regional	Pareledone charcoti	Polychaeta
-Regional	Pareledone charcoti	Eukrohnia hamata
-Regional	Pareledone charcoti	Siphonophora
-Regional	Pareledone charcoti	Glyptonotus antarcticus
-Regional	Pareledone charcoti	Sterechinus neumayeri
-Regional	Pareledone antarctica	Isopoda
-Regional	Psychroteuthis glacialis 	Chionodraco hamatus
-Regional	Psychroteuthis glacialis 	Chaenodraco wilsoni
-Regional	Psychroteuthis glacialis 	Crustacea
-Regional	Psychroteuthis glacialis 	Fish
-Regional	Psychroteuthis glacialis 	Myctophidae
-Regional	Psychroteuthis glacialis 	Euphausia superba
-Regional	Psychroteuthis glacialis 	Pleuragramma antarcticum
-Regional	Psychroteuthis glacialis 	Psychroteuthis glacialis
-Regional	Moroteuthis ingens	Copepoda
-Regional	Moroteuthis ingens	Epimeria robusta
-Regional	Moroteuthis ingens	Squid
-Regional	Moroteuthis ingens	Myctophidae
-Regional	Moroteuthis ingens	Electrona antarctica
-Regional	Moroteuthis ingens	Cyllopus lucasii
-Regional	Alluroteuthis antarcticus	Euphausia superba
-Regional	Alluroteuthis antarcticus	Pleuragramma antarcticum
-Regional	Alluroteuthis antarcticus	Psychroteuthis glacialis
-Regional	Galiteuthis glacialis	Euphausia superba
-Regional	Kondakovia longimama	Euphausia superba
-Regional	Gonatus antarcticus	Cyllopus lucasii
-Regional	Gonatus antarcticus	Fish
-Regional	Gonatus antarcticus	Euphausia superba
-Regional	Mesonychoteuthis hamiltoni	Squid
-Regional	Mesonychoteuthis hamiltoni	Eukrohnia hamata
-Regional	Martialia hyadesi	Euphausia superba
-Regional	Martialia hyadesi	Gonatus antarcticus
-Regional	Martialia hyadesi	Gymnoscopelus nicholsi
-Regional	Martialia hyadesi	Chionodraco hamatus
-Regional	Martialia hyadesi	Protomyctophum bolini
-Regional	Martialia hyadesi	Psychroteuthis glacialis
-Regional	Cyclocardia astartoides	Bacillariophyta
-Regional	Cyclocardia astartoides	Detritus
-Regional	Yolida eightsi	Detritus
-Regional	Yolida eightsi	Bacillariophyta
-Regional	Laternula elliptica	Bacillariophyta
-Regional	Laternula elliptica	Detritus
-Regional	Limopsis lillei	Bacillariophyta
-Regional	Limopsis lillei	Detritus
-Regional	Limopsis marionensis	Bacillariophyta
-Regional	Limopsis marionensis	Detritus
-Regional	Lissarca notorcadensis	Bacillariophyta
-Regional	Lissarca notorcadensis	Detritus
-Regional	Propeleda longicaudata	Bacillariophyta
-Regional	Propeleda longicaudata	Detritus
-Regional	Cadulus (polychides) dalli antarcticum	Bacillariophyta
-Regional	Cadulus (polychides) dalli antarcticum	Detritus
-Regional	Dentalium (Fissidentalium) majorinum	Bacillariophyta
-Regional	Dentalium (Fissidentalium) majorinum	Detritus
-Regional	Cinachyra antarctica	Bacteria
-Regional	Cinachyra antarctica	Phytoplankton
-Regional	Cinachyra antarctica	Detritus
-Regional	Cinachyra barbata	Bacteria
-Regional	Cinachyra barbata	Phytoplankton
-Regional	Cinachyra barbata	Detritus
-Regional	Iophon radiatus	Bacteria
-Regional	Iophon radiatus	Phytoplankton
-Regional	Iophon radiatus	Detritus
-Regional	Kirkpatrickia variolosa	Bacteria
-Regional	Kirkpatrickia variolosa	Phytoplankton
-Regional	Kirkpatrickia variolosa	Detritus
-Regional	Rossella racovitzae	Bacteria
-Regional	Rossella racovitzae	Phytoplankton
-Regional	Rossella racovitzae	Detritus
-Regional	Stylocordyla borealis	Bacteria
-Regional	Stylocordyla borealis	Phytoplankton
-Regional	Stylocordyla borealis	Detritus
-Regional	Homaxinella balfourensis	Bacteria
-Regional	Homaxinella balfourensis	Phytoplankton
-Regional	Homaxinella balfourensis	Detritus
-Regional	Scolymastra joubini	Bacteria
-Regional	Scolymastra joubini	Phytoplankton
-Regional	Scolymastra joubini	Detritus
-Regional	Tetilla leptoderma	Bacteria
-Regional	Tetilla leptoderma	Phytoplankton
-Regional	Tetilla leptoderma	Detritus
-Regional	Haliclona dancoi	Bacteria
-Regional	Haliclona dancoi	Phytoplankton
-Regional	Haliclona dancoi	Detritus
-Regional	Mycale acerata	Bacteria
-Regional	Mycale acerata	Phytoplankton
-Regional	Mycale acerata	Detritus
-Regional	Rossella antarctica	Bacteria
-Regional	Rossella antarctica	Phytoplankton
-Regional	Rossella antarctica	Detritus
-Regional	Haliclona tenella	Bacteria
-Regional	Haliclona tenella	Phytoplankton
-Regional	Haliclona tenella	Detritus
-Regional	Calyx arcuarius	Bacteria
-Regional	Calyx arcuarius	Phytoplankton
-Regional	Calyx arcuarius	Detritus
-Regional	Isodyctia steifera	Bacteria
-Regional	Isodyctia steifera	Phytoplankton
-Regional	Isodyctia steifera	Detritus
-Regional	Axociella nidificata	Bacteria
-Regional	Axociella nidificata	Phytoplankton
-Regional	Axociella nidificata	Detritus
-Regional	Rossella nuda	Bacteria
-Regional	Rossella nuda	Phytoplankton
-Regional	Rossella nuda	Detritus
-Regional	Beroe cucumis	Ctenophora
-Regional	Beroe cucumis	Pelegobia longicirrata
-Regional	Lyrocteis flavopallidus	Phytoplankton
-Regional	Mertensiid ctenophore	Pteropoda
-Regional	Mertensiid ctenophore	Clione antarctica
-Regional	Mertensiid ctenophore	Zooplankton
-Regional	Mertensiid ctenophore	Copepoda
-Regional	Mertensiid ctenophore	Euchaeta antarctica
-Regional	Mertensiid ctenophore	Mysidacea
-Regional	Callianira antarctica	Zooplankton
-Regional	Callianira antarctica	Copepoda
-Regional	Baseodiscus antarcticus	Porifera
-Regional	Baseodiscus antarcticus	Homaxinella balfourensis
-Regional	Baseodiscus antarcticus	Bacillariophyta
-Regional	Baseodiscus antarcticus	Polychaeta
-Regional	Baseodiscus antarcticus	Fish
-Regional	Baseodiscus antarcticus	Actinaria
-Regional	Baseodiscus antarcticus	Asteroidea
-Regional	Baseodiscus antarcticus	Ctenophora
-Regional	Baseodiscus antarcticus	Crustacea
-Regional	Baseodiscus antarcticus	Bivalvia
-Regional	Baseodiscus antarcticus	Adamussium colbecki
-Regional	Lineus longifissus	Homaxinella balfourensis
-Regional	Lineus longifissus	Bacillariophyta
-Regional	Lineus longifissus	Polychaeta
-Regional	Lineus longifissus	Fish
-Regional	Lineus longifissus	Actinaria
-Regional	Lineus longifissus	Asteroidea
-Regional	Lineus longifissus	Ctenophora
-Regional	Lineus longifissus	Crustacea
-Regional	Lineus longifissus	Bivalvia
-Regional	Lineus longifissus	Adamussium colbecki
-Regional	Lineus longifissus	Porifera
-Regional	Parborlasia corrugatus	Homaxinella balfourensis
-Regional	Parborlasia corrugatus	Bacillariophyta
-Regional	Parborlasia corrugatus	Polychaeta
-Regional	Parborlasia corrugatus	Fish
-Regional	Parborlasia corrugatus	Actinaria
-Regional	Parborlasia corrugatus	Asteroidea
-Regional	Parborlasia corrugatus	Ctenophora
-Regional	Parborlasia corrugatus	Crustacea
-Regional	Parborlasia corrugatus	Bivalvia
-Regional	Parborlasia corrugatus	Adamussium colbecki
-Regional	Phascolion strombi	Detritus
-Regional	Golfingia nordenskojoeldi	Detritus
-Regional	Golfingia mawsoni	Detritus
-Regional	Golfingia ohlini	Detritus
-Regional	Golfingia anderssoni	Detritus
-Regional	Golfingia margaritacea margaritacea	Detritus
-Regional	Alomasoma belyaevi	Detritus
-Regional	Echiurus antarcticus	Detritus
-Regional	Hamingia sp.	Detritus
-Regional	Maxmuelleria faex	Detritus
-Regional	Alcyonidium sp.	Nanoplankton
-Regional	Alcyonidium sp.	Bacillariophyta
-Regional	Alcyonidium sp.	Detritus
-Regional	Camptoplites tricornis	Nanoplankton
-Regional	Camptoplites tricornis	Bacillariophyta
-Regional	Camptoplites tricornis	Detritus
-Regional	Nematroflustra flagellata	Nanoplankton
-Regional	Nematroflustra flagellata	Bacillariophyta
-Regional	Nematroflustra flagellata	Detritus
-Regional	Cellarinella sp.	Nanoplankton
-Regional	Cellarinella sp.	Bacillariophyta
-Regional	Cellarinella sp.	Detritus
-Regional	Melicerita obliqua	Nanoplankton
-Regional	Melicerita obliqua	Bacillariophyta
-Regional	Melicerita obliqua	Detritus
-Regional	Systenopora contracta	Nanoplankton
-Regional	Systenopora contracta	Bacillariophyta
-Regional	Systenopora contracta	Detritus
-Regional	Reteporella hippocrepis	Nanoplankton
-Regional	Reteporella hippocrepis	Bacillariophyta
-Regional	Reteporella hippocrepis	Detritus
-Regional	Pemmatoporella sp.	Nanoplankton
-Regional	Pemmatoporella sp.	Bacillariophyta
-Regional	Pemmatoporella sp.	Detritus
-Regional	Isoschizoporella tricuspis	Nanoplankton
-Regional	Isoschizoporella tricuspis	Bacillariophyta
-Regional	Isoschizoporella tricuspis	Detritus
-Regional	Bostrychopora dentata	Nanoplankton
-Regional	Bostrychopora dentata	Bacillariophyta
-Regional	Bostrychopora dentata	Detritus
-Regional	Liothyrella uva	Detritus
-Regional	Magellania joubini	Detritus
-Regional	Magellania fragilis	Detritus
-Regional	Crania lecointei	Detritus
-Regional	Composothyris racovitzae	Detritus
-Regional	Liothyrella uva antarctica	Detritus
-Regional	Eukrohnia hamata	Copepoda
-Regional	Eukrohnia hamata	Calanus propinquus
-Regional	Eukrohnia hamata	Metridia gerlachei
-Regional	Sagitta gazellae	Euchaeta antarctica
-Regional	Sagitta gazellae	Metridia gerlachei
-Regional	Sagitta marri	Copepoda
-Regional	Sagitta marri	Oithona sp.
-Regional	Sagitta marri	Onacea sp.
-Regional	Sagitta marri	Metridia gerlachei
-Regional	Sagitta marri	Ostracoda
-Regional	Sagitta marri	Pelegobia longicirrata
-Regional	Cephalodiscus sp.	Detritus
-Regional	Molgula pedunculata	Bacillariophyta
-Regional	Molgula pedunculata	Detritus
-Regional	Molgula pedunculata	Nanoplankton
-Regional	Molgula pedunculata	Bacteria
-Regional	Ascidia challengeri	Bacillariophyta
-Regional	Ascidia challengeri	Detritus
-Regional	Ascidia challengeri	Nanoplankton
-Regional	Ascidia challengeri	Bacteria
-Regional	Corella eumyota	Bacillariophyta
-Regional	Corella eumyota	Detritus
-Regional	Corella eumyota	Nanoplankton
-Regional	Corella eumyota	Bacteria
-Regional	Aplidium vastum 	Bacillariophyta
-Regional	Aplidium vastum 	Detritus
-Regional	Aplidium vastum 	Nanoplankton
-Regional	Aplidium vastum 	Bacteria
-Regional	Synoicum adareanum	Bacillariophyta
-Regional	Synoicum adareanum	Detritus
-Regional	Synoicum adareanum	Nanoplankton
-Regional	Synoicum adareanum	Bacteria
-Regional	Cnemidocarpa verrucosa	Bacillariophyta
-Regional	Cnemidocarpa verrucosa	Detritus
-Regional	Cnemidocarpa verrucosa	Nanoplankton
-Regional	Cnemidocarpa verrucosa	Bacteria
-Regional	Salpa thompsoni	Bacillariophyta
-Regional	Salpa thompsoni	SilicioZooplanktons
-Regional	Salpa thompsoni	Zooplankton
-Regional	Salpa thompsoni	Tintinnidae
-Regional	Salpa thompsoni	Foraminifera
-Regional	Salpa thompsoni	Phytoplankton
-Regional	Salpa thompsoni	Detritus
-Regional	Salpa thompsoni	Copepoda
-Regional	Salpa thompsoni	Oithona
-Regional	Salpa thompsoni	Onacea
-Regional	Salpa thompsoni	Euchaeta antarctica
-Regional	Salpa thompsoni	Calanus propinquus
-Regional	Salpa thompsoni	Metridia gerlachei
-Regional	Salpa thompsoni	Limacina helicina 
-Regional	Salpa thompsoni	Pelegobia longicirrata
-Regional	Salpa thompsoni	Eukrohnia hamata
-Regional	Salpa gerlachei	Phytoplankton
-Regional	Salpa gerlachei	Bacillariophyta
-Regional	Ihlea racovitzai	Phytoplankton
-Regional	Ihlea racovitzai	Bacillariophyta
-Regional	Artedidraco orianae	Epimeria macrodonta
-Regional	Artedidraco orianae	Epimeria robusta
-Regional	Artedidraco orianae	Iphimediella cyclogena
-Regional	Artedidraco orianae	Liljeborgia georgiana
-Regional	Artedidraco orianae	Cyllopus lucasii
-Regional	Artedidraco orianae	Copepoda
-Regional	Artedidraco orianae	Gnathia calva
-Regional	Artedidraco orianae	Isopoda
-Regional	Artedidraco orianae	Natatolana obtusata
-Regional	Artedidraco orianae	Euphausiacea
-Regional	Artedidraco orianae	Ostracoda
-Regional	Artedidraco orianae	Pantopoda
-Regional	Artedidraco orianae	Polychaeta
-Regional	Artedidraco orianae	Eunoe spica
-Regional	Artedidraco loennbergi	Crustacea
-Regional	Artedidraco loennbergi	Amphipoda
-Regional	Artedidraco loennbergi	Isopoda
-Regional	Artedidraco loennbergi	Tanaidacea
-Regional	Artedidraco loennbergi	Cumacea
-Regional	Artedidraco loennbergi	Copepoda
-Regional	Artedidraco loennbergi	Polychaeta
-Regional	Artedidraco loennbergi	Gastropoda
-Regional	Artedidraco loennbergi	Actinaria
-Regional	Artedidraco shackletoni	Crustacea
-Regional	Artedidraco shackletoni	Isopoda
-Regional	Artedidraco shackletoni	Polychaeta
-Regional	Artedidraco skottsbergi	Crustacea
-Regional	Artedidraco skottsbergi	Amphipoda
-Regional	Artedidraco skottsbergi	Isopoda
-Regional	Artedidraco skottsbergi	Cumacea
-Regional	Artedidraco skottsbergi	Ostracoda
-Regional	Artedidraco skottsbergi	Polychaeta
-Regional	Artedidraco skottsbergi	Gastropoda
-Regional	Artedidraco skottsbergi	Urticinopsis antarctica
-Regional	Artedidraco skottsbergi	Anthozoa
-Regional	Dolloidraco longedorsalis	Crustacea
-Regional	Dolloidraco longedorsalis	Amphipoda
-Regional	Dolloidraco longedorsalis	Isopoda
-Regional	Dolloidraco longedorsalis	Tanaidacea
-Regional	Dolloidraco longedorsalis	Mysidacea
-Regional	Dolloidraco longedorsalis	Euphausiacea
-Regional	Dolloidraco longedorsalis	Cumacea
-Regional	Dolloidraco longedorsalis	Ostracoda
-Regional	Dolloidraco longedorsalis	Copepoda
-Regional	Dolloidraco longedorsalis	Polychaeta
-Regional	Dolloidraco longedorsalis	Bivalvia
-Regional	Dolloidraco longedorsalis	Gastropoda
-Regional	Dolloidraco longedorsalis	Scaphopoda
-Regional	Dolloidraco longedorsalis	Hydrozoa
-Regional	Dolloidraco longedorsalis	Urticinopsis antarctica
-Regional	Dolloidraco longedorsalis	Anthozoa
-Regional	Dolloidraco longedorsalis	Actinaria
-Regional	Pogonophryne marmorata	Epimeria macrodonta
-Regional	Pogonophryne marmorata	Epimeria robusta
-Regional	Pogonophryne marmorata	Iphimediella cyclogena
-Regional	Pogonophryne marmorata	Liljeborgia georgiana
-Regional	Pogonophryne marmorata	Cyllopus lucasii
-Regional	Pogonophryne marmorata	Isopoda
-Regional	Pogonophryne marmorata	Zooplankton
-Regional	Pogonophryne marmorata	Euphausiacea
-Regional	Pogonophryne marmorata	Polychaeta
-Regional	Pogonophryne phyllopogon	Crustacea
-Regional	Pogonophryne phyllopogon	Amphipoda
-Regional	Pogonophryne phyllopogon	Isopoda
-Regional	Pogonophryne phyllopogon	Mysidacea
-Regional	Pogonophryne phyllopogon	Polychaeta
-Regional	Pogonophryne phyllopogon	Crinoidea
-Regional	Pogonophryne permitini	Crustacea
-Regional	Pogonophryne permitini	Amphipoda
-Regional	Pogonophryne permitini	Isopoda
-Regional	Pogonophryne permitini	Mysidacea
-Regional	Pogonophryne permitini	Polychaeta
-Regional	Pogonophryne permitini	Hydrozoa
-Regional	Pogonophryne permitini	Scaphopoda
-Regional	Pogonophryne scotti	Fish
-Regional	Pogonophryne barsukovi	Fish
-Regional	Cygnodraco mawsoni	Crustacea
-Regional	Cygnodraco mawsoni	Amphipoda
-Regional	Cygnodraco mawsoni	Decapoda
-Regional	Cygnodraco mawsoni	Mysidacea
-Regional	Cygnodraco mawsoni	Euphausia crystallorophias
-Regional	Cygnodraco mawsoni	Pteropoda
-Regional	Cygnodraco mawsoni	Fish
-Regional	Gerlachea australis	Crustacea
-Regional	Gerlachea australis	Amphipoda
-Regional	Gerlachea australis	Mysidacea
-Regional	Gerlachea australis	Euphausiacea
-Regional	Gerlachea australis	Euphausia crystallorophias
-Regional	Gymnodraco acuticeps	Euphausiacea
-Regional	Gymnodraco acuticeps	Amphipoda
-Regional	Gymnodraco acuticeps	Polychaeta
-Regional	Gymnodraco acuticeps	Zooplankton
-Regional	Gymnodraco acuticeps	Fish
-Regional	Prionodraco evansii	Copepoda
-Regional	Prionodraco evansii	Euphausiacea
-Regional	Prionodraco evansii	Eukrohnia hamata
-Regional	Prionodraco evansii	Mysidacea
-Regional	Prionodraco evansii	Cumacea
-Regional	Prionodraco evansii	Isopoda
-Regional	Prionodraco evansii	Amphipoda
-Regional	Prionodraco evansii	Ostracoda
-Regional	Prionodraco evansii	Polychaeta
-Regional	Racovitzia glacialis	Amphipoda
-Regional	Racovitzia glacialis	Isopoda
-Regional	Racovitzia glacialis	Tanaidacea
-Regional	Racovitzia glacialis	Mysidacea
-Regional	Racovitzia glacialis	Polychaeta
-Regional	Racovitzia glacialis	Fish
-Regional	Chaenodraco wilsoni	Euphausiacea
-Regional	Chaenodraco wilsoni	Mysidacea
-Regional	Chionodraco hamatus	Euphausiacea
-Regional	Chionodraco hamatus	Copepoda
-Regional	Chionodraco hamatus	Fish
-Regional	Chionodraco myersi	Euphausiacea
-Regional	Chionodraco myersi	Fish
-Regional	Cryodraco antarcticus	Euphausiacea
-Regional	Cryodraco antarcticus	Pleuragramma antarcticum
-Regional	Dacodraco hunteri	Nototheniidae
-Regional	Pagetopsis maculatus	Crustacea
-Regional	Pagetopsis maculatus	Euphausiacea
-Regional	Pagetopsis maculatus	Euphausia crystallorophias
-Regional	Pagetopsis maculatus	Euphausia superba
-Regional	Pagetopsis maculatus	Fish
-Regional	Aethotaxis mitopteryx	Crustacea
-Regional	Aethotaxis mitopteryx	Amphipoda
-Regional	Aethotaxis mitopteryx	Isopoda
-Regional	Aethotaxis mitopteryx	Mysidacea
-Regional	Aethotaxis mitopteryx	Cumacea
-Regional	Aethotaxis mitopteryx	Copepoda
-Regional	Aethotaxis mitopteryx	Polychaeta
-Regional	Dissostichus mawsoni	Fish
-Regional	Dissostichus mawsoni	Myctophidae
-Regional	Dissostichus mawsoni	Bathylagus antarcticus
-Regional	Dissostichus mawsoni	Nototheniidae
-Regional	Dissostichus mawsoni	Dissostichus mawsoni
-Regional	Dissostichus mawsoni	Harpagifer antarcticus
-Regional	Dissostichus mawsoni	Macrourus whitsoni
-Regional	Dissostichus mawsoni	Octopoda
-Regional	Dissostichus mawsoni	Galiteuthis glacialis
-Regional	Dissostichus mawsoni	Gonatus antarcticus
-Regional	Dissostichus mawsoni	Kondakovia longimama
-Regional	Dissostichus mawsoni	Moroteuthis ingens
-Regional	Dissostichus mawsoni	Vampryoteuthis
-Regional	Dissostichus mawsoni	Crustacea
-Regional	Dissostichus mawsoni	Amphipoda
-Regional	Trematomus eulepidotus	Zooplankton
-Regional	Trematomus eulepidotus	Fish
-Regional	Trematomus eulepidotus	Isopoda
-Regional	Trematomus eulepidotus	Cyllopus lucasii
-Regional	Trematomus eulepidotus	Amphipoda
-Regional	Trematomus eulepidotus	Epimeria robusta
-Regional	Trematomus eulepidotus	Mysidacea
-Regional	Trematomus eulepidotus	Euphausia superba
-Regional	Trematomus eulepidotus	Euphausia crystallorophias
-Regional	Trematomus eulepidotus	Copepoda
-Regional	Trematomus eulepidotus	Metridia gerlachei
-Regional	Trematomus eulepidotus	Euchaeta antarctica
-Regional	Trematomus eulepidotus	Oncea curvata
-Regional	Trematomus eulepidotus	Ostracoda
-Regional	Trematomus eulepidotus	Crustacea
-Regional	Trematomus eulepidotus	Polychaeta
-Regional	Trematomus eulepidotus	Gastropoda
-Regional	Trematomus lepidorhinus 	Isopoda
-Regional	Trematomus lepidorhinus 	Amphipoda
-Regional	Trematomus lepidorhinus 	Epimeria robusta
-Regional	Trematomus lepidorhinus 	Mysidacea
-Regional	Trematomus lepidorhinus 	Mysida
-Regional	Trematomus lepidorhinus 	Decapoda
-Regional	Trematomus lepidorhinus 	Euphausia crystallorophias
-Regional	Trematomus lepidorhinus 	Euphausia superba
-Regional	Trematomus lepidorhinus 	Copepoda
-Regional	Trematomus lepidorhinus 	Metridia gerlachei
-Regional	Trematomus lepidorhinus 	Ostracoda
-Regional	Trematomus lepidorhinus 	Crustacea
-Regional	Trematomus lepidorhinus 	Polychaeta
-Regional	Trematomus lepidorhinus 	Eunoe spica
-Regional	Trematomus lepidorhinus 	Laternula elliptica
-Regional	Trematomus lepidorhinus 	Gastropoda
-Regional	Trematomus loennbergii	Crustacea
-Regional	Trematomus loennbergii	Amphipoda
-Regional	Trematomus loennbergii	Isopoda
-Regional	Trematomus loennbergii	Mysidacea
-Regional	Trematomus loennbergii	Euphausia crystallorophias
-Regional	Trematomus loennbergii	Euphausia superba
-Regional	Trematomus loennbergii	Cumacea
-Regional	Trematomus loennbergii	Copepoda
-Regional	Trematomus loennbergii	Polychaeta
-Regional	Trematomus loennbergii	Gastropoda
-Regional	Trematomus loennbergii	Pteropoda
-Regional	Trematomus loennbergii	Cyllopus lucasii
-Regional	Trematomus loennbergii	Eukrohnia hamata
-Regional	Trematomus loennbergii	Fish
-Regional	Trematomus loennbergii	Bryozoa
-Regional	Trematomus loennbergii	Salpa thompsoni
-Regional	Trematomus nicolai	Isopoda
-Regional	Trematomus nicolai	Tanaidacea
-Regional	Trematomus nicolai	Amphipoda
-Regional	Trematomus nicolai	Epimeria robusta
-Regional	Trematomus nicolai	Mysidacea
-Regional	Trematomus nicolai	Mysida
-Regional	Trematomus nicolai	Euphausia superba
-Regional	Trematomus nicolai	Euphausia crystallorophias
-Regional	Trematomus nicolai	Copepoda
-Regional	Trematomus nicolai	Calanoides acutus
-Regional	Trematomus nicolai	Metridia gerlachei
-Regional	Trematomus nicolai	Crustacea
-Regional	Trematomus nicolai	Gastropoda
-Regional	Trematomus pennellii	Fish
-Regional	Trematomus pennellii	Isopoda
-Regional	Trematomus pennellii	Gnathia calva
-Regional	Trematomus pennellii	Ceratoserolis meridionalis
-Regional	Trematomus pennellii	Natatolana obtusata
-Regional	Trematomus pennellii	Aega antarctica
-Regional	Trematomus pennellii	Glyptonotus antarcticus
-Regional	Trematomus pennellii	Tanaidacea
-Regional	Trematomus pennellii	Amphipoda
-Regional	Trematomus pennellii	Epimeria robusta
-Regional	Trematomus pennellii	Cyllopus lucasii
-Regional	Trematomus pennellii	Decapoda
-Regional	Trematomus pennellii	Euphausia crystallorophias
-Regional	Trematomus pennellii	Euphausia superba
-Regional	Trematomus pennellii	Copepoda
-Regional	Trematomus pennellii	Ostracoda
-Regional	Trematomus pennellii	Crustacea
-Regional	Trematomus pennellii	Pentanymphon antarcticum
-Regional	Trematomus pennellii	Polychaeta
-Regional	Trematomus pennellii	Bivalvia
-Regional	Trematomus pennellii	Gastropoda
-Regional	Trematomus pennellii	Urticinopsis antarctica
-Regional	Trematomus pennellii	Anthozoa
-Regional	Trematomus pennellii	Hydrozoa
-Regional	Trematomus scotti	Zooplankton
-Regional	Trematomus scotti	Crinoidea
-Regional	Trematomus scotti	Isopoda
-Regional	Trematomus scotti	Gnathia calva
-Regional	Trematomus scotti	Natatolana obusata
-Regional	Trematomus scotti	Tanaidacea
-Regional	Trematomus scotti	Cumacea
-Regional	Trematomus scotti	Amphipoda
-Regional	Trematomus scotti	Epimeria robusta
-Regional	Trematomus scotti	Cyllopus lucasii
-Regional	Trematomus scotti	Mysidacea
-Regional	Trematomus scotti	Euphausia crystallorophias
-Regional	Trematomus scotti	Euphausia superba
-Regional	Trematomus scotti	Copepoda
-Regional	Trematomus scotti	Metridia gerlachei
-Regional	Trematomus scotti	Calanoides acutus
-Regional	Trematomus scotti	Calanus propinquus
-Regional	Trematomus scotti	Euchaeta antarctica
-Regional	Trematomus scotti	Ostracoda
-Regional	Trematomus scotti	Pantopoda
-Regional	Trematomus scotti	Polychaeta
-Regional	Trematomus scotti	Eunoe hartmanae
-Regional	Trematomus scotti	Eunoe spica
-Regional	Trematomus scotti	Gastropoda
-Regional	Trematomus scotti	Hydrozoa
-Regional	Pleuragramma antarcticum	Cyllopus lucasii
-Regional	Pleuragramma antarcticum	Copepoda
-Regional	Pleuragramma antarcticum	Euphausiacea
-Regional	Pleuragramma antarcticum	Salpa thompsoni
-Regional	Pleuragramma antarcticum	Myctophidae
-Regional	Notothenia marmorata	Ctenophora
-Regional	Notothenia marmorata	Hydrozoa
-Regional	Notothenia marmorata	Euphausia superba
-Regional	Notothenia marmorata	Crustacea
-Regional	Notothenia marmorata	Amphipoda
-Regional	Notothenia marmorata	Salpa thompsoni
-Regional	Notothenia marmorata	Fish
-Regional	Notothenia coriiceps	Porifera
-Regional	Notothenia coriiceps	Polychaeta
-Regional	Notothenia coriiceps	Gastropoda
-Regional	Notothenia coriiceps	Zooplankton
-Regional	Notothenia coriiceps	Bivalvia
-Regional	Notothenia coriiceps	Octopoda
-Regional	Notothenia coriiceps	Epimeria robusta
-Regional	Notothenia coriiceps	Cyllopus lucasii
-Regional	Notothenia coriiceps	Isopoda
-Regional	Notothenia coriiceps	Copepoda
-Regional	Notothenia coriiceps	Euphausiacea
-Regional	Notothenia coriiceps	Salpa thompsoni
-Regional	Notothenia coriiceps	Fish
-Regional	Trematomus bernacchii	Crustacea
-Regional	Trematomus bernacchii	Amphipoda
-Regional	Trematomus bernacchii	Isopoda
-Regional	Trematomus bernacchii	Copepoda
-Regional	Trematomus bernacchii	Cyllopus lucasii
-Regional	Trematomus bernacchii	Gastropoda
-Regional	Trematomus bernacchii	Echiurida
-Regional	Trematomus bernacchii	Sipunculida
-Regional	Trematomus bernacchii	Zooplankton
-Regional	Trematomus bernacchii	Fish
-Regional	Trematomus bernacchii	Bryozoa
-Regional	Trematomus bernacchii	Hydrozoa
-Regional	Trematomus bernacchii	Polychaeta
-Regional	Trematomus bernacchii	Ostracoda
-Regional	Trematomus bernacchii	Metridia gerlachei
-Regional	Trematomus bernacchii	Epimeria robusta
-Regional	Trematomus bernacchii	Tanaidacea
-Regional	Trematomus bernacchii	Yoldiella eightsi
-Regional	Trematomus hansoni	Zooplankton
-Regional	Trematomus hansoni	Fish
-Regional	Trematomus hansoni	Trematomus pennellii
-Regional	Trematomus hansoni	Trematomus eulepidotus
-Regional	Trematomus hansoni	Isopoda
-Regional	Trematomus hansoni	Ceratoserolis meridionalis
-Regional	Trematomus hansoni	Cyllopus lucasii
-Regional	Trematomus hansoni	Amphipoda
-Regional	Trematomus hansoni	Decapoda
-Regional	Trematomus hansoni	Euphausia superba
-Regional	Trematomus hansoni	Euphausia crystallorophias
-Regional	Trematomus hansoni	Copepoda
-Regional	Trematomus hansoni	Metridia gerlachei
-Regional	Trematomus hansoni	Pantopoda
-Regional	Trematomus hansoni	Pentanymphon antarcticum
-Regional	Trematomus hansoni	Polychaeta
-Regional	Trematomus hansoni	Gastropoda
-Regional	Trematomus hansoni	Neobuccinum eatoni
-Regional	Macrourus holotrachis	Octopoda
-Regional	Macrourus holotrachis	Squid
-Regional	Macrourus holotrachis	Fish
-Regional	Macrourus holotrachis	Crustacea
-Regional	Macrourus holotrachis	Amphipoda
-Regional	Macrourus whitsoni	Octopoda
-Regional	Macrourus whitsoni	Squid
-Regional	Macrourus whitsoni	Fish
-Regional	Macrourus whitsoni	Crustacea
-Regional	Macrourus whitsoni	Polychaeta
-Regional	Macrourus whitsoni	Amphipoda
-Regional	Electrona antarctica	Amphipoda
-Regional	Electrona antarctica	Eukrohnia hamata
-Regional	Electrona antarctica	Copepoda
-Regional	Electrona antarctica	Calanus propinquus
-Regional	Electrona antarctica	Oncaea
-Regional	Electrona antarctica	Metridia gerlachei
-Regional	Electrona antarctica	Euchaeta antarctica
-Regional	Electrona antarctica	Rhincalanus gigas
-Regional	Electrona antarctica	Euphausiacea
-Regional	Electrona antarctica	Euphausia frigida
-Regional	Electrona antarctica	Euphausia superba
-Regional	Electrona antarctica	Pelegobia longicirrata
-Regional	Electrona antarctica	Thysanoessa macrura
-Regional	Electrona antarctica	Gastropoda
-Regional	Electrona antarctica	Ostracoda
-Regional	Electrona antarctica	Polychaeta
-Regional	Harpagifer antarcticus	Crustacea
-Regional	Harpagifer antarcticus	Epimeria robusta
-Regional	Harpagifer antarcticus	Oradarea edentata
-Regional	Harpagifer antarcticus	Djerboa furcipes
-Regional	Harpagifer antarcticus	Notocrangon antarcticus
-Regional	Harpagifer antarcticus	Natatolana meridionalis
-Regional	Harpagifer antarcticus	Isopoda
-Regional	Harpagifer antarcticus	Euphausia superba
-Regional	Harpagifer antarcticus	Gastropoda
-Regional	Harpagifer antarcticus	Bivalvia
-Regional	Harpagifer antarcticus	Chiton
-Regional	Harpagifer antarcticus	Polychaeta
-Regional	Harpagifer antarcticus	Detritus
-Regional	Harpagifer antarcticus	Sediment
-Regional	Harpagifer antarcticus	Amphipoda
-Regional	Bathylagus antarcticus	Foraminifera
-Regional	Bathylagus antarcticus	Copepoda
-Regional	Bathylagus antarcticus	Oithona
-Regional	Bathylagus antarcticus	Oncaea
-Regional	Bathylagus antarcticus	Euchaeta antarctica
-Regional	Bathylagus antarcticus	Metridia gerlachei
-Regional	Bathylagus antarcticus	Zooplankton
-Regional	Bathylagus antarcticus	Euphausia superba
-Regional	Bathylagus antarcticus	Limacina helicina 
-Regional	Bathylagus antarcticus	Coelenterata
-Regional	Bathylagus antarcticus	Pelegobia longicirrata
-Regional	Bathylagus antarcticus	Eukrohnia hamata
-Regional	Bathylagus antarcticus	Sagitta marri
-Regional	Notolepis coatsi	Copepoda
-Regional	Notolepis coatsi	Oithona
-Regional	Notolepis coatsi	Oncaea
-Regional	Notolepis coatsi	Euchaeta antarctica
-Regional	Notolepis coatsi	Metridia gerlachei
-Regional	Notolepis coatsi	Notocrangon antarcticus
-Regional	Notolepis coatsi	Euphausia superba
-Regional	Notolepis coatsi	Limacina helicina 
-Regional	Notolepis coatsi	Coelenterata
-Regional	Notolepis coatsi	Pelegobia longicirrata
-Regional	Notolepis coatsi	Eukrohnia hamata
-Regional	Notolepis coatsi	Sagitta marri
-Regional	Notolepis coatsi	Salpa thompsoni
-Regional	Gymnoscopelus braueri	Euchaeta antarctica
-Regional	Gymnoscopelus braueri	Metridia gerlachei
-Regional	Gymnoscopelus braueri	Zooplankton
-Regional	Gymnoscopelus braueri	Euphausia superba
-Regional	Gymnoscopelus braueri	Limacina helicina 
-Regional	Gymnoscopelus braueri	Coelenterata
-Regional	Gymnoscopelus braueri	Pelegobia longicirrata
-Regional	Gymnoscopelus braueri	Eukrohnia hamata
-Regional	Gymnoscopelus braueri	Sagitta marri
-Regional	Gymnoscopelus braueri	Salpa thompsoni
-Regional	Gymnoscopelus braueri	Copepoda
-Regional	Gymnoscopelus braueri	Cyllopus lucasii
-Regional	Gymnoscopelus braueri	Clio pyramidata
-Regional	Gymnoscopelus opisthopterus	Metridia gerlachei
-Regional	Gymnoscopelus opisthopterus	Zooplankton
-Regional	Gymnoscopelus opisthopterus	Euphausia superba
-Regional	Gymnoscopelus opisthopterus	Limacina helicina 
-Regional	Gymnoscopelus opisthopterus	Coelenterata
-Regional	Gymnoscopelus opisthopterus	Pelegobia longicirrata
-Regional	Gymnoscopelus opisthopterus	Eukrohnia hamata
-Regional	Gymnoscopelus opisthopterus	Sagitta marri
-Regional	Gymnoscopelus opisthopterus	Salpa thompsoni
-Regional	Gymnoscopelus opisthopterus	Copepoda
-Regional	Gymnoscopelus opisthopterus	Cyllopus lucasii
-Regional	Gymnoscopelus opisthopterus	Clio pyramidata
-Regional	Gymnoscopelus opisthopterus	Oithona
-Regional	Gymnoscopelus nicholsi	Amphipoda
-Regional	Gymnoscopelus nicholsi	Chaetognatha
-Regional	Gymnoscopelus nicholsi	Copepoda
-Regional	Gymnoscopelus nicholsi	Calanus propinquus
-Regional	Gymnoscopelus nicholsi	Oncaea
-Regional	Gymnoscopelus nicholsi	Metridia gerlachei
-Regional	Gymnoscopelus nicholsi	Euchaeta antarctica
-Regional	Gymnoscopelus nicholsi	Rhincalanus gigas
-Regional	Gymnoscopelus nicholsi	Euphausiacea
-Regional	Gymnoscopelus nicholsi	Euphausia frigida
-Regional	Gymnoscopelus nicholsi	Euphausia superba
-Regional	Gymnoscopelus nicholsi	Thysanoessa macrura
-Regional	Gymnoscopelus nicholsi	Ostracoda
-Regional	Gymnoscopelus nicholsi	Fish
-Regional	Gymnoscopelus nicholsi	Protomyctophum bolini
-Regional	Gymnoscopelus nicholsi	Euphausia crystallorophias
-Regional	Protomyctophum bolini	Copepoda
-Regional	Protomyctophum bolini	Calanus propinquus
-Regional	Protomyctophum bolini	Oncaea
-Regional	Protomyctophum bolini	Metridia gerlachei
-Regional	Protomyctophum bolini	Euchaeta antarctica
-Regional	Protomyctophum bolini	Rhincalanus gigas
-Regional	Protomyctophum bolini	Euphausiacea
-Regional	Protomyctophum bolini	Chaetognatha
-Regional	Protomyctophum bolini	Gastropoda
-Regional	Protomyctophum bolini	Thysanoessa macrura
-Regional	Protomyctophum bolini	Ostracoda
-Regional	Fulmarus glacialoides	Euphausia superba
-Regional	Fulmarus glacialoides	Notocrangon antarcticus
-Regional	Fulmarus glacialoides	Cyllopus lucasii
-Regional	Fulmarus glacialoides	Vibilia antarctica
-Regional	Fulmarus glacialoides	Vibilia stebbingi
-Regional	Fulmarus glacialoides	Amphipoda
-Regional	Fulmarus glacialoides	Eurythenes gryllus
-Regional	Fulmarus glacialoides	Crustacea
-Regional	Fulmarus glacialoides	Electrona antarctica
-Regional	Fulmarus glacialoides	Gymnoscopelus opisthopterus
-Regional	Fulmarus glacialoides	Gymnoscopelus braueri
-Regional	Fulmarus glacialoides	Notolepis coatsi
-Regional	Fulmarus glacialoides	Protomyctophum bolini
-Regional	Fulmarus glacialoides	Fish
-Regional	Fulmarus glacialoides	Galiteuthis glacialis
-Regional	Fulmarus glacialoides	Gonatus antarcticus
-Regional	Fulmarus glacialoides	Psychroteuthis glacialis
-Regional	Fulmarus glacialoides	Salpa thompsoni
-Regional	Thalassoica antarctica	Euphausia superba
-Regional	Thalassoica antarctica	Notocrangon antarcticus
-Regional	Thalassoica antarctica	Cyllopus lucasii
-Regional	Thalassoica antarctica	Vibilia antarctica
-Regional	Thalassoica antarctica	Vibilia stebbingi
-Regional	Thalassoica antarctica	Amphipoda
-Regional	Thalassoica antarctica	Eurythenes gryllus
-Regional	Thalassoica antarctica	Crustacea
-Regional	Thalassoica antarctica	Electrona antarctica
-Regional	Thalassoica antarctica	Gymnoscopelus braueri
-Regional	Thalassoica antarctica	Gymnoscopelus nicholsi
-Regional	Thalassoica antarctica	Gymnoscopelus opisthopterus
-Regional	Thalassoica antarctica	Notolepis coatsi
-Regional	Thalassoica antarctica	Protomyctophum bolini
-Regional	Thalassoica antarctica	Fish
-Regional	Thalassoica antarctica	Galiteuthis glacialis
-Regional	Thalassoica antarctica	Gonatus antarcticus
-Regional	Thalassoica antarctica	Psychroteuthis glacialis
-Regional	Thalassoica antarctica	Detritus
-Regional	Halobaena caerulea	Euphausia superba
-Regional	Halobaena caerulea	Euphausia frigida
-Regional	Halobaena caerulea	Thysanoessa macrura
-Regional	Halobaena caerulea	Notocrangon antarcticus
-Regional	Halobaena caerulea	Cyllopus lucasii
-Regional	Halobaena caerulea	Vibilia antarctica
-Regional	Halobaena caerulea	Vibilia stebbingi
-Regional	Halobaena caerulea	Amphipoda
-Regional	Halobaena caerulea	Eurythenes gryllus
-Regional	Halobaena caerulea	Crustacea
-Regional	Halobaena caerulea	Electrona antarctica
-Regional	Halobaena caerulea	Gymnoscopelus opisthopterus
-Regional	Halobaena caerulea	Gymnoscopelus braueri
-Regional	Halobaena caerulea	Notolepis coatsi
-Regional	Halobaena caerulea	Protomyctophum bolini
-Regional	Halobaena caerulea	Fish
-Regional	Halobaena caerulea	Pteropoda
-Regional	Halobaena caerulea	Salpa thompsoni
-Regional	Halobaena caerulea	Detritus
-Regional	Daption capense	Euphausia superba
-Regional	Daption capense	Notocrangon antarcticus
-Regional	Daption capense	Cyllopus lucasii
-Regional	Daption capense	Vibilia antarctica
-Regional	Daption capense	Vibilia stebbingi
-Regional	Daption capense	Amphipoda
-Regional	Daption capense	Electrona antarctica
-Regional	Daption capense	Gymnoscopelus nicholsi
-Regional	Daption capense	Gymnoscopelus braueri
-Regional	Daption capense	Gymnoscopelus opisthopterus
-Regional	Daption capense	Notolepis coatsi
-Regional	Daption capense	Protomyctophum bolini
-Regional	Daption capense	Fish
-Regional	Daption capense	Galiteuthis glacialis
-Regional	Daption capense	Gonatus antarcticus
-Regional	Daption capense	Psychroteuthis glacialis
-Regional	Daption capense	Salpa thompsoni
-Regional	Pagodroma nivea	Euphausia superba
-Regional	Pagodroma nivea	Notocrangon antarcticus
-Regional	Pagodroma nivea	Cyllopus lucasii
-Regional	Pagodroma nivea	Vibilia antarctica
-Regional	Pagodroma nivea	Vibilia stebbingi
-Regional	Pagodroma nivea	Eurythenes gryllus
-Regional	Pagodroma nivea	Crustacea
-Regional	Pagodroma nivea	Electrona antarctica
-Regional	Pagodroma nivea	Gymnoscopelus braueri
-Regional	Pagodroma nivea	Notolepis coatsi
-Regional	Pagodroma nivea	Protomyctophum bolini
-Regional	Pagodroma nivea	Fish
-Regional	Pagodroma nivea	Galiteuthis glacialis
-Regional	Pagodroma nivea	Psychroteuthis glacialis
-Regional	Pagodroma nivea	Detritus
-Regional	Pterodroma brevirostris	Euphausia superba
-Regional	Pterodroma brevirostris	Notocrangon antarcticus
-Regional	Pterodroma brevirostris	Cyllopus lucasii
-Regional	Pterodroma brevirostris	Vibilia antarctica
-Regional	Pterodroma brevirostris	Eurythenes gryllus
-Regional	Pterodroma brevirostris	Electrona antarctica
-Regional	Pterodroma brevirostris	Gymnoscopelus braueri
-Regional	Pterodroma brevirostris	Notolepis coatsi
-Regional	Pterodroma brevirostris	Protomyctophum bolini
-Regional	Pterodroma brevirostris	Fish
-Regional	Pterodroma brevirostris	Galiteuthis glacialis
-Regional	Macronectes halli	Nototheniidae
-Regional	Macronectes halli	Galiteuthis glacialis
-Regional	Macronectes halli	Gonatus antarcticus
-Regional	Macronectes halli	Kondakovia longimama
-Regional	Macronectes halli	Martialia hyadesi
-Regional	Macronectes halli	Psychroteuthis glacialis
-Regional	Macronectes halli	Squid
-Regional	Macronectes halli	Detritus
-Regional	Macronectes halli	Vampryoteuthis
-Regional	Macronectes halli	Crustacea
-Regional	Macronectes giganteus	Nototheniidae
-Regional	Macronectes giganteus	Galiteuthis glacialis
-Regional	Macronectes giganteus	Gonatus antarcticus
-Regional	Macronectes giganteus	Kondakovia longimama
-Regional	Macronectes giganteus	Crustacea
-Regional	Macronectes giganteus	Detritus
-Regional	Procellaria aequinoctialis	Euphausia superba
-Regional	Procellaria aequinoctialis	Vibilia antarctica
-Regional	Procellaria aequinoctialis	Electrona antarctica
-Regional	Procellaria aequinoctialis	Fish
-Regional	Procellaria aequinoctialis	Galiteuthis glacialis
-Regional	Procellaria aequinoctialis	Gonatus antarcticus
-Regional	Procellaria aequinoctialis	Kondakovia longimama
-Regional	Procellaria aequinoctialis	Psychroteuthis glacialis
-Regional	Procellaria aequinoctialis	Salpa thompsoni
-Regional	Oceanites oceanicus	Euphausia superba
-Regional	Oceanites oceanicus	Cyllopus lucasii
-Regional	Oceanites oceanicus	Vibilia antarctica
-Regional	Oceanites oceanicus	Crustacea
-Regional	Oceanites oceanicus	Electrona antarctica
-Regional	Oceanites oceanicus	Protomyctophum bolini
-Regional	Oceanites oceanicus	Fish
-Regional	Oceanites oceanicus	Salpa thompsoni
-Regional	Sterna vittata	Euphausia superba
-Regional	Sterna vittata	Electrona antarctica
-Regional	Sterna paradisaea	Euphausia superba
-Regional	Sterna paradisaea	Thysanoessa macrura
-Regional	Sterna paradisaea	Cyllopus lucasii
-Regional	Sterna paradisaea	Vibilia antarctica
-Regional	Sterna paradisaea	Amphipoda
-Regional	Sterna paradisaea	Electrona antarctica
-Regional	Pachyptila desolata	Euphausia superba
-Regional	Pachyptila desolata	Thysanoessa macrura
-Regional	Pachyptila desolata	Notocrangon antarcticus
-Regional	Pachyptila desolata	Cyllopus lucasii
-Regional	Pachyptila desolata	Vibilia antarctica
-Regional	Pachyptila desolata	Crustacea
-Regional	Pachyptila desolata	Electrona antarctica
-Regional	Pachyptila desolata	Gymnoscopelus braueri
-Regional	Pachyptila desolata	Notolepis coatsi
-Regional	Pachyptila desolata	Protomyctophum bolini
-Regional	Pachyptila desolata	Fish
-Regional	Pachyptila desolata	Salpa thompsoni
-Regional	Pachyptila desolata	Calanoides acutus
-Regional	Pachyptila desolata	Calanus propinquus
-Regional	Pachyptila desolata	Rhincalanus gigas
-Regional	Pachyptila desolata	Metridia gerlachei
-Regional	Pachyptila desolata	Euchaeta antarctica
-Regional	Pachyptila desolata	Copepoda
-Regional	Pachyptila desolata	Primno macropa
-Regional	Pachyptila desolata	Amphipoda
-Regional	Pachyptila desolata	Euphausia frigida
-Regional	Pachyptila desolata	Octopoda
-Regional	Pachyptila desolata	Gymnoscopelus nicholsi
-Regional	Aptenodytes forsteri	Euphausia superba
-Regional	Aptenodytes forsteri	Thysanoessa macrura
-Regional	Aptenodytes forsteri	Electrona antarctica
-Regional	Aptenodytes forsteri	Gymnoscopelus braueri
-Regional	Aptenodytes forsteri	Gymnoscopelus opisthopterus
-Regional	Aptenodytes forsteri	Notolepis coatsi
-Regional	Aptenodytes forsteri	Protomyctophum bolini
-Regional	Aptenodytes forsteri	Fish
-Regional	Aptenodytes forsteri	Galiteuthis glacialis
-Regional	Aptenodytes forsteri	Gonatus antarcticus
-Regional	Aptenodytes forsteri	Kondakovia longimama
-Regional	Aptenodytes forsteri	Psychroteuthis glacialis
-Regional	Pygoscelis adeliae	Euphausia superba
-Regional	Pygoscelis adeliae	Thysanoessa macrura
-Regional	Pygoscelis adeliae	Cyllopus lucasii
-Regional	Pygoscelis adeliae	Electrona antarctica
-Regional	Pygoscelis adeliae	Kondakovia longimama
-Regional	Pygoscelis adeliae	Psychroteuthis glacialis
-Regional	Lobodon carcinophagus 	Euphausia superba
-Regional	Lobodon carcinophagus 	Euphausiacea
-Regional	Lobodon carcinophagus 	Crustacea
-Regional	Lobodon carcinophagus 	Fish
-Regional	Lobodon carcinophagus 	Squid
-Regional	Lobodon carcinophagus 	Mysidacea
-Regional	Lobodon carcinophagus 	Nematoda
-Regional	Hydrurga leptonyx 	Fish
-Regional	Hydrurga leptonyx 	Squid
-Regional	Hydrurga leptonyx 	Euphausiacea
-Regional	Hydrurga leptonyx 	Amphipoda
-Regional	Hydrurga leptonyx 	Kondakovia longimama
-Regional	Hydrurga leptonyx 	Psychroteuthis glacialis
-Regional	Arctocephalus gazella 	Euphausiacea
-Regional	Arctocephalus gazella 	Fish
-Regional	Arctocephalus gazella 	Myctophidae
-Regional	Arctocephalus gazella 	Nototheniidae
-Regional	Arctocephalus gazella 	Dissostichus mawsoni
-Regional	Arctocephalus gazella 	Pygoscelis adeliae
-Regional	Arctocephalus gazella 	Amphipoda
-Regional	Arctocephalus gazella 	Nematoda
-Regional	Arctocephalus gazella 	Electrona antarctica
-Regional	Arctocephalus gazella 	Gymnoscopelus nicholsi
-Regional	Arctocephalus gazella 	Gymnoscopelus braueri
-Regional	Arctocephalus gazella 	Pleuragramma antarcticum
-Regional	Arctocephalus gazella 	Protomyctophum bolini
-Regional	Arctocephalus gazella 	Trematomus eulepidotus
-Regional	Arctocephalus gazella 	Chaenodraco wilsoni
-Regional	Arctocephalus gazella 	Chionodraco
-Regional	Mirounga leonina 	Myctophidae
-Regional	Mirounga leonina 	Gymnoscopelus nicholsi
-Regional	Mirounga leonina 	Electrona antarctica
-Regional	Mirounga leonina 	Nototheniidae
-Regional	Mirounga leonina 	Pleuragramma antarcticum
-Regional	Mirounga leonina 	Trematomus hansoni
-Regional	Mirounga leonina 	Trematomus eulepidotus
-Regional	Mirounga leonina 	Trematomus scotti
-Regional	Mirounga leonina 	Trematomus pennellii
-Regional	Mirounga leonina 	Dissostichus mawsoni
-Regional	Mirounga leonina 	Chionodraco hamatus
-Regional	Mirounga leonina 	Chionodraco
-Regional	Mirounga leonina 	Fish
-Regional	Mirounga leonina 	Squid
-Regional	Mirounga leonina 	Alluroteuthis antarcticus
-Regional	Mirounga leonina 	Galiteuthis glacialis
-Regional	Mirounga leonina 	Gonatus antarcticus
-Regional	Mirounga leonina 	Kondakovia longimama
-Regional	Mirounga leonina 	Martialia hyadesi
-Regional	Mirounga leonina 	Mesonychoteuthis hamiltoni
-Regional	Mirounga leonina 	Moroteuthis ingens
-Regional	Mirounga leonina 	Psychroteuthis glacialis
-Regional	Ommatophoca rossii 	Fish
-Regional	Ommatophoca rossii 	Squid
-Regional	Ommatophoca rossii 	Psychroteuthis glacialis
-Regional	Ommatophoca rossii 	Galiteuthis glacialis
-Regional	Ommatophoca rossii 	Alluroteuthis antarcticus
-Regional	Ommatophoca rossii 	Kondakovia longimama
-Regional	Leptonychotes weddelli	Squid
-Regional	Leptonychotes weddelli	Octopoda
-Regional	Leptonychotes weddelli	Euphausia crystallorophias
-Regional	Leptonychotes weddelli	Pleuragramma antarcticum
-Regional	Leptonychotes weddelli	Aethotaxis mitopteryx
-Regional	Leptonychotes weddelli	Dissostichus mawsoni
-Regional	Leptonychotes weddelli	Trematomus hansoni
-Regional	Leptonychotes weddelli	Fish
-Regional	Balaenoptera musculus	Dissostichus mawsoni
-Regional	Balaenoptera musculus	Champsocephalus gunnari 
-Regional	Balaenoptera musculus	Myctophidae
-Regional	Balaenoptera musculus	Fish
-Regional	Balaenoptera musculus	Squid
-Regional	Balaenoptera musculus	Zooplankton
-Regional	Balaenoptera musculus	Euphausiacea
-Regional	Balaenoptera physalus	Dissostichus mawsoni
-Regional	Balaenoptera physalus	Champsocephalus gunnari 
-Regional	Balaenoptera physalus	Myctophidae
-Regional	Balaenoptera physalus	Fish
-Regional	Balaenoptera physalus	Squid
-Regional	Balaenoptera physalus	Zooplankton
-Regional	Balaenoptera physalus	Euphausiacea
-Regional	Balaenoptera acutorostrata	Myctophidae
-Regional	Balaenoptera acutorostrata	Fish
-Regional	Balaenoptera acutorostrata	Zooplankton
-Regional	Balaenoptera acutorostrata	Euphausiacea
-Regional	Physeter macrocephalus	Dissostichus mawsoni
-Regional	Physeter macrocephalus	Champsocephalus gunnari 
-Regional	Physeter macrocephalus	Myctophidae
-Regional	Physeter macrocephalus	Fish
-Regional	Physeter macrocephalus	Crustacea
-Regional	Physeter macrocephalus	Euphausiacea
-Regional	Physeter macrocephalus	Squid
-Regional	Megaptera novaeangliae	Euphausiacea
-Regional	Orcinus orca	Squid
-Regional	Orcinus orca	Balaenoptera acutorostrata
-Regional	Orcinus orca	Ommatophoca rossii 
-Regional	Orcinus orca	Leptonychotes weddelli
-Regional	Orcinus orca	Arctocephalus gazella 
-Regional	Orcinus orca	Mirounga leonina 
-Regional	Orcinus orca	Lobodon carcinophagus 
-Regional	Orcinus orca	Hydrurga leptonyx 
-Regional	Orcinus orca	Pygoscelis adeliae
-Regional	Orcinus orca	Thalassoica antarctica
-Regional	Orcinus orca	Halobaena caerulea
-Regional	Orcinus orca	Dissostichus mawsoni
-Regional	Orcinus orca	Myctophidae
-Regional	Orcinus orca	Fish
-Regional	Lagenorhynchus cruciger	Dissostichus mawsoni
-Regional	Lagenorhynchus cruciger	Champsocephalus gunnari 
-Regional	Lagenorhynchus cruciger	Myctophidae
-Regional	Lagenorhynchus cruciger	Fish
-Regional	Lagenorhynchus cruciger	Squid
-Regional	Lagenorhynchus cruciger	Euphausiacea
-Regional	Tursiops truncatus	Fish
-Regional	Tursiops truncatus	Dissostichus mawsoni
-Regional	Tursiops truncatus	Champsocephalus gunnari 
-Regional	Tursiops truncatus	Myctophidae
-Regional	Tursiops truncatus	Euphausiacea
-Regional	Tursiops truncatus	Squid
-Regional	Notothenia coriiceps	Waldeckia obesa
-Regional	Lepidonotothen nudifrons	Waldeckia obesa
-Regional	Bovallia gigantea	Waldeckia obesa
-Regional	Ophionotus victoriae	Waldeckia obesa
-Regional	Sterechinus neumayeri	Waldeckia obesa

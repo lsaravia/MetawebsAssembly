@@ -71,6 +71,7 @@ redl <- graph_from_edgelist(dtot1, directed  = T)
 #
 require(vegan)
 spnames <- make.cepnames(V(redl)$name)
+#write.csv(V(redl)$name,"Local.csv")
 
 # Test if there are duplicated species
 #
@@ -171,6 +172,7 @@ redl <- simplify(redl)
 #
 require(vegan)
 spnames <- make.cepnames(V(redl)$name)
+#write.csv(V(redl)$name,"Regional.csv")
 
 # Test if there are duplicated species
 #
@@ -284,6 +286,8 @@ redl <- simplify(redm)
 #
 require(vegan)
 spnames <- make.cepnames(V(redl)$name)
+#write.csv(V(redl)$name,"Meta.csv")
+
 
 # Test if there are duplicated species
 #
@@ -363,115 +367,194 @@ plot(redl, vertex.color=vertex_attr(redl)$cor,vertex.label=NA,
 dev.off()
 
 save.image()
+
+require(pander)
+panderOptions('table.split.table',Inf)
+panderOptions('table.style', 'multiline')
+
+pandoc.table()
+pandoc.table(t(websTbl %>% dplyr::select(Network,Size,Links,Connectance,PathLength,Clustering,Modularity,Groups,rndCC:GRhigh) %>% mutate_if(is.numeric, round, digits=4)))
+
 ```
 
+# Analysis of motif - Local
 
-# Generate random networks to obtain confidence intervals and compare with experimental FW
+```{r motifAnalysisLocal, eval=T,echo=F,message=T,warning=T}
 
-
-```{r ramdomSmallWorld, eval=T,echo=F,message=T,warning=T}
-
-# Read networks data
-#
-ntot <- read.delim("AllNetworksSLC.dat", quote="",stringsAsFactors = F)
-
-# Calculate confidence intervals for random networks (erdos.renyi)
-#
-swtot <- ntot %>% group_by(Network) %>% do( calc_cpl_cc(.$Size,.$Links)) %>% inner_join(ntot) 
-swtot <- swtot %>% arrange(desc(C))
-
-
-# Arrange using Connectivity in descending order 
-#
-xlbl <-swtot %>% arrange(desc(C)) 
-
-#
-# Add SW test empirical CPL inside random CPL
-#             empirical CC > random CC
-#
-swtot <- swtot %>% mutate(isInsideCPL = (CPL>=cha.pathLow & CPL<=cha.pathUp), isGreaterCC =( CC>clus.coefHigh),
-                          isSW= isInsideCPL & isGreaterCC, CPL_ratio=CPL/cha.pathMean, CC_ratio=CC/clus.coefMean)  
-
-# Plot CC CPL Ratios with colors 
-#
-require(ggplot2)
-require(viridis)
-require(cowplot)
-ggplot(swtot, aes(CPL_ratio,CC_ratio,shape=isSW,fill=isSW)) + geom_point() + theme_bw()+  scale_colour_viridis(discrete = T) + scale_fill_viridis(discrete = T) + geom_text(aes(label=Network),check_overlap = TRUE,size=3,vjust=0,nudge_y = 0.03) +  theme(legend.position="bottom") + scale_shape_manual(values=c(21,25))+ ylab(expression(CC[Empirical]/CC[Random])) +  xlab(expression(CPL[Empirical]/CPL[Random]))
-ggsave("figures/IsSmallWorld_CPL_CC.png",width=5,height=6,units="in",dpi=600)
-
-
-##
-
-ggplot(swtot, aes(Network,CC,shape=isSW)) + geom_point() + geom_linerange(aes(ymin = clus.coefLow, ymax = clus.coefHigh)) +theme_bw()+coord_flip() + scale_shape_manual(values=c(21,25),guide=FALSE) + scale_colour_viridis(discrete = T,guide=FALSE)+ scale_x_discrete(limits=xlbl$Network) # + scale_y_log10()  
-
-# Plot in BW Clustering Coeficient
-#
-A <- ggplot(swtot, aes(Network,CC,shape=isSW)) + geom_point() + geom_errorbar(aes(ymin = clus.coefLow, ymax = clus.coefHigh),width=0.1) +theme_bw()+coord_flip()+ scale_shape_manual(values=c(21,25),guide=FALSE) + scale_x_discrete(limits=xlbl$Network)  + theme(axis.title.y = element_blank())
-
-#ggsave("figures/CC_rnd95confint.png",width=5,height=6,units="in",dpi=600)
-
-# Plot in BW Path Length
-#
-B <- ggplot(swtot, aes(Network,CPL,shape=isSW)) + geom_point() + geom_errorbar(aes(ymin = cha.pathLow, ymax = cha.pathUp),width=0.1) +theme_bw()+coord_flip()  + scale_x_discrete(limits=xlbl$Network) + scale_shape_manual(values=c(21,25),guide=FALSE) + theme(axis.text.y = element_blank()) + xlab("")
-#ggsave("figures/CPL_rnd95confint.png",width=5,height=6,units="in",dpi=600)
-
-plot_grid(A,B,labels = c("A","B"),align = "h",rel_widths = c(1,.8))
-ggsave("figures/CC_CPL_rnd95confint.png",width=7,height=6,units="in",dpi=600)
-
-# Save csv file with all parameters and confidence intervals for random networks
-#
-write.csv(swtot, file="AllNetworksSLC_confint.csv")
-save.image()
-```
-
-
-# Test if Watts-Strogatz model pass Small world test 
-
-```{r WA_SmallWorld, eval=T,echo=F,message=T,warning=T}
-require(igraph)
-require(dplyr)
 source("R/small_world_fun.r")
 
-ntot <- read.delim("AllNetworksSLC.dat", quote="",stringsAsFactors = F)
+require(igraph)
+require(dplyr)
+require(stringr)
 
-# Do Watts - Strogatz models pass the test of SW?
 #
-# Generate WS models with approximate the same number of species and links and test if they pass our test
+# Read data and trim species names to avoid duplicates 
 #
-swr <- ntot %>% group_by(Network) %>% do( genWattsStrogatz_cpl_cc(.$Size,.$Links,10)) 
+dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
+dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
 
-factor <- 1
-swr <- swr %>% ungroup() %>% mutate(isInsideCPL = (CPL<=cha.pathUp*factor), isGreaterCC =( CC>clus.coefHigh), 
-                      isSW= isInsideCPL & isGreaterCC,CPL_ratio=CPL/cha.pathMean,CC_ratio=CC/clus.coefMean)
+#
+# Select local food web - Potter Cove
+#
+dtot1 <- as.matrix(dtot %>% filter(Network=="Local") %>% dplyr::select(Prey_name,Predator_name))
+redl <- graph_from_edgelist(dtot1, directed  = T)
 
-require(ggplot2)
-require(viridis)
-ggplot(swr, aes(CPL_ratio,CC_ratio,colour=isSW,shape=type)) + geom_point(shape=25) + theme_bw()+  scale_colour_viridis(discrete = T) + facet_wrap(~Network)
+#
+# Make short names 
+#
+require(vegan)
+spnames <- make.cepnames(V(redl)$name)
+#write.csv(V(redl)$name,"Local.csv")
 
-names(swr)
-names(swtot)
+# Test if there are duplicated species
+#
+V(redl)$name[grep(".1",spnames)]
 
-swr <- swr %>% mutate(type="Watts-Strogatz", C=Links/(Size^2))
-swtot <- swtot %>% mutate(type="Empirical")
-swtot1 <- swtot %>% bind_rows(swr)
+#
+# Motif
+#
+mot <- triad_census(redl)
+mot[4] # Exploitative competition
+mot[5] # Apparent competition
+mot[6] # Tri-trophic chain
+mot[9] # Omnivory
+set.seed(123)
+motif <- calc_motif_random(redl)
+motif <- motif %>% mutate(Network="Local")
 
-ggplot(swtot1, aes(CPL_ratio,CC_ratio,colour=type)) + geom_point(alpha=0.7) + theme_bw()+  scale_colour_viridis(discrete = T) + facet_wrap(~isSW) + theme(legend.position="bottom")
-ggsave("figures/IsSmalWorld_EmpiricalVsWatts.png",width=6,height=6,units="in",dpi=600)
+save.image()
+```
 
-ggplot(swtot1, aes(CPL,CC,colour=type)) + geom_point(alpha=0.5) + theme_bw()+  scale_colour_viridis(discrete = T) + theme(legend.position="bottom")
+# Analysis of motif - Regional
+
+```{r motifAnalysisRegional, eval=T,echo=F,message=T,warning=T}
+
+source("R/small_world_fun.r")
+
+require(igraph)
+require(dplyr)
+require(stringr)
+
+#
+# Read data and trim species names to avoid duplicates 
+#
+dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
+dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
+
+#
+# Select food web 
+#
+dtot1 <- as.matrix(dtot %>% filter(Network=="Regional") %>% dplyr::select(Prey_name,Predator_name))
+redl <- graph_from_edgelist(dtot1, directed  = T)
+redl <- simplify(redl)
+
+#
+# Make short names 
+#
+require(vegan)
+spnames <- make.cepnames(V(redl)$name)
+#write.csv(V(redl)$name,"Regional.csv")
+
+# Test if there are duplicated species
+#
+V(redl)$name[grep(".1",spnames)]
+dup <- str_sub(spnames[grep(".1",spnames)], start = 1, end = -3)
+V(redl)$name[str_detect(spnames,dup[1])]
+V(redl)$name[str_detect(spnames,dup[2])]
+V(redl)$name[str_detect(spnames,dup[3])]
+
+V(redl)$name[which_loop(redl)]
 
 
-swtot1 %>% group_by(type,isSW) %>% summarize(n=n()) %>% mutate(percentSmallWorld=n/sum(n))
+#
+# Motif
+#
+mot <- triad_census(redl)
+mot[4] # Exploitative competition
+mot[5] # Apparent competition
+mot[6] # Tri-trophic chain
+mot[9] # Omnivory
+set.seed(123)
+motif <- bind_rows(motif, calc_motif_random(redl) %>% mutate(Network="Regional"))
 
-# 87% from Watts-Strogatz model do not pass the test!!!!!!!!!!!!!!!
+save.image()
+```
 
-swtot2 <- swtot1 %>% mutate(CPL=cha.pathMean,CC=clus.coefMean,type="Random") %>% bind_rows(swtot1)
-ggplot(swtot2, aes(CPL,CC,colour=type)) + geom_point(alpha=0.5) + theme_bw()+  scale_colour_viridis(discrete = T) + theme(legend.position="bottom")
-#ggsave("figures/CCvsCPL_Type.png",width=5,height=6,units="in",dpi=600)
+
+# Motif Analysis - MetaWEB!
+
+```{r MotifAnalysisMetaWeb, eval=T,echo=F,message=T,warning=T}
+
+source("R/small_world_fun.r")
+
+require(igraph)
+require(dplyr)
+require(stringr)
+
+#
+# Read data and trim species names to avoid duplicates 
+#
+dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
+dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
+
+#
+# Select food web 
+#
+dtot1 <- as.matrix(dtot %>% filter(Network=="Meta") %>% dplyr::select(Prey_name,Predator_name))
+redl <- graph_from_edgelist(dtot1, directed  = T)
+
+# Select only a connected subgraph graph 
+V(redl)$comp <- components(redl)$membership
+redm <- induced_subgraph(redl,V(redl)$comp==1)
+
+# Unconnected components 
+redd <- induced_subgraph(redl,V(redl)$comp==2)
+
+# Delete cannibalistic 
+redl <- simplify(redm)
+
+#
+# Make short names 
+#
+require(vegan)
+spnames <- make.cepnames(V(redl)$name)
+#write.csv(V(redl)$name,"Meta.csv")
+
+
+# Test if there are duplicated species
+#
+V(redl)$name[grep(".1",spnames)]
+dup <- str_sub(spnames[grep(".1",spnames)], start = 1, end = -3)
+for( i in 1:length(dup)){
+  print(V(redl)$name[str_detect(spnames,dup[i])])
+}
+
+V(redl)$name[which_loop(redl)]
+
+
+#
+# Motif
+#
+mot <- triad_census(redl)
+mot[4] # Exploitative competition
+mot[5] # Apparent competition
+mot[6] # Tri-trophic chain
+mot[9] # Omnivory
+set.seed(123)
+motif <- bind_rows(motif, calc_motif_random(redl) %>% mutate(Network="Meta"))
 
 save.image()
 
+require(pander)
+panderOptions('table.split.table',Inf)
+panderOptions('table.style', 'multiline')
 
+pandoc.table(t(motif %>% mutate_if(is.numeric, round, digits=4)))
+motif
+require(tidyr)
+!str_detect(names(motif),"Network")
+motif <- motif %>% dplyr::select(Network, 1:length(names(motif)))
 
+gather(Network, val, 2:ncol(motif)) %>%
+spread_(names(motif)[1], val)
 ```
