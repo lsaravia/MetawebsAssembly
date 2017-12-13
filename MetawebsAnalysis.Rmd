@@ -368,12 +368,19 @@ dev.off()
 
 save.image()
 
+#
+# Calculate z-score of modularity
+#
+websTbl <- websTbl %>% mutate(zMO= (Modularity- rndMO)/(MOhigh-MOlow)*2)
+
+
 require(pander)
 panderOptions('table.split.table',Inf)
 panderOptions('table.style', 'multiline')
 
 pandoc.table()
 pandoc.table(t(websTbl %>% dplyr::select(Network,Size,Links,Connectance,PathLength,Clustering,Modularity,Groups,rndCC:GRhigh) %>% mutate_if(is.numeric, round, digits=4)))
+
 
 ```
 
@@ -549,12 +556,7 @@ require(pander)
 panderOptions('table.split.table',Inf)
 panderOptions('table.style', 'multiline')
 
-pandoc.table(t(motif %>% mutate_if(is.numeric, round, digits=4)))
-motif
-require(tidyr)
-!str_detect(names(motif),"Network")
 motif <- motif %>% dplyr::select(Network, 1:length(names(motif)))
 
-gather(Network, val, 2:ncol(motif)) %>%
-spread_(names(motif)[1], val)
+pandoc.table(t(motif %>% mutate_if(is.numeric, round, digits=4)))
 ```
