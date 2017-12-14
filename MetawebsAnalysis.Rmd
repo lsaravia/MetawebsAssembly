@@ -97,7 +97,7 @@ mod_by_red[[1]] <- modulos
 tbl <- data.frame()
 tbl <- calc_modularity_random(redl,1000)
 #saveRDS(tbl,"tbl.rds")
-tbl <- readRDS("tbl.rds")
+#tbl <- readRDS("tbl.rds")
 websTbl <- websTbl %>% bind_cols(tbl)
 
 # Check for detritos
@@ -109,7 +109,7 @@ grep("necr", V(redl)$name, ignore.case = TRUE, value=TRUE  )
 # Calculate Trophic Position
 #
 require(NetIndices)
-troph.net2<-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Detritus","Necromass"))
+troph.net2<-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Fresh detritus","Aged detritus","Necromass"))
 layout.matrix.1<-matrix(
   nrow=length(V(redl)),  # Rows equal to the number of vertices
   ncol=2
@@ -198,7 +198,7 @@ mod_by_red[[2]] <- modulos
 tbl <- data.frame()
 tbl <- calc_modularity_random(redl,1000)
 #saveRDS(tbl,"tbl.rds")
-tbl <- readRDS("tbl.rds")
+#tbl <- readRDS("tbl.rds")
 websTbl1 <- websTbl1 %>% bind_cols(tbl)
 websTbl <- bind_rows(websTbl,websTbl1)
 

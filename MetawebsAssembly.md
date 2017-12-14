@@ -1,9 +1,14 @@
-# From Local to regional and continental food web structure in Antarctica 
+# From Local to regional and meta food web structure in Antarctica 
 
 ## Abstract
 
-In recent years there has been an increased interest in spatial and temporal variation in food web structure. This is a necessary step to understand the influences of climate change and other global threats like biological invasions to ecosystems. The pool of species present in a broad geographic area and all their possible feeding interactions have been called meta-web, in analogy with the metacommunity concept. Local food webs are realizations of meta-webs that resulting from assembly processes influenced by migration, habitat filtering, stochastic factors, and dynamical constraints imposed by food web structure. This paper analyzes the largest meta-web available up to now: the marine Antarctic meta-web and compares it with two food webs that represent different spatial scales: the regional Weddell Sea and the local Potter Cove. One way to analyze the assembly  processes that shape food webs is to use subgraphs of nodes (i.e. species) called motifs. The frequency of the following three-node motifs we analyzed: tri-trophic chain, omnivory, apparent competition and exploitative competition. Due to the different spatial scales, the motif representation of the regional Weddel Sea network is expected to be more similar to the meta-web than one exhibited in the local Potter Cove food web. Another important property that characterizes the structure of food webs is the existence of subsets of species that interact more frequently among themselves than with other species: modularity. We also assess a quantitatively the small-world structure that means a tightly interconnected clusters of nodes, and a short mean path length. As the meta-web do not represent realized interactions we expect that it would be more similar to a random network with less modularity and less small-world-ness. Contrary to our expectations the meta-web has the highest modularity and small-world-ness, more frequency of the competition and omnivory motifs and an under-representation of tri-trophic motif compared with random networks. The regional and local food-webs had a similar structure with progressively less modularization. These suggest that local and regional food-webs are random samples of the meta food thus assembly processes are not heavily influencing food web structure and that evolutionary processes seems to be more important in shaping interactions and food web structure. 
- 
+In recent years there has been an increased interest in spatial and temporal variation in food web structure. This is a necessary step to understand the influences of climate change and other global threats like biological invasions to ecosystems. The pool of species present in a broad geographic area and all their possible feeding interactions have been called meta-web, in analogy with the metacommunity concept. Local food webs are realizations of meta-webs that result from assembly processes influenced by migration, habitat filtering, stochastic factors, and dynamical constraints imposed by food web structure. The present study analyzed the largest meta-web available up to now: the marine Antarctic meta-web with an area of 34.8 million Km^2^, and compared it with two food webs that represent different spatial scales: the regional Weddell Sea (3.5 million Km^2^) and the local Potter Cove (6.8 Km^2^). The meta-web was built using a dietary database of the Southern Ocean including species located at latitudes higher than 60°S. This set of species takes into account only the predator-prey interactions and does not have a real network structure. 
+One way to analyze the assembly processes that shape food webs is to use motifs; which are subgraphs of nodes (i.e. species) and links (i.e. predation) whose frequency deviates significantly compared to a random network topology. Here we assessed three-node motifs as they are a tractable study unit, and some of them have been related to the persistence of food webs. There are 16 possible three-node motifs yet only four have ecological relevance: apparent and exploitative competition, omnivory and tri-trophic chain. Due to the huge dissimilarity in spatial scale among the studied food webs, the motif representation of the local---Potter Cove---web is expected to be more different to the meta-web than the regional---Weddel Sea---network. 
+Another important property that characterizes the structure of food webs is the existence of subsets of species that interact more frequently among each other than with other species: modularity. This feature is also related to food web persistence as disturbances are restricted to modules and cannot propagate easily between them. Realized food webs (local and regional in this case) are expected to exhibit higher modularity than the meta-web.
+Furthermore, we studied a quantitative measure of the small-world topology, which refers to networks with a short mean path length between species and tightly interconnected clusters of nodes. Networks that show the small-world pattern are more resistant to extinctions and have higher resilience. As the meta-web does not represent realized interactions, small-world-ness is expected to be similar to a random network. On the other hand, real-world food webs like the local and regional ones are predicted to largely differ from its random counterparts.  
+Our results showed that the local, regional and meta-webs present a similar general pattern regarding motif frequency. In this sense, highest frequency was observed for the competition (exploitative and apparent, in this order) and omnivory motifs, which were over-represented with respect to random networks. On the contrary, the tri-trophic motif exhibited a lower frequency and was under-represented. Although such similar pattern, the frequency of the two competitive motifs in the local food web displayed an important difference: apparent competition was much higher than exploitative competition. 
+Contrary to our expectations, the meta-web had the highest modularity and small-world-ness with values significantly different from the random networks. The regional and local food webs presented a similar structure with progressively less modularity and small-world-ness. Besides, the local web did not differ as expected from random networks regarding small-world-ness.   
+As all networks displayed a comparable motif pattern, it seems that the food web structure is determined by evolutionary processes, neither assembly processes nor dynamical constraints have a strong influence on it. 
 
 **Leonardo A. Saravia** ^1^ ^2^, **Tomás  I. Marina** ^1^ ^2^ ^3^, **Marleen De Troch** ^4^, **Fernando R. Momo** ^1^ ^2^ 
 
@@ -15,6 +20,8 @@ Los Polvorines, Buenos Aires, Argentina.
 3. Consejo Nacional de Investigaciones Científicas y Técnicas (CONICET)
 
 4. Marine Biology, Ghent University, Krijgslaan 281/S8, (B-9000), Ghent, Belgium.
+
+\newpage
 
 ## Results
 
@@ -50,7 +57,6 @@ z-score
 
 Table: Small-world-ness and modularity
 
-\newpage
 
 ------------------------------------------
                  Local  Regional      Meta   
@@ -58,23 +64,23 @@ Table: Small-world-ness and modularity
 Exploitative 
 competition      830     42210    285866  
 
-zEC            15.4971  592.2163 945.5640 
+EC z-score     15.4971  592.2163 945.5640 
 
 Apparent 
 competition     1983      7842    126552  
 
-zAC            63.2947  58.4367  320.3600 
+AC z-score     63.2947  58.4367  320.3600 
 
 
 Tri-trophic 
 chain            578      3101     61739  
 
-zTT            -7.8152  -48.7765 -69.3458 
+TT z-score     -7.8152  -48.7765 -69.3458 
 
 
 Omnivory         124      892      36423  
 
-zOM            15.3853  89.3244  1022.2137
+OM z-score     15.3853  89.3244  1022.2137
 
 ------------------------------------------
 
