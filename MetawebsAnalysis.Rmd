@@ -371,7 +371,7 @@ save.image()
 #
 # Calculate z-score of modularity
 #
-websTbl <- websTbl %>% mutate(zMO= (Modularity- rndMO)/(MOhigh-MOlow)*2)
+websTbl <- websTbl %>% mutate(zMO= (Modularity- rndMO)/(MOhigh-MOlow)*2, zGR=(Groups-rndGR)/(GRhigh-GRlow)*2)
 
 
 require(pander)
@@ -379,7 +379,7 @@ panderOptions('table.split.table',Inf)
 panderOptions('table.style', 'multiline')
 
 pandoc.table()
-pandoc.table(t(websTbl %>% dplyr::select(Network,Size,Links,Connectance,PathLength,Clustering,Modularity,Groups,rndCC:GRhigh) %>% mutate_if(is.numeric, round, digits=4)))
+pandoc.table(t(websTbl %>% dplyr::select(Network,Size,Links,Connectance,PathLength,Clustering,Modularity,Groups,SWness,SWnessCI,zMO,zGR) %>% mutate_if(is.numeric, round, digits=4)))
 
 
 ```
@@ -421,10 +421,14 @@ V(redl)$name[grep(".1",spnames)]
 # Motif
 #
 mot <- triad_census(redl)
+
 mot[4] # Exploitative competition
 mot[5] # Apparent competition
 mot[6] # Tri-trophic chain
 mot[9] # Omnivory
+
+FreqMotif <- data.frame(Network="Local",t(mot))
+
 set.seed(123)
 motif <- calc_motif_random(redl)
 motif <- motif %>% mutate(Network="Local")
@@ -481,6 +485,12 @@ mot[4] # Exploitative competition
 mot[5] # Apparent competition
 mot[6] # Tri-trophic chain
 mot[9] # Omnivory
+
+
+FreqMotif <- rbind(FreqMotif,data.frame(Network="Regional",t(mot)))
+
+mot[10] # Loop 
+
 set.seed(123)
 motif <- bind_rows(motif, calc_motif_random(redl) %>% mutate(Network="Regional"))
 
@@ -547,6 +557,11 @@ mot[4] # Exploitative competition
 mot[5] # Apparent competition
 mot[6] # Tri-trophic chain
 mot[9] # Omnivory
+
+FreqMotif <- rbind(FreqMotif,data.frame(Network="Meta",t(mot)))
+
+mot[10] # Loop 
+
 set.seed(123)
 motif <- bind_rows(motif, calc_motif_random(redl) %>% mutate(Network="Meta"))
 
