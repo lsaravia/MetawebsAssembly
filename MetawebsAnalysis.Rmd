@@ -320,7 +320,7 @@ mod_by_red[[3]] <- modulos
 tbl <- data.frame()
 tbl <- calc_modularity_random(redl,1000)
 #saveRDS(tbl,"tbl.rds")
-tbl <- readRDS("tbl.rds")
+#tbl <- readRDS("tbl.rds")
 websTbl1 <- websTbl1 %>% bind_cols(tbl)
 
 websTbl <- bind_rows(websTbl,websTbl1)
@@ -378,7 +378,6 @@ require(pander)
 panderOptions('table.split.table',Inf)
 panderOptions('table.style', 'multiline')
 
-pandoc.table()
 pandoc.table(t(websTbl %>% dplyr::select(Network,Size,Links,Connectance,PathLength,Clustering,Modularity,Groups,SWness,SWnessCI,zMO,zGR) %>% mutate_if(is.numeric, round, digits=4)))
 
 
@@ -574,4 +573,51 @@ panderOptions('table.style', 'multiline')
 motif <- motif %>% dplyr::select(Network, 1:length(names(motif)))
 
 pandoc.table(t(motif %>% mutate_if(is.numeric, round, digits=4)))
+
 ```
+
+# Analisis of motif frequency change across networks
+
+Pag 616 The R book
+
+```{r MotifAnalysisMetaWeb, eval=T,echo=F,message=T,warning=T}
+
+#
+# Build a dataframe with the relevant motifs
+# 
+pFM<- FreqMotif %>% group_by(Network) %>% dplyr::select(X4:X6,X9) %>% rename(EC=X4,AC=X5,TT=X6,OM=X9) %>% mutate(Tot=sum(EC,AC,TT,OM)) %>% ungroup()
+
+require(tidyr)
+
+pFM <- pFM %>% select(Network:OM) %>%gather(motif,count,EC:OM)
+
+#
+# Test it using poisson glm (only the interaction counts )
+#
+model1 <- glm(count~Network*motif,poisson, data=pFM)
+summary(model1)
+model2 <- glm(count~Network+motif,poisson, data=pFM)
+
+anova(model1,model2,test="Chi")
+
+#
+# Pearson Chi-squared independence 
+#
+
+x <- FreqMotif %>% dplyr::select(X4:X6,X9) %>% rename(EC=X4,AC=X5,TT=X6,OM=X9)
+x <- as.matrix(x)
+rownames(x) <- FreqMotif$Network
+require(RColorBrewer)
+colnet <- brewer.pal(11,"RdYlGn")[c(1,11)]
+png("Figures/NetworkByMotifFreq.png",width=6,height=6,units="in",res=600)
+par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(2, 2, 0, 2))
+colnames(x) <- c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")
+assocplot(t(x),col=colnet)
+dev.off()
+#require(vcd)
+#assoc(x, main = "Relation Network and motif", shade = TRUE)
+
+chisq.test(x)
+
+```
+ 

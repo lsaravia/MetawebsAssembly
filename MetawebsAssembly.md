@@ -30,28 +30,28 @@ Los Polvorines, Buenos Aires, Argentina.
 ------------------------------------------
 Network            Local  Regional    Meta  
 ----------------- ------ --------- -------
-      Size          94      445      864  
+Size                  91      437      859  
 
-      Links        309      1908    9007  
+Links                 309     1908    9003  
 
-   Connectance    0.0350   0.0096  0.0121 
+Connectance        0.0373   0.0100  0.0122 
 
-   PathLength     1.8016   2.2295  2.5920 
+PathLength         1.8106   2.1965  2.5655 
 
-   Clustering     0.0977   0.0467  0.2161 
+Clustering         0.0989   0.0480  0.2164 
 
-   Modularity     0.3728   0.4793  0.4467 
+Modularity         0.3720   0.4784  0.4456 
 
-     Groups         5        6        7   
+Groups                5       5        7   
 
-Small-World-ness  2.9987   4.7612  10.8969
+Small-World-ness   2.7536   4.6855  10.8656
 
-SWness 99%CI      2.2904   2.2154  1.6788 
+SWness 99%CI       2.0670   2.2683  1.7106 
 
-Modularity        0.4173  17.9832  90.9406
+Modularity         0.8883  18.9697  85.7500
 z-score
 
-Groups            -1.5947 -1.9560  -0.2440
+Groups            -1.4993 -2.3960  -0.2533
 z-score
 ------------------------------------------
 
