@@ -48,7 +48,7 @@ oldcd <-getwd()
 
 ```{r ModularityAnalysisLocal, eval=T,echo=F,message=T,warning=T}
 
-source("R/small_world_fun.r")
+source("R/network_fun.r")
 
 require(igraph)
 require(dplyr)
@@ -115,6 +115,13 @@ layout.matrix.1<-matrix(
   ncol=2
 )
 
+
+#
+# Calc incoherence
+#
+q <- calc_incoherence(redl,troph.net2)
+websTbl$Q[1] <- q
+
 # Plot the red
 # 
 # Add colors to nodes 
@@ -148,7 +155,7 @@ save.image()
 
 ```{r ModularityAnalysisRegional, eval=T,echo=F,message=T,warning=T}
 
-source("R/small_world_fun.r")
+source("R/network_fun.r")
 
 require(igraph)
 require(dplyr)
@@ -218,7 +225,14 @@ layout.matrix.1<-matrix(
   nrow=length(V(redl)),  # Rows equal to the number of vertices
   ncol=2
 )
-max(troph.net2)
+
+#
+# Calc incoherence
+#
+q <- calc_incoherence(redl,troph.net2)
+websTbl$Q[2] <- q
+
+
 # 
 # Add colors to nodes 
 #
@@ -253,7 +267,7 @@ save.image()
 
 ```{r ModularityAnalysisMetaWeb, eval=T,echo=F,message=T,warning=T}
 
-source("R/small_world_fun.r")
+source("R/network_fun.r")
 
 require(igraph)
 require(dplyr)
@@ -340,6 +354,12 @@ layout.matrix.1<-matrix(
   nrow=length(V(redl)),  # Rows equal to the number of vertices
   ncol=2
 )
+
+#
+# Calc incoherence
+#
+q <- calc_incoherence(redl,troph.net2)
+websTbl$Q[3] <- q
 # 
 # Add colors to nodes 
 #
@@ -387,7 +407,7 @@ pandoc.table(t(websTbl %>% dplyr::select(Network,Size,Links,Connectance,PathLeng
 
 ```{r motifAnalysisLocal, eval=T,echo=F,message=T,warning=T}
 
-source("R/small_world_fun.r")
+source("R/network_fun.r")
 
 require(igraph)
 require(dplyr)
@@ -439,7 +459,7 @@ save.image()
 
 ```{r motifAnalysisRegional, eval=T,echo=F,message=T,warning=T}
 
-source("R/small_world_fun.r")
+source("R/network_fun.r")
 
 require(igraph)
 require(dplyr)
@@ -501,7 +521,7 @@ save.image()
 
 ```{r MotifAnalysisMetaWeb, eval=T,echo=F,message=T,warning=T}
 
-source("R/small_world_fun.r")
+source("R/network_fun.r")
 
 require(igraph)
 require(dplyr)
@@ -581,7 +601,7 @@ pandoc.table(t(motif %>% mutate_if(is.numeric, round, digits=4)))
 Pag 616 The R book
 
 ```{r MotifAnalysisMetaWeb, eval=T,echo=F,message=T,warning=T}
-
+require(dplyr)
 #
 # Build a dataframe with the relevant motifs
 # 

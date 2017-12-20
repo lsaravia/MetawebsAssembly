@@ -53,3 +53,32 @@ one). Nonetheless, given that so many of the key motifs identified
 so far are either complete 3-node loops or contain them [37,38],
 the global topology will have a high clustering coefficient, and will
 most likely be a small-world network
+
+
+--------------
+@Garcia-Callejas2017
+
+Network analyses can provide insights into
+community local stability (Allesina and Tang 2012) and
+robustness to extinctions (Riede et al. 2011), the degree of
+specialization of individual species or guilds (Dorado et al.
+2011), the impact of invasive species or climate change on
+established communities (Lopezaraiza-Mikel et  al. 2007)
+and, more generally, on any question in which pairwise
+interactions relate to community patterns and processes.
+
+For example, among the factors reported to
+stabilize food webs are high modularity and low connectance
+(Thébault and Fontaine 2010), correlation in pairwise
+interaction strengths (Tang et al. 2014), trophic coherence
+(Johnson et  al. 2014), a preponderance of weak (McCann
+et al. 1998) and asymmetrical interactions (Bascompte et al.
+2006), degree distributions broader than those of random
+graphs (Allesina et al. 2015), or the appearance of general-
+ist consumers coupling resources with different interaction
+strengths (Rip et al. 2010).
+
+---------------
+@Montoya2002
+
+Another important question emerging from our study is how these food webs with SW topologies are constructed through community assembly rules, that is, how they are built dynamically. Even if a community is assembled by random addition of species through a process of biological invasions, interactions can lead to non-random webs (Drake, 1990a, b). The SW topology might be related to underlying community level constraints and might help in understanding as to how biodiversity emerges and persists through time.

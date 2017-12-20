@@ -1,4 +1,45 @@
+# Plot modules vs trophic level
 #
+#
+plot_modules_TL <- function(redl,modulos)
+{
+  #
+  # Calculate Trophic Position
+  #
+  require(NetIndices)
+  troph.net2<-TrophInd(get.adjacency(redl,sparse=F))
+  layout.matrix.1<-matrix(
+    nrow=length(V(redl)),  # Rows equal to the number of vertices
+    ncol=2
+  )
+  
+  # 
+  # Add colors to nodes 
+  #
+  require(RColorBrewer)
+  
+  colTL <-as.numeric(cut(troph.net2$TL,11))
+  colnet <- brewer.pal(11,"RdYlGn")
+  V(redl)$color <- colnet[12-colTL]
+  
+  #
+  # Plot modules
+  #
+  layout.matrix.1[,2]<-jitter(troph.net2$TL,0.4) # y-axis value based on trophic level
+  layout.matrix.1[,1]<-jitter(modulos$membership,1) # randomly assign along x-axis
+  
+#  png("Figures/RegionalFoodWeb.png",width=6,height=6,units="in",res=600)
+#  par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0))
+  
+  plot(redl, vertex.color=vertex_attr(redl)$cor, #vertex.label=NA,
+       #vertex.size=log(3*igraph::degree(redl)),
+       edge.width=.3,edge.arrow.size=.4, 
+       edge.color="grey50",
+       edge.curved=0.3, layout=layout.matrix.1)
+  
+}
+
+# Calc connectivity clustering coeficient and path length 
 #
 #
 calc_topological_indices <- function(red.e)
@@ -113,66 +154,19 @@ calc_modularity_random<- function(red, nsim=1000){
                     GRlow=qgr[1],GRhigh=qgr[2]))         
 }
 
-
-
-# Calculation of the clustering coefficients and average path for random network simulations
 #
+# Calculate incoherence Q
 #
-calc_cpl_cc <- function(size,links, nsim=1000){
-  redes.r <- lapply(1:nsim, function (x) erdos.renyi.game(size, links, type="gnm")) 
-  
-  cha.path.r <- c() 
-  for (i in 1:nsim){
-    cha.path.r <- c(cha.path.r,average.path.length(redes.r[[i]]))
+calc_incoherence <- function(g,ti=0) {
+  require(igraph)
+  require(NetIndices)
+  if(ti==0)
+      ti<-TrophInd(get.adjacency(g,sparse=FALSE))
+  v <- ti$TL
+  z <- outer(v,v,'-');
+  A <- get.adjacency(g,sparse = FALSE)
+  xx <- A>0
+  x <- (A*t(z))[xx]
+  meanQ <- sum(x)/vcount(g) 
+  sdQ <- sqrt(sum((x-1)^2)/vcount(g) )
   }
-  
-  clus.coef.r <- c() 
-  for (i in 1:nsim){
-    clus.coef.r <- c(clus.coef.r,transitivity(redes.r[[i]], type="Global"))
-  }
-  qcc <- quantile(clus.coef.r,c(0.025,0.975))
-  qcp <- quantile(cha.path.r,c(0.025,0.975))
-  mcc <- mean(clus.coef.r)
-  mcp <- mean(cha.path.r)
-  
-  return(data_frame(cha.pathMean= mcp,clus.coefMean=mcc,cha.pathLow=qcp[1],cha.pathUp=qcp[2], clus.coefLow=qcc[1],clus.coefHigh=qcc[2]))         
-}
-
-# Generate a data.frame with all simulations
-#
-genrnd_cpl_cc <- function(size,links, nsim=1000){
-  redes.r <- lapply(1:nsim, function (x) erdos.renyi.game(size, links, type="gnm")) 
-  
-  cha.path.r <- c() 
-  for (i in 1:nsim){
-    cha.path.r <- c(cha.path.r,average.path.length(redes.r[[i]]))
-  }
-  
-  clus.coef.r <- c() 
-  for (i in 1:nsim){
-    clus.coef.r <- c(clus.coef.r,transitivity(redes.r[[i]], type="Global"))
-  }
-  return(data_frame(cha.path=cha.path.r, clus.coef=clus.coef.r))         
-}
-
-
-# Test SW in Watts Strogatz model against random
-#
-genWattsStrogatz_cpl_cc <- function(size,links, ratio=1.1,nsim=100){
-
-  redes.r <- lapply(1:nsim, function (x) { 
-                  sw <- sample_smallworld(1,size, links/(size*runif(1,0.8,1.2)), 0.5)
-                  sw <- simplify(sw,remove.loops = FALSE)})
-
-  swr <- data_frame()
-  
-  for (i in 1:nsim){
-    sw1 <- redes.r[[i]]
-    swr <- bind_rows(swr, calc_cpl_cc(gorder(sw1),gsize(sw1)) %>% 
-      mutate(Size=gorder(sw1),Links=gsize(sw1),CPL=average.path.length(sw1),CC=transitivity(sw1,type="global")) %>% 
-      mutate(isInsideCPL = (CPL >= cha.pathLow*(1/ratio) & CPL<=cha.pathUp*ratio), isGreaterCC =( CC>clus.coefHigh)))
-  }
-
-  return(swr)
-  
-}
