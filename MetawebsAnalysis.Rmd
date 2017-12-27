@@ -120,7 +120,10 @@ layout.matrix.1<-matrix(
 # Calc incoherence
 #
 q <- calc_incoherence(redl,troph.net2)
-websTbl$Q[1] <- q
+websTbl$Q[1] <- q$Q
+websTbl$rQ[1] <- q$rQ  # ratio of Q/eQ expected coherence under null -  Significan coherence rQ< 1, Significant incoherence rQ>1
+websTbl$mTI[1] <- q$mTI # mean trophic level 
+websTbl$rTI[1] <- q$rTI   # ratio of mTI/eTI expected under null 
 
 # Plot the red
 # 
@@ -230,7 +233,11 @@ layout.matrix.1<-matrix(
 # Calc incoherence
 #
 q <- calc_incoherence(redl,troph.net2)
-websTbl$Q[2] <- q
+websTbl$Q[2] <- q$Q
+websTbl$rQ[2] <- q$rQ  # ratio of Q/eQ expected coherence under null -  Significan coherence rQ< 1, Significant incoherence rQ>1
+websTbl$mTI[2] <- q$mTI # mean trophic level 
+websTbl$rTI[2] <- q$rTI   # ratio of mTI/eTI expected under null 
+
 
 
 # 
@@ -359,7 +366,11 @@ layout.matrix.1<-matrix(
 # Calc incoherence
 #
 q <- calc_incoherence(redl,troph.net2)
-websTbl$Q[3] <- q
+websTbl$Q[3] <- q$Q
+websTbl$rQ[3] <- q$rQ  # ratio of Q/eQ expected coherence under null -  Significan coherence rQ< 1, Significant incoherence rQ>1
+websTbl$mTI[3] <- q$mTI # mean trophic level 
+websTbl$rTI[3] <- q$rTI   # ratio of mTI/eTI expected under null 
+
 # 
 # Add colors to nodes 
 #
@@ -398,7 +409,7 @@ require(pander)
 panderOptions('table.split.table',Inf)
 panderOptions('table.style', 'multiline')
 
-pandoc.table(t(websTbl %>% dplyr::select(Network,Size,Links,Connectance,PathLength,Clustering,Modularity,Groups,SWness,SWnessCI,zMO,zGR) %>% mutate_if(is.numeric, round, digits=4)))
+pandoc.table(t(websTbl %>% dplyr::select(Network,Size,Links,Connectance,PathLength,Clustering,Modularity,Groups,SWness,SWnessCI,zMO,zGR,Q,rQ,mTI,rTI) %>% mutate_if(is.numeric, round, digits=4)))
 
 
 ```
@@ -609,14 +620,21 @@ pFM<- FreqMotif %>% group_by(Network) %>% dplyr::select(X4:X6,X9) %>% rename(EC=
 
 require(tidyr)
 
-pFM <- pFM %>% select(Network:OM) %>%gather(motif,count,EC:OM)
+pFM1 <- pFM %>% mutate(EC=EC/Tot,AC=AC/Tot,TT=TT/Tot, OM=OM/Tot) %>% dplyr::select(Network:OM) %>%gather(motif,count,EC:OM)
+require(ggplot2)
+ggplot(pFM1,aes(x=Network,y=count,fill=motif)) + geom_bar(stat="identity") + 
+  scale_fill_brewer(palette = "RdYlGn", breaks=c("EC","AC","TT","OM"), name="", labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")) + 
+  xlab("") + ylab("Proportion") + theme_bw() + theme(legend.position="bottom")
+ggsave("Figures/MotifProportionByNetwork.png",width=6,height=6,units="in",dpi=600)
 
 #
 # Test it using poisson glm (only the interaction counts )
 #
-model1 <- glm(count~Network*motif,poisson, data=pFM)
+pFM1 <- pFM %>%  dplyr::select(Network:OM) %>%gather(motif,count,EC:OM)
+
+model1 <- glm(count~Network*motif,poisson, data=pFM1)
 summary(model1)
-model2 <- glm(count~Network+motif,poisson, data=pFM)
+model2 <- glm(count~Network+motif,poisson, data=pFM1)
 
 anova(model1,model2,test="Chi")
 
@@ -638,6 +656,6 @@ dev.off()
 #assoc(x, main = "Relation Network and motif", shade = TRUE)
 
 chisq.test(x)
-
+spineplot(x)
 ```
  

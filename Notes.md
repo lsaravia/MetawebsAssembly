@@ -82,3 +82,28 @@ strengths (Rip et al. 2010).
 @Montoya2002
 
 Another important question emerging from our study is how these food webs with SW topologies are constructed through community assembly rules, that is, how they are built dynamically. Even if a community is assembled by random addition of species through a process of biological invasions, interactions can lead to non-random webs (Drake, 1990a, b). The SW topology might be related to underlying community level constraints and might help in understanding as to how biodiversity emerges and persists through time.
+
+---------------
+@Johnson2014
+
+Thanks to Pauly and colleagues’ seminal paper “Fishing down marine food webs” [57], the mean trophic level has come to be regarded as an indicator of an ecosystem’s health, to the extent that the Convention on Biological Diversity has mandated that signatory states report changes in this measure (renamed the Mean Trophic Index) for marine ecosystems.
+
+
+---------------
+@Johnson2017
+
+It has recently been shown that the high linear stability of food
+webs is determined mainly by a structural feature called “trophic
+coherence,” a measure of how neatly nodes fall into distinct lev-
+els (15). Trophic coherence, moreover, has been found to play
+an important role in other structural and dynamical properties
+of networks (16, 17).
+
+The graphs corresponding to
+food webs are significantly coherent (q/q < 1) and have slightly
+lower mean trophic levels than the expectation (hsi/s̃ . 1).
+The networks derived from gene regulation have coherence and
+mean trophic levels that are very close to their expected val-
+ues. Meanwhile, the networks linked to metabolism are signif-
+icantly incoherent (q/q̃ > 1) and have mean trophic levels that
+are higher than expected (hsi/s̃ > 1)

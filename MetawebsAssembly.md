@@ -44,15 +44,27 @@ Modularity         0.3720   0.4784  0.4456
 
 Groups                5       5        7   
 
-Small-World-ness   2.7536   4.6855  10.8656
+Small-World-ness   2.7536   4.6855  10.866
 
-SWness 99%CI       2.0670   2.2683  1.7106 
+SWness 99%CI       2.0670   2.2683  1.711 
 
-Modularity         0.8883  18.9697  85.7500
+Modularity         0.8883  18.9697  85.750
 z-score
 
 Groups            -1.4993 -2.3960  -0.2533
 z-score
+
+Coherence          0.5319  0.4508   0.7037  
+
+Coherence 
+Ratio              0.4533  0.7524   0.8245  
+
+Mean Trophic
+level              2.1289  1.9831   1.9119  
+
+Trophic level
+Ratio              0.8209  0.9370   0.9225  
+
 ------------------------------------------
 
 Table: Small-world-ness and modularity
@@ -90,8 +102,12 @@ Table: Motif counts z-scores and CI99%
 \normalsize
 
 
-![Local Food Web trophic level by compartiments](Figures/LocalFoodWeb.png)
+![Local Food Web trophic level by compartments](Figures/LocalFoodWeb.png)
 
-![Regional Food Web trophic level by compartiments](Figures/RegionalFoodWeb.png)
+![Regional Food Web trophic level by compartments](Figures/RegionalFoodWeb.png)
 
-![Meta Food Web trophic level by compartiments](Figures/MetaFoodWeb.png)
+![Meta Food Web trophic level by compartments](Figures/MetaFoodWeb.png)
+
+![Deviation of motif frequencies from  independence between motif and networks. ](Figures/NetworkByMotifFreq.png)
+
+![Motif proportions by network. ](Figures/MotifProportionByNetwork.png)
