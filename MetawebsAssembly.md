@@ -96,7 +96,7 @@ OM z-score     15.3853  89.3244  1022.2137
 
 ------------------------------------------
 
-Table: Motif counts z-scores and CI99%
+Table: Motif counts z-scores and CI99%. The proportions for the three scales are different (Pearson's Chi-squared test of independence X-squared = 12612, df = 6, p-value < 2.2e-16)
 
 
 \normalsize

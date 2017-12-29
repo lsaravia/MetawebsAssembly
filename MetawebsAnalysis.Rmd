@@ -121,7 +121,7 @@ layout.matrix.1<-matrix(
 #
 q <- calc_incoherence(redl,troph.net2)
 websTbl$Q[1] <- q$Q
-websTbl$rQ[1] <- q$rQ  # ratio of Q/eQ expected coherence under null -  Significan coherence rQ< 1, Significant incoherence rQ>1
+websTbl$rQ[1] <- q$rQ  # ratio of Q/eQ expected coherence under null -  Significant coherence rQ< 1, Significant incoherence rQ>1
 websTbl$mTI[1] <- q$mTI # mean trophic level 
 websTbl$rTI[1] <- q$rTI   # ratio of mTI/eTI expected under null 
 
@@ -659,3 +659,55 @@ chisq.test(x)
 spineplot(x)
 ```
  
+# Topological Roles
+
+
+@Kortsch2015
+
+The role is described by two parameters: (i) the standardized within-module degree z and (ii) the among-module
+connectivity participation coefficient PC. The z-score reflects how well a species is connected to other species inside the module relative to other species within its own module. The PC parameter estimates the distribution of a species’ connections across the modules.
+
+
+```{r topologicalRoles, eval=T,echo=F,message=T,warning=T}
+
+source("R/network_fun.r")
+
+require(igraph)
+require(dplyr)
+require(stringr)
+
+#
+# Read data and trim species names to avoid duplicates 
+#
+dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
+dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
+
+#
+# Select local food web 
+#
+dtot1 <- as.matrix(dtot %>% filter(Network=="Local") %>% dplyr::select(Prey_name,Predator_name))
+redl <- graph_from_edgelist(dtot1, directed  = T)
+
+#
+
+topoRoles <- calc_topological_roles(redl,mod_by_red[[1]])
+
+plot_topological_roles(topoRoles,redl,mod_by_red[[1]])
+
+
+#
+# Select regional food web 
+#
+dtot1 <- as.matrix(dtot %>% filter(Network=="Regional") %>% dplyr::select(Prey_name,Predator_name))
+redl <- graph_from_edgelist(dtot1, directed  = T)
+redl <- simplify(redl)
+
+#
+
+topoRoles <- calc_topological_roles(redl,mod_by_red[[2]])
+
+plot_topological_roles(topoRoles,redl,mod_by_red[[2]])
+
+
+```
+
