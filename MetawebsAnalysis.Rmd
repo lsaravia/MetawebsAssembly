@@ -690,10 +690,33 @@ redl <- graph_from_edgelist(dtot1, directed  = T)
 
 #
 
-topoRoles <- calc_topological_roles(redl,mod_by_red[[1]])
+tR <- calc_topological_roles(redl)
+topoRoles <- tR %>% mutate(Network="Local")
 
-plot_topological_roles(topoRoles,redl,mod_by_red[[1]])
+png("Figures/TopoRoles_Local.png",width=6,height=6,units="in",res=600)
+par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0))
 
+hub_conn <- bind_rows(hub_conn, plot_topological_roles(filter(topoRoles,Network=="Local"),redl,mod_by_red[[1]]) %>% mutate(Network="Local"))
+
+dev.off()
+
+save.image()
+
+# Check if 100 simulations are the same as 1000
+#
+tR1 <- calc_topological_roles(redl,100)
+tR2 <- topoRoles %>% filter(Network=="Local") 
+require(kSamples)
+ad.test(list(tR1$among_module_conn,tR2$among_module_conn),method="simulated",nsim=1000)
+ad.test(list(tR1$within_module_degree,tR2$within_module_degree),method="simulated",nsim=1000)
+# No difference with 100 or 1000 simulations
+
+require(ggplot2)
+tR3 <- tR1 %>% mutate(nsim=100) %>% bind_rows(tR2 %>% mutate(nsim=1000)) %>% mutate(nsim=as.factor(nsim))
+ggplot(tR3, aes(within_module_degree,fill=nsim)) + geom_density(alpha=.5)
+ggplot(tR3, aes(among_module_conn,fill=nsim)) + geom_density(alpha=.5)
+
+rm(tR1,tR2,tR3)
 
 #
 # Select regional food web 
@@ -704,9 +727,68 @@ redl <- simplify(redl)
 
 #
 
-topoRoles <- calc_topological_roles(redl,mod_by_red[[2]])
+tR <- calc_topological_roles(redl,100)
+topoRoles <- bind_rows(topoRoles, tR %>% mutate(Network="Regional"))
 
-plot_topological_roles(topoRoles,redl,mod_by_red[[2]])
+png("Figures/TopoRoles_Regional.png",width=6,height=6,units="in",res=600)
+par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0))
+hub_conn <- bind_rows(hub_conn,plot_topological_roles(filter(topoRoles,Network=="Regional"),redl,mod_by_red[[2]]) %>% mutate(Network="Regional"))
+
+dev.off()
+
+#
+# Select meta food web 
+#
+dtot1 <- as.matrix(dtot %>% filter(Network=="Meta") %>% dplyr::select(Prey_name,Predator_name))
+redl <- graph_from_edgelist(dtot1, directed  = T)
+redl <- simplify(redl)
+
+#
+rm(tR,tR1,tR2)
+
+#
+tR1 <- bind_rows(tR1, calc_topological_roles(redl,10))
+saveRDS(tR1,"TopoRoles_Meta.rds")
+tR2 <-   tR1 %>% group_by(node) %>% summarize(wtmLowCI=quantile(within_module_degree,0.005,na.rm=TRUE),
+                                        wtmHiCI=quantile(within_module_degree,0.995,na.rm=TRUE),
+                                        amcLowCI=quantile(among_module_conn,0.005,na.rm=TRUE),
+                                        amcHiCI=quantile(among_module_conn,0.995,na.rm=TRUE),
+                                        within_module_degree=mean(within_module_degree,na.rm=TRUE),
+                                        among_module_conn=mean(among_module_conn,na.rm=TRUE))
+
+#
+# 
+# There are Differences between 10 and 20 simulations
+#  tR  = 40 
+#  tR2 = 50
+#  tR1 = data.frame with added simulations
+
+require(kSamples)
+ad.test(list(tR2$among_module_conn,tR$among_module_conn),method="simulated",nsim=1000)
+ad.test(list(tR2$within_module_degree,tR$within_module_degree),method="simulated",nsim=1000)
+
+tR <- tR2
+
+# At 50 sims there is no difference with 40
+#
+#                 AD   T.AD  asympt. P-value  sim. P-value
+# version 1: 0.04612 -1.254                1             1
+# version 2: 0.04160 -1.260                1             1
+#
+#              AD   T.AD  asympt. P-value  sim. P-value
+# version 1: 2.08 1.4200          0.08299        0.0849
+# version 2: 1.31 0.4092          0.22860        0.2307
+
+topoRoles <- bind_rows(topoRoles, tR %>% mutate(Network="Meta"))
+
+png("Figures/TopoRoles_Meta.png",width=6,height=6,units="in",res=600)
+par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0))
+
+hub_conn <- plot_topological_roles(tR,redl,mod_by_red[[3]]) %>% mutate(Network="Meta")
+dev.off()
+
+save.image()
+
 
 
 ```

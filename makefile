@@ -6,8 +6,8 @@ all: MetawebsAssembly.pdf
 	pandoc $< -o $@ -H Appendices.sty
 	evince $@		
 
-CriticalGF.pdf: CriticalGF.md margins.sty makefile
-	cp "/home/leonardo/BibTeX/Meta-web local web assembly" MetawebsAssembly.bib
+MetawebsAssembly.pdf: MetawebsAssembly.md margins.sty makefile
+	cp "/home/leonardo/BibTeX/Manuscritos-Meta-web local web assembly.bib" MetawebsAssembly.bib
 	pandoc $< -o $@ $(OPTS)
 	evince $@		
 

@@ -107,3 +107,103 @@ mean trophic levels that are very close to their expected val-
 ues. Meanwhile, the networks linked to metabolism are signif-
 icantly incoherent (q/q̃ > 1) and have mean trophic levels that
 are higher than expected (hsi/s̃ > 1)
+
+
+------------------
+@Grilli2016
+
+
+The picture emerging from both simulations and mathematical analysis is much more complex than previously hypothesized. Block structure can have an effect on the local asymptotic stability of the underlying system. However, unless we are in particular areas of the parameter space, the effect tends to be destabilizing. Our results stress the fact that, when discussing the relationship between network structure and local stability, we need to qualify our statements, as a given structure is not stabilizing or destabilizing per se, but is only so under certain specific conditions.
+
+Though we have illustrated this point by studying the modular structures, we believe this phenomenon to hold generally: any network structure can have different effects on stability, depending on the choice of parameters. To reinforce this message, in Fig. 7, we show three cases in which an empirical network structure makes the system more or less stable than its random counterpart, depending on the parameterization of the coefficients. Practically, this means that the challenge of proving that biological network structure emerges because of a selective process, removing configurations yielding unfavourable dynamics17–19 is much harder than expected: network structure, without estimates of the distribution of the coefficients, cannot be used to determine
+the effect on dynamical properties.
+
+------------------
+@Borrelli2015a
+
+While large scale 
+emergent properties of networks (modularity, nestedness,
+connectance, etc.) has been the focus of much research in
+the past, there are many other ways to characterize the struc-
+ture of an ecological network. Here I assess the substructural
+composition of food webs in light of the stability of their
+basic building blocks (three-node subgraphs).
+
+Subgraphs differed in how frequently they were observed relative to permuted webs (Fig. 2). Tritrophic chains (s1), apparent competition (s4), and direct competition (s5) all tended to be over-represented in food webs based on both null models.
+
+Like the pattern of subgraphs in food webs, trophic coherence may be explained by the two hypotheses of constraints
+on the assembly of the web, or intrinsic benefits of the structure. Johnson et al. (2014) suggest that adaptations for feeding on a given species may be more helpful for preying upon other species at a similar trophic level, evoking the idea of constraints on assembly of the web. The observed frequency of subgraphs may then be the result of such feeding preferences and the apparent relationship between stability and frequency only coincidental. 
+
+One could also imagine that species vary in how they choose prey and when species feeding preferences lead to the increase of s1, s4 and s5 subgraphs the coherence of the web and therefore its stability increases. The observed pattern would then result from a combination of constraints on assembly and the intrinsic properties of the subgraphs (stability).
+
+An ideal test of the hypothesis of selection against unstable configurations would involve food web assembly data. During food web assembly, new species enter the food web and establish feeding links with the species that are pres- ent. This establishment alters the structure of the food web, and can be measured as changes in the relative frequency of the different three-node subgraphs. Following the introduction of the new species one of two events could occur; 1) the new species becomes integrated into the network and the food web grows (in terms of the number of species), or 2) the introduction of the new species leads to extinction events and the food web shrinks. The selection against instability hypothesis would predict that when the addition of new species increases the relative frequency of more stable subgraphs
+compared to less stable ones, the web should grow. If the frequency of less stable subgraphs is increased more than the stable ones, then extinctions would be more likely to occur.
+
+
+Nonadaptive systemic selection can act on networks via
+dynamical pruning, favoring configurations that are more
+likely to lead to system persistence [31]. Similar nonran-
+dom motif profiles could also arise by network assembly,
+the effects of which have been found in both mutualistic
+and trophic networks [33–37]. Only by developing strong
+models of network assembly can one separate the effect of
+dynamical pruning from that of network growth and de-
+velopment. Assembly might not only involve systemic
+selection, but also include other processes (e.g., priority
+effects or constraints on colonization).
+
+--------------------
+
+Bornatowski2017
+
+This theory has been applied to several marine studies (e.g. Montoya & Solé, 2002; Lusseau et al., 2006; Fox & Bellwood, 2014; Navia et al., 2012). For example, Navia et al. (2016) proposed that this information
+2016; a). Small-­world networks require a high level of clustering compared with a random graph, and a small average path length, similar to that seen in random graphs (Watts & Strogatz, 1998).
+
+Small-­world food webs are, in theory, resistant to the loss of species with low centrality values (a measure of how many times the node participates in the dispersal effects in the network), but are sensitive to the loss of species with the highest values (e.g. Albert & Barabási, 2002; Clauset, Moore, & Newman, 2008; Gaichas & Francis, 2008; Jordano, Bascompte, & Olesen, 2003; Montoya & Solé, 2002; Solé & Montoya, 2001).
+
+Thereby, the small-­world structural pattern (based on the clustering co-­efficient) has been associated with rapid responses to various disturbances in several theoretical food webs, suggesting that this arrangement may benefit web resilience. In this respect, Solé and Montoya (2001) and Montoya and Solé (2002) determined that food webs with small-­world structural arrangements were more resistant to secondary extinction of species than networks with random structures. However, trophic interactions are flexible and the response of the community is much less predictable, and so properties of structures of networks should not be taken for granted (Navia et al., 2016).
+
+
+----------------------
+@Gray2016
+
+
+As with other features of the whole network (such as connectance) or parts of
+the network (e.g. generality) the so-called ‘small-world’ properties of food webs
+have also been linked to stability (Watts & Strogatz 1998; Montoya & Solé 2002) and
+to the rate at which perturbations propagate (Montoya, Pimm & Solé 2006).
+Essentially, if species are highly connected to the rest of the food web in a ‘small-
+world’ network, then perturbations may spread (and dissipate) rapidly, but if there
+are less well connected (more degrees of separation) this may lead to longer-lived
+oscillatory dynamics and feedbacks that require a long time to reach equilibrium.
+Thus, it is not simply the linkage density or strength of connections that are
+important for determining stability or food-web inertia, but their particular
+configuration. Even large food webs from circumneutral or higher pH systems can
+exhibit these properties, with most species being only 1-2 degrees of separation from
+the rest of the web (Thompson et al. 2015). Network efficiency (see Text Box) is a
+measure of how well connected a network is, as well as the distribution of those
+connections across a network (Latora & Marchiori 2001), and can enable inferences
+to be made about the small-world properties of food webs. Although rarely applied
+to date in food web studies, this metric derived from the wider field of network
+science could provide new insights into how these small-world aspects of food web
+topology itself might shape the trajectory of biological recovery (Monteith et al. 2005;
+Layer et al. 2010b). The lengthening of food chains associated with the re-invasion of
+consumers might be expected to increase the overall efficiency of the network, as the
+wider breadth of diet of new, large, top predators effectively reduces the distance (in
+terms of number of links) between resources.
+
+
+---------------------
+
+@Mougi2016
+
+Here, we propose that spatial heterogeneity alone, as a general and inherent feature of any natural ecosystem,
+can elicit a positive complexity-stability effect. Our world is undoubtedly spatial, and species interactions are
+spatially limited 17 . Stabilizing effects of spatiality on prey-predator population dynamics have been well recog-
+nized and studied both theoretically and empirically 18–20 . However, those studies considered simple communities
+consisting of only a few species 17,21,22 , did not account for spatial effects 23,24 , did not examine interactions between
+food-web complexity and spatiality 25 or food-web complexity is only realized as a result of spatial aggregation of
+local simple sub-webs 26–28 . Thus, how essential spatiality may be for the persistence of more complex food webs
+is still not clear. We aim to reveal that the incorporation of spatiality may totally change, and even reverse, our
+understanding of how ecosystem complexity affects ecosystem stability.
+
