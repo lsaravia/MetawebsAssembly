@@ -54,17 +54,24 @@ calc_topological_indices <- function(red.e)
   return(data.frame(Size=size.e,Links=links.e, LD=link.den,Connectance=conn.e,PathLength=cha.path.e,Clustering=clus.coef.e))
 }
 
-# Calculate motif for random networks and observed network
-#
-#
+#' Calculate motif counts for observed network and CI for erdos-renyi random networks and Z-scores 
+#'
+#' @param red igraph network object
+#' @param nsim number of simulation to calculate random networks with the same nodes and links
+#'
+#' @return data.frame with all the results
+#' @export
+#'
+#' @examples
 calc_motif_random <- function(red, nsim=1000)
 {
-    t <- calc_topological_indices(red)
+    Size <- vcount(red)
+    Links <- ecount(red)
     
     redes.r <- lapply(1:nsim, function (x) {
-      e <- erdos.renyi.game(t$Size, t$Links, type="gnm",directed = TRUE)
+      e <- erdos.renyi.game(Size, Links, type="gnm",directed = TRUE)
       while(components(e)$no>1)
-        e <- erdos.renyi.game(t$Size, t$Links, type="gnm",directed = TRUE)
+        e <- erdos.renyi.game(Size, Links, type="gnm",directed = TRUE)
       
       return(e) }
     )
