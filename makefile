@@ -1,6 +1,6 @@
 OPTS= -H margins.sty --bibliography MetawebsAssembly.bib --csl=plos.csl --latex-engine=xelatex 
 
-all: MetawebsAssembly.pdf 
+all: NetSci_abstract.pdf MetawebsAssembly.pdf
 
 %.pdf:%.md
 	pandoc $< -o $@ -H Appendices.sty

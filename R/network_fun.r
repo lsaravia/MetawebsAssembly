@@ -308,10 +308,10 @@ plot_topological_roles <- function(tRoles,g,spingB){
   axis(1, tck=0.02, lwd=1,las=2,lty=1, labels=F, xlim=c(0,1))
   axis(2,tck=0.02, labels=FALSE)
   
-  # Which are the module hubs
+  # Which are the module hubs: many links within its own module.
   #
   modhub <- which(l>2.5)
-  modhub <- modhub[which(l>2.5) %in% which(r<0.625)]
+  modhub <- modhub[which(l>2.5) %in% which(r<=0.625)]
   modlbl <- unlist(vertex_attr(g,index=modhub))
   hub_conn <- data.frame()
   
@@ -321,7 +321,9 @@ plot_topological_roles <- function(tRoles,g,spingB){
   }
   
   #points(r[modhub], l[modhub], cex=4, col="blue", pch=20)
-  # Which are the module connectors
+  
+  # Which are the hub connectors: high within and between-module connectivity
+  #                              and are classified super-generalists
   #
   modhub <- which(l>2.5)
   modhub <- modhub[which(l>2.5) %in% which(r>0.625)]
@@ -329,7 +331,23 @@ plot_topological_roles <- function(tRoles,g,spingB){
   if(length(modhub)) {
     text(r[modhub],l[modhub],labels = modlbl,cex=0.7,pos=3)
   }
+  
   #points(r[modhub], l[modhub], cex=4, col="blue", pch=20)
+  hub_conn <- rbind(hub_conn, data.frame(type="hubcon",node=modhub,name=modlbl))  
+
+  
+  # Which are the module specialist: Few links and most of them within its own module
+  #
+  modhub <- which(l<=2.5)
+  modhub <- modhub[which(l<=2.5) %in% which(r<=0.625)]
+  modlbl <- unlist(vertex_attr(g,index=modhub))
+  hub_conn <- rbind(hub_conn, data.frame(type="modspe",node=modhub,name=modlbl))  
+  
+  # Which are the module connectors: Few links and between modules
+  #
+  modhub <- which(l<=2.5)
+  modhub <- modhub[which(l<=2.5) %in% which(r>0.625)]
+  modlbl <- unlist(vertex_attr(g,index=modhub))
   hub_conn <- rbind(hub_conn, data.frame(type="modcon",node=modhub,name=modlbl))  
   
 }

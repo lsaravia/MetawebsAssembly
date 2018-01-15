@@ -1,5 +1,7 @@
 # From Local to regional and meta food web structure in Antarctica 
 
+# Ecological Network structure across scales: from local to regional
+
 ## Abstract
 
 In recent years there has been an increased interest in spatial and temporal variation in food web structure. This is a necessary step to understand the influences of climate change and other global threats like biological invasions to ecosystems. The pool of species present in a broad geographic area and all their possible feeding interactions have been called meta-web, in analogy with the metacommunity concept. Local food webs are realizations of meta-webs that result from assembly processes influenced by migration, habitat filtering, stochastic factors, and dynamical constraints imposed by food web structure. The present study analysed the largest meta-web available up to now: the marine Antarctic meta-web with an area of 34.8 million Km^2^, and compared it with two food webs that represent different spatial scales: the regional Weddell Sea (3.5 million Km^2^) and the local Potter Cove (6.8 Km^2^). The meta-web was built using a dietary database of the Southern Ocean including species located at latitudes higher than 60°S. This set of species takes into account only the predator-prey interactions and does not have a real network structure. 
@@ -9,6 +11,13 @@ Furthermore, we studied a quantitative measure of the small-world topology, whic
 Our results showed that the local, regional and meta-webs present a similar general pattern regarding motif frequency. In this sense, highest frequency was observed for the competition (exploitative and apparent, in this order) and omnivory motifs, which were over-represented with respect to random networks. On the contrary, the tri-trophic motif exhibited a lower frequency and was under-represented. Although such similar pattern, the frequency of the two competitive motifs in the local food web displayed an important difference: apparent competition was much higher than exploitative competition. 
 Contrary to our expectations, the meta-web had the highest modularity and small-world-ness with values significantly different from the random networks. The regional and local food webs presented a similar structure with progressively less modularity and small-world-ness. Besides, the local web did not differ as expected from random networks regarding small-world-ness.   
 As all networks displayed a comparable motif pattern, it seems that the food web structure is determined by evolutionary processes, neither assembly processes nor dynamical constraints have a strong influence on it. 
+
+## Abstract 2
+
+The idea that ecological networks are built in a sequence of colonization events is not new but has been mostly applied to competitive interactions. Similar processes act in trophic networks (food webs): a regional pool of species is the source from which species colonize local areas, called the meta-web.  Local food webs are realizations of meta-webs that result from assembly processes influenced by migration, habitat filtering, stochastic factors, and dynamical constraints imposed by food web structure. In the present study we analyse three spatial scales: the marine Antarctic meta-web representing an area of 34.8 million Km^2^, the regional Weddell Sea (3.5 million Km^2^) and the local Potter Cove (6.8 Km^2^). The meta-web was built using a dietary database of the Southern Ocean including species located at latitudes higher than 60°S. This set of species takes into account only the predator-prey interactions and does not have a real network structure. We analyse how this nested set of food-webs change across scales using properties at three levels: emergent global properties that take into account the whole network (like modularity), sub-structural properties that consider several nodes (like motifs), and properties related to one node (like topological roles). 
+The global properties that are important for food webs stability and resilience: trophic coherence that is the tendency of nodes to fall into well defined trophic levels; a quantitative measure of the small-world topology, which refers to networks with a short mean path length between species and tightly interconnected clusters of nodes and modularity: the existence of subsets of species that interact more frequently among each other than with other species. As the intermediate level property, we analysed the frequency of three-node motifs that are important for food-webs. And as node-level property we analysed the within node degree that measures well a species is connected to other species inside the module, and the among-module connectivity that estimates how well a species is linked across modules. 
+The meta-web had the highest modularity and small-world-ness with values significantly different from the random networks. The regional and local food webs presented a similar structure with progressively less modularity and small-world-ness. The coherence showed an opposite pattern with the meta web more similar to a random null model, and the local food web more different. Regarding motif frequency, the local, regional and meta-webs present a similar general pattern: highest frequency was observed for the competition (exploitative and apparent, in this order) and omnivory motifs, which were over-represented with respect to random networks. On the contrary, the tri-trophic motif exhibited a lower frequency and was under-represented. Beside that there are some differences: in the local food web apparent competition was much higher than exploitative competition, and in the meta web omnivory is higher than the others. Topological roles display a similar pattern across scales, with one difference the local does not have module hubs, which means less connectivity within modules.
+We expected that the meta-web where more similar to a random network in global properties related to stability and resilience, only coherence showed that pattern. Coherence is related to local stability of food webs, this is coincident with the observed motif frequencies, the meta-web showed an excess of the omnivory that is the most unstable motif of the four analysed. The meta-web also showed a highly from a random structure regarding topological roles. We found that a great portion of the structure of the food webs is determined by evolutionary processes that act on large temporal and spatial scales, but non-adaptative selection or assembly processes also filter unstable structures at a local scale, this there is a mixture of processes determining food web structure. One important thing to consider is that the particular assembly process of food webs acts preserving the structure of the meta-web. 
 
 **Leonardo A. Saravia** ^1^ ^2^, **Tomás  I. Marina** ^1^ ^2^ ^3^, **Marleen De Troch** ^4^, **Fernando R. Momo** ^1^ ^2^ 
 
@@ -36,7 +45,7 @@ There are several approaches to characterize the structure of an ecological netw
 
 <!---Modularity -->
 
-Food webs have highly non-random and structurally complex patterns that contain internal functional units or sub-modules [@Krause2003]. These are groups of prey and predators that interact more strongly with each other than with species belonging to other sub-modules, the existence of these modules (also called compartments) acts buffering the propagation of extinctions throughout the network, thereby  increasing persistence [@stouffer2011]. It is interesting to mention that small-world patterns and modularity act in opposite directions. The small-world structure favours that perturbations spread and dissipate rapidly [@Gray2016], and a high degree of modularity prevents the spread of perturbations [@stouffer2011;@Krause2003]. The detection of these modules is an intermediate approach between the global and the local analysis. 
+Food webs have highly non-random and structurally complex patterns that contain internal functional units or sub-modules [@Grilli2016]. These are groups of prey and predators that interact more strongly with each other than with species belonging to other sub-modules, the existence of these modules (also called compartments) acts buffering the propagation of extinctions throughout the network, thereby  increasing persistence [@stouffer2011]. It is interesting to mention that small-world patterns and modularity act in opposite directions. The small-world structure favours that perturbations spread and dissipate rapidly [@Gray2016], and a high degree of modularity prevents the spread of perturbations [@stouffer2011;@Krause2003]. The detection of these modules is an intermediate approach between the global and the local analysis. 
 
 <!---Topological roles -->
 
@@ -48,20 +57,14 @@ their own module and/or between the modules [12]. [@Kortsch2015]
 
 Thus we consider both kinds of properties,    
 
+<!---Metaweb, regional, local food webs -->
 
-
-* Emergent vs local properties  
-
-* Motif [@Borrelli2015a,@Borrelli2015]
-
-* Food webs [,,]
-
-* Food webs assembly evolutionary and dynamical constrains .
+* Food webs assembly evolutionary and dynamical constrains [@poisot2012].
 
 
 ## Methods
 
-We consider that the metacomunity is the regional pool the species defined by the biogeographic Antarctic region  
+We consider that the metaweb is the regional pool the species defined by the biogeographic Antarctic region  
 
 
 ## Results
@@ -153,14 +156,14 @@ Table: Motif counts and motif z-scores. The proportions for the three scales are
 
 ![Meta Food Web trophic level by compartments](Figures/MetaFoodWeb.png)
 
-![Deviation of motif frequencies from  independence between motif and networks. ](Figures/NetworkByMotifFreq.png)
 
-![Motif proportions by network. ](Figures/MotifProportionByNetwork.png)
+![Network sub-structural properties across scales, *Meta* represent the marine predator-prey relationships of Antarctica (34.8 million Km^2^), *Regional* represent the Weddell Sea (3.5 million Km^2^), and *Local* a small fjord (6.8 Km^2^). A. Z-scores of four three node motif important for food-web stability. B. Topological roles based in within module degree and among module connectivity](Figures/Motif_TopoRoles_ByNetwork.png){ width=75% }
+
 
 
 ## Discussion
 
-There is no strong pattern either produced by Nonadaptive systemic selection or by network assembly processes.
+There is a pattern either produced by Nonadaptive systemic selection or by network assembly processes.
 
 ## References
 

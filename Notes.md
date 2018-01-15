@@ -35,6 +35,11 @@ protects the majority of the nodes from the perturbation.
 ------------
 @Kortsch2015
 
+
+From a network perspective, the ecological role of a species is a direct result of its position in the food web, the number of interactions it has with neighbouring species and their interactions, and also the strength of these interactions [13,14].
+Some species are functionally more important than others and may have disproportionately large effects on food web structure [15]. Central and functionally unique species include keystone species, key species, ecosystem engineers and network hubs [16–18]. Theoretical and empirical results suggest that network hubs, or super-generalists, connect modules and communities due to their wide niche breadth, environmental tolerance, apex position in local communities and high motility [19–21]. If species affected by pertubations possess key functional roles in the food web, then the potential higher order, indirect effects of those pertubations on the entire food web structure can be dramatic.
+
+
 We detected considerable differences in structural properties and link configuration between the boreal and the arctic food webs, the latter being more modular and less connected. We found that a main characteristic of the boreal fish moving poleward into the arctic region of the Barents Sea is high generalism, a property that increases connectance and reduces modularity in the arctic marine food web. Our results reveal that habitats form natural boundaries for food web modules, and that generalists play an important functional role in coupling pelagic and benthic modules. We posit that these habitat couplers have the potential to promote the transfer of energy and matter between habitats, but also the spread of pertubations [I DO not think so!!]
 
 
@@ -207,3 +212,7 @@ local simple sub-webs 26–28 . Thus, how essential spatiality may be for the pe
 is still not clear. We aim to reveal that the incorporation of spatiality may totally change, and even reverse, our
 understanding of how ecosystem complexity affects ecosystem stability.
 
+--------------------
+@Poisot2012
+
+Understanding how local realisations relate to it paves the way to the development of a biogeography of species interactions. Given the multiple drivers of local community composition (species filtering, historical contingencies and stochasticity), only a subset of species will be present at each locality, thus potentially realising only a subsample (the alpha diversity) of all the possible interactions found in the metaweb (the gamma diversity; Fig. 1).
