@@ -118,10 +118,24 @@ are higher than expected (hsi/s̃ > 1)
 @Grilli2016
 
 
+Food-web structure. Clearly, ecological systems do not follow a
+random graph structure, for example, displaying a directionality
+in the flow of energy from producers to consumers. This
+directionality proved important in our previous study 36 , where
+we showed that when the mean of the negative effects dominates
+that of the positive effects, systems built according to the
+cascade 37 model (in which ‘larger’ species consume ‘smaller’
+ones) are more likely to be stable than their random counterparts.
+We therefore analysed matrices constructed using a variation of
+the cascade model, where we assign a ‘size’ to each species and
+each species can only consume smaller species, and has a
+preference for those in the same subsystem (Q40), or for those in
+the other subsystem (Qo0)
+
 The picture emerging from both simulations and mathematical analysis is much more complex than previously hypothesized. Block structure can have an effect on the local asymptotic stability of the underlying system. However, unless we are in particular areas of the parameter space, the effect tends to be destabilizing. Our results stress the fact that, when discussing the relationship between network structure and local stability, we need to qualify our statements, as a given structure is not stabilizing or destabilizing per se, but is only so under certain specific conditions.
 
-Though we have illustrated this point by studying the modular structures, we believe this phenomenon to hold generally: any network structure can have different effects on stability, depending on the choice of parameters. To reinforce this message, in Fig. 7, we show three cases in which an empirical network structure makes the system more or less stable than its random counterpart, depending on the parameterization of the coefficients. Practically, this means that the challenge of proving that biological network structure emerges because of a selective process, removing configurations yielding unfavourable dynamics17–19 is much harder than expected: network structure, without estimates of the distribution of the coefficients, cannot be used to determine
-the effect on dynamical properties.
+
+Though we have illustrated this point by studying the modular structures, we believe this phenomenon to hold generally: any network structure can have different effects on stability, depending on the choice of parameters. To reinforce this message, in Fig. 7, we show three cases in which an empirical network structure makes the system more or less stable than its random counterpart, depending on the parameterization of the coefficients. Practically, this means that the challenge of proving that biological network structure emerges because of a selective process, removing configurations yielding unfavourable dynamics17–19 is much harder than expected: network structure, without estimates of the distribution of the coefficients, cannot be used to determine the effect on dynamical properties.
 
 ------------------
 @Borrelli2015a
@@ -216,3 +230,14 @@ understanding of how ecosystem complexity affects ecosystem stability.
 @Poisot2012
 
 Understanding how local realisations relate to it paves the way to the development of a biogeography of species interactions. Given the multiple drivers of local community composition (species filtering, historical contingencies and stochasticity), only a subset of species will be present at each locality, thus potentially realising only a subsample (the alpha diversity) of all the possible interactions found in the metaweb (the gamma diversity; Fig. 1).
+
+
+--------------------
+
+@Borrelli2014
+
+Two patterns found in real food webs have been hypothesized to have been produced by
+selection on stability: short food chains (Borrelli and Ginzburg 2014) and three-species motif
+profiles (Borrelli 2015). These patterns represent a signature of the selection process because
+they are structures that both have a high probability of being stable and a high frequency in
+observed food webs.

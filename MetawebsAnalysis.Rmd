@@ -810,20 +810,32 @@ colnames(tbl1) <- c("Hub\nconnectors", "Module\nConnectors", "Module\nHubs", "Mo
 assocplot(t(tbl1),col=colnet)
 
 require(ggplot2)
+require(scales)
 df1 <- data.frame(tbl1)
 names(df1) <- c("Network","Rol","count")
-df1 <- df1 %>% group_by(Network) %>% mutate(total=sum(count),Freq=count/total) 
-g2 <- ggplot(df1,aes(x=Network,y=Freq,fill=Rol)) + geom_bar(stat="identity") + 
-  scale_fill_brewer(palette = "RdYlGn",name="") + 
-  xlab("") + ylab("Proportion") + theme_bw() + theme(legend.position="bottom")
+df1 <- filter(df1,count!=0)
+#df1 <- df1 %>% group_by(Network) %>% mutate(total=sum(count),Freq=count/total) 
+g2 <- ggplot(df1,aes(x=Network,y=count,fill=Rol)) + geom_bar(stat="identity",position=position_dodge()) + 
+  scale_fill_brewer(palette = "RdYlGn",name="Topological\nRol") + scale_y_continuous(trans=log1p_trans(),breaks=c(1,10,100,1000)) +
+  xlab("") + ylab("") + theme_bw() #+ theme(legend.position="bottom") 
 ggsave("Figures/TopoRolesProportionByNetwork.png",width=6,height=6,units="in",dpi=600)
 
 # Combine g1 & g2 
 
+require(tidyr)
+
+names(motif)
+pFM1 <- motif %>% dplyr::select(Network,zEC:zOM) %>%gather(motif,value,zEC:zOM)
+
+
+g1 <- ggplot(pFM1,aes(x=Network,y=value,fill=motif)) + geom_bar(stat="identity",position=position_dodge()) + 
+  scale_fill_brewer(palette = "RdYlGn",breaks=c("zEC","zAC","zTT","zOM"),name="Motif\nZ-score",   labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")) + 
+  xlab("") + ylab("") + theme_bw() + scale_x_discrete(limits=c("Local","Regional","Meta")) #+ theme(legend.position="bottom")
+
 require(cowplot)
 plot_grid(g1,g2,labels = c("A","B"),align = "h")
 
-ggsave("Figures/Motif_TopoRoles_ByNetwork.png",width=7,height=6,units="in",dpi=600)
+ggsave("Figures/Motif_TopoRoles_ByNetwork.png",width=8,height=5,units="in",dpi=600)
 
 
 

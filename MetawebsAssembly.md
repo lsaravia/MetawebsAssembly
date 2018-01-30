@@ -49,8 +49,14 @@ Food webs have highly non-random and structurally complex patterns that contain 
 
 <!---Topological roles -->
 
-Species can participate in different ways with respect to modularity: depending on how many feed links they have within
-their own module and/or between the modules [12]. [@Kortsch2015] 
+There are important species in ecological networks that have disproportionately large effects on the whole ecosystem, like keystone species [@Paine1969], ecosystem engineers [@Jones1994] and network hubs []. Species can participate in different ways with respect to modularity: depending on how many feed links they have within their own module and/or between the modules [@Guimera2005; @Kortsch2015]. Theoretical and empirical results suggest
+that network hubs, or super-generalists, connect modules
+and communities due to their wide niche breadth, environ-
+mental tolerance, apex position in local communities and
+high motility [19–21]. If species affected by pertubations pos-
+sess key functional roles in the food web, then the potential
+higher order, indirect effects of those pertubations on the
+entire food web structure can be dramatic.
 
 <!---Motifs -->
 
