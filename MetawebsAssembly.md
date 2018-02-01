@@ -41,22 +41,15 @@ The characterization of ecological systems as networks of interacting elements h
 There are several approaches to characterize the structure of an ecological networks: emergent or global properties that focus on averages over the entire network (e.g.  modularity or connectance), and more local properties that focuses on how one or several species are related to the whole. Global properties related to resilience and stability are fundamental to understand the response of ecological networks to global treats like climate change and biological invasions. One of these properties is the small-world pattern, associated with rapid responses to disturbances and resistance to secondary extinctions [@Montoya2002]. The small-world pattern is related to two global properties: the average distance between all species, called the path length, and the clustering coefficient, the probability that two species linked to the same species are linked. Then Small-­world patterns imply a high level of clustering compared with a random graph, and a small average path length similar to that seen in random graphs [@Watts1998]. This pattern comes from the general network theory, beyond ecological networks, but has been mostly applied to marine food webs [@Navia2016;@Bornatowski2017;@Gray2016; @Marina2018]. 
 
 <!--- Coherence -->
-Since the early studies of @May1972 that found that larger and more connected ecosystems will be unstable there is a search of factors that would stabilize a food-web [@Garcia-Callejas2018], one of such properties is called trophic coherence [@Johnson2014]. Trophic coherence is based on the distances between the trophics levels of species and measures how well species fall into discrete trophic levels; thus more coherence implies a more hierarchical structure of the food-web and it is directly correlated with linear stability [@Johnson2014].  
+Since the early studies of @May1972 that found that larger and more connected ecosystems will be unstable there is a search of factors that would stabilize a food-web [@Garcia-Callejas2018], one of such properties is called trophic coherence [@Johnson2014]. Trophic coherence is based on the distances between the trophics levels of species and measures how well species fall into discrete trophic levels; thus more coherence implies a more hierarchical structure of the food-web and it is directly correlated with linear stability [@Johnson2014]. The advantage of coherence as an index of stability is that it does not make any assumptions about interaction strengths.
 
 <!---Modularity -->
 
-Food webs have highly non-random and structurally complex patterns that contain internal functional units or sub-modules [@Grilli2016]. These are groups of prey and predators that interact more strongly with each other than with species belonging to other sub-modules, the existence of these modules (also called compartments) acts buffering the propagation of extinctions throughout the network, thereby  increasing persistence [@stouffer2011]. It is interesting to mention that small-world patterns and modularity act in opposite directions. The small-world structure favours that perturbations spread and dissipate rapidly [@Gray2016], and a high degree of modularity prevents the spread of perturbations [@stouffer2011;@Krause2003]. The detection of these modules is an intermediate approach between the global and the local analysis. 
+Food webs have highly non-random and structurally complex patterns that contain internal functional units or sub-modules [@Grilli2016]. These are groups of prey and predators that interact more strongly with each other than with species belonging to other sub-modules, the existence of these modules (also called compartments) acts buffering the propagation of extinctions throughout the network, thereby  increasing persistence [@Stouffer2011]. It is interesting to mention that small-world patterns and modularity act in opposite directions. The small-world structure favours that perturbations spread and dissipate rapidly [@Gray2016], and a high degree of modularity prevents the spread of perturbations [@Stouffer2011;@Krause2003]. The detection of these modules is an intermediate approach between the global and the local analysis. 
 
 <!---Topological roles -->
 
-There are important species in ecological networks that have disproportionately large effects on the whole ecosystem, like keystone species [@Paine1969], ecosystem engineers [@Jones1994] and network hubs []. Species can participate in different ways with respect to modularity: depending on how many feed links they have within their own module and/or between the modules [@Guimera2005; @Kortsch2015]. Theoretical and empirical results suggest
-that network hubs, or super-generalists, connect modules
-and communities due to their wide niche breadth, environ-
-mental tolerance, apex position in local communities and
-high motility [19–21]. If species affected by pertubations pos-
-sess key functional roles in the food web, then the potential
-higher order, indirect effects of those pertubations on the
-entire food web structure can be dramatic.
+There are important species in ecological networks that have disproportionately large effects on the whole ecosystem, like keystone species [@Paine1969], ecosystem engineers [@Jones1994] and network hubs [@Borthagaray2014]. Species can participate in different ways with respect to modularity: depending on how many feed links they have within their own module and/or between the modules [@Guimera2005; @Kortsch2015]. This participation has been called the species' topological role, theoretical and empirical results suggest this roles are related to species traits like wide niche breadth, environmental tolerance, apex position in local communities and high motility [@Borthagaray2014;@Guimera2010;@Rezende2009]. This is a local property at an individual species level. 
 
 <!---Motifs -->
 
@@ -65,8 +58,9 @@ Thus we consider both kinds of properties,
 
 <!---Metaweb, regional, local food webs -->
 
-* Food webs assembly evolutionary and dynamical constrains [@poisot2012].
+* Food webs assembly evolutionary and dynamical constrains [@Poisot2012].
 
+* We expect that at the metacommunity reflect the evolutionary constraints of the species interactions, and the regional and the local should be more influenced by assembly procesess and the local should be also strongly determined by the local environment. 
 
 ## Methods
 
