@@ -62,7 +62,10 @@ Thus our objective is to analyse the process of food-web assembly using three ne
 
 ## Methods
 
-We consider that the metaweb is the regional pool the species defined by the biogeographic Antarctic region  
+The three dataset used in this study represent a nested hierarchy but they were collected independently. The southern ocean database compiled by @Raymond2011 was used to construct the metaweb selecting only species located at latitudes higher than 60°S. @Raymond2011 compiled information from  direct sampling methods of dietary assessment, including gut, scat, and bolus content analysis, stomach flushing, and observed feeding. We consider that the metaweb is the regional pool the species defined by the biogeographic Antarctic region. The regional Weddell Sea dataset includes species situated between 74°S and 78°S with a length of approximately 450 km and comprises all information available for the zone since 1983 [@Jacob2011]. The local dataset comes from Potter Cove: a 4 km long and 2.5 km wide Antarctic fjord located at 62°14'S, 58°40'W, South Shetland Islands [@Marina2018]. For more information about these dataset please consult the original publications. To make compatible the datasets first we check taxonomic names for synonyms, and second we add species (either prey or predator) with their interactions to the metaweb when the local or regional food-webs contains more taxonomic resolution; instead if the meta-web contained more detailed records, only for predators we added them to the local food-web checking for its geographic range. We remove cannibalistic (self-links) and double arrows (i.d. A eats B and B eats A).  
+  
+
+
 
 
 ## Results
