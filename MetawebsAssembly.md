@@ -36,7 +36,6 @@ Los Polvorines, Buenos Aires, Argentina.
 
 The characterization of ecological systems as networks of interacting elements has a long history [@May1972,@Cohen1985;@Paine1966], much of these work has devoted to investigate network structure and its effects on the dynamics and stability of networks [@Thebault2010]. In recent years the application of network theory and new developments in random matrix theory has greatly expanded our capability of analysis of ecological networks [@Guimaraes2016, @Allesina2015]. Besides that, the analysis of the effects of ecological dynamical processes on food web structure are not so well developed. On such dynamical process is community assembly: how species from a regional pool colonize a site and interact to form local communities [@Carstensen2013]. Regional pools are shaped by evolutionary and biogeographical processes that imply large spatial and temporal scales [@Carstensen2013]. Then the assembly of local communities is influenced by dispersal, environmental filters, biotic interactions and stochastic events [@HilleRisLambers2012]. These processes has been studied by means of metacommunity theory, where different spatial assemblages are connected through dispersal of multiple species. Metacommunity theory provides a framework for assessing which are the roles of local and regional-scale dynamics [@Baiser2013;@Leibold2004]. Traditionally metacommunity theory has been applied to competitive interactions, trophic interactions received much less attention [@Baiser2016]. 
 
-<!--- Nonadaptative selection and assembly processes NOT INCLUDED-->
 
 There are several approaches to characterize the structure of an ecological networks: emergent or global properties that focus on averages over the entire network (e.g.  modularity or connectance), and more local properties that focuses on how one or several species are related to the whole. Global properties related to resilience and stability are fundamental to understand the response of ecological networks to global treats like climate change and biological invasions. One of these properties is the small-world pattern, associated with rapid responses to disturbances and resistance to secondary extinctions [@Montoya2002]. The small-world pattern is related to two global properties: the average distance between all species, called the path length, and the clustering coefficient, the probability that two species linked to the same species are linked. Then Small-­world patterns imply a high level of clustering compared with a random graph, and a small average path length similar to that seen in random graphs [@Watts1998]. This pattern comes from the general network theory, beyond ecological networks, but has been mostly applied to marine food webs [@Navia2016;@Bornatowski2017;@Gray2016; @Marina2018]. 
 
@@ -52,15 +51,14 @@ Food webs have highly non-random and structurally complex patterns that contain 
 There are important species in ecological networks that have disproportionately large effects on the whole ecosystem, like keystone species [@Paine1969], ecosystem engineers [@Jones1994] and network hubs [@Borthagaray2014]. Species can participate in different ways with respect to modularity: depending on how many feed links they have within their own module and/or between the modules [@Guimera2005; @Kortsch2015]. This participation has been called the species' topological role, theoretical and empirical results suggest this roles are related to species traits like wide niche breadth, environmental tolerance, apex position in local communities and high motility [@Borthagaray2014;@Guimera2010;@Rezende2009]. This is a local property at an individual species level. 
 
 <!---Motifs -->
+When we consider several linked species this forms a subnetwork, when the abundance of one of these subnetworks is deviates significantly compared to a random network is called a motif [@Milo2002]. We consider here three species subnetworks that have been explored theoretically and empirically [@Prill2005;@Stouffer2007;@Baiser2016], these are four of the thirteen possible three-species motifs: the tri-trophic chain, omnivory, apparent competition, and exploitative competition motifs (Figure 1).
 
+![The four three-species motifs analysed: apparent competition, exploitative competition, tri-trophic chain, and omnivory. These four motifs have been explored both theoretically and empirically in ecological networks and are the most common motifs found](Figures/Fig1Motifs.png)
 
-Thus we consider both kinds of properties,    
+Motif can show the process of assembly of interactions [@Baiser2016], this could be done comparing the representation of motifs at each scale (i.e over-represented, under-represented, or random). When the same processes structure of the food-web across scales, motifs representation should be the same. Ecological interactions occur at the local scale so the differences may show the importance of local interactions in the assembly of the food web. During the assembly process the motif structures that are less dynamically stable tend to disappear from the food-web [@Borrelli2015a], this has been called nonadaptative systemic selection [@Borrelli2015]. This process is nonadaptative because the selection process is not adapting the system to local conditions [@Borrelli2015].   
 
-<!---Metaweb, regional, local food webs -->
+Thus our objective is to analyse the process of food-web assembly using three nested datasets collected at three different spatial scales: the marine Antarctic meta-web representing an area of 34.8 million Km^2^ and it is mainly a dietary database [@Raymond2011]; the regional Weddell Sea that represent 3.5 million Km^2^ and is one of the most resolved marine food-webs obtained by a combination of field, laboratory analysis [@Jacob2011]; and the local Potter Cove that represent 6.8 Km^2^, this was build using the results of 20 years of research in the area [@Marina2018]. We analyse how this nested set of food-webs change across scales using properties at three levels: emergent global properties that take into account the whole network (modularity, coherence), sub-structural properties that consider several nodes (motifs), and properties related to one node (topological roles). 
 
-* Food webs assembly evolutionary and dynamical constrains [@Poisot2012].
-
-* We expect that at the metacommunity reflect the evolutionary constraints of the species interactions, and the regional and the local should be more influenced by assembly procesess and the local should be also strongly determined by the local environment. 
 
 ## Methods
 
@@ -69,7 +67,6 @@ We consider that the metaweb is the regional pool the species defined by the bio
 
 ## Results
 
-* Topological roles: Local more random than Regional and Meta
 
 \scriptsize
 
@@ -113,7 +110,7 @@ Ratio              0.8209  0.9370   0.9225
 
 ------------------------------------------
 
-Table: Small-world-ness and modularity
+Table: Small-world-ness and modularity and coherence, z-scores are calculated against random networks and Ratios against a random network with the same number of basal species with an analytical expression (called the basal network)
 
 
 ------------------------------------------
@@ -163,7 +160,16 @@ Table: Motif counts and motif z-scores. The proportions for the three scales are
 
 ## Discussion
 
-There is a pattern either produced by Nonadaptive systemic selection or by network assembly processes.
+<!---Metaweb, regional, local food webs -->
+
+* Food webs assembly evolutionary and dynamical constrains [@Poisot2012].
+
+* We expect that at the metacommunity reflect the evolutionary constraints of the species interactions, and the regional and the local should be more influenced by assembly procesess and also strongly determined by the local environment. 
+
+
+- Representation is equal across scales reflecting the influences of evolutionary forces in structuring food-webs
+
+- Motif frequency is different this maybe due to nonadaptative systemic selection during the network assembly process
 
 ## References
 
