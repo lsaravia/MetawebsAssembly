@@ -68,11 +68,28 @@ The three dataset used in this study represent a nested hierarchy but they were 
 
 We analysed the structural properties of the nested network hierarchy (Meta-web, regional, local) using properties that focus on different levels within the networks: emergent global properties that take into account the whole network, sub-structural properties that consider several nodes, and properties related to one node. To describe food-webs as networks each species is represented as a node or vertex and the feeding interactions are represented as edges or links between de nodes. This links in the case of food-webs are directed from the prey to the predator. Two nodes are neighbours if they are connected by an edge and the degree $k_i$ of node $i$ is the number of neighbours it has. 
 
-The first emergent property we used is the Small world pattern, this property relates two other properties average distance between the nodes and the clustering which that measures the extent to which the neighbours of a node are also interconnected [@Watts1998]. We first calculated the minimum path length $L$: minimum path length between two nodes is the minimum number of edges that must be gone through to get from origin node to the target one. Then $L$ is mean value across all pairs of nodes of the minimum path length. The clustering coefficient of node $i$ was defined as 
+The first emergent property we used is the small world pattern (SW), this property relates two other properties average distance between the nodes and the clustering which that measures the extent to which the neighbours of a node are also interconnected [@Watts1998]. We first calculated the minimum path length $L$: minimum path length between two nodes is the minimum number of edges that must be gone through to get from origin node to the target one. Then $L$ is mean value across all pairs of nodes of the minimum path length. The clustering coefficient of node $i$ was defined as 
 
-$$c_i =\frac{2 E_i}{k_i (k_i -1)}$$
+$$c_i =\frac{2 E_i}{k_i (k_i -1)}$$ 
 
-where $E_i$ is the number of edges between the neighbours of $i$. The clustering coefficient of the network $C$ is the average of $c_i$ over all nodes.
+where $E_i$ is the number of edges between the neighbours of $i$. The clustering coefficient of the network $C$ is the average of $c_i$ over all nodes. The original definition of small world networks is discrete [@Watts1998], a network $G$ is small world when if it has a similar path length but greater clustering than an Erdös-Rényi (E–R) random graph with the same  number of nodes $n$ and edges $m$. An E-R network is constructed assigning at random the $m$ edges to the $n$ nodes. For the quantitative version of the SW pattern [@Humphries2008] we need more definitions:
+
+
+$$\gamma_g = \frac{C_g}{C_(rand)}$$
+
+and
+
+$$\lambda_g = \frac{L_g}{L_(rand)}$$
+
+where $C_g$ and $L_g$ are the clustering coefficient and the mean shortest path length of the netowork of interest $G$; $C_g$ and $C_(rand)$ are the same quantities for the corresponding E-R random network. Thus the quantitative small-world-ness is defined as:
+
+$$S = \frac{\gamma_g}{\lambda_g}$$
+
+and to determine if $S$ is statistically significant monte carlo methods are used. We constructed 1000 E-R networks with the same nodes $n$ and edges $m$ for the network of interest then we calculated $S$ for each random network and the lower and higher 99% quantiles of the $S$ distribution are called $a*,b*$:
+
+$$CI = \frac{b* - a*}{2}$$
+
+
 
 
 
