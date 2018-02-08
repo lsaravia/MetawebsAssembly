@@ -248,3 +248,9 @@ observed food webs.
 @Jacob2011
 
 The Southern Ocean (Figure 1) ecosystem exhibits a number of unique features, including around 25 million years of bio-geographic isolation (Barnes, 2005; Clarke, 1985; Hempel, 1985) and, in the form of the annual formation and retreat of sea ice, the geographically most extensive seasonal environmental oscillation pattern in the world. Consequently, there are a number of unusual ecological features, such as a high degree of endemism (Arntz et al., 1994, 1997) and the occupation of the ‘pelagic swarm fish niche’ by euphausiid crustaceans (Bergstrom and Chown, 1999; Ichii and Kato, 1991).
+
+
+----------------------
+
+Dunne JA, Williams RJ, Martinez ND (2004) Network structure and robustness of
+marine food webs. Mar Ecol Prog Ser 273:291–302.
