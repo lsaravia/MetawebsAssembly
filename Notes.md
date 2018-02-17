@@ -252,5 +252,13 @@ The Southern Ocean (Figure 1) ecosystem exhibits a number of unique features, in
 
 ----------------------
 
-Dunne JA, Williams RJ, Martinez ND (2004) Network structure and robustness of
-marine food webs. Mar Ecol Prog Ser 273:291–302.
+@Stouffer2007
+
+Food webs aim to provide a thorough representation of the trophic interactions found in an ecosystem. The complexity of empirical food webs, however, is leading many ecologists to focus dynamic ecosystem studies on smaller microcosm or mesocosm studies based upon community modules, which comprise three to five species and the interactions likely to have ecological relevance. We provide here a structural counterpart to community modules. We investigate food-web ‘motifs’ which are n-species connected subgraphs found within the food web. Remarkably, we find that the over- and under-representation of three-species motifs in empirical food webs can be understood through comparison to a static food-web model, the niche model. Our result conclusively demonstrates that predation upon species with some ‘characteristic’ niche value is the prey selection mechanism consistent with the structural properties of empirical food webs.
+
+It is clear that this randomization scheme maintains the
+same species as cannibals before and after. Owing to this fact,
+and the fact that the appearance of cannibalism in food webs is
+consistent with the random hypothesis ( Williams & Martinez
+2000; Stouffer et al. 2005), we neglect cannibalism in our
+investigation of prey selection mechanisms.

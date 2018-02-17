@@ -47,6 +47,9 @@ When we consider several linked species this forms a subnetwork, when the abunda
 
 Motif can show the process of assembly of interactions [@Baiser2016], this could be done comparing the representation of motifs at each scale (i.e over-represented, under-represented, or random). When the same processes structure of the food-web across scales, motifs representation should be the same. Ecological interactions occur at the local scale so the differences may show the importance of local interactions in the assembly of the food web. During the assembly process the motif structures that are less dynamically stable tend to disappear from the food-web [@Borrelli2015a], this has been called nonadaptative systemic selection [@Borrelli2015]. This process is nonadaptative because the selection process is not adapting the system to local conditions [@Borrelli2015].   
 
+<!---How all these multilevel properties are related to network assembly -->
+
+
 Thus our objective is to analyse the process of food-web assembly using three nested datasets collected at three different spatial scales: the marine Antarctic meta-web representing an area of 34.8 million Km^2^ and it is mainly a dietary database [@Raymond2011]; the regional Weddell Sea that represent 3.5 million Km^2^ and is one of the most resolved marine food-webs obtained by a combination of field, laboratory analysis [@Jacob2011]; and the local Potter Cove that represent 6.8 Km^2^, this was build using the results of 20 years of research in the area [@Marina2018]. We analyse how this nested set of food-webs change across scales using properties at three levels: emergent global properties that take into account the whole network (modularity, coherence), sub-structural properties that consider several nodes (motifs), and properties related to one node (topological roles). 
 
 
@@ -100,6 +103,8 @@ $$q_{basal} = \sqrt{\frac{E}{E_{basal}}-1}$$
 
 We report $q/q_{basal}$ and $tp/tp_{basal}$ for the three networks. 
 
+<!---Modularity -->
+
 The intermediate level property (i.e. between the whole network and the individual species) is modularity, that measures how densely sub-groups of species interact with one another compared to species of other sub-groups [@Newman2004]. These sub-groups are called compartments and to find the best partition we used a stochastic algorithm based on simulated annealing [@Reichardt2006]. Simulated annealing allows to maximize modularity without getting trapped in local maxima configurations [@Guimera2005], the index of modularity is then defined as: 
 
 $$M = \sum_s \left(\frac{I_s}{E} - \left(\frac{d_s}{2E}\right)^2 \right)$$
@@ -110,6 +115,26 @@ where $s$ is the number of modules or compartments, $I_s$ is the number of links
 $$z_i=\frac{M_{obs} - M_{(rand)}}{\sigma_{(rand)}}$$
 
 where $M_{obs}$ is the observed modularity, $M_{(rand)}$ is the mean modularity from the E-R networks and $\sigma_{(rand)}$ is the standard deviation. It has been stressed that only networks with modularities larger that the random expectation should be called modular [@Reichardt2006]. We used the same formula to calculate z-scores for other quantities. A z-score greater than 2 is evidence than the observed quantity is significantly greater than its E-R counterpart, and a z-score less than 2 means that the quantity is significantly lower. 
+
+<!---Topological roles -->
+
+As a local property that reflect the ecological role of each species we use topological roles. To identify topological roles we use the method of functional cartography [@Guimera2005]. The method is based on module membership and we used the previously described algorithm to detect them. The roles are characterized by two parameters: the standardized within-module degree $dz$ and the among-module connectivity participation coefficient $PC$.  The within-module degree is a z-score that measure how well a species is connected to other species within its own module:
+
+$$dz_i = \frac{k_{is}-\bar{k_s} }{\sigma_{ks}}$$ 
+
+
+where $k_{is}$ is the number of links of species $i$ within its own module $s$ and $\bar{k_s}$ and $\sigma_{ks}$ are the average and SD of $k_{is}$ over all species in $s$. The participation coefficient $PC$ estimates the distribution of the links of species $i$ among modules; thus it can be defined as:
+
+$$PC_i =  1 - \sum_s frac{k_{is}}{k_i}$$ 
+
+where $k_i$ is the degree of species $i$ (i.e. the number of links), $k_is$ is the number of links of species $i$ to species in module $s$, and in this case $s$ runs over all the modules. Due to the stochastic nature of the module detection algorithm we made repeated simulations until the distribution of $PC_i$ and $dz_i$ has no statistical differences between two successive repetitions. To test that they come from the same distribution we used the k-sample Anderson-Darling test [@Scholz1987]. The we calculate the mean and 95% CI of $dz$ and $PC$.
+
+To determine each species role the $dz-PC$ parameter space is divided into four regions, this was modified from @Guimera2005, using the same scheme that @Kortsch2015. There are two thresholds that define the roles: $dz=2.5$ and $PC=0.625$. If a species has at least 60% of links within its own module then $PC<0.625$ and if it also has $dz\ge 2.5$, it is classified as a module hub. These species a relatively high number of links, but inside his module. If a species has $dz<2.5$ and $PC<0.625$ is called peripheral or specialist, it means that it has relatively few links and most within its module. Species that have $dz<2.5$ and $PC\ge0.625$ are module connectors, they have relatively few links and most between modules. Finally is a species have $dz\ge 2.5$ and  $PC\ge0.625$ is classified as super-generalist because it has high between- and within-module connectivity. 
+
+<!---Motifs -->
+We analysed the three-species motif that are most frequent in food-webs and that have a clear ecological interpretation [@McCann1998].   
+
+
 
 ## Results
 

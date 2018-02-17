@@ -8,38 +8,9 @@ output: html_document
 
 ```{r setup, eval=T,echo=FALSE }
 load(".RData")
-#simul  <- F # variable to perform or not the simulations
-
-
 oldcd <-getwd()
 
 
-# require(pander)
-# require(plyr)
-# require(dplyr)
-# panderOptions('table.split.table',Inf)
-# panderOptions('table.style', 'multiline')
-# options("scipen"=6, "digits"=4)
-# 
-# #Load package
-# library(poweRlaw) 
-# source("R/dist_fun.r")
-# # 
-# # Load functions for discrete distributions
-# # # 
-# # Load functions for continuous ht distributions
-# # 
-# 
-# source("R/powerlaw/discpowerexp.R")
-# source("R/powerlaw/discexp.R")
-# source("R/powerlaw/zeta.R")
-# # 
-# # Load functions for continuous ht distributions
-# # 
-# source("R/powerlaw/powerexp.R")
-# source("R/powerlaw/exp.R")
-# source("R/powerlaw/pareto.R")
-# #
 
 ```
 
