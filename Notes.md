@@ -1,5 +1,10 @@
 # From Local to regional and continental food web structure  
 
+# reviewers
+
+Alyssa R. Cirtwill, School of Biological Sciences, University of Canterbury, Private Bag 4800, Christchurch 8140, New Zealand.E-mail: alyssa.cirtwill@gmail.com
+
+
 ## Hypothesis
 
 Meta-web --> Weddell Sea : Random sampling (Local Motif representation should match the meta-web)
@@ -262,3 +267,20 @@ and the fact that the appearance of cannibalism in food webs is
 consistent with the random hypothesis ( Williams & Martinez
 2000; Stouffer et al. 2005), we neglect cannibalism in our
 investigation of prey selection mechanisms.
+
+
+-----------------
+
+@Liao2016
+
+Classical metacommunity models have recently explored
+how food web dynamics respond to patch loss, but the effects of patch fragmentation have largely been
+overlooked. Here we develop an extended patch-dynamic model that tracks the patch occupancy of the
+various trophic links subject to colonization-extinction-predation dynamics by incorporating species
+dispersal with patch connectivity. We found that, in a simple food chain, species at higher trophic level
+become extinct sooner with increasing patch loss and fragmentation due to the constraint in resource
+availability, confirming the trophic rank hypothesis. Yet, effects of fragmentation on species occupancy
+are largely determined by patch loss, with maximal fragmentation effects occurring at intermediate
+patch loss. Compared to the spatially explicit simulations that we also performed, the current model
+with pair approximation generates similar community patterns especially in spatially clustered
+landscapes.

@@ -812,3 +812,12 @@ ggsave("Figures/Motif_TopoRoles_ByNetwork.png",width=8,height=5,units="in",dpi=6
 
 ```
 
+# Integrated plot of topological roles, trophic level and modularity
+
+```{r plotTopoRolesTLmod, eval=T,echo=F,message=T,warning=T}
+
+# Data frame hub_conn have the topological roles of species by network
+
+
+```
+
