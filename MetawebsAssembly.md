@@ -237,12 +237,11 @@ Table: Motif counts and motif z-scores. The proportions for the three scales are
 
 
 
-![Local Food Web trophic level by compartments](Figures/LocalFoodWeb.png)
+![Local Food Web trophic level by compartments](Figures/LocalTR_TL_MOD.png)
 
-![Regional Food Web trophic level by compartments](Figures/RegionalFoodWeb.png)
+![Regional Food Web trophic level by compartments](Figures/RegionalTR_TL_MOD.png)
 
-![Meta Food Web trophic level by compartments](Figures/MetaFoodWeb.png)
-
+![Meta Food Web trophic level by compartments](Figures/MetawebTR_TL_MOD.png)
 
 ![Network sub-structural properties across scales, *Meta* represent the marine predator-prey relationships of Antarctica (34.8 million Km^2^), *Regional* represent the Weddell Sea (3.5 million Km^2^), and *Local* a small fjord (6.8 Km^2^). A. Z-scores of four three node motif important for food-web stability. B. Topological roles based in within module degree and among module connectivity](Figures/Motif_TopoRoles_ByNetwork.png){ width=75% }
 

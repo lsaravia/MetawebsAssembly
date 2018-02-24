@@ -818,6 +818,179 @@ ggsave("Figures/Motif_TopoRoles_ByNetwork.png",width=8,height=5,units="in",dpi=6
 
 # Data frame hub_conn have the topological roles of species by network
 
+# mod_by_red have the modules
+
+# 
+# Local 
+#
+dtot1 <- as.matrix(dtot %>% filter(Network=="Local") %>% dplyr::select(Prey_name,Predator_name))
+redl <- graph_from_edgelist(dtot1, directed  = T)
+modulos <- mod_by_red[[1]]
+require(NetIndices)
+troph.net2<-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Fresh detritus","Aged detritus","Necromass"))
+layout.matrix.1<-matrix(
+  nrow=length(V(redl)),  # Rows equal to the number of vertices
+  ncol=2
+)
+
+# 
+# Add colors with topological roles to nodes 
+#
+require(RColorBrewer)
+colnet <- brewer.pal(4,"RdYlGn")
+
+hc <- hub_conn %>% mutate(type = factor(type)) %>% filter(Network=="Local") %>% arrange(node) %>% mutate(col= as.numeric(type), TL=troph.net2[,1]) 
+V(redl)$color <- colnet[hc$col]
+
+# Transform y-axis coordinates
+#
+maxnew <- max(hc$TL)
+minnew <- min(hc$TL)
+maxold <- 1
+minold <- -1
+t1 <- function(x) (maxnew -minnew)/(maxold-minold)*(x - maxold)+maxnew 
+t2 <- function(x) (maxold-minold)/(maxnew -minnew)*(x - maxnew)+maxold 
+
+ 
+#
+# Plot modules
+#
+layout.matrix.1[,2]<-jitter(troph.net2$TL,0.4) # y-axis value based on trophic level
+layout.matrix.1[,1]<-jitter(modulos$membership,1) # randomly assign along x-axis
+
+png("Figures/LocalTR_TL_MOD.png",width=6,height=6,units="in",res=600)
+par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(.5, 3, .5, 0.5))
+
+plot(redl, vertex.color=vertex_attr(redl)$cor,vertex.label=NA,
+     vertex.size=log(3*igraph::degree(redl)),
+     edge.width=.3,edge.arrow.size=.4, 
+     edge.color="grey50",
+     edge.curved=0.3, layout=layout.matrix.1)
+
+
+axis(side=2,at=t2(1:4),labels=1:4,  las=1, col = NA, col.ticks = 1)
+
+legstr <- levels(hc$type)
+legstr <- c("Hub conn.", "Mod. Conn.", "Mod. Hubs", "Mod. Spec.")
+legend("topright", pch=19, col=colnet, legend= legstr)
+
+dev.off()
+
+# 
+# Regional 
+#
+dtot1 <- as.matrix(dtot %>% filter(Network=="Regional") %>% dplyr::select(Prey_name,Predator_name))
+redl <- graph_from_edgelist(dtot1, directed  = T)
+# Delete cannibalistic 
+redl <- simplify(redl)
+
+modulos <- mod_by_red[[2]]
+require(NetIndices)
+troph.net2<-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Detritus","Necromass"))
+layout.matrix.1<-matrix(
+  nrow=length(V(redl)),  # Rows equal to the number of vertices
+  ncol=2
+)
+
+# 
+# Add colors with topological roles to nodes 
+#
+require(RColorBrewer)
+colnet <- brewer.pal(4,"RdYlGn")
+
+hc <- hub_conn %>% mutate(type = factor(type)) %>% filter(Network=="Regional") %>% arrange(node) %>% mutate(col= as.numeric(type), TL=troph.net2[,1]) 
+V(redl)$color <- colnet[hc$col]
+
+# Transform y-axis coordinates
+#
+maxnew <- max(hc$TL)
+minnew <- min(hc$TL)
+maxold <- 1
+minold <- -1
+t2 <- function(x) (maxold-minold)/(maxnew -minnew)*(x - maxnew)+maxold 
+
+ 
+#
+# Plot modules
+#
+layout.matrix.1[,2]<-jitter(troph.net2$TL,0.4) # y-axis value based on trophic level
+layout.matrix.1[,1]<-jitter(modulos$membership,1) # randomly assign along x-axis
+
+png("Figures/RegionalTR_TL_MOD.png",width=6,height=6,units="in",res=600)
+par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(.5, 3, .5, 0.5))
+
+plot(redl, vertex.color=vertex_attr(redl)$cor,vertex.label=NA,
+     vertex.size=log(3*igraph::degree(redl)),
+     edge.width=.3,edge.arrow.size=.4, 
+     edge.color="grey50",
+     edge.curved=0.3, layout=layout.matrix.1)
+
+
+axis(side=2,at=t2(1:4),labels=1:4,  las=1, col = NA, col.ticks = 1)
+
+legstr <- levels(hc$type)
+legstr <- c("Hub conn.", "Mod. Conn.", "Mod. Hubs", "Mod. Spec.")
+legend("topleft", pch=19, col=colnet, legend= legstr)
+
+dev.off()
+
+#
+# Metaweb
+#
+
+dtot1 <- as.matrix(dtot %>% filter(Network=="Meta") %>% dplyr::select(Prey_name,Predator_name))
+redl <- graph_from_edgelist(dtot1, directed  = T)
+# Delete cannibalistic 
+
+redl <- simplify(redl)
+
+modulos <- mod_by_red[[3]]
+
+require(NetIndices)
+troph.net2<-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Detritus","Necromass"))
+layout.matrix.1<-matrix(
+  nrow=length(V(redl)),  # Rows equal to the number of vertices
+  ncol=2
+)
+
+require(RColorBrewer)
+colnet <- brewer.pal(4,"RdYlGn")
+
+hc <- hub_conn %>% mutate(type = factor(type)) %>% filter(Network=="Meta") %>% arrange(node) %>% mutate(col= as.numeric(type), TL=troph.net2[,1]) 
+V(redl)$color <- colnet[hc$col]
+
+# Transform y-axis coordinates
+#
+maxnew <- max(hc$TL)
+minnew <- min(hc$TL)
+maxold <- 1
+minold <- -1
+t2 <- function(x) (maxold-minold)/(maxnew -minnew)*(x - maxnew)+maxold 
+
+ 
+#
+# Plot modules
+#
+layout.matrix.1[,2]<-jitter(troph.net2$TL,0.4) # y-axis value based on trophic level
+layout.matrix.1[,1]<-jitter(modulos$membership,1) # randomly assign along x-axis
+
+png("Figures/MetawebTR_TL_MOD.png",width=6,height=6,units="in",res=600)
+par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(.5, 3, .5, 0.5))
+
+plot(redl, vertex.color=vertex_attr(redl)$cor,vertex.label=NA,
+     vertex.size=log(3*igraph::degree(redl)),
+     edge.width=.3,edge.arrow.size=.4, 
+     edge.color="grey50",
+     edge.curved=0.3, layout=layout.matrix.1)
+
+
+axis(side=2,at=t2(1:4),labels=1:4,  las=1, col = NA, col.ticks = 1)
+
+legstr <- levels(hc$type)
+legstr <- c("Hub conn.", "Mod. Conn.", "Mod. Hubs", "Mod. Spec.")
+legend("topleft", pch=19, col=colnet, legend= legstr)
+
+dev.off()
 
 ```
 
