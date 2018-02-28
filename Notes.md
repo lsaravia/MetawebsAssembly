@@ -284,3 +284,11 @@ are largely determined by patch loss, with maximal fragmentation effects occurri
 patch loss. Compared to the spatially explicit simulations that we also performed, the current model
 with pair approximation generates similar community patterns especially in spatially clustered
 landscapes.
+
+
+-----------------
+
+@Magurran2018
+
+The world’s biodiversity is under unprecedented threat due to human activities, yet we have an incomplete understanding of ecosystem change in response to these pressures. Here we present data from a new 5-y study of a tropical freshwater ecosystem showing that change in the two dimensions of biodiversity—assemblage diversity (number and abundance of species) and assemblage composition—is decoupled from and uncorrelated among taxa. Assemblage diversity is typically stable over time. However, in line with Darwin’s expectation that community composition is constantly changing, this stability can be accompanied by marked turnover in species identities. Our paper thus identifies an important question for future research: at what point does compositional turnover threaten ecosystem resilience?
+

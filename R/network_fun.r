@@ -351,3 +351,84 @@ plot_topological_roles <- function(tRoles,g,spingB){
   hub_conn <- rbind(hub_conn, data.frame(type="modcon",node=modhub,name=modlbl))  
   
 }
+
+
+
+#' Plot topological roles
+#'
+#' @param netFrame dataframe with all the networks 
+#' @param netName String with name of the food web to analyse
+#' @param deadNodes Vector of strings with name of dead nodes to calculate trophic level
+#' @param modulObj Igraph community object with the module organization of the food web
+#' @param topoFrame dataframe with topoloigical role and node index
+#' @param legendPos position of the legend "topleft", "topright" or if "" no legend.
+#'
+#' @return
+#' @export
+#'
+#' @examples
+
+plotTopoRolesByTLByMod <- function(netFrame,netName,deadNodes,modulObj,topoFrame,legendPos=""){
+  # 
+  # Local 
+  #
+  dtot1 <- as.matrix(netFrame %>% filter(Network==netName) %>% dplyr::select(Prey_name,Predator_name))
+  redl <- graph_from_edgelist(dtot1, directed  = T)
+  redl <- simplify(redl)
+  
+  require(NetIndices)
+  troph.net2<-TrophInd(get.adjacency(redl,sparse=F),Dead=deadNodes)
+  layout.matrix.1<-matrix(
+    nrow=length(V(redl)),  # Rows equal to the number of vertices
+    ncol=2
+  )
+  
+  # 
+  # Add colors with topological roles to nodes 
+  #
+  require(RColorBrewer)
+  colnet <- brewer.pal(4,"RdYlGn")
+  
+  hc <- topoFrame %>% mutate(type = factor(type)) %>% filter(Network==netName) %>% arrange(node) %>% mutate(col= as.numeric(type), TL=troph.net2[,1]) 
+  V(redl)$color <- colnet[hc$col]
+  
+  # Transform y-axis coordinates
+  #
+  maxnew <- max(hc$TL)
+  minnew <- min(hc$TL)
+  maxold <- 1
+  minold <- -1
+  t2 <- function(x) (maxold-minold)/(maxnew -minnew)*(x - maxnew)+maxold 
+  
+  
+  #
+  # Plot modules
+  #
+  layout.matrix.1[,2]<-jitter(troph.net2$TL,0.4) # y-axis value based on trophic level
+  layout.matrix.1[,1]<-jitter(modulObj$membership,1) # randomly assign along x-axis
+  
+  
+  plot(redl, vertex.color=vertex_attr(redl)$cor,vertex.label=NA,
+       vertex.size=log(3*igraph::degree(redl)),
+       edge.width=.3,edge.arrow.size=.2, 
+       edge.color=add.alpha("grey50",0.5),
+       edge.curved=0.3, layout=layout.matrix.1)
+  
+  
+  axis(side=2,at=t2(1:4),labels=1:4,  las=1, col = NA, col.ticks = 1)
+  
+  legstr <- levels(hc$type)
+  legstr <- c("Hub conn.", "Mod. Conn.", "Mod. Hubs", "Mod. Spec.")
+  if(legendPos!="")
+      legend(legendPos, pch=19, col=colnet, legend= legstr)
+  
+}
+
+
+add.alpha <- function(col, alpha=1){
+  if(missing(col))
+    stop("Please provide a vector of colours.")
+  apply(sapply(col, col2rgb)/255, 2, 
+        function(x) 
+          rgb(x[1], x[2], x[3], alpha=alpha))  
+}
