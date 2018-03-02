@@ -169,17 +169,17 @@ calc_modularity_random<- function(red, nsim=1000){
 #      mTi: mean trophic level
 #      rTI: ration of TI with expected TI under the same null
 #
-calc_incoherence <- function(g,ti=0) {
+calc_incoherence <- function(g,ti=NULL) {
   require(igraph)
   require(NetIndices)
-  if(ti==0)
+  if(is.null(ti))
       ti<-TrophInd(get.adjacency(g,sparse=FALSE))
   v <- ti$TL
   z <- outer(v,v,'-');
   A <- get.adjacency(g,sparse = FALSE)
   xx <- A>0
   x <- (A*t(z))[xx]
-  meanQ <- sum(x)/ecount(g) 
+  #meanQ <- sum(x)/ecount(g) 
   #sdQ <- sqrt(sum((x-1)^2)/vcount(g) )
   Q <- sqrt(sum(x*x-1)/ecount(g) )
   
@@ -192,6 +192,61 @@ calc_incoherence <- function(g,ti=0) {
   data.frame(Q=Q,rQ=Q/eQ,mTI=mTI,rTI=mTI/eTI)
 }
 
+
+#' Calc incoherence z-score and confidence interval under a random Erdos-Renyi 
+#' networks with the condition of at least one basal node
+#'
+#' @param g igraph network object
+#' @param ti trophic level vector
+#'
+#' @return
+#' @export
+#'
+#' @examples
+calc_incoherence_z <- function(g,ti=0,nsim=1000) {
+
+    t <- calc_topological_indices(g)
+    
+    redes.r <- lapply(1:nsim, function (x) {
+        e <- erdos.renyi.game(t$Size, t$Links, type="gnm",directed = TRUE)
+        basal <- length(V(e)[degree(e,mode="in")==0])
+        while(components(e)$no>1 | basal==0){
+          e <- erdos.renyi.game(t$Size, t$Links, type="gnm",directed = TRUE)
+          basal <- length(V(e)[degree(e,mode="in")==0])
+        }
+      return(e) }
+    )
+    
+    ind <- data.frame()
+    require(doParallel)
+    cn <-detectCores()
+    # #  cl <- makeCluster(cn,outfile="foreach.log") # Logfile to debug 
+    cl <- makeCluster(cn)
+    registerDoParallel(cl)
+    
+    ind <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE,.packages='igraph',.export = 'calc_incoherence') %dopar% 
+    {
+      m<-calc_incoherence(redes.r[[i]])
+      data.frame(Q=m$Q,mTI=m$mTI)
+    }
+    stopCluster(cl)
+    
+    qQ <- quantile(ind$Q,c(0.005,0.995))
+    qTI <- quantile(ind$mTI,c(0.005,0.995))
+    rndQ <- mean(ind$Q)
+    rndTI <- mean(ind$mTI)
+
+    m <- calc_incoherence(g,ti)
+    
+    zQ <-  (m$Q- rndQ)/sd(ind$Q)
+    zTI <- (m$mTI - rndTI)/sd(ind$mTI) # the same as sd(ind$mTI)
+    #
+    return(data_frame(rndQ=rndQ,rndTI=rndTI,Qlow=qQ[1],Qhigh=qQ[2],
+                      TIlow=qTI[1],TIhigh=qTI[2],zQ=zQ,zTI=zTI))         
+    
+    
+}
+  
 
 #' Calc topological roles 
 #'
@@ -360,7 +415,7 @@ plot_topological_roles <- function(tRoles,g,spingB){
 #' @param netName String with name of the food web to analyse
 #' @param deadNodes Vector of strings with name of dead nodes to calculate trophic level
 #' @param modulObj Igraph community object with the module organization of the food web
-#' @param topoFrame dataframe with topoloigical role and node index
+#' @param topoFrame dataframe with topological role and node index
 #' @param legendPos position of the legend "topleft", "topright" or if "" no legend.
 #'
 #' @return
@@ -431,4 +486,47 @@ add.alpha <- function(col, alpha=1){
   apply(sapply(col, col2rgb)/255, 2, 
         function(x) 
           rgb(x[1], x[2], x[3], alpha=alpha))  
+}
+
+
+
+#' Curbe ball algorithm 
+#' Strona, G. et al. 2014. A fast and unbiased procedure to randomize ecological binary matrices with 
+#' fixed row and column totals. -Nat. Comm. 5: 4114. doi: 10.1038/ncomms5114
+#'
+#' @param g igraph object to extract adjacency matrix  
+#'
+#' @return
+#' @export
+#'
+#' @examples
+curve_ball<-function(g){
+  require(igraph)
+  m <- get.adjacency(g,sparse=F)
+  RC=dim(m)
+  R=RC[1]
+  C=RC[2]
+  hp=list()
+  for (row in 1:dim(m)[1]) {hp[[row]]=(which(m[row,]==1))}
+  l_hp=length(hp)
+  for (rep in 1:5*l_hp){
+    AB=sample(1:l_hp,2)
+    a=hp[[AB[1]]]
+    b=hp[[AB[2]]]
+    ab=intersect(a,b)
+    l_ab=length(ab)
+    l_a=length(a)
+    l_b=length(b)
+    if ((l_ab %in% c(l_a,l_b))==F){
+      tot=setdiff(c(a,b),ab)
+      l_tot=length(tot)
+      tot=sample(tot, l_tot, replace = FALSE, prob = NULL)
+      L=l_a-l_ab
+      hp[[AB[1]]] = c(ab,tot[1:L])
+      hp[[AB[2]]] = c(ab,tot[(L+1):l_tot])}
+    
+  }
+  rm=matrix(0,R,C)
+  for (row in 1:R){rm[row,hp[[row]]]=1}
+  graph_from_adjacency_matrix(rm,mode="directed") 
 }

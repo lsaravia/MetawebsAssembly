@@ -96,6 +96,21 @@ websTbl$rQ[1] <- q$rQ  # ratio of Q/eQ expected coherence under null -  Signific
 websTbl$mTI[1] <- q$mTI # mean trophic level 
 websTbl$rTI[1] <- q$rTI   # ratio of mTI/eTI expected under null 
 
+# Calc incoherence z-score based in random E-R networks with the condition of at least one basal node
+#
+# ADD IN OTHER NETWORKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+#
+zq <- calc_incoherence_z(redl,troph.net2)
+websTbl$rndQ[1] <- zq$rndQ
+websTbl$rndTI[1] <- zq$rndTI
+websTbl$Qlow[1] <- zq$Qlow
+websTbl$Qhigh[1] <- zq$Qhigh
+websTbl$TIlow[1] <- zq$TIlow
+websTbl$TIhigh[1] <- zq$TIhigh
+websTbl$zQ[1] <- zq$zQ
+websTbl$zTI[1] <- zq$zTI
+
+
 # Plot the red
 # 
 # Add colors to nodes 

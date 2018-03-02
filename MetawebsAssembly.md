@@ -39,7 +39,8 @@ Traditionally metacommunity theory has been applied to competitive interactions,
 There are several approaches to characterize the structure of an ecological networks: emergent or global properties that focus on averages over the entire network (e.g.  modularity or connectance), and more local properties that focuses on how one or several species are related to the whole. Global properties related to resilience and stability are fundamental to understand the response of ecological networks to global treats like climate change and biological invasions. One of these properties is the small-world pattern, associated with rapid responses to disturbances and resistance to secondary extinctions [@Montoya2002]. The small-world pattern is related to two global properties: the average distance between all species, called the path length, and the clustering coefficient, the probability that two species linked to the same species are linked. Then Small-­world patterns imply a high level of clustering compared with a random graph, and a small average path length similar to that seen in random graphs [@Watts1998]. This pattern comes from the general network theory, beyond ecological networks, and has been mostly applied to marine food webs [@Navia2016;@Bornatowski2017;@Gray2016; @Marina2018a]. 
 
 <!--- Coherence -->
-Since the early studies of @May1972 that found that larger and more connected ecosystems will be unstable there is a search of factors that would stabilize a food-web [@Garcia-Callejas2018], one of such properties is called trophic coherence [@Johnson2014]. Trophic coherence is based on the distances between the trophic levels of species and measures how well species fall into discrete trophic levels; thus more coherence implies a more hierarchical structure of the food-web and it is directly correlated with linear stability [@Johnson2014]. The advantage of coherence as an index of stability is that it does not make any assumptions about interaction strengths.
+Since the early studies of @May1972 that found that larger and more connected ecosystems will be unstable there is a search of factors that would stabilize a food-web [@Garcia-Callejas2018], one of such properties is called trophic coherence [@Johnson2014]. Trophic coherence is based on the distances between the trophic levels of species and measures how well species fall into discrete trophic levels; thus more coherence implies a more hierarchical structure of the food-web and it is directly correlated with linear stability [@Johnson2014]. The advantage of coherence as an index of stability is that it does not make any assumptions about interaction strengths. Related to coherence is the mean trophic level, that was also been used as an ecosystem health indicator [@Pauly1998], and is predicted that food webs with higher trophic levels result less stable [@Borrelli2014]. 
+
 
 <!---Modularity -->
 
@@ -58,11 +59,11 @@ Thus our objective is to analyse the process of food-web assembly using three da
 
 ## Methods
 
-The three dataset used in this study represent a nested hierarchy but they were collected independently. The southern ocean database compiled by @Raymond2011 was used to construct the meta-web selecting only species located at latitudes higher than 60°S. @Raymond2011 compiled information from  direct sampling methods of dietary assessment, including gut, scat, and bolus content analysis, stomach flushing, and observed feeding. We consider that the meta-web is the regional pool the species defined by the biogeographic Antarctic region. The regional Weddell Sea dataset includes species situated between 74°S and 78°S with a length of approximately 450 km and comprises all information available for the zone since 1983 [@Jacob2011]. The local dataset comes from Potter Cove: a 4 km long and 2.5 km wide Antarctic fjord located at 62°14'S, 58°40'W, South Shetland Islands [@Marina2018]. For more information about these dataset please consult the original publications. To make compatible the datasets first we check taxonomic names for synonyms, and second we add species (either prey or predator) with their interactions to the meta-web when the local or regional food-webs contains more taxonomic resolution; instead if the meta-web contained more detailed records, only for predators we added them to the local food-web checking for its geographic range. We remove cannibalistic (self-links) and double arrows (i.d. A eats B and B eats A).  
+The three dataset used in this study encompass a wide range of spatial scales and they were collected independently. The southern ocean database compiled by @Raymond2011 was used to construct the meta-web selecting only species located at latitudes higher than 60°S. @Raymond2011 compiled information from  direct sampling methods of dietary assessment, including gut, scat, and bolus content analysis, stomach flushing, and observed feeding. We consider that the meta-web is the regional pool the species defined by the biogeographic Antarctic region. The regional Weddell Sea dataset includes species situated between 74°S and 78°S with a length of approximately 450 km and comprises all information available for the zone since 1983 [@Jacob2011]. The local dataset comes from Potter Cove: a 4 km long and 2.5 km wide Antarctic fjord located at 62°14'S, 58°40'W, South Shetland Islands [@Marina2018]. For more information about these dataset please consult the original publications. To make compatible the datasets first we check taxonomic names for synonyms, and second we add species (either prey or predator) with their interactions to the meta-web when the local or regional food-webs contains more taxonomic resolution; instead if the meta-web contained more detailed records, only for predators we added them to the local food-web checking for its geographic range. We remove cannibalistic (self-links) and double arrows (i.d. A eats B and B eats A).  
   
 ### Analysis
 
-We analysed the structural properties of the nested network hierarchy (Meta-web, regional, local) using properties that focus on different levels within the networks: emergent global properties that take into account the whole network, sub-structural properties that consider several nodes, and properties related to one node. To describe food-webs as networks each species is represented as a node or vertex and the feeding interactions are represented as edges or links between de nodes. This links in the case of food-webs are directed from the prey to the predator. Two nodes are neighbours if they are connected by an edge and the degree $k_i$ of node $i$ is the number of neighbours it has. The food web can be represented by an adjacency matrix $A=(a_{ij})$ where $a_{ij}=1$ if species $j$ predates species $i$, else is 0. Then $k_i^{in}=\sum_j{a_{ji}}$ is the number of preys of species $i$ or its in-degree, and $k_i^{out}=\sum_j{a_{ij}}$ is the number of predators of $i$ or its out-degree. The total number of edges is $E=\sum_{ij}a_{ij}$.
+We analysed the structural properties of the networks (Meta-web, regional, local) using properties that focus on different levels within the networks: emergent global properties that take into account the whole network, sub-structural properties that consider several nodes, and properties related to one node. To describe food-webs as networks each species is represented as a node or vertex and the feeding interactions are represented as edges or links between de nodes. This links in the case of food-webs are directed from the prey to the predator. Two nodes are neighbours if they are connected by an edge and the degree $k_i$ of node $i$ is the number of neighbours it has. The food web can be represented by an adjacency matrix $A=(a_{ij})$ where $a_{ij}=1$ if species $j$ predates species $i$, else is 0. Then $k_i^{in}=\sum_j{a_{ji}}$ is the number of preys of species $i$ or its in-degree, and $k_i^{out}=\sum_j{a_{ij}}$ is the number of predators of $i$ or its out-degree. The total number of edges is $E=\sum_{ij}a_{ij}$.
 
 #### Small-world topology
 
@@ -157,7 +158,6 @@ All the analysis and simulations were made in R version 3.4.3 [@RCoreTeam2017], 
 
 ## Results
 
-
 \scriptsize
 
 ------------------------------------------
@@ -237,11 +237,8 @@ Table: Motif counts and motif z-scores. The proportions for the three scales are
 
 
 
-![Local Food Web trophic level by compartments](Figures/LocalTR_TL_MOD.png)
+![Food Web structure showing trophic level by compartments (modules) and topological roles. ](Figures/AllTopoRoles_TL_MOD.png)
 
-![Regional Food Web trophic level by compartments](Figures/RegionalTR_TL_MOD.png)
-
-![Meta Food Web trophic level by compartments](Figures/MetawebTR_TL_MOD.png)
 
 ![Network sub-structural properties across scales, *Meta* represent the marine predator-prey relationships of Antarctica (34.8 million Km^2^), *Regional* represent the Weddell Sea (3.5 million Km^2^), and *Local* a small fjord (6.8 Km^2^). A. Z-scores of four three node motif important for food-web stability. B. Topological roles based in within module degree and among module connectivity](Figures/Motif_TopoRoles_ByNetwork.png){ width=75% }
 
@@ -250,6 +247,8 @@ Table: Motif counts and motif z-scores. The proportions for the three scales are
 ## Discussion
 
 <!---Metaweb, regional, local food webs -->
+
+* Potter Cove is very small compared with the others, so it will comprise a smaller amount of different habitats. Thus, habitat filtering should be an important factor, this could be reflected in the lack of species that are module hubs, and the lack of a modular structure. Most species are module connectors and module specialist, that means that they mainly interact with the species in its own module but the don't have a high connectivity, this is a pattern that coincides with a random network structure, as signalled by the modularity z-score. 
 
 * Food webs assembly evolutionary and dynamical constrains [@Poisot2012].
 
