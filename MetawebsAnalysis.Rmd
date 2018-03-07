@@ -98,7 +98,6 @@ websTbl$rTI[1] <- q$rTI   # ratio of mTI/eTI expected under null
 
 # Calc incoherence z-score based in random E-R networks with the condition of at least one basal node
 #
-# ADD IN OTHER NETWORKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 #
 zq <- calc_incoherence_z(redl,troph.net2)
 websTbl$rndQ[1] <- zq$rndQ
@@ -223,6 +222,20 @@ websTbl$Q[2] <- q$Q
 websTbl$rQ[2] <- q$rQ  # ratio of Q/eQ expected coherence under null -  Significan coherence rQ< 1, Significant incoherence rQ>1
 websTbl$mTI[2] <- q$mTI # mean trophic level 
 websTbl$rTI[2] <- q$rTI   # ratio of mTI/eTI expected under null 
+
+#
+# Calc incoherence z-score based in random E-R networks with the condition of at least one basal node
+#
+zq <- calc_incoherence_z(redl,troph.net2)
+websTbl$rndQ[2] <- zq$rndQ
+websTbl$rndTI[2] <- zq$rndTI
+websTbl$Qlow[2] <- zq$Qlow
+websTbl$Qhigh[2] <- zq$Qhigh
+websTbl$TIlow[2] <- zq$TIlow
+websTbl$TIhigh[2] <- zq$TIhigh
+websTbl$zQ[2] <- zq$zQ
+websTbl$zTI[2] <- zq$zTI
+
 
 
 
@@ -356,6 +369,21 @@ websTbl$Q[3] <- q$Q
 websTbl$rQ[3] <- q$rQ  # ratio of Q/eQ expected coherence under null -  Significan coherence rQ< 1, Significant incoherence rQ>1
 websTbl$mTI[3] <- q$mTI # mean trophic level 
 websTbl$rTI[3] <- q$rTI   # ratio of mTI/eTI expected under null 
+
+
+#
+# Calc incoherence z-score based in random E-R networks with the condition of at least one basal node
+#
+zq <- calc_incoherence_z(redl,troph.net2)
+websTbl$rndQ[3] <- zq$rndQ
+websTbl$rndTI[3] <- zq$rndTI
+websTbl$Qlow[3] <- zq$Qlow
+websTbl$Qhigh[3] <- zq$Qhigh
+websTbl$TIlow[3] <- zq$TIlow
+websTbl$TIhigh[3] <- zq$TIhigh
+websTbl$zQ[3] <- zq$zQ
+websTbl$zTI[3] <- zq$zTI
+
 
 # 
 # Add colors to nodes 
@@ -668,6 +696,7 @@ require(stringr)
 dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
 dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
 
+#################################################
 #
 # Select local food web 
 #
@@ -675,12 +704,17 @@ dtot1 <- as.matrix(dtot %>% filter(Network=="Local") %>% dplyr::select(Prey_name
 redl <- graph_from_edgelist(dtot1, directed  = T)
 
 #
+# Calc topological roles 1000 simulations
+#
+tR1 <- calc_topological_roles(redl)
+tR  <- tR1 %>% group_by(node) %>% summarize(wtmLowCI=quantile(within_module_degree,0.005,na.rm=TRUE),
+                                        wtmHiCI=quantile(within_module_degree,0.995,na.rm=TRUE),
+                                        amcLowCI=quantile(among_module_conn,0.005,na.rm=TRUE),
+                                        amcHiCI=quantile(among_module_conn,0.995,na.rm=TRUE),
+                                        within_module_degree=mean(within_module_degree,na.rm=TRUE),
+                                        among_module_conn=mean(among_module_conn,na.rm=TRUE))
 
-tR <- calc_topological_roles(redl)
 topoRoles <- tR %>% mutate(Network="Local")
-
-png("Figures/TopoRoles_Local.png",width=6,height=6,units="in",res=600)
-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0))
 
 # Initialize hub_conn
 hub_conn <- data.frame()
@@ -699,8 +733,9 @@ tR2 <- topoRoles %>% filter(Network=="Local")
 require(kSamples)
 ad.test(list(tR1$among_module_conn,tR2$among_module_conn),method="simulated",nsim=1000)
 ad.test(list(tR1$within_module_degree,tR2$within_module_degree),method="simulated",nsim=1000)
+#
 # No difference with 100 or 1000 simulations
-
+#
 require(ggplot2)
 tR3 <- tR1 %>% mutate(nsim=100) %>% bind_rows(tR2 %>% mutate(nsim=1000)) %>% mutate(nsim=as.factor(nsim))
 ggplot(tR3, aes(within_module_degree,fill=nsim)) + geom_density(alpha=.5)
@@ -708,6 +743,7 @@ ggplot(tR3, aes(among_module_conn,fill=nsim)) + geom_density(alpha=.5)
 
 rm(tR1,tR2,tR3)
 
+######################################################
 #
 # Select regional food web 
 #
@@ -715,17 +751,56 @@ dtot1 <- as.matrix(dtot %>% filter(Network=="Regional") %>% dplyr::select(Prey_n
 redl <- graph_from_edgelist(dtot1, directed  = T)
 redl <- simplify(redl)
 
+# Incremental calculation of topological roles
 #
 
-tR <- calc_topological_roles(redl,100)
-topoRoles <- bind_rows(topoRoles, tR %>% mutate(Network="Regional"))
+tR1 <- calc_topological_roles(redl,100)
+tR  <- tR1 %>% group_by(node) %>% summarize(wtmLowCI=quantile(within_module_degree,0.005,na.rm=TRUE),
+                                        wtmHiCI=quantile(within_module_degree,0.995,na.rm=TRUE),
+                                        amcLowCI=quantile(among_module_conn,0.005,na.rm=TRUE),
+                                        amcHiCI=quantile(among_module_conn,0.995,na.rm=TRUE),
+                                        within_module_degree=mean(within_module_degree,na.rm=TRUE),
+                                        among_module_conn=mean(among_module_conn,na.rm=TRUE))
 
-png("Figures/TopoRoles_Regional.png",width=6,height=6,units="in",res=600)
-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0))
+tR1 <- bind_rows(tR1, calc_topological_roles(redl,10))
+saveRDS(tR1,"TopoRoles_Regional.rds")
+tR2 <-   tR1 %>% group_by(node) %>% summarize(wtmLowCI=quantile(within_module_degree,0.005,na.rm=TRUE),
+                                        wtmHiCI=quantile(within_module_degree,0.995,na.rm=TRUE),
+                                        amcLowCI=quantile(among_module_conn,0.005,na.rm=TRUE),
+                                        amcHiCI=quantile(among_module_conn,0.995,na.rm=TRUE),
+                                        within_module_degree=mean(within_module_degree,na.rm=TRUE),
+                                        among_module_conn=mean(among_module_conn,na.rm=TRUE))
+
+# 
+# There are Differences between X and X+10 simulations
+#  tR  = 100 
+#  tR2 = 110
+#  tR1 = data.frame with added simulations
+
+require(kSamples)
+ad.test(list(tR2$among_module_conn,tR$among_module_conn),method="simulated",nsim=1000)
+ad.test(list(tR2$within_module_degree,tR$within_module_degree),method="simulated",nsim=1000)
+
+#               AD     T.AD  asympt. P-value  sim. P-value
+# version 1: 1.026  0.03472           0.3433        0.3418
+# version 2: 0.579 -0.55420           0.6677        0.6577
+
+#
+# Add to general dataframe TR2!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+#topoRoles <- topoRoles %>% filter(Network!="Regional")
+
+topoRoles <- bind_rows(topoRoles, tR2 %>% mutate(Network="Regional"))
+
+#
+# Plot and clasify topological roles
+#
+
 hub_conn <- bind_rows(hub_conn,plot_topological_roles(filter(topoRoles,Network=="Regional"),redl,mod_by_red[[2]]) %>% mutate(Network="Regional"))
 
 dev.off()
 
+##############################################################
 #
 # Select meta food web 
 #
@@ -733,10 +808,21 @@ dtot1 <- as.matrix(dtot %>% filter(Network=="Meta") %>% dplyr::select(Prey_name,
 redl <- graph_from_edgelist(dtot1, directed  = T)
 redl <- simplify(redl)
 
+# Calc topological roles incrementally and test if there are differences 
 #
 rm(tR,tR1,tR2)
 
 #
+tR1 <- calc_topological_roles(redl,10)
+tR  <- tR1 %>% group_by(node) %>% summarize(wtmLowCI=quantile(within_module_degree,0.005,na.rm=TRUE),
+                                        wtmHiCI=quantile(within_module_degree,0.995,na.rm=TRUE),
+                                        amcLowCI=quantile(among_module_conn,0.005,na.rm=TRUE),
+                                        amcHiCI=quantile(among_module_conn,0.995,na.rm=TRUE),
+                                        within_module_degree=mean(within_module_degree,na.rm=TRUE),
+                                        among_module_conn=mean(among_module_conn,na.rm=TRUE))
+
+#tR1 <- readRDS("TopoRoles_Meta.rds")
+
 tR1 <- bind_rows(tR1, calc_topological_roles(redl,10))
 saveRDS(tR1,"TopoRoles_Meta.rds")
 tR2 <-   tR1 %>% group_by(node) %>% summarize(wtmLowCI=quantile(within_module_degree,0.005,na.rm=TRUE),
@@ -748,7 +834,7 @@ tR2 <-   tR1 %>% group_by(node) %>% summarize(wtmLowCI=quantile(within_module_de
 
 #
 # 
-# There are Differences between 10 and 20 simulations
+# There are Differences between X and X+10 simulations
 #  tR  = 40 
 #  tR2 = 50
 #  tR1 = data.frame with added simulations
@@ -771,11 +857,7 @@ tR <- tR2
 
 topoRoles <- bind_rows(topoRoles, tR %>% mutate(Network="Meta"))
 
-png("Figures/TopoRoles_Meta.png",width=6,height=6,units="in",res=600)
-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0))
-
 hub_conn <- bind_rows(hub_conn,plot_topological_roles(filter(topoRoles,Network=="Meta"),redl,mod_by_red[[3]]) %>% mutate(Network="Meta"))
-dev.off()
 
 save.image()
 
@@ -824,6 +906,23 @@ plot_grid(g1,g2,labels = c("A","B"),align = "h")
 ggsave("Figures/Motif_TopoRoles_ByNetwork.png",width=8,height=5,units="in",dpi=600)
 
 
+#
+#   Plot of topological roles with confidence interval
+#
+
+require(ggplot2)
+
+topoRoles$Network <- factor(topoRoles$Network, levels = c("Local","Regional","Meta")) 
+
+g <- ggplot(topoRoles, aes(x=among_module_conn,y=within_module_degree,colour=Network),shape=21) +  theme_bw() + geom_point()+ 
+	geom_errorbar(aes(ymin=wtmLowCI, ymax=wtmHiCI),width=0.0,alpha=0.5) +
+  geom_errorbarh(aes(xmin = amcLowCI, xmax = amcHiCI),height=0.0,alpha=0.5) + 
+  ylab("Within module degree") + xlab("Among module connectivity") +
+	scale_colour_brewer(palette="Dark2",name="Network") + theme(legend.position="none") +  theme(axis.text.x = element_text(angle = 90, hjust = 0))
+
+g + geom_hline(aes(yintercept=2.5),linetype = 2) + geom_vline(aes(xintercept=0.625),linetype = 2) +facet_wrap( ~Network)
+
+ggsave("Figures/TopoRolesCI_ByNetwork.png",width=7,height=5,units="in",dpi=600)
 
 ```
 

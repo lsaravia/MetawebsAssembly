@@ -1,6 +1,6 @@
 OPTS= -H margins.sty --bibliography MetawebsAssembly.bib --csl=plos.csl --latex-engine=xelatex 
 
-all: NetSci_abstract.pdf MetawebsAssembly.pdf
+all: Appendices.pdf MetawebsAssembly.pdf MetawebsAssembly.docx
 
 %.pdf:%.md
 	pandoc $< -o $@ -H Appendices.sty
@@ -15,8 +15,8 @@ Appendices.pdf: Appendices.md
 	pandoc -H Appendices.sty $^ -o $@
 	evince $@		
 
-CriticalGF.docx: CriticalGF.md margins.sty CriticalGF.bib makefile
-	cp "/home/leonardo/BibTeX/Manuscritos-Critical global forest.bib" CriticalGF.bib
+MetawebsAssembly.docx: MetawebsAssembly.md makefile
+	cp "/home/leonardo/BibTeX/Manuscritos-Meta-web local web assembly.bib" MetawebsAssembly.bib
 	pandoc $< -o $@ $(OPTS)
 			
 CriticalGF_bioRxiv.pdf: CriticalGF.md nolineno.sty CriticalGF.bib

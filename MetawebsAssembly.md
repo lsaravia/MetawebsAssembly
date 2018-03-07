@@ -71,7 +71,7 @@ The first emergent property we used is the small world pattern (SW), this proper
 
 $$c_i =\frac{2 E_i}{k_i (k_i -1)}$$ 
 
-where $E_i$ is the number of edges between the neighbours of $i$. The clustering coefficient of the network $C$ is the average of $c_i$ over all nodes. The original definition of small world networks is conceptual [@Watts1998], a network $G$ is small world when if it has a similar path length but greater clustering than an Erdös-Rényi (E–R) random graph with the same number of nodes $n$ and edges $m$. An E-R network is constructed assigning at random the $m$ edges to the $n$ nodes with equal probability [@Erdos1959]. For the quantitative version of the SW pattern we followed @Humphries2008, we need to define:
+where $E_i$ is the number of edges between the neighbours of $i$. The clustering coefficient of the network $C$ is the average of $c_i$ over all nodes. The original definition of small world networks is conceptual [@Watts1998], a network $G$ is small world when if it has a similar path length but greater clustering than an Erdös-Rényi random graph with the same number of nodes $n$ and edges $m$. An Erdös-Rényi network is constructed assigning at random the $m$ edges to the $n$ nodes with equal probability [@Erdos1959]. For the quantitative version of the SW pattern we followed @Humphries2008, we need to define:
 
 $$\gamma_g = \frac{C_g}{C_{(rand)}}$$
 
@@ -79,11 +79,11 @@ and
 
 $$\lambda_g = \frac{L_g}{L_{(rand)}}$$
 
-where $C_g$ and $L_g$ are the clustering coefficient and the mean shortest path length of the network of interest $G$; $C_g$ and $C_{(rand)}$ are the same quantities for the corresponding E-R random network. Thus the quantitative small-world-ness is defined as:
+where $C_g$ and $L_g$ are the clustering coefficient and the mean shortest path length of the network of interest $G$; $C_g$ and $C_{(rand)}$ are the same quantities for the corresponding Erdös-Rényi random network. Thus the quantitative small-world-ness is defined as:
 
 $$S = \frac{\gamma_g}{\lambda_g}$$
 
-and to determine if $S$ is statistically significant monte carlo methods are used. We constructed 1000 E-R networks with the same nodes $n$ and edges $m$ for the network of interest then we calculated $S$ for each random network and the lower and higher 99% quantiles of the $S$ distribution are called $ql,qh$:
+and to determine if $S$ is statistically significant monte carlo methods are used. We constructed 1000 Erdös-Rényi networks with the same number of nodes $n$ and edges $m$ for the network of interest, then we calculated $S$ for each random network and the lower and higher 99% quantiles of the $S$ distribution are called $ql,qh$:
 
 $$CI = \frac{qh - ql}{2}$$
 
@@ -100,15 +100,11 @@ where $k_i^{in}=\sum_{j}a_{ji}$ is the number of preys of species $i$, basal spe
 $$q = \sqrt{\frac{1}{E} \sum_{ij}a_{ij}x_{ij}^2 - 1}$$
 
 
-that is the SD of the distribution of trophic distances, a food web will be more coherent when $q$ is closer to zero. When $q = 0$ the maximal coherence is achieved and corresponds to a layered network in which every node has an integer trophic level [@Johnson2014; @Johnson2017]. As a null model to compare coherence and trophic level we used the basal ensemble with the same number of species, links and basal species that the original food web. The basal ensemble satisfy the following constrain: for every non-basal species the proportion of the number of preys that connects to basal species is the same [@Johnson2017], and provides a null model similar to E-R random networks but where the expectation of the mean trophic level and coherence could be calculated analytically:
+that is the SD of the distribution of trophic distances, a food web will be more coherent when $q$ is closer to zero. When $q = 0$ the maximal coherence is achieved and corresponds to a layered network in which every node has an integer trophic level [@Johnson2014; @Johnson2017]. As a null model to compare coherence and trophic level we generated 1000 Erdös-Rényi random networks with at least one basal species and the same number of species and links that the network of interest. Then we calculated the 99% CI using the 0.5% and 99.5% quantiles the distribution of $q$ and $tp$; and the z-scores as:
 
-$$tp_{basal} = 1 + \left( 1 + \frac{B}{N}\right) \frac{E}{E_{basal}}$$
+$$z_i=\frac{q_{obs} - q_{(rand)}}{\sigma_{q(rand)}}$$
 
-is the expected mean trophic level, where $B$ is the number of basal species, $N$ the total number of species, $E_{basal}$ the number of basal links and $E$ the total number of links.  The expected coherence of the basal ensemble is:
-
-$$q_{basal} = \sqrt{\frac{E}{E_{basal}}-1}$$      
-
-We report $q/q_{basal}$ and $tp/tp_{basal}$ for the three networks. 
+where $q_{obs}$ is the observed coherence, $q_{(rand)}$ is the mean coherence from the Erdös-Rényi networks and $\sigma_{q(rand)}$ is the standard deviation. The same formula is used for $tp$. If the distribution for the quantity ($q$, $tp$) under the random model is normal, a z-score greater than 2 is evidence than the observed quantity is significantly greater than its random counterpart, and a z-score less than 2 means that the quantity is significantly lower. 
 
 #### Modularity 
 
@@ -117,11 +113,7 @@ The intermediate level property (i.e. between the whole network and the individu
 $$M = \sum_s \left(\frac{I_s}{E} - \left(\frac{d_s}{2E}\right)^2 \right)$$
 
 
-where $s$ is the number of modules or compartments, $I_s$ is the number of links between species in the module $s$, $d_s$ is the sum of degrees for all species in module $s$ and $E$ is the total number of links for the network. To asses the significance of our networks we calculate Z-scores based on 1000 E-R networks with the same number of species and links. We calculated the z-score with the following equation:
-
-$$z_i=\frac{M_{obs} - M_{(rand)}}{\sigma_{(rand)}}$$
-
-where $M_{obs}$ is the observed modularity, $M_{(rand)}$ is the mean modularity from the E-R networks and $\sigma_{(rand)}$ is the standard deviation. It has been stressed that only networks with modularities larger that the random expectation should be called modular [@Reichardt2006]. We used the same formula to calculate z-scores for other quantities. A z-score greater than 2 is evidence than the observed quantity is significantly greater than its E-R counterpart, and a z-score less than 2 means that the quantity is significantly lower. 
+where $s$ is the numberf modules or compartments, $I_s$ is the number of links between species in the module $s$, $d_s$ is the sum of degrees for all species in module $s$ and $E$ is the total number of links for the network. To asses the significance of our networks we calculate the 99% confidence interval and z-scores based on 1000 Erdös-Rényi networks as previously described. It has been stressed that only networks with modularities larger that the random expectation should be called modular [@Reichardt2006]. 
 
 #### Motifs 
 
@@ -129,11 +121,11 @@ We consider here three species subnetworks that have been explored theoretically
 
 ![The four three-species motifs analysed: apparent competition, exploitative competition, tri-trophic chain, and omnivory. These four motifs have been explored both theoretically and empirically in ecological networks and are the most common motifs found](Figures/Fig1Motifs.png)
 
-These are the only motifs present in all the networks analysed here. We compared the frequency of these motif to Erdös-Rényi (E–R) random graph with the same number of nodes $n$ and edges $m$. We performed 1000 simulations of E-R random networks and calculated the z-score of motif frequencies using the equation:  
+These are the only motifs present in all the networks analysed here. We compared the frequency of these motif to Erdös-Rényi (E–R) random graph with the same number of nodes $n$ and edges $m$. We performed 1000 simulations of Erdös-Rényi random networks and calculated the z-score of motif frequencies using the equation:  
 
 $$z_i=\frac{N_{obs} - N_{(rand)}}{\sigma_{(rand)}}$$
 
-where $N_{obs}$ is the observed number of a given motif, $N_{(rand)}$ is the mean count and $\sigma_{(rand)}$ is the standard deviation for the E-R networks.  
+where $N_{obs}$ is the observed number of a given motif, $N_{(rand)}$ is the mean count and $\sigma_{(rand)}$ is the standard deviation for the Erdös-Rényi networks.  
 
 
 #### Topological roles 
@@ -160,76 +152,76 @@ All the analysis and simulations were made in R version 3.4.3 [@RCoreTeam2017], 
 
 \scriptsize
 
-------------------------------------------
-Network            Local  Regional    Meta  
------------------ ------ --------- -------
-Size                  91      437      859  
+------------------------------------------------------------
+Network            Local   Regional     Meta                  
+----------------- ------- --------- -------- ---------------
+Size                  91       437       859                  
 
-Links                 309     1908    9003  
+Links                 309      1908     9003                  
 
-Connectance        0.0373   0.0100  0.0122 
+Connectance        0.0373    0.0100   0.0122                 
 
-PathLength         1.8106   2.1965  2.5655 
+PathLength         1.8106    2.1965   2.5655                 
 
-Clustering         0.0989   0.0480  0.2164 
+Clustering         0.0989    0.0480   0.2164                 
 
-Modularity         0.3720   0.4784  0.4456 
+Modularity         0.3720   *0.4784  *0.4456                 
 
-Groups                5       5        7   
-
-Small-World-ness   2.7536   4.6855  10.866
-
-SWness 99%CI       2.0670   2.2683  1.711 
-
-Modularity         0.8883  18.9697  85.750
+Modularity         0.8883   18.9697   85.750                
 z-score
 
-Groups            -1.4993 -2.3960  -0.2533
+Groups                *5        *5         7                   
+
+Groups            -1.4993  -2.3960   -0.2533                
 z-score
 
-Coherence          0.5319  0.4508   0.7037  
+Small-World-ness   2.7536    4.6855   10.866                
+
+SWness 99%CI       2.0670    2.2683   1.711                 
+
+Coherence         *0.5319   *0.4508  *0.7037                  
 
 Coherence 
-Ratio              0.4533  0.7524   0.8245  
+z-score           -0.5376   -2.0767  -3.5354                  
 
 Mean Trophic
-level              2.1289  1.9831   1.9119  
+level             *2.1289   *1.9831  *1.9119                  
 
 Trophic level
-Ratio              0.8209  0.9370   0.9225  
+z-score           -0.2701   -0.8567  -1.6021                  
 
-------------------------------------------
+------------------------------------------------------------
 
-Table: Small-world-ness and modularity and coherence, z-scores are calculated against random networks and Ratios against a random network with the same number of basal species with an analytical expression (called the basal network)
+Table: Network global properties across scales, *Meta* represent the marine predator-prey relationships of Antarctica (34.8 million Km^2^), *Regional* represent the Weddell Sea (3.5 million Km^2^), and *Local* a small fjord (6.8 Km^2^). Z-scores are calculated against 1000 random networks. Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation for random networks; a positive z-score means that is greater.
 
 
 ------------------------------------------
                  Local  Regional      Meta   
 -------------- ------- --------- ---------
 Exploitative 
-competition      830     42210    285866  
+competition      *830    *42210    *285866  
 
-EC z-score     15.4971  592.2163 945.5640 
+EC z-score     15.4971  592.2163  945.5640 
 
 Apparent 
-competition     1983      7842    126552  
+competition     *1983     *7842    *126552  
 
-AC z-score     63.2947  58.4367  320.3600 
+AC z-score      63.2947  58.4367  320.3600
 
 
 Tri-trophic 
-chain            578      3101     61739  
+chain            *578      *3101    *61739  
 
 TT z-score     -7.8152  -48.7765 -69.3458 
 
 
-Omnivory         124      892      36423  
+Omnivory        *124      *892      *36423  
 
 OM z-score     15.3853  89.3244  1022.2137
 
 ------------------------------------------
 
-Table: Motif counts and motif z-scores. The proportions for the three scales are different (Pearson's Chi-squared test of independence X-squared = 12612, df = 6, p-value < 2.2e-16)
+Table: Motif counts and z-scores, calculated against 1000 random networks. Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation for random networks; a positive z-score means that is greater. The proportions for the three scales are different (Pearson's Chi-squared test of independence X-squared = 12612, df = 6, p-value < 2.2e-16)
 
 
 \normalsize
@@ -237,10 +229,10 @@ Table: Motif counts and motif z-scores. The proportions for the three scales are
 
 
 
-![Food Web structure showing trophic level by compartments (modules) and topological roles. ](Figures/AllTopoRoles_TL_MOD.png)
+![Food Web structure showing trophic level by compartments (modules) and topological roles. The topological roles are clasified with reference to random networks then: *Hub connectors* have a high number of between module links, *Module connectors* have a low number of links mostly between modules,  *Module hubs* have a high number of links inside its module. *Module specialists* have a low number of links inside its module.](Figures/AllTopoRoles_TL_MOD.png)
 
 
-![Network sub-structural properties across scales, *Meta* represent the marine predator-prey relationships of Antarctica (34.8 million Km^2^), *Regional* represent the Weddell Sea (3.5 million Km^2^), and *Local* a small fjord (6.8 Km^2^). A. Z-scores of four three node motif important for food-web stability. B. Topological roles based in within module degree and among module connectivity](Figures/Motif_TopoRoles_ByNetwork.png){ width=75% }
+![Network sub-structural properties across scales, *Meta* represent the marine predator-prey relationships of Antarctica (34.8 million Km^2^), *Regional* represent the Weddell Sea (3.5 million Km^2^), and *Local* a small fjord (6.8 Km^2^). A. Z-scores of four three node motif important for food-web stability. B. Topological roles based in within module degree $dz$ and among module connectivity](Figures/Motif_TopoRoles_ByNetwork.png){ width=75% }
 
 
 
