@@ -3,18 +3,6 @@
 ----------------------------------------------------
 **Network**             Local   Regional        Meta
 ----------------- ----------- ---------- -----------
- **Modularity**     0.3720      0.4784     0.4456   
-
- Mod Low CI         0.3389      0.3491     0.2207   
-
- Mod high CI        0.3755      0.3620     0.2259   
-
-  **Groups**          5          5           7     
-
-  Groups low          6          8           6     
-
- Groups high          9          12          9     
-
      **Q**         0.5319      0.4508     0.7037   
 
 Q low              2.9321      5.5191     18.8128  
@@ -28,6 +16,21 @@ Level**
 
    T.L  high       2010.8165   915.9291   4364.5925 
 
+
+ **Modularity**     0.3720      0.4784     0.4456   
+
+ Mod Low CI         0.3389      0.3491     0.2207   
+
+ Mod high CI        0.3755      0.3620     0.2259   
+
+  **Groups**          5          5           7     
+
+  Groups low          6          8           6     
+
+ Groups high          9          12          9     
+
+Groups             -1.4993     -2.3960    -0.2533
+z-score
 ----------------------------------------------------
 Table: Modularity, number of groups coherence (q) and mean trophic level with 99% confidence intervals based on 1000 random networks.
 

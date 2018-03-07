@@ -924,6 +924,23 @@ g + geom_hline(aes(yintercept=2.5),linetype = 2) + geom_vline(aes(xintercept=0.6
 
 ggsave("Figures/TopoRolesCI_ByNetwork.png",width=7,height=5,units="in",dpi=600)
 
+#
+# Add network area to the table with network info
+# 
+websTbl$Area <- c(6.8,3.5e6,34.8e6)
+
+ggplot(websTbl,aes(log(Area),log(Size))) + geom_point() + geom_line()
+
+calc_z <- function(S,S1,A,A1){(S-S1)/(A-A1)}
+
+calc_z(websTbl$Area[1],websTbl$Area[2],websTbl$Size[1],websTbl$Size[2])
+
+lm(log(websTbl$Size[2:3]) ~ log(websTbl$Area[2:3]))
+lm(log(websTbl$Size[1:2]) ~ log(websTbl$Area[1:2]))
+lm(log(websTbl$Size) ~ log(websTbl$Area))
+
+exp(4.2822)*(websTbl$Area[2])^0.1193
+
 ```
 
 # Integrated plot of topological roles, trophic level and modularity

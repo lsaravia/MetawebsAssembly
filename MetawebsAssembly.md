@@ -59,7 +59,7 @@ Thus our objective is to analyse the process of food-web assembly using three da
 
 ## Methods
 
-The three dataset used in this study encompass a wide range of spatial scales and they were collected independently. The southern ocean database compiled by @Raymond2011 was used to construct the meta-web selecting only species located at latitudes higher than 60°S. @Raymond2011 compiled information from  direct sampling methods of dietary assessment, including gut, scat, and bolus content analysis, stomach flushing, and observed feeding. We consider that the meta-web is the regional pool the species defined by the biogeographic Antarctic region. The regional Weddell Sea dataset includes species situated between 74°S and 78°S with a length of approximately 450 km and comprises all information available for the zone since 1983 [@Jacob2011]. The local dataset comes from Potter Cove: a 4 km long and 2.5 km wide Antarctic fjord located at 62°14'S, 58°40'W, South Shetland Islands [@Marina2018]. For more information about these dataset please consult the original publications. To make compatible the datasets first we check taxonomic names for synonyms, and second we add species (either prey or predator) with their interactions to the meta-web when the local or regional food-webs contains more taxonomic resolution; instead if the meta-web contained more detailed records, only for predators we added them to the local food-web checking for its geographic range. We remove cannibalistic (self-links) and double arrows (i.d. A eats B and B eats A).  
+The three dataset used in this study encompass a wide range of spatial scales and they were collected independently. The Southern Ocean database compiled by @Raymond2011 was used to construct the meta-web selecting only species located at latitudes higher than 60°S. @Raymond2011 compiled information from  direct sampling methods of dietary assessment, including gut, scat, and bolus content analysis, stomach flushing, and observed feeding. We considered that the meta-web is the regional pool of species defined by the biogeographic Antarctic region. The regional Weddell Sea dataset includes species situated between 74°S and 78°S with a West-East extension of approximately 450 km, comprises all information about trophic interactions available for the zone since 1983 [@Jacob2011]. The local dataset comes from Potter Cove: a 4 km long and 2.5 km wide Antarctic fjord located at 62°14'S, 58°40'W, South Shetland Islands [@Marina2018]. These food web datasets comprise benthic and pelagic habitats of the Antarctic ecosystem, few aggregated low-trophic level groups (e.g. detritus, diatoms, phytoplankton, zooplankton) and an exceptionally high resolution of the macroalgae community (i.e. 24 biological species of red, brown and green macroalgae). The macroalgae community is responsible for the majority of the primary production and supports a large fraction of secondary production in Antarctic fjords [@Quartino2008a, @Valdivia2015]. The higher trophic levels comprise: invertebrate (e.g. ascidians, sponges, isopods, amphipods, bivalves, gastropods, cephalopods, echinoderms) and vertebrate predator groups (e.g. demersal and pelagic fishes, penguins, seals and whales). For more information about these dataset please consult the original publications. To make compatible the datasets first we check taxonomic names for synonyms, and second we add species (either prey or predator) with their interactions to the meta-web when the local or regional food-webs contains more taxonomic resolution; instead if the meta-web contained more detailed records, only for predators we added them to the local food-web checking for its geographic range. We remove cannibalistic (self-links) and double arrows (i.d. A eats B and B eats A).  
   
 ### Analysis
 
@@ -104,7 +104,7 @@ that is the SD of the distribution of trophic distances, a food web will be more
 
 $$z_i=\frac{q_{obs} - q_{(rand)}}{\sigma_{q(rand)}}$$
 
-where $q_{obs}$ is the observed coherence, $q_{(rand)}$ is the mean coherence from the Erdös-Rényi networks and $\sigma_{q(rand)}$ is the standard deviation. The same formula is used for $tp$. If the distribution for the quantity ($q$, $tp$) under the random model is normal, a z-score greater than 2 is evidence than the observed quantity is significantly greater than its random counterpart, and a z-score less than 2 means that the quantity is significantly lower. 
+where $q_{obs}$ is the observed coherence, $q_{(rand)}$ is the mean coherence from the Erdös-Rényi networks and $\sigma_{q(rand)}$ is the standard deviation. The same formula is used for $tp$. If the distribution of the quantity ($q$, $tp$) under the random model is normal, a z-score greater than 2 is evidence than the observed quantity is significantly greater than its random counterpart, and a z-score less than 2 means that the quantity is significantly lower. 
 
 #### Modularity 
 
@@ -150,47 +150,47 @@ All the analysis and simulations were made in R version 3.4.3 [@RCoreTeam2017], 
 
 ## Results
 
+The networks have values for connectance, numbers of species (size) and links (Table 1), that are well inside the range found for marine food webs [@Marina2018a]. Assuming a power-law relationship between species and area the exponent is 0.14 also compatible with other experimental results [@Rosindell2007].  All networks present the small-world structure as their small-world-ness index is greater than the 99% CI (Table 1). By definition a network is more coherent when its $q$ index is closer to zero, all networks have a significant smaller $q$ value,  thus they are more coherent than a random network. The regional an local networks have similar values and both are smaller than the meta-web, thus they are more locally stable as they are more coherent. Mean trophic level is always lower than its random counterpart, and similar between networks. For these two last metrics local z-scores are smaller for the local food-web and greater for regional and meta-web, this means that smaller networks present more variability than larger ones.  Modularity is greater and significant for meta-web and regional networks and not significant and smaller for the local networks. Modularity shows an opposite pattern with coherence, more modularity less coherence, and in consequence less stability.  
+
+
 \scriptsize
 
-------------------------------------------------------------
-Network            Local   Regional     Meta                  
------------------ ------- --------- -------- ---------------
-Size                  91       437       859                  
+--------------------------------------------
+Network            Local   Regional     Meta  
+----------------- ------- --------- --------
+Size                  91       437       859  
 
-Links                 309      1908     9003                  
+Links                 309      1908     9003  
 
-Connectance        0.0373    0.0100   0.0122                 
+Area (Km^2^)          6.8     3.5e6   34.8e6
 
-PathLength         1.8106    2.1965   2.5655                 
+Connectance        0.0373    0.0100   0.0122 
 
-Clustering         0.0989    0.0480   0.2164                 
+PathLength         1.8106    2.1965   2.5655 
 
-Modularity         0.3720   *0.4784  *0.4456                 
+Clustering         0.0989    0.0480   0.2164 
 
-Modularity         0.8883   18.9697   85.750                
-z-score
+Small-World-ness   2.7536    4.6855   10.866
 
-Groups                *5        *5         7                   
+SWness 99%CI       2.0670    2.2683   1.711 
 
-Groups            -1.4993  -2.3960   -0.2533                
-z-score
-
-Small-World-ness   2.7536    4.6855   10.866                
-
-SWness 99%CI       2.0670    2.2683   1.711                 
-
-Coherence         *0.5319   *0.4508  *0.7037                  
+Coherence         *0.5319   *0.4508  *0.7037  
 
 Coherence 
-z-score           -0.5376   -2.0767  -3.5354                  
+z-score           -0.5376   -2.0767  -3.5354  
 
 Mean Trophic
-level             *2.1289   *1.9831  *1.9119                  
+level             *2.1289   *1.9831  *1.9119  
 
 Trophic level
-z-score           -0.2701   -0.8567  -1.6021                  
+z-score           -0.2701   -0.8567  -1.6021  
 
-------------------------------------------------------------
+Modularity         0.3720   *0.4784  *0.4456 
+
+Modularity         0.8883   18.9697   85.750
+z-score
+
+--------------------------------------------
 
 Table: Network global properties across scales, *Meta* represent the marine predator-prey relationships of Antarctica (34.8 million Km^2^), *Regional* represent the Weddell Sea (3.5 million Km^2^), and *Local* a small fjord (6.8 Km^2^). Z-scores are calculated against 1000 random networks. Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation for random networks; a positive z-score means that is greater.
 
@@ -237,6 +237,9 @@ Table: Motif counts and z-scores, calculated against 1000 random networks. Quant
 
 
 ## Discussion
+
+
+The meta-web mainly shaped by evolutionary forces because only predator-prey interactions are considered and the occurrence of most of the species in and adjacent area was not accounted. The other proposed mechanisms that could act to shape the structure of food-web should be absent. (Which are the other mechanisms?) Indirect interactions are neglected [@Levine2017]. Modularity has a small effect on stability [@Grilli2016] and it is negatively correlated with metapopulation size, but when small perturbations are present produce a buffering effect that protect species [@Gilarranz2017]. 
 
 <!---Metaweb, regional, local food webs -->
 
