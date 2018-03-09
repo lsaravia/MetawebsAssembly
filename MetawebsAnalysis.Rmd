@@ -1,6 +1,6 @@
 ---
 title: "From metawebs to regional and local"
-author: "L.A.S. - T. M."
+author: "L.A.S."
 output: html_document
 ---
 
@@ -669,7 +669,7 @@ dev.off()
 #require(vcd)
 #assoc(x, main = "Relation Network and motif", shade = TRUE)
 
-chisq.test(x)
+chisq.test(x,simulate.p.value = T, B=10000)
 spineplot(x)
 ```
  
@@ -931,10 +931,9 @@ websTbl$Area <- c(6.8,3.5e6,34.8e6)
 
 ggplot(websTbl,aes(log(Area),log(Size))) + geom_point() + geom_line()
 
-calc_z <- function(S,S1,A,A1){(S-S1)/(A-A1)}
-
-calc_z(websTbl$Area[1],websTbl$Area[2],websTbl$Size[1],websTbl$Size[2])
-
+#
+# Calc the species area exponent
+#
 lm(log(websTbl$Size[2:3]) ~ log(websTbl$Area[2:3]))
 lm(log(websTbl$Size[1:2]) ~ log(websTbl$Area[1:2]))
 lm(log(websTbl$Size) ~ log(websTbl$Area))
@@ -954,31 +953,27 @@ exp(4.2822)*(websTbl$Area[2])^0.1193
 # 
 # Local 
 #
-
 png("Figures/AllTopoRoles_TL_MOD.png",width=8,height=8,units="in",res=600)
 par(mfcol=c(2,2), mar=c(1,1.2,0.5,0.5), oma=c(2,2,2,0))
-#par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(.5, 3, .5, 0.5))
+
 plotTopoRolesByTLByMod(dtot,"Local",c("Fresh detritus","Aged detritus","Necromass"),mod_by_red[[1]],hub_conn)
 mtext("A", side = 3, adj = 0.05, line=1 ,cex=1.2)
-#dev.off()
 
 #
 # Metaweb
 #
-#png("Figures/MetawebTopoRoles_TL_MOD.png",width=6,height=6,units="in",res=600)
-#par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(.5, 3, .5, 0.5))
 plotTopoRolesByTLByMod(dtot,"Meta",c("Detritus","Necromass"),mod_by_red[[3]],hub_conn)
-mtext("C", side = 3, adj = 0.05, line = -1,cex=1.2)
+mtext("C", side = 3, adj = 0.05, line = 0,cex=1.2)
 
+# modulos<-cluster_spinglass(redl)
+# plotTopoRolesByTLByMod(dtot,"Meta",c("Detritus","Necromass"),modulos,hub_conn)
+# mod_by_red[[3]] <- modulos
 
 #
 # Regional 
 #
-#png("Figures/RegionalTopoRoles_TL_MOD.png",width=6,height=6,units="in",res=600)
-#par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(.5, 3, .5, 0.5))
 plotTopoRolesByTLByMod(dtot,"Regional",c("Detritus","Necromass"),mod_by_red[[2]],hub_conn)
 mtext("B", side = 3, adj = 0.05, line=1,cex=1.2)
-#dev.off()
 
 
 require(RColorBrewer)
@@ -995,13 +990,38 @@ mtext("Modules", side = 1, outer=T, line=0.1,cex=1.2,font=2)
 mtext("Trophic level", side = 2, outer=T, line=0.5,cex=1.2,font=2)
 
 
-# mtext("B", side = 3, adj = 0.05, outer=F,line=1,cex=1.2)
-# mtext("B", side = 3, adj = 1, line=1,cex=1.2)
+# mtext("B", side = 3, adj = 0.05, outer=F,line=-1,cex=1.2)
+# mtext("B", side = 3, adj = 0.05, outer=F,line=0,cex=1.2)
 # box("plot", lty="dotted", col="red")
 # box("inner", lty="dotted", col="green")
 # box("outer", lty="solid", col="green")
 
 dev.off()
 
+
 ```
 
+# Check the species that are hub connectors degree and trophic level
+
+```{r checkTopoRolesTLmod, eval=T,echo=F,message=T,warning=T}
+require(dplyr)
+hub_conn %>% filter(type=="hubcon")
+
+unique(hub_conn$type)
+topoRolesDegree <- getTopoRolesTLdegree(dtot,"Local",c("Fresh detritus","Aged detritus","Necromass"),hub_conn,"hubcon")
+topoRolesDegree <- bind_rows(topoRolesDegree, getTopoRolesTLdegree(dtot,"Regional",c("Detritus","Necromass"),hub_conn,"hubcon"))
+topoRolesDegree <- bind_rows(topoRolesDegree, getTopoRolesTLdegree(dtot,"Meta",c("Detritus","Necromass"),hub_conn,"hubcon"))
+
+topoRolesDegree <- bind_rows(topoRolesDegree, getTopoRolesTLdegree(dtot,"Meta",c("Detritus","Necromass"),hub_conn,"modspe"))
+
+topoRolesDegree %>% filter(type=="modspe", preys<2,predators<2)
+
+require(pander)
+panderOptions('table.split.table',Inf)
+panderOptions('table.style', 'multiline')
+
+pandoc.table(topoRolesDegree %>% filter(type=="hubcon") %>% dplyr::select(Network,name,preys,predators,trophLevel) %>% mutate_if(is.numeric, round, digits=2))
+
+save.image()
+
+```

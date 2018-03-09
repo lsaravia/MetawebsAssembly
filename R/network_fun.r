@@ -480,6 +480,9 @@ plotTopoRolesByTLByMod <- function(netFrame,netName,deadNodes,modulObj,topoFrame
 }
 
 
+# Add alpha to base plot colors
+# 
+#
 add.alpha <- function(col, alpha=1){
   if(missing(col))
     stop("Please provide a vector of colours.")
@@ -530,3 +533,32 @@ curve_ball<-function(g){
   for (row in 1:R){rm[row,hp[[row]]]=1}
   graph_from_adjacency_matrix(rm,mode="directed") 
 }
+
+
+#' Get species names in degree/preys outdegree/predators of one topological role ("hubcon","modspe","modcon","modhub")
+#'
+#' @param netFrame dataframe with all the networks 
+#' @param netName String with name of the food web to analyse
+#' @param deadNodes Vector of strings with name of dead nodes to calculate trophic level
+#' @param topoFrame dataframe with topological role and node index
+#'
+#' @return
+#' @export
+#'
+#' @examples
+
+getTopoRolesTLdegree <- function(netFrame,netName,deadNodes,topoFrame,topoType){
+  # 
+  # Igraph object from dataframe
+  #
+  dtot1 <- as.matrix(netFrame %>% filter(Network==netName) %>% dplyr::select(Prey_name,Predator_name))
+  redl <- graph_from_edgelist(dtot1, directed  = T)
+  redl <- simplify(redl)
+  
+  require(NetIndices)
+  TL<-TrophInd(get.adjacency(redl,sparse=F),Dead=deadNodes)
+
+  topoFrame %>% filter(type==topoType,Network==netName) %>% rowwise() %>% mutate( preys=degree(redl,node,mode=c("in")), predators= degree(redl,node,mode=c("out")), trophLevel=TL[node,1])
+  
+}
+  

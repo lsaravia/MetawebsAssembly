@@ -50,6 +50,12 @@ Food webs have highly non-random and structurally complex patterns that contain 
 
 There are important species in ecological networks that have disproportionately large effects on the whole ecosystem, like keystone species [@Paine1969], ecosystem engineers [@Jones1994] and network hubs [@Borthagaray2014]. Species can participate in different ways with respect to modularity: depending on how many feed links they have within their own module and/or between the modules [@Guimera2005; @Kortsch2015]. This participation has been called the species' topological role, theoretical and empirical results suggest this roles are related to species traits like wide niche breadth, environmental tolerance, apex position in local communities and high motility [@Borthagaray2014;@Guimera2010;@Rezende2009]. This is a local property at an individual species level. 
 
+<!---Motifs -->
+When we consider several linked species this forms a sub-network, when the abundance of one of these sub-networks is deviates significantly compared to a random network is called a motif [@Milo2002]. We analyse here the three species sub-networks that have been explored theoretically and empirically [@Prill2005;@Stouffer2007;@Baiser2016], these are four of the thirteen possible three-species sub-networks: the tri-trophic chain, omnivory, apparent competition, and exploitative competition (Figure 1).
+
+![The four three-species sub-networks analysed: apparent competition, exploitative competition, tri-trophic chain, and omnivory. These four sub-networks have been explored both theoretically and empirically in ecological networks and are the most common sub-networks found in food webs](Figures/Fig1Motifs.png)
+
+These motifs can be used to show the process of assembly of interactions [@Baiser2016] by comparing the representation of motifs at each scale (i.e over-represented, under-represented, or random). When the same processes structure of the food-web across scales, motifs representation should be the same. Ecological interactions occur at the local scale so the differences may show the importance of local interactions in the assembly of the food web. During the assembly process the motif structures that are less dynamically stable tend to disappear from the food-web [@Borrelli2015a], this has been called nonadaptative systemic selection [@Borrelli2015]. This process is nonadaptative because the selection process is not adapting the system to local conditions [@Borrelli2015].   
 
 <!---How all these multilevel properties are related to network assembly -->
 
@@ -104,7 +110,7 @@ that is the SD of the distribution of trophic distances, a food web will be more
 
 $$z_i=\frac{q_{obs} - q_{(rand)}}{\sigma_{q(rand)}}$$
 
-where $q_{obs}$ is the observed coherence, $q_{(rand)}$ is the mean coherence from the Erdös-Rényi networks and $\sigma_{q(rand)}$ is the standard deviation. The same formula is used for $tp$. If the distribution of the quantity ($q$, $tp$) under the random model is normal, a z-score greater than 2 is evidence than the observed quantity is significantly greater than its random counterpart, and a z-score less than 2 means that the quantity is significantly lower. 
+where $q_{obs}$ is the observed coherence, $q_{(rand)}$ is the mean coherence from the Erdös-Rényi networks and $\sigma_{q(rand)}$ is the standard deviation. The same formula is used for $tp$. The z -score thus measures the significance of deviations of the real network from the null hypothesis. If the distribution of the quantity ($q$, $tp$) under the null model is normal, a z-score greater than 2 is evidence than the observed quantity is significantly greater than its random counterpart, and a z-score less than 2 means that the quantity is significantly lower. If the distribution under the null model is skewed this is not necessarily true thus we must rely on confidence intervals. 
 
 #### Modularity 
 
@@ -113,19 +119,15 @@ The intermediate level property (i.e. between the whole network and the individu
 $$M = \sum_s \left(\frac{I_s}{E} - \left(\frac{d_s}{2E}\right)^2 \right)$$
 
 
-where $s$ is the numberf modules or compartments, $I_s$ is the number of links between species in the module $s$, $d_s$ is the sum of degrees for all species in module $s$ and $E$ is the total number of links for the network. To asses the significance of our networks we calculate the 99% confidence interval and z-scores based on 1000 Erdös-Rényi networks as previously described. It has been stressed that only networks with modularities larger that the random expectation should be called modular [@Reichardt2006]. 
+where $s$ is the number of modules or compartments, $I_s$ is the number of links between species in the module $s$, $d_s$ is the sum of degrees for all species in module $s$ and $E$ is the total number of links for the network. To asses the significance of our networks we calculate the 99% confidence interval and z-scores based on 1000 Erdös-Rényi networks as previously described. It has been stressed that only networks with modularities larger that the random expectation should be called modular [@Reichardt2006]. 
 
 #### Motifs 
 
-We consider here three species subnetworks that have been explored theoretically and empirically [@McCann1998;@Prill2005;@Stouffer2007;@Stouffer2010;@Baiser2016], these are four of the thirteen possible three-species motifs: the tri-trophic chain, omnivory, apparent competition, and exploitative competition motifs (Figure 1).
-
-![The four three-species motifs analysed: apparent competition, exploitative competition, tri-trophic chain, and omnivory. These four motifs have been explored both theoretically and empirically in ecological networks and are the most common motifs found](Figures/Fig1Motifs.png)
-
-These are the only motifs present in all the networks analysed here. We compared the frequency of these motif to Erdös-Rényi (E–R) random graph with the same number of nodes $n$ and edges $m$. We performed 1000 simulations of Erdös-Rényi random networks and calculated the z-score of motif frequencies using the equation:  
+We consider here four of thirteen possible three-species subnetworks: the tri-trophic chain, omnivory, apparent competition, and exploitative competition motifs (Figure 1). These are the only motifs present in all the networks analysed here. We compared the frequency of these motifs to  1000 Erdös-Rényi random networks with the same number of nodes $n$ and edges $m$. We  calculated the 99% confidence interval and the z-score of motif counts using the equation:  
 
 $$z_i=\frac{N_{obs} - N_{(rand)}}{\sigma_{(rand)}}$$
 
-where $N_{obs}$ is the observed number of a given motif, $N_{(rand)}$ is the mean count and $\sigma_{(rand)}$ is the standard deviation for the Erdös-Rényi networks.  
+where $N_{obs}$ is the observed number of a given motif, $N_{(rand)}$ is the mean count and $\sigma_{(rand)}$ is the standard deviation for the Erdös-Rényi networks. To determine if the proportions of motifs change across networks we use the Pearson's Chi-squared test with simulated p-value based on 10000 Monte Carlo replicates.
 
 
 #### Topological roles 
@@ -141,7 +143,7 @@ $$PC_i =  1 - \sum_s \frac{k_{is}}{k_i}$$
 
 where $k_i$ is the degree of species $i$ (i.e. the number of links), $k_{is}$ is the number of links of species $i$ to species in module $s$, and in this case $s$ runs over all the modules. Due to the stochastic nature of the module detection algorithm we made repeated simulations until the distribution of $PC_i$ and $dz_i$ has no statistical differences between two successive repetitions. To test that they come from the same distribution we used the k-sample Anderson-Darling test [@Scholz1987]. The we calculate the mean and 95% CI of $dz$ and $PC$.
 
-To determine each species role the $dz-PC$ parameter space is divided into four regions, this was modified from @Guimera2005, using the same scheme that @Kortsch2015. There are two thresholds that define the roles: $dz=2.5$ and $PC=0.625$. If a species has at least 60% of links within its own module then $PC<0.625$ and if it also has $dz\ge 2.5$, it is classified as a module hub. These species a relatively high number of links, but inside his module. If a species has $dz<2.5$ and $PC<0.625$ is called peripheral or specialist, it means that it has relatively few links and most within its module. Species that have $dz<2.5$ and $PC\ge0.625$ are module connectors, they have relatively few links and most between modules. Finally is a species have $dz\ge 2.5$ and  $PC\ge0.625$ is classified as super-generalist because it has high between- and within-module connectivity. 
+To determine each species role the $dz-PC$ parameter space is divided into four regions, this was modified from @Guimera2005, using the same scheme that @Kortsch2015. There are two thresholds that define the roles: $dz=2.5$ and $PC=0.625$. If a species has at least 60% of links within its own module then $PC<0.625$ and if it also has $dz\ge 2.5$, it is classified as a module hub. These species a relatively high number of links, but inside his module. If a species has $dz<2.5$ and $PC<0.625$ is called peripheral or specialist, it means that it has relatively few links and most within its module. Species that have $dz<2.5$ and $PC\ge0.625$ are module connectors, they have relatively few links and most between modules. Finally is a species have $dz\ge 2.5$ and  $PC\ge0.625$ is classified as super-generalist because it has high between- and within-module connectivity. To test if the proportion of species with each of the roles change for the different networks we made a Pearson's Chi-squared test with simulated p-value based on 10000 Monte Carlo replicates.
 
 We combined the topological roles with the trophic level of each species and the compartments in one plot to give an integrated visualization of these sub-structural and local properties of the food web.
 
@@ -150,8 +152,9 @@ All the analysis and simulations were made in R version 3.4.3 [@RCoreTeam2017], 
 
 ## Results
 
-The networks have values for connectance, numbers of species (size) and links (Table 1), that are well inside the range found for marine food webs [@Marina2018a]. Assuming a power-law relationship between species and area the exponent is 0.14 also compatible with other experimental results [@Rosindell2007].  All networks present the small-world structure as their small-world-ness index is greater than the 99% CI (Table 1). By definition a network is more coherent when its $q$ index is closer to zero, all networks have a significant smaller $q$ value,  thus they are more coherent than a random network. The regional an local networks have similar values and both are smaller than the meta-web, thus they are more locally stable as they are more coherent. Mean trophic level is always lower than its random counterpart, and similar between networks. For these two last metrics local z-scores are smaller for the local food-web and greater for regional and meta-web, this means that smaller networks present more variability than larger ones.  Modularity is greater and significant for meta-web and regional networks and not significant and smaller for the local networks. Modularity shows an opposite pattern with coherence, more modularity less coherence, and in consequence less stability.  
+### Global network properties
 
+The networks have values for connectance, numbers of species (size) and links (Table 1), that are well inside the range found for marine food webs [@Marina2018a]. Assuming a power-law relationship between species and area the exponent is 0.14 also compatible with other experimental results [@Rosindell2007].  All networks present the small-world structure as their small-world-ness index is greater than the 99% CI (Table 1). By definition a network is more coherent when its $q$ index is closer to zero, all networks have a significant smaller $q$ value (Table S1); thus they are more coherent than a random network. The regional an local networks have similar values and both are smaller than the meta-web, thus they are more locally stable as they are more coherent. Mean trophic level is always lower than its random counterpart, and similar between networks. For these two last metrics local z-scores are smaller for the local food-web and greater for regional and meta-web, this means that smaller networks present more variability than larger ones.  Modularity is greater and significant for meta-web and regional networks and not significant and smaller for the local networks. Modularity shows an opposite pattern with coherence, more modularity imply less coherence, and in consequence less stability.  
 
 \scriptsize
 
@@ -189,10 +192,16 @@ Modularity         0.3720   *0.4784  *0.4456
 
 Modularity         0.8883   18.9697   85.750
 z-score
-
 --------------------------------------------
 
-Table: Network global properties across scales, *Meta* represent the marine predator-prey relationships of Antarctica (34.8 million Km^2^), *Regional* represent the Weddell Sea (3.5 million Km^2^), and *Local* a small fjord (6.8 Km^2^). Z-scores are calculated against 1000 random networks. Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation for random networks; a positive z-score means that is greater.
+Table: Network global properties across scales, *Meta* represent the marine predator-prey relationships of Antarctica, *Regional* represent the Weddell Sea food web, and *Local* a small fjord food web (Potter Cove). Z-scores are calculated against 1000 random networks. Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation for random networks; a positive z-score means that is greater.
+
+
+### Sub-structural properties (motifs)
+
+The representation of three species sub-networks showed the same patterns in all networks (Figure 2 A, Table 2). Exploitative competition, apparent competition, and omnivory are over-represented, the three trophic chains are under-represented and all these patterns are significant (Table S2). The z-scores are lower for smaller sized networks showing that smaller networks are more variable.  The motifs proportions for the three scales are different (Chi-squared = 12612, p-value < 9.999e-05), this means that local and regional networks are not a random sample of the meta-web. 
+
+![Network sub-structural properties across scales, *Meta* represent the marine predator-prey relationships of Antarctica (34.8 million Km^2^), *Regional* represent the Weddell Sea (3.5 million Km^2^), and *Local* a small fjord (6.8 Km^2^). A. Z-scores of four three node motif important for food-web stability. B. Topological roles based in within module degree and among module connectivity](Figures/Motif_TopoRoles_ByNetwork.png){ width=75% }
 
 
 ------------------------------------------
@@ -221,42 +230,48 @@ OM z-score     15.3853  89.3244  1022.2137
 
 ------------------------------------------
 
-Table: Motif counts and z-scores, calculated against 1000 random networks. Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation for random networks; a positive z-score means that is greater. The proportions for the three scales are different (Pearson's Chi-squared test of independence X-squared = 12612, df = 6, p-value < 2.2e-16)
+Table: Motif counts and z-scores across scales, *Meta* represent the marine predator-prey relationships of Antarctica, *Regional* represent the Weddell Sea food web, and *Local* a small fjord food web (Potter Cove). Z-scores were calculated against 1000 random networks. Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation for random networks; a positive z-score means that is greater. The proportions for the three scales are different ( Chi-squared = 12612, df = 6, p-value < 2.2e-16)
 
 
 \normalsize
 
+### Node level properties (Topological roles)
+
+The proportion of species with the four topological roles is different when spatial scale changes (Chi-squared = 79.308, p-value = 9.999e-05). This is observed as a higher presence of module connectors (few links, mostly between modules) in regional network, and the lack of module hubs (high number of links inside its module) in the local network (Figure 2 B). This last characteristic of the local network can be related to its low modularity value (Table 1). The plot of topological roles combined with trophic levels and modularity reveals some unexpected details of the food webs: in the meta-web there are densely connected compartments but some compartments have few low connected species (module connectors or module specialists).We run  the compartimentalization algorithm several times to check if this was a consistent result and always the same structure was obtained. This asymmetry in the number of species by module maybe a characteristic of meta-webs. The second surprising result is that we observed in the regional network hub connectors with a basal trophic level. These are aggregated nodes that represent generic preys, e.g. fish or zooplankton, they only have incoming links or predators and they can not have outgoing links or preys because they comprise a lot of species. Different fishes species are present in the regional food with correctly specified preys and predators, but this reflects the fact that for some predators there is insufficient knowledge of its preys and aggregated nodes must be added to the food-web. Thus the existence of these basal hub connectors is a spurious result of aggregating prey species. The other non-aggregated hub connectors are highly mobile species with an intermediate trophic level like krill (Table S3).  	      
 
 
+![Food Web structure showing trophic level by compartments (modules) and topological roles. The topological roles are classified with reference to random networks: *Hub connectors* have a high number of between module links, *Module connectors* have a low number of links mostly between modules,  *Module hubs* have a high number of links inside its module. *Module specialists* have a low number of links inside its module. The size of the species nodes is proportional to the log of its degree](Figures/AllTopoRoles_TL_MOD.png)
 
-![Food Web structure showing trophic level by compartments (modules) and topological roles. The topological roles are clasified with reference to random networks then: *Hub connectors* have a high number of between module links, *Module connectors* have a low number of links mostly between modules,  *Module hubs* have a high number of links inside its module. *Module specialists* have a low number of links inside its module.](Figures/AllTopoRoles_TL_MOD.png)
 
-
-![Network sub-structural properties across scales, *Meta* represent the marine predator-prey relationships of Antarctica (34.8 million Km^2^), *Regional* represent the Weddell Sea (3.5 million Km^2^), and *Local* a small fjord (6.8 Km^2^). A. Z-scores of four three node motif important for food-web stability. B. Topological roles based in within module degree $dz$ and among module connectivity](Figures/Motif_TopoRoles_ByNetwork.png){ width=75% }
 
 
 
 ## Discussion
 
+We expect that the meta-web structure reflects the evolutionary constraints of the species interactions, and the regional and the local networks should be more influenced by assembly processes and also strongly determined by the local environment. 
+Our results suggest that the structure of the meta-web does not change significantly as we change scale, thus food-webs are mainly shaped by the evolutionary forces that constrain predator-prey interactions. 
 
-The meta-web mainly shaped by evolutionary forces because only predator-prey interactions are considered and the occurrence of most of the species in and adjacent area was not accounted. The other proposed mechanisms that could act to shape the structure of food-web should be absent. (Which are the other mechanisms?) Indirect interactions are neglected [@Levine2017]. Modularity has a small effect on stability [@Grilli2016] and it is negatively correlated with metapopulation size, but when small perturbations are present produce a buffering effect that protect species [@Gilarranz2017]. 
+Global level network properties showed the same patterns across scales and most of them are significantly different of the null random network model. Modularity a the local level is the only property not different from the null model, some studies showed that modularity enhance local stability [@Stouffer2011] but later was demonstrated that this strongly depends on the interaction strengths configuration [@Grilli2016]. This is consistent with the values of the coherence (that is a proxy of dynamical local stability), the local food web is more stable than regional and meta-web but less modular.
 
-<!---Metaweb, regional, local food webs -->
-
-* Potter Cove is very small compared with the others, so it will comprise a smaller amount of different habitats. Thus, habitat filtering should be an important factor, this could be reflected in the lack of species that are module hubs, and the lack of a modular structure. Most species are module connectors and module specialist, that means that they mainly interact with the species in its own module but the don't have a high connectivity, this is a pattern that coincides with a random network structure, as signalled by the modularity z-score. 
-
-* Food webs assembly evolutionary and dynamical constrains [@Poisot2012].
-
-* We expect that at the metacommunity reflect the evolutionary constraints of the species interactions, and the regional and the local should be more influenced by assembly procesess and also strongly determined by the local environment. 
+Modularity has a small effect on stability [@Grilli2016] and it is negatively correlated with metapopulation size, but when small perturbations are present produce a buffering effect that protect species [@Gilarranz2017]. 
 
 
-- Motif representation is equal across scales reflecting the influences of evolutionary forces in structuring food-webs, thus the hypothesis than nonadaptative selection is producing motifs patterns is not supported by our results. Moreover these motif patterns seem to be spandrels of adaptative forces ---consequences of adaptative selection and/or coevolution.   
+Motifs also have the same representation patterns, but smaller scale food-webs should have motifs patterns that increase its persistence. The expected the pattern that enhances persistence is over-representation of omnivory and tri-trophic chain and under representation of apparent competition and exploitative competition [@Stouffer2010]. Other studies showed that tri-trophic chains, exploitative competition, and apparent competition should be expected more frequently, but this last were based on the stability of isolated three species sub-networks [@Borrelli2015a] and the assumption that during the assembly process theses 3 species sub-networks are selected because their intrinsic stability [@Borrelli2015]. The fact that tri-trophic (or n-trophic) interactions can not account fully for the properties of the food webs [@Cohen2009a] make the results based on isolated modules less convincing. Our results showed and over representation of omnivory, exploitative competition and apparent competition, this configuration is not the most stable (based on @Stouffer2010), an hypothetical explanation is that the structure observed in the meta-web is maintained at local food-webs. Thus this tri-trophic motifs are undesired consequences of evolutionary or coevolutionary forces, this kind of structures that are a sub-product of process that happen at a different level have been called spandrels of assembly [@Sole2006a].   
+Even though the local food-webs showed the same representation pattern, the assembly process is not random, there are differences in the frequencies of motifs as the scale change, this implies that other processes that influence the presence or absence of species like habitat filtering or dispersal limitation are acting and probably modify interaction strengths .  
 
-During the assembly process the motif structures that are less dynamically stable tend to disappear from the food-web [@Borrelli2015a], this has been called nonadaptative systemic selection [@Borrelli2015]. This process is nonadaptative because the selection process is not adapting the system to local conditions [@Borrelli2015]. 
+
+<!---topo rols -->
+
+- Potter Cove is very small compared with the others, so it will comprise a smaller amount of different habitats. Thus, habitat filtering should be an important factor, this could be reflected in the lack of species that are module hubs, and the lack of a modular structure. Most species are module connectors and module specialist, that means that they mainly interact with the species in its own module but the don't have a high connectivity, this is a pattern that coincides with a random network structure, as signalled by the modularity z-score. 
 
 - Is this a property of marine food webs only? the same patterns of conservation of motif representation have been found in a similar analysis made for pitcher plant trophic networks.  
 
-- Motif frequency is different this maybe due to nonadaptative systemic selection during the network assembly process
+- Food webs assembly evolutionary and dynamical constrains [@Poisot2012].
+
+
+<!---Final phrase -->
+ 
+Local processes that limit species from the meta-web to local scales are influencing the assembly process but the structure of the food-web originated trough an emergent process from evolutionary or co-evolutionary forces seems to be more important.  This could guide us to find a unified theory of ecological interactions that could describe the diversity of patterns observed in natural world. 
 
 ## References
 

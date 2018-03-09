@@ -75,3 +75,32 @@ Table: Motif counts and 99% confidence intervals based on 1000 random networks. 
 
 
 ![Topological roles with 95% confidence intervals by Network. *Meta* represent the marine predator-prey relationships of Antarctica (34.8 million Km^2^), *Regional* represent the Weddell Sea (3.5 million Km^2^), and *Local* a small fjord (6.8 Km^2^). A. Z-scores of four three node motif important for food-web stability. Topological roles are based in within module degree $dz$ and the participation coefficient $PC$ that measures among module connectivity.](Figures/TopoRolesCI_ByNetwork.png){ width=75% }
+
+
+------------------------------------------------------------------------
+Network         Tropho-species            Preys   Predators      Trophic 
+                                                                   Level 
+---------- ---------------------------- ------- ----------- ------------
+  Local        Notothenia coriiceps       48         0          2.86    
+
+ Regional          Zooplankton             0        57           1      
+
+ Regional       Euphausia superba          9        41           2      
+
+ Regional              Fish                0        57           1      
+
+ Regional          Euphausiacea            0        41           1      
+
+   Meta        Electrona antarctica       111       25          2.53    
+
+   Meta       Protomyctophum bolini       71        20          2.64    
+
+   Meta     Euphausia crystallorophias    23        59          2.11    
+
+   Meta       Gymnoscopelus nicholsi      73        24          2.6     
+
+   Meta        Aptenodytes forsteri       68         0          3.06    
+
+   Meta         Pygoscelis adeliae        75         4          3.03    
+------------------------------------------------------------------------
+Table: Hub connectors with number of preys and predators and trophic level. Hub connectors are species that have relatively high number of links (predators and/or preys) and these links are mostly between modules. 

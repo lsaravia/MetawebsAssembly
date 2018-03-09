@@ -123,24 +123,13 @@ are higher than expected (hsi/s̃ > 1)
 @Grilli2016
 
 
-Food-web structure. Clearly, ecological systems do not follow a
-random graph structure, for example, displaying a directionality
-in the flow of energy from producers to consumers. This
-directionality proved important in our previous study 36 , where
-we showed that when the mean of the negative effects dominates
-that of the positive effects, systems built according to the
-cascade 37 model (in which ‘larger’ species consume ‘smaller’
-ones) are more likely to be stable than their random counterparts.
-We therefore analysed matrices constructed using a variation of
-the cascade model, where we assign a ‘size’ to each species and
-each species can only consume smaller species, and has a
-preference for those in the same subsystem (Q40), or for those in
-the other subsystem (Qo0)
+Food-web structure. Clearly, ecological systems do not follow a random graph structure, for example, displaying a directionality in the flow of energy from producers to consumers. This directionality proved important in our previous study 36 , where we showed that when the mean of the negative effects dominates that of the positive effects, systems built according to the cascade 37 model (in which ‘larger’ species consume ‘smaller’ ones) are more likely to be stable than their random counterparts. We therefore analysed matrices constructed using a variation of the cascade model, where we assign a ‘size’ to each species and each species can only consume smaller species, and has a preference for those in the same subsystem (Q40), or for those in the other subsystem (Qo0).
 
 The picture emerging from both simulations and mathematical analysis is much more complex than previously hypothesized. Block structure can have an effect on the local asymptotic stability of the underlying system. However, unless we are in particular areas of the parameter space, the effect tends to be destabilizing. Our results stress the fact that, when discussing the relationship between network structure and local stability, we need to qualify our statements, as a given structure is not stabilizing or destabilizing per se, but is only so under certain specific conditions.
 
+Though we have illustrated this point by studying the modular structures, we believe this phenomenon to hold generally: any network structure can have different effects on stability, depending on the choice of parameters. To reinforce this message, in Fig. 7, we show three cases in which an empirical network structure makes the system more or less stable than its random counterpart, depending on the parameterization of the coefficients. 
 
-Though we have illustrated this point by studying the modular structures, we believe this phenomenon to hold generally: any network structure can have different effects on stability, depending on the choice of parameters. To reinforce this message, in Fig. 7, we show three cases in which an empirical network structure makes the system more or less stable than its random counterpart, depending on the parameterization of the coefficients. Practically, this means that the challenge of proving that biological network structure emerges because of a selective process, removing configurations yielding unfavourable dynamics17–19 is much harder than expected: network structure, without estimates of the distribution of the coefficients, cannot be used to determine the effect on dynamical properties.
+Practically, this means that the challenge of proving that biological network structure emerges because of a selective process, removing configurations yielding unfavourable dynamics17–19 is much harder than expected: network structure, without estimates of the distribution of the coefficients, cannot be used to determine the effect on dynamical properties.
 
 ------------------
 @Borrelli2015a
@@ -160,21 +149,11 @@ on the assembly of the web, or intrinsic benefits of the structure. Johnson et a
 
 One could also imagine that species vary in how they choose prey and when species feeding preferences lead to the increase of s1, s4 and s5 subgraphs the coherence of the web and therefore its stability increases. The observed pattern would then result from a combination of constraints on assembly and the intrinsic properties of the subgraphs (stability).
 
-An ideal test of the hypothesis of selection against unstable configurations would involve food web assembly data. During food web assembly, new species enter the food web and establish feeding links with the species that are pres- ent. This establishment alters the structure of the food web, and can be measured as changes in the relative frequency of the different three-node subgraphs. Following the introduction of the new species one of two events could occur; 1) the new species becomes integrated into the network and the food web grows (in terms of the number of species), or 2) the introduction of the new species leads to extinction events and the food web shrinks. The selection against instability hypothesis would predict that when the addition of new species increases the relative frequency of more stable subgraphs
-compared to less stable ones, the web should grow. If the frequency of less stable subgraphs is increased more than the stable ones, then extinctions would be more likely to occur.
+An ideal test of the hypothesis of selection against unstable configurations would involve food web assembly data. During food web assembly, new species enter the food web and establish feeding links with the species that are present. This establishment alters the structure of the food web, and can be measured as changes in the relative frequency of the different three-node subgraphs. Following the introduction of the new species one of two events could occur; 1) the new species becomes integrated into the network and the food web grows (in terms of the number of species), or 2) the introduction of the new species leads to extinction events and the food web shrinks. The selection against instability hypothesis would predict that when the addition of new species increases the relative frequency of more stable subgraphs compared to less stable ones, the web should grow. If the frequency of less stable subgraphs is increased more than the stable ones, then extinctions would be more likely to occur.
 
 
-Nonadaptive systemic selection can act on networks via
-dynamical pruning, favoring configurations that are more
-likely to lead to system persistence [31]. Similar nonran-
-dom motif profiles could also arise by network assembly,
-the effects of which have been found in both mutualistic
-and trophic networks [33–37]. Only by developing strong
-models of network assembly can one separate the effect of
-dynamical pruning from that of network growth and de-
-velopment. Assembly might not only involve systemic
-selection, but also include other processes (e.g., priority
-effects or constraints on colonization).
+Nonadaptive systemic selection can act on networks via dynamical pruning, favoring configurations that are more likely to lead to system persistence [31]. Similar nonrandom motif profiles could also arise by network assembly, the effects of which have been found in both mutualistic and trophic networks [33–37]. Only by developing strong models of network assembly can one separate the effect of dynamical pruning from that of network growth and development. Assembly might not only involve systemic selection, but also include other processes (e.g., priority effects or constraints on colonization).
+
 
 --------------------
 
