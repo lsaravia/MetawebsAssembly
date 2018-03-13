@@ -159,8 +159,7 @@ Nonadaptive systemic selection can act on networks via dynamical pruning, favori
 
 Bornatowski2017
 
-This theory has been applied to several marine studies (e.g. Montoya & Solé, 2002; Lusseau et al., 2006; Fox & Bellwood, 2014; Navia et al., 2012). For example, Navia et al. (2016) proposed that this information
-2016; a). Small-­world networks require a high level of clustering compared with a random graph, and a small average path length, similar to that seen in random graphs (Watts & Strogatz, 1998).
+This theory has been applied to several marine studies (e.g. Montoya & Solé, 2002; Lusseau et al., 2006; Fox & Bellwood, 2014; Navia et al., 2012). a). Small-­world networks require a high level of clustering compared with a random graph, and a small average path length, similar to that seen in random graphs (Watts & Strogatz, 1998).
 
 Small-­world food webs are, in theory, resistant to the loss of species with low centrality values (a measure of how many times the node participates in the dispersal effects in the network), but are sensitive to the loss of species with the highest values (e.g. Albert & Barabási, 2002; Clauset, Moore, & Newman, 2008; Gaichas & Francis, 2008; Jordano, Bascompte, & Olesen, 2003; Montoya & Solé, 2002; Solé & Montoya, 2001).
 
@@ -168,7 +167,7 @@ Thereby, the small-­world structural pattern (based on the clustering co-­effi
 
 
 ----------------------
-@Gray2016
+@Gray2016 Recovery and Nonrecovery of Freshwater Food Webs from the Effects of Acidification
 
 
 As with other features of the whole network (such as connectance) or parts of
@@ -214,6 +213,8 @@ understanding of how ecosystem complexity affects ecosystem stability.
 @Poisot2012
 
 Understanding how local realisations relate to it paves the way to the development of a biogeography of species interactions. Given the multiple drivers of local community composition (species filtering, historical contingencies and stochasticity), only a subset of species will be present at each locality, thus potentially realising only a subsample (the alpha diversity) of all the possible interactions found in the metaweb (the gamma diversity; Fig. 1).
+
+We expect that the connectance of the metaweb will be lower than the connectance of each local network (realisation), as even a single occurrence of one interaction will be reported into the metaweb (Gravel et al. 2011b).
 
 
 --------------------

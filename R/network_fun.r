@@ -547,7 +547,7 @@ curve_ball<-function(g){
 #'
 #' @examples
 
-getTopoRolesTLdegree <- function(netFrame,netName,deadNodes,topoFrame,topoType){
+getTopoRolesTLdegree <- function(netFrame,netName,deadNodes,topoFrame,topoType=NULL){
   # 
   # Igraph object from dataframe
   #
@@ -558,7 +558,10 @@ getTopoRolesTLdegree <- function(netFrame,netName,deadNodes,topoFrame,topoType){
   require(NetIndices)
   TL<-TrophInd(get.adjacency(redl,sparse=F),Dead=deadNodes)
 
-  topoFrame %>% filter(type==topoType,Network==netName) %>% rowwise() %>% mutate( preys=degree(redl,node,mode=c("in")), predators= degree(redl,node,mode=c("out")), trophLevel=TL[node,1])
-  
+  if(!is.null(topoType)){
+    topoFrame %>% filter(type==topoType,Network==netName) %>% rowwise() %>% mutate( preys=degree(redl,node,mode=c("in")), predators= degree(redl,node,mode=c("out")), trophLevel=TL[node,1])
+  } else {
+    topoFrame %>% filter(Network==netName) %>% group_by(type) %>% rowwise() %>% mutate( preys=degree(redl,node,mode=c("in")), predators= degree(redl,node,mode=c("out")), trophLevel=TL[node,1])
+  }
 }
   

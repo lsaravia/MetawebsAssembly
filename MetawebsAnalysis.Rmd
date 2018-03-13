@@ -1001,27 +1001,37 @@ dev.off()
 
 ```
 
-# Check the species that are hub connectors degree and trophic level
+# Generate datafrane with topological roles species names trophic level and degree 
 
 ```{r checkTopoRolesTLmod, eval=T,echo=F,message=T,warning=T}
 require(dplyr)
 hub_conn %>% filter(type=="hubcon")
 
 unique(hub_conn$type)
-topoRolesDegree <- getTopoRolesTLdegree(dtot,"Local",c("Fresh detritus","Aged detritus","Necromass"),hub_conn,"hubcon")
-topoRolesDegree <- bind_rows(topoRolesDegree, getTopoRolesTLdegree(dtot,"Regional",c("Detritus","Necromass"),hub_conn,"hubcon"))
-topoRolesDegree <- bind_rows(topoRolesDegree, getTopoRolesTLdegree(dtot,"Meta",c("Detritus","Necromass"),hub_conn,"hubcon"))
 
-topoRolesDegree <- bind_rows(topoRolesDegree, getTopoRolesTLdegree(dtot,"Meta",c("Detritus","Necromass"),hub_conn,"modspe"))
+tRD <- getTopoRolesTLdegree(dtot,"Local",c("Fresh detritus","Aged detritus","Necromass"),hub_conn)
+tRD <- bind_rows(tRD, getTopoRolesTLdegree(dtot,"Regional",c("Detritus","Necromass"),hub_conn))
+tRD <- bind_rows(tRD, getTopoRolesTLdegree(dtot,"Meta",c("Detritus","Necromass"),hub_conn))
 
-topoRolesDegree %>% filter(type=="modspe", preys<2,predators<2)
+topoRolesDegree <- tRD
+rm(tRD)
+topoRolesDegree %>% group_by(type,Network) %>% summarise(n=n())
 
+# Generate table of more connected topological roles
+#
 require(pander)
 panderOptions('table.split.table',Inf)
 panderOptions('table.style', 'multiline')
 
-pandoc.table(topoRolesDegree %>% filter(type=="hubcon") %>% dplyr::select(Network,name,preys,predators,trophLevel) %>% mutate_if(is.numeric, round, digits=2))
+pandoc.table(topoRolesDegree %>% filter(type=="hubcon" | type=="modhub" ) %>% arrange(type,Network,trophLevel) %>%  dplyr::select(type,Network,name,preys,predators,trophLevel) %>% mutate_if(is.numeric, round, digits=2))
+
+# 
+#
+
+topoRolesDegree %>% mutate(basal=(round(trophLevel,2)<=1)) %>% group_by(type,Network,basal) %>% summarise(n=n())
 
 save.image()
 
 ```
+
+
