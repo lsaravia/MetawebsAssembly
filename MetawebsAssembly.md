@@ -34,7 +34,7 @@ Traditionally metacommunity theory has been applied to competitive interactions,
 
 <!--- Meta-web processes: habitat filtering, dispersal limitation, dynamic instability, spatial scale -->
 
-
+Thus our objective is to analyse the process of food-web assembly using three datasets collected at different spatial scales: the marine Antarctic meta-web representing an area of 34.8 million Km^2^ and it is mainly a dietary database [@Raymond2011]; the regional Weddell Sea that represent 3.5 million Km^2^ and is one of the most resolved marine food-webs obtained by a combination of field, laboratory analysis [@Jacob2011]; and the local Potter Cove that represent 6.8 Km^2^, this was build using the results of 20 years of research in the area [@Marina2018]. We analyse how this set of networks change across scales from the meta-web to the two selected food-webs. 
 <!--- Your burning question/hypothesis/aim -->
 
 <!--- Your experimental approach -->
@@ -51,7 +51,7 @@ Food webs have highly non-random and structurally complex patterns that contain 
 
 <!---Topological roles -->
 
-There are important species in ecological networks that have disproportionately large effects on the whole ecosystem, like keystone species [@Paine1969], ecosystem engineers [@Jones1994] and network hubs [@Borthagaray2014]. Species can participate in different ways with respect to modularity: depending on how many feed links they have within their own module and/or between the modules [@Guimera2005; @Kortsch2015]. This participation has been called the species' topological role, theoretical and empirical results suggest this roles are related to species traits like wide niche breadth, environmental tolerance, apex position in local communities and high motility [@Borthagaray2014;@Guimera2010;@Rezende2009]. This is a local property at an individual species level. 
+There are important species in ecological networks that have disproportionately large effects on the whole ecosystem, like keystone species [@Paine1969], ecosystem engineers [@Jones1994] and network hubs [@Borthagaray2014]. Species can participate in different ways with respect to modularity: depending on how many feed links they have within their own module and/or between the modules [@Guimera2005; @Kortsch2015]. This participation has been called the species' topological role; theoretical and empirical results suggest this roles are related to species traits like wide niche breadth, environmental tolerance, apex position in local communities and high motility [@Borthagaray2014;@Guimera2010;@Rezende2009]. This is a local property at an individual species level. 
 
 <!---Motifs -->
 When we consider several linked species this forms a sub-network, when the abundance of one of these sub-networks is deviates significantly compared to a random network is called a motif [@Milo2002]. We analyse here the three species sub-networks that have been explored theoretically and empirically [@Prill2005;@Stouffer2007;@Baiser2016], these are four of the thirteen possible three-species sub-networks: the tri-trophic chain, omnivory, apparent competition, and exploitative competition (Figure 1).
@@ -61,9 +61,8 @@ When we consider several linked species this forms a sub-network, when the abund
 These motifs can be used to show the process of assembly of interactions [@Baiser2016] by comparing the representation of motifs at each scale (i.e over-represented, under-represented, or random). When the same processes structure of the food-web across scales, motifs representation should be the same. Ecological interactions occur at the local scale so the differences may show the importance of local interactions in the assembly of the food web. During the assembly process the motif structures that are less dynamically stable tend to disappear from the food-web [@Borrelli2015a], this has been called nonadaptative systemic selection [@Borrelli2015]. This process is nonadaptative because the selection process is not adapting the system to local conditions [@Borrelli2015].   
 
 <!---How all these multilevel properties are related to network assembly -->
-
-
-Thus our objective is to analyse the process of food-web assembly using three datasets collected at different spatial scales: the marine Antarctic meta-web representing an area of 34.8 million Km^2^ and it is mainly a dietary database [@Raymond2011]; the regional Weddell Sea that represent 3.5 million Km^2^ and is one of the most resolved marine food-webs obtained by a combination of field, laboratory analysis [@Jacob2011]; and the local Potter Cove that represent 6.8 Km^2^, this was build using the results of 20 years of research in the area [@Marina2018]. We analyse how this set of food-webs change across scales using properties at three levels: emergent global properties that take into account the whole network (modularity, coherence), sub-structural properties that consider several nodes (motifs), and properties related to one node (topological roles). 
+To our knowledge, the combination of network properties at three different levels has not been applied in food web studies up to now. 
+To show how all these properties would change from the meta-web to a more localized scale where interactions are supposed to be realized we will compare them against a random networks that represent the absence of an ecological mechanism: global properties related to resilience and stability should be not different a null model in the meta-web and different in the local food-webs, more stable motifs are expected to be more frequent at local food-webs and the frequency of species topological are expected to change if habitat filtering or dispersal limitation is acting at local food-webs. 
 
 
 ## Methods
