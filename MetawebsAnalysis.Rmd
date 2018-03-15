@@ -895,11 +895,19 @@ require(tidyr)
 names(motif)
 pFM1 <- motif %>% dplyr::select(Network,zEC:zOM) %>%gather(motif,value,zEC:zOM)
 
-
 g1 <- ggplot(pFM1,aes(x=Network,y=value,fill=motif)) + geom_bar(stat="identity",position=position_dodge()) + 
   scale_fill_brewer(palette = "RdYlGn",breaks=c("zEC","zAC","zTT","zOM"),name="Motif\nZ-score",   labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")) + 
   xlab("") + ylab("") + theme_bw() + scale_x_discrete(limits=c("Local","Regional","Meta")) #+ theme(legend.position="bottom")
 
+# Normalize z-scores
+#
+# pFM1 <- pFM1 %>% group_by(Network) %>% mutate(normZ=value/sum(sqrt(value^2)))
+# 
+# g1 <- ggplot(pFM1,aes(x=Network,y=normZ,fill=motif)) + geom_bar(stat="identity",position=position_dodge()) + 
+#   scale_fill_brewer(palette = "RdYlGn",breaks=c("zEC","zAC","zTT","zOM"),name="Motif\nZ-score",   labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")) + 
+#   xlab("") + ylab("") + theme_bw() + scale_x_discrete(limits=c("Local","Regional","Meta")) #+ theme(legend.position="bottom")
+
+g1
 require(cowplot)
 plot_grid(g1,g2,labels = c("A","B"),align = "h")
 
