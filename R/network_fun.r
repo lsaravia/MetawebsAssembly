@@ -25,7 +25,7 @@ plot_modules_TL <- function(redl,modulos)
   #
   # Plot modules
   #
-  layout.matrix.1[,2]<-jitter(troph.net2$TL,0.4) # y-axis value based on trophic level
+  layout.matrix.1[,2]<-jitter(troph.net2$TL,0.1) # y-axis value based on trophic level
   layout.matrix.1[,1]<-jitter(modulos$membership,1) # randomly assign along x-axis
   
 #  png("Figures/RegionalFoodWeb.png",width=6,height=6,units="in",res=600)
