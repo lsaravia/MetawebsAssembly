@@ -1,0 +1,146 @@
+---
+title: "From metawebs to regional and local"
+author: "L.A.S."
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+## Setup
+
+```{r setup, eval=T,echo=FALSE }
+load(".RData")
+oldcd <-getwd()
+```
+
+# Testing Fitting metaWeb assembly models to Potter Cove   
+
+```{r fitMetaWebPC, eval=T,echo=F,message=T,warning=T}
+
+require(ggplot2)
+require(igraph)
+require(dplyr)
+require(stringr)
+require(devtools)
+require(MetaWebAssemblyModels)
+source("R/network_fun.r")
+# load_all('MetaWebAssemblyModels')
+# install_local('MetaWebAssemblyModels')
+#sourceCpp("src/NetAssemblyFromMetaWeb.cpp")
+
+#
+# Read data and trim species names to avoid duplicates 
+#
+dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
+dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
+
+#
+# Select food web 
+#
+dtot1 <- as.matrix(dtot %>% filter(Network=="Meta") %>% dplyr::select(Prey_name,Predator_name))
+redl <- graph_from_edgelist(dtot1, directed  = T)
+# Delete cannibalistic 
+redl <- simplify(redl)
+sum(degree(redl,mode="in")==0)
+
+A <- get.adjacency(redl,sparse=F)
+dim(A)
+
+#
+# Testing if 500 time steps is enough to find equilibrium point
+#
+tf <- 2000
+AA <- metaWebNetAssembly(A,0.05,1,0.2,tf)
+plot_NetAssemblyModel(AA,400)
+plot_NetAssemblyModel_eqw(AA,100)
+tf <- 500
+AA <- metaWebNetAssembly(A,0.05,1,0.2,tf)
+plot_NetAssemblyModel_eqw(AA,100)
+
+
+(target <- c(mean(dfA$S),mean(dfA$L)))
+
+#
+# Optimization function 
+#
+optMetaWebAss <- function(x){
+  AA <- metaWebNetAssembly(A,x[1],1,x[2],tf)
+  (mean(AA$S[200:tf]) - target[1])^2/ + (mean(AA$L[200:tf]) - target[2])^2
+  
+}
+
+# require(DEoptim)
+# 
+# de <- DEoptim(optMetaWebAss,lower=c(0.01,0.01), upper=c(0.1,0.5), 
+#               control = DEoptim.control(NP = 20, itermax = 10,parallelType = 1,steptol=3, parVar=c("A","tf","target"),
+#                                         packages="MetaWebAssemblyModels")
+#               )
+
+require(parallel)
+require(rgenoud)
+# Potter Cove
+target <- c(91,309)
+
+no_cores <- detectCores()
+cl<-makeCluster(no_cores)
+clusterExport(cl, c("A","tf","target"))
+clusterEvalQ(cl, library(MetaWebAssemblyModels))
+de <- genoud(optMetaWebAss, nvars=2, max=FALSE, pop.size = 1000,max.generations = 20, wait.generations = 5,cluster = cl,
+             Domains = matrix(c(0.01,0.01,0.1,0.5),nrow=2),boundary.enforcement=1)
+
+stopCluster(cl)
+saveRDS(de,"Data/PC_DEoptim.rds")
+de
+
+AA <- metaWebNetAssembly(A,.018,1,0.07,tf)
+dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))
+c(mean(dfA$S),mean(dfA$L))
+
+
+
+
+plot_NetAssemblyModel(AA,400)
+target <- c(755,7035)
+optMetaWebAss(c(.08803504, 0.01024175))
+```
+
+
+
+# Fitting metaWeb assembly models to Potter Cove   
+
+```{r fitMetaWebPC, eval=T,echo=F,message=T,warning=T}
+
+require(ggplot2)
+require(igraph)
+require(dplyr)
+require(stringr)
+require(devtools)
+source("R/network_fun.r")
+load_all('MetaWebAssemblyModels')
+
+#sourceCpp("src/NetAssemblyFromMetaWeb.cpp")
+
+#
+# Read data and trim species names to avoid duplicates 
+#
+dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
+dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
+
+#
+# Select food web 
+#
+dtot1 <- as.matrix(dtot %>% filter(Network=="Meta") %>% dplyr::select(Prey_name,Predator_name))
+redl <- graph_from_edgelist(dtot1, directed  = T)
+# Delete cannibalistic 
+redl <- simplify(redl)
+sum(degree(redl,mode="in")==0)
+
+A <- get.adjacency(redl,sparse=F)
+dim(A)
+
+
+save.image()
+
+```
+
+

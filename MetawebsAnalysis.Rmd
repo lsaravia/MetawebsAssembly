@@ -10,8 +10,6 @@ output: html_document
 load(".RData")
 oldcd <-getwd()
 
-
-
 ```
 
 
@@ -81,6 +79,11 @@ grep("necr", V(redl)$name, ignore.case = TRUE, value=TRUE  )
 #
 require(NetIndices)
 troph.net2<-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Fresh detritus","Aged detritus","Necromass"))
+
+# Number of basal species
+#
+sum(round(troph.net2[,1])==1)
+
 layout.matrix.1<-matrix(
   nrow=length(V(redl)),  # Rows equal to the number of vertices
   ncol=2

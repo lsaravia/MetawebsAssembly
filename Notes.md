@@ -276,3 +276,16 @@ The world’s biodiversity is under unprecedented threat due to human activities
 
 May RM (2009) Food-web assembly and collapse: Mathematical models and impli-
 cations for conservation. Philos Trans R Soc Lond B Biol Sci 364:1643–1646.
+
+
+-----------------
+@Eklof2006 Species loss and secondary extinctions in simple and complex model communities
+
+We find that highly connected food webs are, on average, more resistant to species loss than webs with low connectance. The most probable explanation of this pattern is that in highly connected webs most consumers have several prey species, so the loss of one of them will not be that catastrophic (see also MacArthur 1955) There might be additional reasons behind the pat- tern we have found. As the number of links (and hence connectance) in our model webs increases so does the proportion of these links that are weak because we assume each consumer to have a strong effect on one of its prey species and weak effects on the others. Thus, mean per capita interaction strength decreases with increasing connectance
+
+However, comparing the results from dynamic and topological analyses of our model webs we find that topological analysis predict fewer secondary extinctions following the loss of species, especially in highly connected webs, than analysis taking dynamics into account. This is to be expected (see Introduction).
+
+-------------------
+@Curtsdotter2011
+
+This comparison reveals that the topological approach overestimates robustness in general and for certain sequences in particular. Top-down directed sequences have no or very low impact on robustness in topological analyses, while the dynamical analysis reveals that they may be as important as high-impact bottom-up directed sequences.

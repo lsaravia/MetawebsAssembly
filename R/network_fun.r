@@ -565,3 +565,45 @@ getTopoRolesTLdegree <- function(netFrame,netName,deadNodes,topoFrame,topoType=N
   }
 }
   
+#' Title Plot net assembly model time series of S and L only the last timeW steps are ploted
+#'
+#' @param AA output of a net assembly model
+#' @param timeW time window used
+#'
+#' @return
+#' @export
+#'
+#' @examples
+plot_NetAssemblyModel <- function(AA,timeW){
+  tf <- length(AA$L)
+  if(tf<timeW) stop("timeW parameter must be less than the time of the simulation")
+  
+  dfA <- data.frame(S=AA$S[(tf-timeW):tf],L=as.numeric(AA$L[(tf-timeW):tf]),T=c((tf-timeW):tf))
+  dfA$C <- dfA$S/(dfA$L*dfA$L)
+  print(ggplot(dfA, aes(x=T,y=S)) + geom_line() + theme_bw() + geom_hline(yintercept = mean(dfA$S)))
+  print(ggplot(dfA, aes(x=T,y=L)) + geom_line() + theme_bw() + ylab("L") + geom_hline(yintercept = mean(dfA$L)))
+  print(ggplot(dfA, aes(x=T,y=C)) + geom_line() + theme_bw() + ylab("C") + geom_hline(yintercept = mean(dfA$C)))
+}
+
+
+#' Title Plot net assembly model S and L average by a moving window to check if equilibrium is reached
+#'
+#' @param AA output of a net assembly model
+#' @param timeW time window used
+#'
+#' @return
+#' @export
+#'
+#' @examples
+plot_NetAssemblyModel_eqw <- function(AA,timeW){
+
+  df <- data.frame(S=AA$S,L=as.numeric(AA$L),T=c(1:tf))
+  grandS <- mean(df$S[timeW:nrow(df)])
+  grandL <- mean(df$L[timeW:nrow(df)])
+  
+  df$gr <- rep(1:(nrow(df)/timeW), each = timeW)
+  df <- df %>% group_by(gr) %>% summarise(mS=mean(S),sdS=sd(S), mL=mean(L), sdL=sd(L),time=max(T))
+  print(ggplot(df,aes(y=mS,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mS-sdS,ymax=mS+sdS)) + scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandS,linetype=3 ))
+  print(ggplot(df,aes(y=mL,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mL-sdL,ymax=mL+sdL))+ scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandL,linetype=3 ))
+  return(df)
+}
