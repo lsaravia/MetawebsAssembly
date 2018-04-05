@@ -13,7 +13,7 @@ load(".RData")
 oldcd <-getwd()
 ```
 
-# Testing Fitting metaWeb assembly models to Potter Cove   
+# Fitting metaWeb assembly models to Potter Cove   
 
 ```{r fitMetaWebPC, eval=T,echo=F,message=T,warning=T}
 
@@ -58,55 +58,74 @@ AA <- metaWebNetAssembly(A,0.05,1,0.2,tf)
 plot_NetAssemblyModel_eqw(AA,100)
 
 
-(target <- c(mean(dfA$S),mean(dfA$L)))
 
+# Simulate a grid of parameters to select the best options
 #
-# Optimization function 
 #
-optMetaWebAss <- function(x){
-  AA <- metaWebNetAssembly(A,x[1],1,x[2],tf)
-  (mean(AA$S[200:tf]) - target[1])^2/ + (mean(AA$L[200:tf]) - target[2])^2
-  
+
+# Combine parameters
+arguments <- expand.grid(m = seq(from=0.01,to=0.1,by=0.001), a = seq(from=0.01,to=0.1,by=0.001))
+simMetaWebAssembly <- data.frame()
+# repeat ten times
+#arguments<- bind_rows(arguments,arguments,arguments,arguments,arguments,arguments,arguments,arguments,arguments,arguments)
+tf <- 500
+sim <- data.frame()
+require(doParallel)
+require(tictoc)
+cn <-detectCores()
+#  cl <- makeCluster(cn,outfile="foreach.log") # Logfile to debug 
+cl <- makeCluster(cn)
+registerDoParallel(cl)
+nsim <- dim(arguments)[1]
+tic()
+sim <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE,.packages='MetaWebAssemblyModels') %dopar% 
+{
+  mm <- arguments[i,1]
+  aa <- arguments[i,2]
+  AA <- metaWebNetAssembly(A,mm,1,aa,tf)
+  dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))
+  data.frame(m=mm,a=aa, S=mean(dfA$S),L=mean(dfA$L),C=mean(dfA$L)/(mean(dfA$S)*mean(dfA$S)))
 }
-
-# require(DEoptim)
-# 
-# de <- DEoptim(optMetaWebAss,lower=c(0.01,0.01), upper=c(0.1,0.5), 
-#               control = DEoptim.control(NP = 20, itermax = 10,parallelType = 1,steptol=3, parVar=c("A","tf","target"),
-#                                         packages="MetaWebAssemblyModels")
-#               )
-
-require(parallel)
-require(rgenoud)
-# Potter Cove
-target <- c(91,309)
-
-no_cores <- detectCores()
-cl<-makeCluster(no_cores)
-clusterExport(cl, c("A","tf","target"))
-clusterEvalQ(cl, library(MetaWebAssemblyModels))
-de <- genoud(optMetaWebAss, nvars=2, max=FALSE, pop.size = 1000,max.generations = 20, wait.generations = 5,cluster = cl,
-             Domains = matrix(c(0.01,0.01,0.1,0.5),nrow=2),boundary.enforcement=1)
-
+toc()
 stopCluster(cl)
-saveRDS(de,"Data/PC_DEoptim.rds")
-de
+simMetaWebAssembly <- bind_rows(simMetaWebAssembly,sim)
+saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
+#simMetaWebAssembly <- readRDS("Data/simulations_metaWebAssembly.rds")
+# 10815.238/60 sec elapsed
 
-AA <- metaWebNetAssembly(A,.018,1,0.07,tf)
+
+# To select the parameters I lowered the tolerance until there is only one value or few values
+#
+# Potter Cove
+#
+
+tol <- .20
+simMetaWebAssembly %>% group_by(m,a) %>% summarize(S=mean(S),L=mean(L),C=mean(C)) %>% mutate(alpha=m/a) %>% filter(L>309*(1-tol),L<309*(1+tol),S>91*(1-tol),S<91*(1+tol)) %>% arrange(desc(L))
+
+# Weddell Sea
+#
+tol <- .125
+simMetaWebAssembly %>% group_by(m,a) %>% summarize(S=mean(S),L=mean(L),C=mean(C)) %>% mutate(alpha=m/a) %>% filter(L>1908*(1-tol),L<1908*(1+tol), S>436*(1-tol),S<437*(1+tol)) %>% arrange(S)
+
+AA <- metaWebNetAssembly(A,0.019,1,0.08,tf)
 dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))
-c(mean(dfA$S),mean(dfA$L))
+c(mean(dfA$S),mean(dfA$L),mean(dfA$L)/(mean(dfA$S)*mean(dfA$S)))
 
+plot_NetAssemblyModel_eqw(AA,100)
+plot_NetAssemblyModel(AA,300)
 
+AA <- metaWebNetAssembly(A,0.022,1,0.021,tf)
+dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))
+c(mean(dfA$S),mean(dfA$L),mean(dfA$L)/(mean(dfA$S)*mean(dfA$S)))
 
+plot_NetAssemblyModel_eqw(AA,100)
+plot_NetAssemblyModel(AA,300)
 
-plot_NetAssemblyModel(AA,400)
-target <- c(755,7035)
-optMetaWebAss(c(.08803504, 0.01024175))
 ```
 
 
 
-# Fitting metaWeb assembly models to Potter Cove   
+# Local web (Potter Cove) compared to  metaWeb assembly model 
 
 ```{r fitMetaWebPC, eval=T,echo=F,message=T,warning=T}
 
@@ -115,8 +134,8 @@ require(igraph)
 require(dplyr)
 require(stringr)
 require(devtools)
+require(MetaWebAssemblyModels)
 source("R/network_fun.r")
-load_all('MetaWebAssemblyModels')
 
 #sourceCpp("src/NetAssemblyFromMetaWeb.cpp")
 
@@ -127,7 +146,7 @@ dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
 dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
 
 #
-# Select food web 
+# Select meta web 
 #
 dtot1 <- as.matrix(dtot %>% filter(Network=="Meta") %>% dplyr::select(Prey_name,Predator_name))
 redl <- graph_from_edgelist(dtot1, directed  = T)
@@ -136,8 +155,40 @@ redl <- simplify(redl)
 sum(degree(redl,mode="in")==0)
 
 A <- get.adjacency(redl,sparse=F)
-dim(A)
+dim(A)                             
 
+#
+# Select Local food web 
+# 
+
+dtot1 <- as.matrix(dtot %>% filter(Network=="Local") %>% dplyr::select(Prey_name,Predator_name))
+redl <- graph_from_edgelist(dtot1, directed  = T)
+
+#
+# Compare modularity 
+#
+m <- 0.019
+a <- 0.08
+tbl <- calc_modularity_metaWebAssembly(redl, A, m,a,10)
+
+#
+# Calculate Trophic Position
+#
+require(NetIndices)
+TL <-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Fresh detritus","Aged detritus","Necromass"))
+
+# Calc incoherence z-score based in random E-R networks with the condition of at least one basal node
+#
+#
+zq <- calc_incoherence_z(redl,troph.net2)
+websTbl$rndQ[1] <- zq$rndQ
+websTbl$rndTI[1] <- zq$rndTI
+websTbl$Qlow[1] <- zq$Qlow
+websTbl$Qhigh[1] <- zq$Qhigh
+websTbl$TIlow[1] <- zq$TIlow
+websTbl$TIhigh[1] <- zq$TIhigh
+websTbl$zQ[1] <- zq$zQ
+websTbl$zTI[1] <- zq$zTI
 
 save.image()
 

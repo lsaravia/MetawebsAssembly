@@ -579,7 +579,7 @@ plot_NetAssemblyModel <- function(AA,timeW){
   if(tf<timeW) stop("timeW parameter must be less than the time of the simulation")
   
   dfA <- data.frame(S=AA$S[(tf-timeW):tf],L=as.numeric(AA$L[(tf-timeW):tf]),T=c((tf-timeW):tf))
-  dfA$C <- dfA$S/(dfA$L*dfA$L)
+  dfA$C <- dfA$L/(dfA$S*dfA$S)
   print(ggplot(dfA, aes(x=T,y=S)) + geom_line() + theme_bw() + geom_hline(yintercept = mean(dfA$S)))
   print(ggplot(dfA, aes(x=T,y=L)) + geom_line() + theme_bw() + ylab("L") + geom_hline(yintercept = mean(dfA$L)))
   print(ggplot(dfA, aes(x=T,y=C)) + geom_line() + theme_bw() + ylab("C") + geom_hline(yintercept = mean(dfA$C)))
@@ -606,4 +606,59 @@ plot_NetAssemblyModel_eqw <- function(AA,timeW){
   print(ggplot(df,aes(y=mS,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mS-sdS,ymax=mS+sdS)) + scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandS,linetype=3 ))
   print(ggplot(df,aes(y=mL,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mL-sdL,ymax=mL+sdL))+ scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandL,linetype=3 ))
   return(df)
+}
+
+
+
+#' Estimation of z-scores using Meta-Web assembly model as a null 
+#'
+#' @param red This is the reference network as an igraph object
+#' @param A Adyacency matrix for the meta-web
+#' @param m Migration parameter of the meta-Web assembly model
+#' @param a Exctinction parameter of the meta-Web assembly model
+#' @param nsim number of simulations
+#'
+#' @return
+#' @export
+#'
+#' @examples
+calc_modularity_metaWebAssembly<- function(red, A, m,a,nsim=1000){
+  
+  t <- calc_topological_indices(red)
+  tf <- 500  # Final time used in simulations of the meta-web assembly
+  
+  ind <- data.frame()
+  require(doParallel)
+  cn <-detectCores()
+  #  cl <- makeCluster(cn,outfile="foreach.log") # Logfile to debug 
+  cl <- makeCluster(cn)
+  registerDoParallel(cl)
+  ind <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE,.packages=c('MetaWebAssemblyModels','igraph'), 
+                 .export = c('A','a','m','tf')) %do% 
+  {
+    AA <- metaWebNetAssembly(A,m,1,a,tf)
+    g <- graph_from_adjacency_matrix( AA$A, mode  = "directed")
+    
+    mmm<-cluster_spinglass(g)
+    modl <- m$modularity
+    ngrp <- length(m$csize)
+    clus.coef <- transitivity(g, type="Global")
+    cha.path  <- average.path.length(g)
+    data.frame(modularity=modl,ngroups=ngrp,clus.coef=clus.coef,cha.path=cha.path)
+  }
+  stopCluster(cl)
+  ind <- ind %>% mutate(gamma=t$Clustering/clus.coef,lambda=t$PathLength/cha.path,SWness=gamma/lambda)
+  # 99% confidence interval
+  #
+  qSW <- quantile(ind$SWness,c(0.005,0.995))
+  qmo <- quantile(ind$modularity,c(0.005,0.995))
+  qgr <- quantile(ind$ngroups,c(0.005,0.995))
+  mcc <- mean(ind$clus.coef)
+  mcp <- mean(ind$cha.path)
+  mmo <- mean(ind$modularity)
+  mgr <- mean(ind$ngroups)
+  mSW <- mean(t$Clustering/mcc*mcp/t$PathLength)
+  mCI <- 1+(qSW[2]-qSW[1])/2  
+  return(data_frame(rndCC=mcc,rndCP=mcp,rndMO=mmo,rndGR=mgr,SWness=mSW,SWnessCI=mCI,MOlow=qmo[1],MOhigh=qmo[2],
+                    GRlow=qgr[1],GRhigh=qgr[2]))         
 }
