@@ -11,11 +11,19 @@ editor_options:
 ```{r setup, eval=T,echo=FALSE }
 load(".RData")
 oldcd <-getwd()
+require(ggplot2)
+require(igraph)
+require(dplyr)
+require(stringr)
+require(devtools)
+require(MetaWebAssemblyModels)
+source("R/network_fun.r")
+
 ```
 
 # Fitting metaWeb assembly models to Potter Cove   
 
-```{r fitMetaWebPC, eval=T,echo=F,message=T,warning=T}
+```{r fitMetaWebPC, eval=F,echo=F,message=T,warning=T}
 
 require(ggplot2)
 require(igraph)
@@ -91,21 +99,32 @@ stopCluster(cl)
 simMetaWebAssembly <- bind_rows(simMetaWebAssembly,sim)
 saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
 #simMetaWebAssembly <- readRDS("Data/simulations_metaWebAssembly.rds")
-# 10815.238/60 sec elapsed
-
 
 # To select the parameters I lowered the tolerance until there is only one value or few values
 #
 # Potter Cove
 #
 
-tol <- .20
+tol <- .2
 simMetaWebAssembly %>% group_by(m,a) %>% summarize(S=mean(S),L=mean(L),C=mean(C)) %>% mutate(alpha=m/a) %>% filter(L>309*(1-tol),L<309*(1+tol),S>91*(1-tol),S<91*(1+tol)) %>% arrange(desc(L))
+# Simulations
+#       m     a        S        L         C    alpha
+# 4 0.019  0.08 108.0955 249.9427 0.02139875 0.2375
+# 7 0.023 0.096 109.0323 247.8472 0.02086496 0.2395833
+# 8 0.015 0.064 108.8941 251.1877 0.02111088 0.234375
+# 9 0.015 0.064 108.7829 250.4179 0.02109662 0.234375
 
 # Weddell Sea
 #
-tol <- .125
+tol <- .13
 simMetaWebAssembly %>% group_by(m,a) %>% summarize(S=mean(S),L=mean(L),C=mean(C)) %>% mutate(alpha=m/a) %>% filter(L>1908*(1-tol),L<1908*(1+tol), S>436*(1-tol),S<437*(1+tol)) %>% arrange(S)
+
+# Simulations
+#       m     a        S        L         C    alpha
+# 4 0.022 0.021 385.7151 2143.468 0.0144348  1.047619
+# 7 0.044 0.041 381.4585 2150.424 0.01477366 1.073171
+# 8 0.014 0.014 380.1873 2101.99 0.01457585     1
+# 9 0.014 0.014 380.323 2106.511 0.01459287     1
 
 AA <- metaWebNetAssembly(A,0.019,1,0.08,tf)
 dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))
@@ -127,15 +146,8 @@ plot_NetAssemblyModel(AA,300)
 
 # Local web (Potter Cove) compared to  metaWeb assembly model 
 
-```{r fitMetaWebPC, eval=T,echo=F,message=T,warning=T}
+```{r mdlMetaWebAssembly, eval=T,echo=F,message=T,warning=T}
 
-require(ggplot2)
-require(igraph)
-require(dplyr)
-require(stringr)
-require(devtools)
-require(MetaWebAssemblyModels)
-source("R/network_fun.r")
 
 #sourceCpp("src/NetAssemblyFromMetaWeb.cpp")
 
@@ -165,30 +177,70 @@ dtot1 <- as.matrix(dtot %>% filter(Network=="Local") %>% dplyr::select(Prey_name
 redl <- graph_from_edgelist(dtot1, directed  = T)
 
 #
-# Compare modularity 
-#
-m <- 0.019
-a <- 0.08
-tbl <- calc_modularity_metaWebAssembly(redl, A, m,a,10)
-
-#
 # Calculate Trophic Position
 #
 require(NetIndices)
 TL <-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Fresh detritus","Aged detritus","Necromass"))
 
-# Calc incoherence z-score based in random E-R networks with the condition of at least one basal node
 #
+# Compare modularity 
 #
-zq <- calc_incoherence_z(redl,troph.net2)
-websTbl$rndQ[1] <- zq$rndQ
-websTbl$rndTI[1] <- zq$rndTI
-websTbl$Qlow[1] <- zq$Qlow
-websTbl$Qhigh[1] <- zq$Qhigh
-websTbl$TIlow[1] <- zq$TIlow
-websTbl$TIhigh[1] <- zq$TIhigh
-websTbl$zQ[1] <- zq$zQ
-websTbl$zTI[1] <- zq$zTI
+require(tictoc)
+m <- 0.015
+a <- 0.064
+tic()
+tblMdlWeb <- calc_modularity_metaWebAssembly(redl, A, m,a,1000,TL)
+toc()
+
+tblMdlWeb <- tblMdlWeb %>% mutate(Network="Local") %>% inner_join(dplyr::select(websTbl,Size:Modularity), by="Network")
+
+#
+# Calculate z-score of modularity
+#
+tblMdlWeb <- tblMdlWeb %>% mutate(zMO= (Modularity- mdlMO)/(MOhigh-MOlow)*2, zGR=(Groups-mdlGR)/(GRhigh-GRlow)*2)
+
+#websAssemblyModel <- dplyr::select(tblMdlWeb,Network:Modularity,mdlCC:zTI,zMO:zGR)
+websAssemblyModel <- bind_rows(websAssemblyModel, dplyr::select(tblMdlWeb,Network:Modularity,mdlCC:zTI,zMO:zGR))
+
+save.image()
+
+```
+
+
+
+# Regional web (Weddell) compared to  metaWeb assembly model 
+
+```{r regionalMetaWebAssembly, eval=F,echo=F,message=T,warning=T}
+
+#
+# Select "Regional" food web 
+#
+dtot1 <- as.matrix(dtot %>% filter(Network=="Regional") %>% dplyr::select(Prey_name,Predator_name))
+redl <- graph_from_edgelist(dtot1, directed  = T)
+redl <- simplify(redl)
+
+
+require(NetIndices)
+TL<-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Detritus","Necromass"))
+
+#
+# Compare modularity 
+#
+require(tictoc)
+m <- 0.014
+a <- 0.014
+tic()
+tblMdlWeb <- calc_modularity_metaWebAssembly(redl, A, m,a,1000,TL)
+toc()
+
+tblMdlWeb <- tblMdlWeb %>% mutate(Network="Regional") %>% inner_join(dplyr::select(websTbl,Size:Modularity), by="Network")
+
+#
+# Calculate z-score of modularity
+#
+tblMdlWeb <- tblMdlWeb %>% mutate(zMO= (Modularity- mdlMO)/(MOhigh-MOlow)*2, zGR=(Groups-mdlGR)/(GRhigh-GRlow)*2)
+
+websAssemblyModel <- bind_rows(websAssemblyModel, dplyr::select(tblMdlWeb,Network:Modularity,mdlCC:zTI,zMO:zGR))
 
 save.image()
 

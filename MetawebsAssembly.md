@@ -66,7 +66,7 @@ To our knowledge, the combination of network properties at three different level
 
 ## Methods
 
-The three dataset used in this study encompass a wide range of spatial scales and they were collected independently. The Southern Ocean database compiled by @Raymond2011 was used to construct the meta-web selecting only species located at latitudes higher than 60°S. @Raymond2011 compiled information from direct sampling methods of dietary assessment, including gut, scat, and bolus content analysis, stomach flushing, and observed feeding. We considered that the meta-web is the regional pool of species defined by the biogeographic Antarctic region. Next, the regional Weddell Sea dataset includes species situated between 74°S and 78°S with a West-East extension of approximately 450 km, comprises all information about trophic interactions available for the zone since 1983 [@Jacob2011]. The local dataset comes from Potter Cove: a 4 km long and 2.5 km wide Antarctic fjord located at 62°14'S, 58°40'W, South Shetland Islands [@Marina2018]. These food web datasets comprise benthic and pelagic habitats of the Antarctic ecosystem, few aggregated low-trophic level groups (e.g. detritus, diatoms, phytoplankton, zooplankton) and an exceptionally high resolution of the macroalgae community (i.e. 24 biological species of red, brown and green macroalgae). The macroalgae community is responsible for the majority of the primary production and supports a large fraction of secondary production in Antarctic fjords [@Quartino2008a, @Valdivia2015]. The higher trophic levels comprise: invertebrate (e.g. ascidians, sponges, isopods, amphipods, bivalves, gastropods, cephalopods, echinoderms) and vertebrate predator groups (e.g. demersal and pelagic fishes, penguins, seals and whales). For more information about these dataset we refer to the original publications. To make datasets compatible, first we checked taxonomic names for synonyms, and second, we added species (either prey or predator) with their interactions to the meta-web when the local or regional food-webs contains more taxonomic resolution. When the meta-web contained more detailed records, only for predators we added them to the local food-web checking for its geographic range. We remove cannibalistic (self-links) and double arrows (i.d. A eats B and B eats A).  
+The three dataset used in this study encompass a wide range of spatial scales and they were collected independently. The Southern Ocean database compiled by @Raymond2011 was used to construct the meta-web selecting only species located at latitudes higher than 60°S. @Raymond2011 compiled information from direct sampling methods of dietary assessment, including gut, scat, and bolus content analysis, stomach flushing, and observed feeding. We considered that the meta-web is the regional pool of species defined by the biogeographic Antarctic region. Next we analysed two local food webs: the Weddell Sea dataset includes species situated between 74°S and 78°S with a West-East extension of approximately 450 km, comprises all information about trophic interactions available for the zone since 1983 [@Jacob2011]. The Potter Cove dataset comes from a 4 km long and 2.5 km wide Antarctic fjord located at 62°14'S, 58°40'W, South Shetland Islands [@Marina2018]. These food web datasets comprise benthic and pelagic habitats of the Antarctic ecosystem, few aggregated low-trophic level groups (e.g. detritus, diatoms, phytoplankton, zooplankton) and an exceptionally high resolution of the macroalgae community (i.e. 24 biological species of red, brown and green macroalgae). The macroalgae community is responsible for the majority of the primary production and supports a large fraction of secondary production in Antarctic fjords [@Quartino2008a, @Valdivia2015]. The higher trophic levels comprise: invertebrate (e.g. ascidians, sponges, isopods, amphipods, bivalves, gastropods, cephalopods, echinoderms) and vertebrate predator groups (e.g. demersal and pelagic fishes, penguins, seals and whales). For more information about these datasets we refer to the original publications. To make datasets compatible, first we checked taxonomic names for synonyms, and second, we added species (either prey or predator) with their interactions to the meta-web when the local food-webs contains more taxonomic resolution. When the meta-web contained more detailed records, only for predators we added them to the local food-web checking for its geographic range. We remove cannibalistic (self-links) and double arrows (i.d. A eats B and B eats A).  
 
 
 <!---Cambiar Regional y local porque ambas son locales!!!!!!!!!!! -->
@@ -74,7 +74,11 @@ The three dataset used in this study encompass a wide range of spatial scales an
   
 ### Analysis
 
-We analysed the structural properties of the networks (Meta-web, regional, local) using properties that focus on different levels within the networks: emergent global properties that take into account the whole network, sub-structural properties that consider several nodes, and properties related to one node. To describe food-webs as networks each species is represented as a node or vertex and the feeding interactions are represented as edges or links between de nodes. This links in the case of food-webs are directed from the prey to the predator. Two nodes are neighbours if they are connected by an edge and the degree $k_i$ of node $i$ is the number of neighbours it has. The food web can be represented by an adjacency matrix $A=(a_{ij})$ where $a_{ij}=1$ if species $j$ predates species $i$, else is 0. Then $k_i^{in}=\sum_j{a_{ji}}$ is the number of preys of species $i$ or its in-degree, and $k_i^{out}=\sum_j{a_{ij}}$ is the number of predators of $i$ or its out-degree. The total number of edges is $E=\sum_{ij}a_{ij}$.
+We analysed the structural properties of the networks using properties that focus on different levels within the networks: emergent global properties that take into account the whole network, sub-structural properties that consider several nodes, and properties related to one node. To describe food-webs as networks each species is represented as a node or vertex and the feeding interactions are represented as edges or links between de nodes. This links in the case of food-webs are directed from the prey to the predator. Two nodes are neighbours if they are connected by an edge and the degree $k_i$ of node $i$ is the number of neighbours it has. The food web can be represented by an adjacency matrix $A=(a_{ij})$ where $a_{ij}=1$ if species $j$ predates species $i$, else is 0. Then $k_i^{in}=\sum_j{a_{ji}}$ is the number of preys of species $i$ or its in-degree, and $k_i^{out}=\sum_j{a_{ij}}$ is the number of predators of $i$ or its out-degree. The total number of edges is $E=\sum_{ij}a_{ij}$. 
+
+#### Null models 
+
+We considered two null models, the Erdös-Rényi random graph [@Erdos1959], and the meta-web assembly model. An Erdös-Rényi network is constructed assigning at random the $m$ edges to the $n$ nodes with equal probability [@Erdos1959; @Baiser2016]. We restrict the random model eliminating double arrows and cannibalistic links. To calculate trophic level and the coherence parameter (see below) we further restrict to random webs with at least one basal node, if not these calculation were not possible. The random model represent the absence of any mechanism, thus when we test our networks against it we do not obtain information about any hypothesized mechanism. To consider the mechanism of network assembly we designed a dynamic meta-web assembly model. In this model species migrate from the meta-web to a local web with a uniform probability $m$, and become extinct from the local web with probability $e$, this is reminiscent of the theory of island biogeography [@MacArthur1967;@Gravel2011], but we added network structure. Species migrate with their potential networks links from the meta-web, thus in the local web species can only survive if there exist at least one its preys or if it is a basal species. Then when a species go extinct locally we check that the local predators maintain at least one prey if not they become extinct independent of the probability $e$, this represent secondary extinctions.  We simulate this model in time and it eventually reach an equilibrium that depends on the migration and extinctions probabilities but also on the structure of the meta-web, for details of the simulations see supplementary material.  
 
 #### Small-world topology
 
@@ -82,7 +86,7 @@ The first emergent property we used is the small world pattern (SW), this proper
 
 $$c_i =\frac{2 E_i}{k_i (k_i -1)}$$ 
 
-where $E_i$ is the number of edges between the neighbours of $i$. The clustering coefficient of the network $C$ is the average of $c_i$ over all nodes. The original definition of small world networks is conceptual [@Watts1998], a network $G$ is small world when if it has a similar path length but greater clustering than an Erdös-Rényi random graph with the same number of nodes $n$ and edges $m$. An Erdös-Rényi network is constructed assigning at random the $m$ edges to the $n$ nodes with equal probability [@Erdos1959]. For the quantitative version of the SW pattern we followed @Humphries2008, we need to define:
+where $E_i$ is the number of edges between the neighbours of $i$. The clustering coefficient of the network $C$ is the average of $c_i$ over all nodes. The original definition of small world networks is conceptual [@Watts1998], a network $G$ is small world when if it has a similar path length but greater clustering than an Erdös-Rényi random graph with the same number of nodes $n$ and edges $m$. For the quantitative version of the SW pattern we followed @Humphries2008, we need to define:
 
 $$\gamma_g = \frac{C_g}{C_{(rand)}}$$
 
@@ -163,43 +167,63 @@ The networks have values for connectance, numbers of species (size) and links (T
 
 \scriptsize
 
---------------------------------------------
-Network            Local   Regional     Meta  
------------------ ------- --------- --------
-Size                  91       437       859  
+----------------------------------------------
+Network             Potter    Weddell     Meta  
+----------------- -------- ---------- --------
+Size                   91        437       859  
 
-Links                 309      1908     9003  
+Links                  309       1908     9003  
 
-Area (Km^2^)          6.8     3.5e6   34.8e6
+Area (Km^2^)           6.8      3.5e6   34.8e6
 
-Connectance        0.0373    0.0100   0.0122 
+Connectance         0.0373     0.0100   0.0122 
 
-PathLength         1.8106    2.1965   2.5655 
+PathLength          1.8106     2.1965   2.5655 
 
-Clustering         0.0989    0.0480   0.2164 
+Clustering          0.0989     0.0480   0.2164 
 
-Small-World-ness   2.7536    4.6855   10.866
+Small-World-ness    2.7536     4.6855   10.866
 
-SWness 99%CI       2.0670    2.2683   1.711 
+SWness random       2.0670     2.2683   1.711
+99%CI        
 
-Coherence         *0.5319   *0.4508  *0.7037  
+SWness assembly     0.4182     0.2081
+99%CI           
 
-Coherence 
-z-score           -0.5376   -2.0767  -3.5354  
+Coherence           0.5319     0.4508   0.7037  
 
-Mean Trophic
-level             *2.1289   *1.9831  *1.9119  
+Coherence          *-0.5376  *-2.0767  *-3.535
+random 
+z-score    
 
-Trophic level
-z-score           -0.2701   -0.8567  -1.6021  
+Coherence          -0.2546   *-3.3322 
+assembly
+z-score    
 
-Modularity         0.3720   *0.4784  *0.4456 
+Mean Trophic        2.1289     1.9831   1.9119
+level         
 
-Modularity         0.8883   18.9697   85.750
+Trophic level      *-0.2701  *-0.8567 *-1.6021
+random
+z-score        
+
+Trophic level       1.2792     1.0847
+assembly
+z-score        
+
+
+Modularity          0.3720    0.4784   0.4456 
+
+Modularity          0.8883   *18.9697  *85.750
+random
 z-score
---------------------------------------------
 
-Table: Network global properties across scales, *Meta* represents the marine predator-prey relationships of Antarctica, *Regional* represents the Weddell Sea food web, and *Local* a small fjord food web (Potter Cove). Z-scores are calculated against 1000 random networks. Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation for random networks; a positive z-score means that is greater.
+Modularity         -0.3773    0.3805          
+assembly 
+z-score
+----------------------------------------------
+
+Table: Network global properties across scales, *Meta* represents the marine predator-prey relationships of Antarctica, *Weddell* is the Weddell Sea food web, and *Potter* the Potter Cove food web (). Z-scores are calculated against 1000 random networks or 1000 networks generated with the meta-web assembly model. Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation for null model networks; a positive z-score means that is greater.
 
 
 ### Sub-structural properties (motifs)

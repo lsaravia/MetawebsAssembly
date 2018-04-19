@@ -28,5 +28,7 @@ In recent years there has been an increased interest in spatial and temporal var
 ## Folders
 
 	| 
-	|--- R: R code by L. Saravia
+	+--- R: R code by L. Saravia
+    |
+    +--- MetaWebAssemblyModels: Package with the meta-web assembly model
     	 

@@ -613,19 +613,20 @@ plot_NetAssemblyModel_eqw <- function(AA,timeW){
 #' Estimation of z-scores using Meta-Web assembly model as a null 
 #'
 #' @param red This is the reference network as an igraph object
-#' @param A Adyacency matrix for the meta-web
-#' @param m Migration parameter of the meta-Web assembly model
-#' @param a Exctinction parameter of the meta-Web assembly model
+#' @param Adj Adyacency matrix for the meta-web
+#' @param mig Migration parameter of the meta-Web assembly model
+#' @param ext Exctinction parameter of the meta-Web assembly model
+#' @param ti  trophic level vector 
 #' @param nsim number of simulations
 #'
 #' @return
 #' @export
 #'
 #' @examples
-calc_modularity_metaWebAssembly<- function(red, A, m,a,nsim=1000){
+calc_modularity_metaWebAssembly<- function(red, Adj, mig,ext,nsim=1000,ti=NULL){
   
   t <- calc_topological_indices(red)
-  tf <- 500  # Final time used in simulations of the meta-web assembly
+  final_time <- 500  # Final time used in simulations of the meta-web assembly
   
   ind <- data.frame()
   require(doParallel)
@@ -634,17 +635,21 @@ calc_modularity_metaWebAssembly<- function(red, A, m,a,nsim=1000){
   cl <- makeCluster(cn)
   registerDoParallel(cl)
   ind <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE,.packages=c('MetaWebAssemblyModels','igraph'), 
-                 .export = c('A','a','m','tf')) %do% 
+                 .export = c('Adj','ext','mig','final_time','calc_incoherence')) %dopar% 
   {
-    AA <- metaWebNetAssembly(A,m,1,a,tf)
+    AA <- metaWebNetAssembly(Adj,mig,1,ext,final_time)
     g <- graph_from_adjacency_matrix( AA$A, mode  = "directed")
-    
+    # Select only a connected subgraph graph 
+    dg <- components(g)
+    g <- induced_subgraph(g, which(dg$membership == which.max(dg$csize)))
     mmm<-cluster_spinglass(g)
-    modl <- m$modularity
-    ngrp <- length(m$csize)
+    modl <- mmm$modularity
+    ngrp <- length(mmm$csize)
     clus.coef <- transitivity(g, type="Global")
     cha.path  <- average.path.length(g)
-    data.frame(modularity=modl,ngroups=ngrp,clus.coef=clus.coef,cha.path=cha.path)
+    mmm<-calc_incoherence(g)
+
+    data.frame(modularity=modl,ngroups=ngrp,clus.coef=clus.coef,cha.path=cha.path,Q=mmm$Q,mTI=mmm$mTI)
   }
   stopCluster(cl)
   ind <- ind %>% mutate(gamma=t$Clustering/clus.coef,lambda=t$PathLength/cha.path,SWness=gamma/lambda)
@@ -659,6 +664,18 @@ calc_modularity_metaWebAssembly<- function(red, A, m,a,nsim=1000){
   mgr <- mean(ind$ngroups)
   mSW <- mean(t$Clustering/mcc*mcp/t$PathLength)
   mCI <- 1+(qSW[2]-qSW[1])/2  
-  return(data_frame(rndCC=mcc,rndCP=mcp,rndMO=mmo,rndGR=mgr,SWness=mSW,SWnessCI=mCI,MOlow=qmo[1],MOhigh=qmo[2],
-                    GRlow=qgr[1],GRhigh=qgr[2]))         
+
+  qQ <- quantile(ind$Q,c(0.005,0.995))
+  qTI <- quantile(ind$mTI,c(0.005,0.995))
+  mdlQ <- mean(ind$Q)
+  mdlTI <- mean(ind$mTI)
+  
+  m <- calc_incoherence(red,ti)
+  
+  zQ <-  (m$Q- mdlQ)/sd(ind$Q)
+  zTI <- (m$mTI - mdlTI)/sd(ind$mTI) # the same as sd(ind$mTI)
+  
+  return(data_frame(mdlCC=mcc,mdlCP=mcp,mdlMO=mmo,mdlGR=mgr,SWness=mSW,SWnessCI=mCI,MOlow=qmo[1],MOhigh=qmo[2],
+                    GRlow=qgr[1],GRhigh=qgr[2], mdlQ=mdlQ,mdlTI=mdlTI,Qlow=qQ[1],Qhigh=qQ[2],
+                                                 TIlow=qTI[1],TIhigh=qTI[2],zQ=zQ,zTI=zTI))         
 }
