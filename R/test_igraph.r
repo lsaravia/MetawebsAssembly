@@ -1,5 +1,15 @@
 require(dplyr)
 require(igraph)
+
+motifs2 <- function(g){
+  mo <- motifs(g)
+  mo2 <- mo[c(5, 8, 12, 3, 7, 14, 9, 10, 6, 13, 16, 15, 11)]  
+  names(mo2) <- c("s1", "s2", "s3", "s4", "s5", "d1", "d2", "d3", "d4", "d5", "d6", "d7", "d8")
+  
+  return(mo2)
+}
+
+
 dtot1[1:10,]
 dtot1 <- as.matrix(dtot %>% filter(Network=="Meta") %>% dplyr::select(Prey_name,Predator_name))
 g <- graph_from_edgelist(dtot1[1:10,], directed  = T)
