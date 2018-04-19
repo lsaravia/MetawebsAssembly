@@ -78,7 +78,9 @@ We analysed the structural properties of the networks using properties that focu
 
 #### Null models 
 
-We considered two null models, the Erdös-Rényi random graph [@Erdos1959], and the meta-web assembly model. An Erdös-Rényi network is constructed assigning at random the $m$ edges to the $n$ nodes with equal probability [@Erdos1959; @Baiser2016]. We restrict the random model eliminating double arrows and cannibalistic links. To calculate trophic level and the coherence parameter (see below) we further restrict to random webs with at least one basal node, if not these calculation were not possible. The random model represent the absence of any mechanism, thus when we test our networks against it we do not obtain information about any hypothesized mechanism. To consider the mechanism of network assembly we designed a dynamic meta-web assembly model. In this model species migrate from the meta-web to a local web with a uniform probability $m$, and become extinct from the local web with probability $e$, this is reminiscent of the theory of island biogeography [@MacArthur1967;@Gravel2011], but we added network structure. Species migrate with their potential networks links from the meta-web, thus in the local web species can only survive if there exist at least one its preys or if it is a basal species. Then when a species go extinct locally we check that the local predators maintain at least one prey if not they become extinct independent of the probability $e$, this represent secondary extinctions.  We simulate this model in time and it eventually reach an equilibrium that depends on the migration and extinctions probabilities but also on the structure of the meta-web, for details of the simulations see supplementary material.  
+We considered two null models, the Erdös-Rényi random graph [@Erdos1959], and the meta-web assembly model. An Erdös-Rényi network is constructed assigning at random the $m$ edges to the $n$ nodes with equal probability [@Erdos1959; @Baiser2016]. We restrict the random model eliminating double arrows and cannibalistic links. To calculate trophic level and the coherence parameter (see below) we further restrict to random webs with at least one basal node, if not these calculation were not possible. The random model represent the absence of any mechanism, thus when we test our networks against it we do not obtain information about any hypothesized mechanism. 
+
+To consider the mechanism of network assembly we designed a dynamic meta-web assembly model. In this model species migrate from the meta-web to a local web with a uniform probability $g$, and become extinct from the local web with probability $e$, this is reminiscent of the theory of island biogeography [@MacArthur1967;@Gravel2011], but we added network structure. Species migrate with their potential networks links from the meta-web, thus in the local web species can only survive if there exist at least one its preys or if it is a basal species. Then when a species go extinct locally it may produce secondary extinctions; we check that the local predators maintain at least one prey if not they become extinct independent of the probability $e$. We simulate this model in time and it eventually reach an equilibrium that depends on the migration and extinctions probabilities but also on the structure of the meta-web. For the random model we simulate networks with the  same number of nodes $n$ and edges $m$ than the empirical networks, for the meta-web model we fitted the parameters $g$ and $e$ to obtain networks with $n$ and $m$ close to the empirical networks, for details of the simulations see appendix. 
 
 #### Small-world topology
 
@@ -86,19 +88,19 @@ The first emergent property we used is the small world pattern (SW), this proper
 
 $$c_i =\frac{2 E_i}{k_i (k_i -1)}$$ 
 
-where $E_i$ is the number of edges between the neighbours of $i$. The clustering coefficient of the network $C$ is the average of $c_i$ over all nodes. The original definition of small world networks is conceptual [@Watts1998], a network $G$ is small world when if it has a similar path length but greater clustering than an Erdös-Rényi random graph with the same number of nodes $n$ and edges $m$. For the quantitative version of the SW pattern we followed @Humphries2008, we need to define:
+where $E_i$ is the number of edges between the neighbours of $i$. The clustering coefficient of the network $C$ is the average of $c_i$ over all nodes. The original definition of small world networks is conceptual [@Watts1998], a network $G$ is small world when if it has a similar path length but greater clustering than an Erdös-Rényi random network with the same number of nodes $n$ and edges $m$. For the quantitative version of the SW pattern we followed @Humphries2008, we need to define:
 
-$$\gamma_g = \frac{C_g}{C_{(rand)}}$$
+$$\gamma_g = \frac{C_g}{C_{null}}$$
 
 and
 
-$$\lambda_g = \frac{L_g}{L_{(rand)}}$$
+$$\lambda_g = \frac{L_g}{L_{null}}$$
 
-where $C_g$ and $L_g$ are the clustering coefficient and the mean shortest path length of the network of interest $G$; $C_g$ and $C_{(rand)}$ are the same quantities for the corresponding Erdös-Rényi random network. Thus the quantitative small-world-ness is defined as:
+where $C_g$ and $L_g$ are the clustering coefficient and the mean shortest path length of the network of interest $G$; $C_g$ and $C_{null}$ are the same quantities for the corresponding null model. Thus the quantitative small-world-ness is defined as:
 
 $$S = \frac{\gamma_g}{\lambda_g}$$
 
-and to determine if $S$ is statistically significant monte carlo methods are used. We constructed 1000 Erdös-Rényi networks with the same number of nodes $n$ and edges $m$ for the network of interest, then we calculated $S$ for each random network and the lower and higher 99% quantiles of the $S$ distribution are called $ql,qh$:
+and to determine if $S$ is statistically significant monte carlo methods are used. We constructed 1000 null model networks with the same number of nodes $n$ and edges $m$---or approximately the same---than the empirical network; then we calculated $S$ for each random network and the lower and higher 99% quantiles of the $S$ distribution are called $ql,qh$:
 
 $$CI = \frac{qh - ql}{2}$$
 
@@ -115,11 +117,11 @@ where $k_i^{in}=\sum_{j}a_{ji}$ is the number of preys of species $i$, basal spe
 $$q = \sqrt{\frac{1}{E} \sum_{ij}a_{ij}x_{ij}^2 - 1}$$
 
 
-that is the SD of the distribution of trophic distances, a food web will be more coherent when $q$ is closer to zero. When $q = 0$ the maximal coherence is achieved and corresponds to a layered network in which every node has an integer trophic level [@Johnson2014; @Johnson2017]. As a null model to compare coherence and trophic level we generated 1000 Erdös-Rényi random networks with at least one basal species and the same number of species and links that the network of interest. Then we calculated the 99% CI using the 0.5% and 99.5% quantiles the distribution of $q$ and $tp$; and the z-scores as:
+that is the SD of the distribution of trophic distances, a food web will be more coherent when $q$ is closer to zero. When $q = 0$ the maximal coherence is achieved and corresponds to a layered network in which every node has an integer trophic level [@Johnson2014; @Johnson2017]. To compare coherence and trophic level we generated 1000 null model networks with at least one basal species and the same number of species and links---or approximately the same---than the network of interest. Then we calculated the 99% CI using the 0.5% and 99.5% quantiles the distribution of $q$ and $tp$; and the z-scores as:
 
-$$z_i=\frac{q_{obs} - q_{(rand)}}{\sigma_{q(rand)}}$$
+$$z_i=\frac{q_{obs} - q_{null}}{\sigma_{qnull}}$$
 
-where $q_{obs}$ is the observed coherence, $q_{(rand)}$ is the mean coherence from the Erdös-Rényi networks and $\sigma_{q(rand)}$ is the standard deviation. The same formula is used for $tp$. The z -score thus measures the significance of deviations of the real network from the null hypothesis. If the distribution of the quantity ($q$, $tp$) under the null model is normal, a z-score greater than 2 is evidence than the observed quantity is significantly greater than its random counterpart, and a z-score less than 2 means that the quantity is significantly lower. If the distribution under the null model is skewed this is not necessarily true and thus we must rely on confidence intervals. 
+where $q_{obs}$ is the observed coherence, $q_{null}$ is the mean coherence from the null model networks and $\sigma_{qnull}$ is the standard deviation. The same formula is used for $tp$. The z -score thus measures the significance of deviations of the real network from the null hypothesis. If the distribution of the quantity ($q$, $tp$) under the null model is normal, a z-score greater than 2 is evidence than the observed quantity is significantly greater than its random counterpart, and a z-score less than 2 means that the quantity is significantly lower. If the distribution under the null model is skewed this is not necessarily true and thus we must rely on confidence intervals. 
 
 #### Modularity 
 
@@ -128,15 +130,15 @@ The intermediate level property (i.e. between the whole network and the individu
 $$M = \sum_s \left(\frac{I_s}{E} - \left(\frac{d_s}{2E}\right)^2 \right)$$
 
 
-where $s$ is the number of modules or compartments, $I_s$ is the number of links between species in the module $s$, $d_s$ is the sum of degrees for all species in module $s$ and $E$ is the total number of links for the network. To asses the significance of our networks we calculate the 99% confidence interval and z-scores based on 1000 Erdös-Rényi networks as previously described. It has been stressed that only networks with modularities larger that the random expectation should be called modular [@Reichardt2006]. 
+where $s$ is the number of modules or compartments, $I_s$ is the number of links between species in the module $s$, $d_s$ is the sum of degrees for all species in module $s$ and $E$ is the total number of links for the network. To asses the significance of our networks we calculate the 99% confidence interval and z-scores based on 1000 null model networks as previously described. 
 
 #### Motifs 
 
-We consider here four of thirteen possible three-species subnetworks: the tri-trophic chain, omnivory, apparent competition, and exploitative competition motifs (Figure 1). These are the only motifs present in all the networks analysed in the present study. We compared the frequency of these motifs to  1000 Erdös-Rényi random networks with the same number of nodes $n$ and edges $m$. We calculated the 99% confidence interval and the z-score of motif counts using the equation:  
+We consider here four of thirteen possible three-species subnetworks: the tri-trophic chain, omnivory, apparent competition, and exploitative competition motifs (Figure 1). These are the only motifs present in all the networks analysed in the present study. We compared the frequency of these motifs to 1000 null model networks as previously described. We calculated the 99% confidence interval and the z-score of motif counts using the equation:  
 
-$$z_i=\frac{N_{obs} - N_{(rand)}}{\sigma_{(rand)}}$$
+$$z_i=\frac{N_{obs} - N_{null}}{\sigma_{null}}$$
 
-where $N_{obs}$ is the observed number of a given motif, $N_{(rand)}$ is the mean count and $\sigma_{(rand)}$ is the standard deviation for the Erdös-Rényi networks. To determine if the proportions of motifs change across networks we use the Pearson's Chi-squared test with simulated p-value based on 10000 Monte Carlo replicates.
+where $N_{obs}$ is the observed number of a given motif, $N_{null}$ is the mean count and $\sigma_{null}$ is the standard deviation for the null model networks. To determine if the proportions of motifs change across networks we use the Pearson's Chi-squared test with simulated p-value based on 10000 Monte Carlo replicates.
 
 
 #### Topological roles 
@@ -295,6 +297,10 @@ Topological roles are useful to detect the existence of functional roles of spec
 Our results strongly depend on the null model that was used, our null model was a standard Erdös-Rényi random network devoid of any mechanism, thus when results are significant we know that for a particular property there is a biological mechanism derived from that property. As we were comparing different nested scales: meta-web and regional; meta-web and local, it is difficult to evaluate if the pattern is inherited from one scale to another or if different mechanisms produce the same effect at different scales. Thus null models representing or not each of the hypothesized processes involved would be needed to improve our results. 
 
 The spatial scales involved in our study do not represent a continuity, the meta-web and regional web have a 10 to 1 ratio but the local web is 10^6^ smaller, besides that most of the global network properties and the motif structure showed no changes relative to the null model. Thus we found evidence that local processes that limit species from the meta-web to local scales are influencing the assembly process but the structure of the food-web originated trough an emergent process from evolutionary or co-evolutionary forces seems to be more important. This could guide us to find a unified theory of ecological interactions that could describe the diversity of patterns observed in the natural world. 
+
+## Acknowledgements
+
+LAS and SRD are grateful to the National University of General Sarmiento for financial support. LAS would like to thank Susanne Kortsch, that provided her source code for topological analysis and the corresponding figures. This work was partially supported by a grant from CONICET (PIO 144-20140100035-CO). 
 
 ## References
 
