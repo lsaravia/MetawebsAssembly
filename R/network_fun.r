@@ -679,3 +679,72 @@ calc_modularity_metaWebAssembly<- function(red, Adj, mig,ext,nsim=1000,ti=NULL){
                     GRlow=qgr[1],GRhigh=qgr[2], mdlQ=mdlQ,mdlTI=mdlTI,Qlow=qQ[1],Qhigh=qQ[2],
                                                  TIlow=qTI[1],TIhigh=qTI[2],zQ=zQ,zTI=zTI))         
 }
+
+
+
+
+#' Calculate motif counts for observed network and CI for meta-web assembly model networks and Z-scores 
+#'
+#' @param red igraph network object
+#' @param Adj Adyacency matrix for the meta-web
+#' @param mig Migration parameter of the meta-Web assembly model
+#' @param ext Exctinction parameter of the meta-Web assembly model
+#' @param nsim number of simulation to calculate random networks with the same nodes and links
+#'
+#' @return data.frame with all the results
+#' @export
+#'
+#' @examples
+calc_motif_metaWebAssembly<- function(red, Adj, mig, ext, nsim=1000)
+{
+  ind <- data.frame()
+  require(doParallel)
+  cn <-detectCores()
+  #  cl <- makeCluster(cn,outfile="foreach.log") # Logfile to debug 
+  cl <- makeCluster(cn)
+  registerDoParallel(cl)
+  
+  final_time <- 500  # Final time used in simulations of the meta-web assembly
+  
+  ind <- data.frame()
+  require(doParallel)
+  cn <-detectCores()
+  #  cl <- makeCluster(cn,outfile="foreach.log") # Logfile to debug 
+  cl <- makeCluster(cn)
+  registerDoParallel(cl)
+  ind <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE,.packages=c('MetaWebAssemblyModels','igraph'), 
+                 .export = c('Adj','ext','mig','final_time')) %dopar% 
+  {
+    AA <- metaWebNetAssembly(Adj,mig,1,ext,final_time)
+    g <- graph_from_adjacency_matrix( AA$A, mode  = "directed")
+    # Select only a connected subgraph graph 
+    dg <- components(g)
+    g <- induced_subgraph(g, which(dg$membership == which.max(dg$csize)))
+    
+    mot <- triad_census(g)
+    mot[4] # Exploitative competition
+    mot[5] # Apparent competition
+    mot[6] # Tri-trophic chain
+    mot[9] # Omnivory
+    
+    data.frame(explComp=mot[4],apprComp=mot[5],triTroph=mot[6],omnivory=mot[9])
+  }
+  stopCluster(cl)
+  # 99% confidence interval
+  #
+  
+  qEC <- quantile(ind$explComp,c(0.005,0.995))
+  qAC <- quantile(ind$apprComp,c(0.005,0.995))
+  qTT <- quantile(ind$triTroph,c(0.005,0.995))
+  qOM <- quantile(ind$omnivory,c(0.005,0.995))
+  
+  # Calculate motif for the original network
+  obs <- triad_census(red)
+  
+  zEC <- (obs[4] - mean(ind$explComp))/sd(ind$explComp)
+  zAC <- (obs[5] - mean(ind$apprComp))/sd(ind$apprComp)
+  zTT <- (obs[6] - mean(ind$triTroph))/sd(ind$triTroph)
+  zOM <- (obs[9] - mean(ind$omnivory))/sd(ind$omnivory)
+  
+  return(data_frame(explComp=obs[4],apprComp=obs[5],triTroph=obs[6],omnivory=obs[9],zEC=zEC,zAC=zAC,zTT=zTT,zOM=zOM,EClow=qEC[1],EChigh=qEC[2],AClow=qAC[1],AChigh=qAC[2],TTlow=qTT[1],TThigh=qTT[2],OMlow=qOM[1],OMhigh=qOM[2]))         
+}    

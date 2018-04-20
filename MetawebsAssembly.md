@@ -80,7 +80,9 @@ We analysed the structural properties of the networks using properties that focu
 
 We considered two null models, the Erdös-Rényi random graph [@Erdos1959], and the meta-web assembly model. An Erdös-Rényi network is constructed assigning at random the $m$ edges to the $n$ nodes with equal probability [@Erdos1959; @Baiser2016]. We restrict the random model eliminating double arrows and cannibalistic links. To calculate trophic level and the coherence parameter (see below) we further restrict to random webs with at least one basal node, if not these calculation were not possible. The random model represent the absence of any mechanism, thus when we test our networks against it we do not obtain information about any hypothesized mechanism. 
 
-To consider the mechanism of network assembly we designed a dynamic meta-web assembly model. In this model species migrate from the meta-web to a local web with a uniform probability $g$, and become extinct from the local web with probability $e$, this is reminiscent of the theory of island biogeography [@MacArthur1967;@Gravel2011], but we added network structure. Species migrate with their potential networks links from the meta-web, thus in the local web species can only survive if there exist at least one its preys or if it is a basal species. Then when a species go extinct locally it may produce secondary extinctions; we check that the local predators maintain at least one prey if not they become extinct independent of the probability $e$. We simulate this model in time and it eventually reach an equilibrium that depends on the migration and extinctions probabilities but also on the structure of the meta-web. For the random model we simulate networks with the  same number of nodes $n$ and edges $m$ than the empirical networks, for the meta-web model we fitted the parameters $g$ and $e$ to obtain networks with $n$ and $m$ close to the empirical networks, for details of the simulations see appendix. 
+To consider the mechanism of network assembly we designed a dynamic meta-web assembly model. In this model species migrate from the meta-web to a local web with a uniform probability $c$, and become extinct from the local web with probability $e$, this is reminiscent of the theory of island biogeography [@MacArthur1967;@Gravel2011], but we added network structure. Species migrate with their potential networks links from the meta-web, thus in the local web species can only survive if there exist at least one its preys or if it is a basal species. Then when a species go extinct locally it may produce secondary extinctions; we check that the local predators maintain at least one prey if not they become extinct independent of the probability $e$. We simulate this model in time and it eventually reach an equilibrium that depends on the migration and extinctions probabilities but also on the structure of the meta-web. The ratio of immigration vs. extinction $\alpha= c/e$  is hypothesised to be inversely related to the distance to the mainland [@MacArthur1967] and as extinction $e$ should be inversely proportional to population size [@Hanski1999], the ratio $\alpha$ is also hypothesised to be related to local area.
+
+For the random model we simulate networks with the  same number of nodes $n$ and edges $m$ than the empirical networks, for the meta-web model we fitted the parameters $g$ and $e$ to obtain networks with $n$ and $m$ close to the empirical networks, this implies that $\alpha$ should reflect the differences in areas of the two local food webs. For details of the fitting and simulations see appendix. 
 
 #### Small-world topology
 
@@ -138,12 +140,12 @@ We consider here four of thirteen possible three-species subnetworks: the tri-tr
 
 $$z_i=\frac{N_{obs} - N_{null}}{\sigma_{null}}$$
 
-where $N_{obs}$ is the observed number of a given motif, $N_{null}$ is the mean count and $\sigma_{null}$ is the standard deviation for the null model networks. To determine if the proportions of motifs change across networks we use the Pearson's Chi-squared test with simulated p-value based on 10000 Monte Carlo replicates.
+where $N_{obs}$ is the observed number of a given motif, $N_{null}$ is the mean count and $\sigma_{null}$ is the standard deviation for null model networks. To determine if the proportions of motifs change across networks we use the Pearson's Chi-squared test with simulated p-value based on 10000 Monte Carlo replicates.
 
 
 #### Topological roles 
 
-As a local property that reflect the ecological role of each species we use topological roles. To identify topological roles we use the method of functional cartography [@Guimera2005]. The method is based on module membership and we used the previously described algorithm to detect them. The roles are characterized by two parameters: the standardized within-module degree $dz$ and the among-module connectivity participation coefficient $PC$.  The within-module degree is a z-score that measure how well a species is connected to other species within its own module:
+As a local property that reflect the ecological role of each species we use topological roles. To identify topological roles we use the method of functional cartography [@Guimera2005], which is based on module membership. The roles are characterized by two parameters: the standardized within-module degree $dz$ and the among-module connectivity participation coefficient $PC$.  The within-module degree is a z-score that measure how well a species is connected to other species within its own module:
 
 $$dz_i = \frac{k_{is}-\bar{k_s} }{\sigma_{ks}}$$ 
 
@@ -152,7 +154,7 @@ where $k_{is}$ is the number of links of species $i$ within its own module $s$ a
 
 $$PC_i =  1 - \sum_s \frac{k_{is}}{k_i}$$ 
 
-where $k_i$ is the degree of species $i$ (i.e. the number of links), $k_{is}$ is the number of links of species $i$ to species in module $s$, and in this case $s$ runs over all the modules. Due to the stochastic nature of the module detection algorithm we made repeated simulations until the distribution of $PC_i$ and $dz_i$ has no statistical differences between two successive repetitions. To test that they come from the same distribution we used the k-sample Anderson-Darling test [@Scholz1987]. Then we calculate the mean and 95% CI of $dz$ and $PC$.
+where $k_i$ is the degree of species $i$ (i.e. the number of links), $k_{is}$ is the number of links of species $i$ to species in module $s$, and in this case $s$ runs over all the modules. Due to the stochastic nature of the module detection algorithm we made repeated simulations until the distribution of $PC_i$ and $dz_i$ has no statistical differences between two successive repetitions; to test that we used the k-sample Anderson-Darling test [@Scholz1987]. Then we calculate the mean and 95% CI of $dz$ and $PC$.
 
 To determine each species' role the $dz-PC$ parameter space is divided into four regions, this was modified from @Guimera2005, using the same scheme of @Kortsch2015. There are two thresholds that define the roles: $dz=2.5$ and $PC=0.625$. If a species has at least 60% of links within its own module then $PC<0.625$ and if it also has $dz\ge 2.5$, it is classified as a module hub. These species a relatively high number of links, but inside his module. If a species has $dz<2.5$ and $PC<0.625$ is called peripheral or specialist, it means that it has relatively few links and most within its module. Species that have $dz<2.5$ and $PC\ge0.625$ are module connectors, they have relatively few links and most between modules. Finally if a species has $dz\ge 2.5$ and $PC\ge0.625$ it is classified as super-generalist because it has high between- and within-module connectivity. To test if the proportion of species with each of the roles changes for the different networks we made a Pearson's Chi-squared test with simulated p-value based on 10000 Monte Carlo replicates.
 
@@ -165,7 +167,7 @@ All analyses and simulations were made in R version 3.4.3 [@RCoreTeam2017], the 
 
 ### Global network properties
 
-The networks have values for connectance, numbers of species (size) and links (Table 1), that are well inside the range found for marine food webs [@Marina2018a]. Assuming a power-law relationship between species and area the exponent is 0.14 also compatible with other experimental results [@Rosindell2007]. All networks present the small-world structure as their small-world-ness index is larger than the 99% CI (Table 1). By definition a network is more coherent when its $q$ index is closer to zero, all networks have a significant smaller $q$ value (Table S1); thus they are more coherent than a random network. The regional an local networks have similar values and both are smaller than the meta-web, thus they are more locally stable as they are more coherent. Mean trophic level is always lower than its random counterpart, and similar between networks. For these two last metrics local z-scores are smaller for the local food-web and greater for regional and meta-web, this means that smaller networks present more variability than larger ones. Modularity is greater and significant for meta-web and regional networks and not significant and smaller for the local networks. Modularity shows an opposite pattern with coherence, more modularity imply less coherence, and in consequence less stability.  
+The networks have values for connectance, numbers of species (size) and links (Table 1), that are well inside the range found for marine food webs [@Marina2018a]. Based in the random null model, all networks present the small-world structure as their small-world-ness index is larger than the 99% CI (Table 1), but there is no difference between local food-webs and the assembly model. By definition a network is more coherent when its $q$ index is closer to zero, all networks have a significant smaller $q$ value (Table S1); thus they are more coherent than a random network. The regional an local networks have similar values and both are smaller than the meta-web, thus they are more locally stable as they are more coherent. Using the meta-web assembly model only Weddell food-web is more stable and Potter Cove food web have no differences with the model (Table S2). Mean trophic level is always lower than its random counterpart, and similar between networks. For these two last metrics local z-scores are smaller for the local food-web and greater for regional and meta-web, this means that smaller networks present more variability than larger ones. Modularity is greater and significant for meta-web and regional networks and not significant and smaller for the local networks. Modularity shows an opposite pattern with coherence, more modularity imply less coherence, and in consequence less stability.  
 
 \scriptsize
 
@@ -178,55 +180,56 @@ Links                  309       1908     9003
 
 Area (Km^2^)           6.8      3.5e6   34.8e6
 
-Connectance         0.0373     0.0100   0.0122 
+Connectance          0.037       0.010   0.012 
 
-PathLength          1.8106     2.1965   2.5655 
+PathLength            1.81       2.20     2.57  
 
-Clustering          0.0989     0.0480   0.2164 
+Clustering            0.10      0.048     0.22 
 
-Small-World-ness    2.7536     4.6855   10.866
+Small-World-ness      2.75       4.69    10.87
 
-SWness random       2.0670     2.2683   1.711
+SWness random         2.07       2.27     1.71
 99%CI        
 
-SWness assembly     0.4182     0.2081
+SWness assembly       0.42       0.21
 99%CI           
 
-Coherence           0.5319     0.4508   0.7037  
+Coherence             0.53       0.45     0.70  
 
-Coherence          *-0.5376  *-2.0767  *-3.535
+Coherence           *-0.54     *-2.08   *-3.54
 random 
 z-score    
 
-Coherence          -0.2546   *-3.3322 
+Coherence            -0.25     *-3.33 
 assembly
 z-score    
 
-Mean Trophic        2.1289     1.9831   1.9119
+Mean Trophic          2.13       1.98     1.91
 level         
 
-Trophic level      *-0.2701  *-0.8567 *-1.6021
+Trophic level       *-0.27     *-0.86   *-1.60
 random
 z-score        
 
-Trophic level       1.2792     1.0847
+Trophic level         1.28       1.08
 assembly
 z-score        
 
 
-Modularity          0.3720    0.4784   0.4456 
+Modularity            0.37       0.48    0.45 
 
-Modularity          0.8883   *18.9697  *85.750
+Modularity            0.89     *18.97  *85.75
 random
 z-score
 
-Modularity         -0.3773    0.3805          
+Modularity           -0.38       0.38          
 assembly 
 z-score
 ----------------------------------------------
 
-Table: Network global properties across scales, *Meta* represents the marine predator-prey relationships of Antarctica, *Weddell* is the Weddell Sea food web, and *Potter* the Potter Cove food web (). Z-scores are calculated against 1000 random networks or 1000 networks generated with the meta-web assembly model. Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation for null model networks; a positive z-score means that is greater.
+Table: Network global properties across scales, *Meta* represents the marine predator-prey relationships of Antarctica, *Weddell* is the Weddell Sea food web, and *Potter* the Potter Cove food web. Z-scores are calculated against 1000 null model networks (random or meta-web assembly models). Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation for null model networks; a positive z-score means that is greater.
 
+\normalsize
 
 ### Sub-structural properties (motifs)
 
@@ -236,32 +239,46 @@ The representation of three species sub-networks showed the same patterns in all
 
 
 ------------------------------------------
-                 Local  Regional      Meta   
+                Potter   Weddell  Meta-web   
+                 Cove        Sea
 -------------- ------- --------- ---------
 Exploitative 
-competition      *830    *42210    *285866  
+competition       830     42210     285866  
 
-EC z-score     15.4971  592.2163  945.5640 
+EC z-zcore      *15.45   *592.22   *945.56 
+Random
+
+EC z-score      -0.73      1.41    
+Assembly
 
 Apparent 
-competition     *1983     *7842    *126552  
+competition       1983      7842    126552  
 
-AC z-score      63.2947  58.4367  320.3600
+AC z-score      *63.29    *58.44   *320.36
+Random
 
+AC z-score      *4.86      -1.94
+Assembly
 
 Tri-trophic 
-chain            *578      *3101    *61739  
+chain              578      3101     61739  
 
-TT z-score     -7.8152  -48.7765 -69.3458 
+TT z-score      *-7.82   *-48.78   *-69.35 
+Random
 
+TT z-score        1.43    *-2.28 
+Assembly
 
-Omnivory        *124      *892      *36423  
+Omnivory           124       892     36423  
 
-OM z-score     15.3853  89.3244  1022.2137
+OM z-score      *15.38    *89.32  *1022.21
+Random
 
+OM z-score       -0.44    *-2.47
+Assembly
 ------------------------------------------
 
-Table: Motif counts and z-scores across scales, *Meta* represents the marine predator-prey relationships of Antarctica, *Regional* represents the Weddell Sea food web, and *Local* a small fjord food web (Potter Cove). Z-scores were calculated against 1000 random networks. Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation for random networks; a positive z-score means that is greater. The proportions for the three scales are different (Chi-squared = 12612, df = 6, p-value < 2.2e-16)
+Table: Motif counts and z-scores across scales, *Meta-web* represents the marine predator-prey relationships of Antarctica, *Weddell* represents the Weddell Sea food web, and *Potter Cove* a small fjord food web. Z-scores were calculated against 1000 random networks. Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation for random networks; a positive z-score means that is greater. The proportions for the three scales are different (Chi-squared = 12612, df = 6, p-value < 2.2e-16)
 
 
 \normalsize

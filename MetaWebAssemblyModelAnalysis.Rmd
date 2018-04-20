@@ -146,7 +146,7 @@ plot_NetAssemblyModel(AA,300)
 
 # Local web (Potter Cove) compared to  metaWeb assembly model 
 
-```{r mdlMetaWebAssembly, eval=T,echo=F,message=T,warning=T}
+```{r PotterGlobalMetaWebAssembly, eval=F,echo=F,message=T,warning=T}
 
 
 #sourceCpp("src/NetAssemblyFromMetaWeb.cpp")
@@ -210,7 +210,7 @@ save.image()
 
 # Regional web (Weddell) compared to  metaWeb assembly model 
 
-```{r regionalMetaWebAssembly, eval=F,echo=F,message=T,warning=T}
+```{r WeddellGlobalMetaWebAssembly, eval=F,echo=F,message=T,warning=T}
 
 #
 # Select "Regional" food web 
@@ -247,3 +247,95 @@ save.image()
 ```
 
 
+# Motif Potter Cove compared to  metaWeb assembly model 
+
+```{r PotterMotifMetaWebAssembly, eval=F,echo=F,message=T,warning=T}
+
+
+#sourceCpp("src/NetAssemblyFromMetaWeb.cpp")
+
+#
+# Read data and trim species names to avoid duplicates 
+#
+dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
+dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
+
+#
+# Select meta web 
+#
+dtot1 <- as.matrix(dtot %>% filter(Network=="Meta") %>% dplyr::select(Prey_name,Predator_name))
+redl <- graph_from_edgelist(dtot1, directed  = T)
+# Delete cannibalistic 
+redl <- simplify(redl)
+sum(degree(redl,mode="in")==0)
+
+A <- get.adjacency(redl,sparse=F)
+dim(A)                             
+
+#
+# Select Local food web 
+# 
+
+dtot1 <- as.matrix(dtot %>% filter(Network=="Local") %>% dplyr::select(Prey_name,Predator_name))
+redl <- graph_from_edgelist(dtot1, directed  = T)
+
+#
+# Motif
+#
+mot <- triad_census(redl)
+
+mot[4] # Exploitative competition
+mot[5] # Apparent competition
+mot[6] # Tri-trophic chain
+mot[9] # Omnivory
+
+#FreqMotif <- data.frame(Network="Local",t(mot))
+
+set.seed(123)
+m <- 0.015
+a <- 0.064
+motif_metaWeb <- calc_motif_metaWebAssembly(redl, A, m,a,1000)
+
+motif_metaWeb <- motif_metaWeb %>% mutate(Network="Local")
+
+
+save.image()
+
+```
+
+
+# Motif Weddell compared to  metaWeb assembly model 
+
+```{r WeddellMotifMetaWebAssembly, eval=T,echo=F,message=T,warning=T}
+
+
+#
+# Select "Regional" food web 
+#
+dtot1 <- as.matrix(dtot %>% filter(Network=="Regional") %>% dplyr::select(Prey_name,Predator_name))
+redl <- graph_from_edgelist(dtot1, directed  = T)
+redl <- simplify(redl)
+
+
+#
+# Motif
+#
+set.seed(123)
+
+m <- 0.014
+a <- 0.014
+
+m_metaWeb <- calc_motif_metaWebAssembly(redl, A, m,a,1000)
+
+motif_metaWeb <- bind_rows(motif_metaWeb, m_metaWeb %>% mutate(Network="Regional"))
+
+rm(m_metaWeb)
+save.image()
+
+
+select(motif_metaWeb, explComp,EClow,EChigh)
+select(motif_metaWeb, apprComp,AClow,AChigh,zAC)
+select(motif_metaWeb, triTroph,TTlow,TThigh,zTT)
+select(motif_metaWeb, omnivory,OMlow,OMhigh,zOM)
+
+```
