@@ -229,7 +229,7 @@ assembly
 z-score
 ------------------------------------------------
 
-Table: Network global properties across scales, *Meta* represents the marine predator-prey relationships of Antarctica, the *Weddell Sea* and *Potter Cove* are local food webs. Z-scores are calculated against 1000 null model networks (random or meta-web assembly models). Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation for null model networks; a positive z-score means that is greater.
+Table: Network global properties across scales, the *Meta-web* represents the marine predator-prey relationships of Antarctica, the *Weddell Sea* and *Potter Cove* are local food webs. Z-scores are calculated against 1000 null model networks (random or meta-web assembly models). Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation for null model networks; a positive z-score means that is greater.
 
 \normalsize
 
@@ -237,7 +237,7 @@ Table: Network global properties across scales, *Meta* represents the marine pre
 
 The representation of three species sub-networks showed the same patterns in all networks (Figure 2 A, Table 2). Exploitative competition, apparent competition, and omnivory are over-represented, the three trophic chains are under-represented and all these patterns are significant (Table S2). The z-scores are lower for smaller sized networks showing that smaller networks are more variable. The motifs proportions for the three scales are different (Chi-squared = 12612, p-value < 9.999e-05), this means that local and regional networks are not a random sample of the meta-web. 
 
-![Network sub-structural properties across scales, the *Meta-web* represents the marine predator-prey relationships of Antarctica (34.8 million Km^2^), *Regional* represents the Weddell Sea (3.5 million Km^2^), and *Local* a small fjord (6.8 Km^2^). A. Z-scores of four three node motif important for food-web stability. B. Topological roles based in within module degree and among module connectivity](Figures/Motif_TopoRoles_ByNetwork.png){ width=75% }
+![Network sub-structural properties across scales, the *Meta-web* represents the marine predator-prey relationships of Antarctica (34.8 million Km^2^), the *Weddell Sea* (3.5 million Km^2^), and *Potter Cove* (6.8 Km^2^) are local food-webs. A. proportions three node motif important for food-web stability. B. Proportion of topological roles based in within module degree and among module connectivity](Figures/PropMotif_Roles_ByNetwork.png){ width=100% }
 
 
 \scriptsize

@@ -638,8 +638,9 @@ pFM<- FreqMotif %>% group_by(Network) %>% dplyr::select(X4:X6,X9) %>% rename(EC=
 require(tidyr)
 
 pFM1 <- pFM %>% mutate(EC=EC/Tot,AC=AC/Tot,TT=TT/Tot, OM=OM/Tot) %>% dplyr::select(Network:OM) %>%gather(motif,count,EC:OM)
+levels(pFM1$Network) <- c("Potter Cove","Weddell Sea","Meta-web")
 require(ggplot2)
-ggplot(pFM1,aes(x=Network,y=count,fill=motif)) + geom_bar(stat="identity") + 
+gP1 <- ggplot(pFM1,aes(x=Network,y=count,fill=motif)) + geom_bar(stat="identity") + 
   scale_fill_brewer(palette = "RdYlGn", breaks=c("EC","AC","TT","OM"), name="", labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")) + 
   xlab("") + ylab("Proportion") + theme_bw() + theme(legend.position="bottom")
 ggsave("Figures/MotifProportionByNetwork.png",width=6,height=6,units="in",dpi=600)
@@ -885,22 +886,42 @@ require(scales)
 df1 <- data.frame(tbl1)
 names(df1) <- c("Network","Rol","count")
 df1 <- filter(df1,count!=0)
-#df1 <- df1 %>% group_by(Network) %>% mutate(total=sum(count),Freq=count/total) 
-g2 <- ggplot(df1,aes(x=Network,y=count,fill=Rol)) + geom_bar(stat="identity",position=position_dodge()) + 
-  scale_fill_brewer(palette = "RdYlGn",name="Topological\nRol") + scale_y_continuous(trans=log1p_trans(),breaks=c(1,10,100,1000)) +
-  xlab("") + ylab("") + theme_bw() #+ theme(legend.position="bottom") 
+df1 <- df1 %>% group_by(Network) %>% mutate(total=sum(count),Freq=count/total)
+levels(df1$Network) <- c("Potter Cove","Weddell Sea","Meta-web")
+
+
+gP2 <- ggplot(df1,aes(x=Network,y=Freq,fill=Rol)) + geom_bar(stat="identity") + 
+  scale_fill_brewer(palette = "RdYlGn",name="") + 
+  xlab("") + ylab("") + theme_bw() + theme(legend.position="bottom")
 ggsave("Figures/TopoRolesProportionByNetwork.png",width=6,height=6,units="in",dpi=600)
 
-# Combine g1 & g2 
 
+# Plot motif frequency 
+# 
+#
+pFM<- FreqMotif %>% group_by(Network) %>% dplyr::select(X4:X6,X9) %>% rename(EC=X4,AC=X5,TT=X6,OM=X9) %>% mutate(Tot=sum(EC,AC,TT,OM)) %>% ungroup()
 require(tidyr)
+pFM1 <- pFM %>% mutate(EC=EC/Tot,AC=AC/Tot,TT=TT/Tot, OM=OM/Tot) %>% dplyr::select(Network:OM) %>%gather(motif,count,EC:OM)
+levels(pFM1$Network) <- c("Potter Cove","Weddell Sea","Meta-web")
+require(ggplot2)
+gP1 <- ggplot(pFM1,aes(x=Network,y=count,fill=motif)) + geom_bar(stat="identity") + 
+  scale_fill_brewer(palette = "RdYlGn", breaks=c("EC","AC","TT","OM"), name="", labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivo-\nry")) + 
+  xlab("") + ylab("Proportion") + theme_bw() + theme(legend.position="bottom")
 
-names(motif)
-pFM1 <- motif %>% dplyr::select(Network,zEC:zOM) %>%gather(motif,value,zEC:zOM)
-
-g1 <- ggplot(pFM1,aes(x=Network,y=value,fill=motif)) + geom_bar(stat="identity",position=position_dodge()) + 
-  scale_fill_brewer(palette = "RdYlGn",breaks=c("zEC","zAC","zTT","zOM"),name="Motif\nZ-score",   labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")) + 
-  xlab("") + ylab("") + theme_bw() + scale_x_discrete(limits=c("Local","Regional","Meta")) #+ theme(legend.position="bottom")
+# g2 <- ggplot(df1,aes(x=Network,y=count,fill=Rol)) + geom_bar(stat="identity",position=position_dodge()) + 
+#   scale_fill_brewer(palette = "RdYlGn",name="Topological\nRol") + scale_y_continuous(trans=log1p_trans(),breaks=c(1,10,100,1000)) +
+#   xlab("") + ylab("") + theme_bw() #+ theme(legend.position="bottom") 
+# 
+# # Combine g1 & g2 
+# 
+# require(tidyr)
+# 
+# names(motif)
+# pFM1 <- motif %>% dplyr::select(Network,zEC:zOM) %>%gather(motif,value,zEC:zOM)
+# 
+# g1 <- ggplot(pFM1,aes(x=Network,y=value,fill=motif)) + geom_bar(stat="identity",position=position_dodge()) + 
+#   scale_fill_brewer(palette = "RdYlGn",breaks=c("zEC","zAC","zTT","zOM"),name="Motif\nZ-score",   labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")) + 
+#   xlab("") + ylab("") + theme_bw() + scale_x_discrete(limits=c("Local","Regional","Meta")) #+ theme(legend.position="bottom")
 
 # Normalize z-scores
 #
@@ -910,11 +931,13 @@ g1 <- ggplot(pFM1,aes(x=Network,y=value,fill=motif)) + geom_bar(stat="identity",
 #   scale_fill_brewer(palette = "RdYlGn",breaks=c("zEC","zAC","zTT","zOM"),name="Motif\nZ-score",   labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")) + 
 #   xlab("") + ylab("") + theme_bw() + scale_x_discrete(limits=c("Local","Regional","Meta")) #+ theme(legend.position="bottom")
 
-g1
-require(cowplot)
-plot_grid(g1,g2,labels = c("A","B"),align = "h")
+gP1 <- gP1 +  theme(legend.key.width = unit(.5, "cm"))
+gP2 <- gP2 +  theme(legend.key.width = unit(.5, "cm"))
 
-ggsave("Figures/Motif_TopoRoles_ByNetwork.png",width=8,height=5,units="in",dpi=600)
+require(cowplot)
+gP3 <- plot_grid(gP1,gP2,labels = c("A","B"),align = "h")
+save_plot("Figures/PropMotif_Roles_ByNetwork.png",gP3,base_width=8,base_height=5,dpi=600)
+#ggsave("Figures/PropMotif_Roles_ByNetwork.png",width=8,height=5,units="in",dpi=600)
 
 
 #
@@ -1045,4 +1068,29 @@ save.image()
 
 ```
 
+## Make a map of antarctica weddell sea and Potter Cove
 
+<http://eriqande.github.io/rep-res-web/lectures/making-maps-with-R.html#map-making-in-R>
+<https://rpubs.com/nickbearman/r-google-map-making>
+<http://www.polarmicrobes.org/making-maps-in-r/>
+
+```{r AntarcitaWeddelPotterMap, eval=T,echo=F,message=T,warning=T}
+
+# 
+
+require(ggmap)
+
+map1 <- get_map(location = "King George Island", maptype = "satellite", source = "google")
+ggmap(map1)
+
+
+library(ggplot2)
+world <- map_data("world")
+worldmap <- ggplot(world, aes(x=long, y=lat, group=group)) +
+   geom_path() +
+   scale_y_continuous(breaks=(-2:2) * 30) +
+   scale_x_continuous(breaks=(-4:4) * 45)
+
+worldmap + coord_map("ortho", orientation=c(-90, 0, 0))
+
+```
