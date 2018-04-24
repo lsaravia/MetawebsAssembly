@@ -1,4 +1,4 @@
-OPTS= -H margins.sty --bibliography MetawebsAssembly.bib --csl=plos.csl --latex-engine=xelatex 
+OPTS= -H margins.sty --bibliography MetawebsAssembly.bib --csl=ecography.csl --latex-engine=xelatex 
 
 all: Appendices.pdf MetawebsAssembly.pdf MetawebsAssembly.docx
 

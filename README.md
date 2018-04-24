@@ -23,12 +23,14 @@ In recent years there has been an increased interest in spatial and temporal var
 		Plots of food-webs by modularity and trophic level, package NetIndices
 		Analysis of 3-node motif
 
+* The R Package MetaWebAssemblyModels is needed to simulate the meta-web assembly model
+
+<https://github.com/lsaravia/MetaWebAssemblyModels>
+
 
 
 ## Folders
 
 	| 
 	+--- R: R code by L. Saravia
-    |
-    +--- MetaWebAssemblyModels: Package with the meta-web assembly model
     	 

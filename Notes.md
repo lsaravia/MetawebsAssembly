@@ -1,5 +1,7 @@
 # From Local to regional and continental food web structure  
 
+words: 5438 - 73 -163 - 144 -51
+
 # reviewers
 
 Alyssa R. Cirtwill, School of Biological Sciences, University of Canterbury, Private Bag 4800, Christchurch 8140, New Zealand.E-mail: alyssa.cirtwill@gmail.com

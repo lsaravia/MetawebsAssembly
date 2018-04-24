@@ -127,7 +127,7 @@ where $q_{obs}$ is the observed coherence, $q_{null}$ is the mean coherence from
 
 #### Modularity 
 
-The intermediate level property (i.e. between the whole network and the individual species) is modularity, that measures how densely sub-groups of species interact with one another compared to species of other sub-groups [@Newman2004]. These sub-groups are called compartments and to find the best partition we used a stochastic algorithm based on simulated annealing [@Reichardt2006]. Simulated annealing allows to maximize modularity without getting trapped in local maxima configurations [@Guimera2005], the index of modularity is then defined as: 
+An intermediate level property (i.e. between the whole network and the individual species) is modularity, that measures how densely sub-groups of species interact with one another compared to species of other sub-groups [@Newman2004]. These sub-groups are called compartments and to find the best partition we used a stochastic algorithm based on simulated annealing [@Reichardt2006]. Simulated annealing allows to maximize modularity without getting trapped in local maxima configurations [@Guimera2005], the index of modularity is then defined as: 
 
 $$M = \sum_s \left(\frac{I_s}{E} - \left(\frac{d_s}{2E}\right)^2 \right)$$
 
@@ -150,13 +150,13 @@ As a local property that reflect the ecological role of each species we use topo
 $$dz_i = \frac{k_{is}-\bar{k_s} }{\sigma_{ks}}$$ 
 
 
-where $k_{is}$ is the number of links of species $i$ within its own module $s$ and $\bar{k_s}$ and $\sigma_{ks}$ are the average and SD of $k_{is}$ over all species in $s$. The participation coefficient $PC$ estimates the distribution of the links of species $i$ among modules; thus it can be defined as:
+where $k_{is}$ is the number of links of species $i$ within its own module $s$, $\bar{k_s}$ and $\sigma_{ks}$ are the average and SD of $k_{is}$ over all species in $s$. The participation coefficient $PC$ estimates the distribution of the links of species $i$ among modules; thus it can be defined as:
 
 $$PC_i =  1 - \sum_s \frac{k_{is}}{k_i}$$ 
 
 where $k_i$ is the degree of species $i$ (i.e. the number of links), $k_{is}$ is the number of links of species $i$ to species in module $s$, and in this case $s$ runs over all the modules. Due to the stochastic nature of the module detection algorithm we made repeated simulations until the distribution of $PC_i$ and $dz_i$ has no statistical differences between two successive repetitions; to test that we used the k-sample Anderson-Darling test [@Scholz1987]. Then we calculate the mean and 95% CI of $dz$ and $PC$.
 
-To determine each species' role the $dz-PC$ parameter space is divided into four regions, this was modified from @Guimera2005, using the same scheme of @Kortsch2015. There are two thresholds that define the roles: $dz=2.5$ and $PC=0.625$. If a species has at least 60% of links within its own module then $PC<0.625$ and if it also has $dz\ge 2.5$, it is classified as a module hub. These species a relatively high number of links, but inside his module. If a species has $dz<2.5$ and $PC<0.625$ is called peripheral or specialist, it means that it has relatively few links and most within its module. Species that have $dz<2.5$ and $PC\ge0.625$ are module connectors, they have relatively few links and most between modules. Finally if a species has $dz\ge 2.5$ and $PC\ge0.625$ it is classified as super-generalist because it has high between- and within-module connectivity. To test if the proportion of species with each of the roles changes for the different networks we made a Pearson's Chi-squared test with simulated p-value based on 10000 Monte Carlo replicates.
+To determine each species' role the $dz-PC$ parameter space is divided into four regions, this was modified from @Guimera2005, using the same scheme of @Kortsch2015. There are two thresholds that define the roles: $dz=2.5$ and $PC=0.625$. If a species has at least 60% of links within its own module then $PC<0.625$ and if it also has $dz\ge 2.5$, it is classified as a module hub. These species have a relatively high number of links, but inside his own module. If a species has $dz<2.5$ and $PC<0.625$ is called peripheral or specialist, it means that it has relatively few links and most within its module. Species that have $dz<2.5$ and $PC\ge0.625$ are module connectors, they have relatively few links and most between modules. Finally if a species has $dz\ge 2.5$ and $PC\ge0.625$ it is classified as super-generalist or hub-connector because it has high between- and within-module connectivity. To test if the proportion of species with each of the roles changes for the different networks we made a Pearson's Chi-squared test with simulated p-value based on 10000 Monte Carlo replicates.
 
 We combined the topological roles with the trophic level of each species and the compartments in one plot to give an integrated visualization of these sub-structural and local properties of the food web.
 
@@ -167,36 +167,38 @@ All analyses and simulations were made in R version 3.4.3 [@RCoreTeam2017], the 
 
 ### Global network properties
 
-The networks have values for connectance, numbers of species (size) and links (Table 1), that are well inside the range found for marine food webs [@Marina2018a]. Based in the random null model, all networks present the small-world structure as their small-world-ness index is larger than the 99% CI (Table 1), but there is no difference between local food-webs and the assembly model. By definition a network is more coherent when its $q$ index is closer to zero, all networks have a significant smaller $q$ value (Table S1); thus they are more coherent than a random network. The regional an local networks have similar values and both are smaller than the meta-web, thus they are more locally stable as they are more coherent. Using the meta-web assembly model only Weddell food-web is more stable and Potter Cove food web have no differences with the model (Table S2). Mean trophic level is always lower than its random counterpart, and similar between networks. For these two last metrics local z-scores are smaller for the local food-web and greater for regional and meta-web, this means that smaller networks present more variability than larger ones. Modularity is greater and significant for meta-web and regional networks and not significant and smaller for the local networks. Modularity shows an opposite pattern with coherence, more modularity imply less coherence, and in consequence less stability.  
+The networks have values for connectance, numbers of species (size) and links (Table 1), that are well inside the range found for marine food webs [@Marina2018a]. Based in the random null model, all networks present the small-world structure as their small-world-ness index is larger than the 99% CI (Table 1), but there is no difference between local food-webs and the assembly model. By definition a network is more coherent when its $q$ index is closer to zero, all networks have a negative random z-score (Table 1) and a significant smaller $q$ value (Table S1); thus they are more locally stable as they are more coherent. Using the meta-web assembly model only Weddell food-web is more stable and Potter Cove food web have no differences with the model (Table 1 & S2). Mean trophic level is similar among networks and significantly lower than the random null model (Table 1 & S1), but compared with meta-web model trophic levels are not significant. Modularity is greater than the random model and significant for the meta-web and Weddell Sea and not significant Potter Cove; compared with the meta-web model modularity is not significant. In general the networks are different from the random null model and similar to the meta-web assembly model.
+
 
 \scriptsize
 
-----------------------------------------------
-Network             Potter    Weddell     Meta  
------------------ -------- ---------- --------
-Size                   91        437       859  
+------------------------------------------------
+Network             Potter    Weddell   Meta-web  
+                      Cove        Sea
+----------------- -------- ---------- ----------
+Size                   91        437         859  
 
-Links                  309       1908     9003  
+Links                  309       1908       9003  
 
-Area (Km^2^)           6.8      3.5e6   34.8e6
+Area (Km^2^)           6.8      3.5e6     34.8e6
 
-Connectance          0.037       0.010   0.012 
+Connectance          0.037      0.010      0.012 
 
-PathLength            1.81       2.20     2.57  
+PathLength            1.81       2.20       2.57  
 
-Clustering            0.10      0.048     0.22 
+Clustering            0.10      0.048       0.22 
 
-Small-World-ness      2.75       4.69    10.87
+Small-World-ness      2.75       4.69      10.87
 
-SWness random         2.07       2.27     1.71
+SWness random         2.07       2.27       1.71
 99%CI        
 
 SWness assembly       0.42       0.21
 99%CI           
 
-Coherence             0.53       0.45     0.70  
+Coherence             0.53       0.45       0.70  
 
-Coherence           *-0.54     *-2.08   *-3.54
+Coherence           *-0.54     *-2.08     *-3.54
 random 
 z-score    
 
@@ -204,10 +206,10 @@ Coherence            -0.25     *-3.33
 assembly
 z-score    
 
-Mean Trophic          2.13       1.98     1.91
+Mean Trophic          2.13       1.98       1.91
 level         
 
-Trophic level       *-0.27     *-0.86   *-1.60
+Trophic level       *-0.27     *-0.86     *-1.60
 random
 z-score        
 
@@ -216,18 +218,18 @@ assembly
 z-score        
 
 
-Modularity            0.37       0.48    0.45 
+Modularity            0.37       0.48      0.45 
 
-Modularity            0.89     *18.97  *85.75
+Modularity            0.89     *18.97    *85.75
 random
 z-score
 
-Modularity           -0.38       0.38          
+Modularity           -0.38       0.38            
 assembly 
 z-score
-----------------------------------------------
+------------------------------------------------
 
-Table: Network global properties across scales, *Meta* represents the marine predator-prey relationships of Antarctica, *Weddell* is the Weddell Sea food web, and *Potter* the Potter Cove food web. Z-scores are calculated against 1000 null model networks (random or meta-web assembly models). Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation for null model networks; a positive z-score means that is greater.
+Table: Network global properties across scales, *Meta* represents the marine predator-prey relationships of Antarctica, the *Weddell Sea* and *Potter Cove* are local food webs. Z-scores are calculated against 1000 null model networks (random or meta-web assembly models). Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation for null model networks; a positive z-score means that is greater.
 
 \normalsize
 
@@ -235,8 +237,10 @@ Table: Network global properties across scales, *Meta* represents the marine pre
 
 The representation of three species sub-networks showed the same patterns in all networks (Figure 2 A, Table 2). Exploitative competition, apparent competition, and omnivory are over-represented, the three trophic chains are under-represented and all these patterns are significant (Table S2). The z-scores are lower for smaller sized networks showing that smaller networks are more variable. The motifs proportions for the three scales are different (Chi-squared = 12612, p-value < 9.999e-05), this means that local and regional networks are not a random sample of the meta-web. 
 
-![Network sub-structural properties across scales, *Meta* represents the marine predator-prey relationships of Antarctica (34.8 million Km^2^), *Regional* represents the Weddell Sea (3.5 million Km^2^), and *Local* a small fjord (6.8 Km^2^). A. Z-scores of four three node motif important for food-web stability. B. Topological roles based in within module degree and among module connectivity](Figures/Motif_TopoRoles_ByNetwork.png){ width=75% }
+![Network sub-structural properties across scales, the *Meta-web* represents the marine predator-prey relationships of Antarctica (34.8 million Km^2^), *Regional* represents the Weddell Sea (3.5 million Km^2^), and *Local* a small fjord (6.8 Km^2^). A. Z-scores of four three node motif important for food-web stability. B. Topological roles based in within module degree and among module connectivity](Figures/Motif_TopoRoles_ByNetwork.png){ width=75% }
 
+
+\scriptsize
 
 ------------------------------------------
                 Potter   Weddell  Meta-web   
@@ -245,41 +249,40 @@ The representation of three species sub-networks showed the same patterns in all
 Exploitative 
 competition       830     42210     285866  
 
-EC z-zcore      *15.45   *592.22   *945.56 
-Random
+EC Random      *15.45   *592.22    *945.56 
+z-score
 
-EC z-score      -0.73      1.41    
-Assembly
+EC Assembly     -0.73      1.41    
+z-score
 
 Apparent 
 competition       1983      7842    126552  
 
-AC z-score      *63.29    *58.44   *320.36
-Random
+AC Random       *63.29    *58.44   *320.36
+z-score
 
-AC z-score      *4.86      -1.94
-Assembly
+AC Assembly     *4.86      -1.94
+z-score
 
 Tri-trophic 
 chain              578      3101     61739  
 
-TT z-score      *-7.82   *-48.78   *-69.35 
-Random
+TT Random       *-7.82   *-48.78   *-69.35 
+z-score
 
-TT z-score        1.43    *-2.28 
-Assembly
+TT Assembly        1.43    *-2.28 
+z-score
 
 Omnivory           124       892     36423  
 
-OM z-score      *15.38    *89.32  *1022.21
-Random
+OM Random       *15.38    *89.32  *1022.21
+z-score
 
-OM z-score       -0.44    *-2.47
-Assembly
+OM Assembly      -0.44    *-2.47
+z-score
 ------------------------------------------
 
-Table: Motif counts and z-scores across scales, *Meta-web* represents the marine predator-prey relationships of Antarctica, *Weddell* represents the Weddell Sea food web, and *Potter Cove* a small fjord food web. Z-scores were calculated against 1000 random networks. Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation for random networks; a positive z-score means that is greater. The proportions for the three scales are different (Chi-squared = 12612, df = 6, p-value < 2.2e-16)
-
+Table: Motif counts and z-scores across scales, *Meta-web* represents the marine predator-prey relationships of Antarctica, the *Weddell Sea* and *Potter Cove* are local food webs. Z-scores were calculated against 1000 null model networks (random or meta-web assembly models). Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation for random networks; a positive z-score means that is greater. The proportions for the three scales are different (Chi-squared = 12612, df = 6, p-value < 2.2e-16)
 
 \normalsize
 

@@ -338,4 +338,14 @@ select(motif_metaWeb, apprComp,AClow,AChigh,zAC)
 select(motif_metaWeb, triTroph,TTlow,TThigh,zTT)
 select(motif_metaWeb, omnivory,OMlow,OMhigh,zOM)
 
+require(pander)
+panderOptions('table.split.table',Inf)
+panderOptions('table.style', 'multiline')
+
+webs_tmp <- inner_join(websAssemblyModel,dplyr::select(websTbl,Q,mTI,Network), by="Network")
+pandoc.table(t(webs_tmp %>% dplyr::select(Network,Q,Qlow,Qhigh,mTI,TIlow,TIhigh,Modularity, MOlow,MOhigh) %>% mutate_if(is.numeric, round, digits=4)))
+
+pandoc.table(t(motif_metaWeb %>% dplyr::select(Network,) %>% mutate_if(is.numeric, round, digits=4)))
+
+
 ```
