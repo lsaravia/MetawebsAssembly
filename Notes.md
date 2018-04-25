@@ -14,6 +14,53 @@ Meta-web --> Weddell Sea : Random sampling (Local Motif representation should ma
 Meta-web --> Potter Cove : Habitat Filtering (Local Motif representation should be different from the meta-web)
 
 
+### Old table
+
+\scriptsize
+
+------------------------------------------
+                Potter   Weddell  Meta-web   
+                 Cove        Sea
+-------------- ------- --------- ---------
+Exploitative 
+competition       830     42210     285866  
+
+EC Random      *15.45   *592.22    *945.56 
+z-score
+
+EC Assembly     -0.73      1.41    
+z-score
+
+Apparent 
+competition       1983      7842    126552  
+
+AC Random       *63.29    *58.44   *320.36
+z-score
+
+AC Assembly     *4.86      -1.94
+z-score
+
+Tri-trophic 
+chain              578      3101     61739  
+
+TT Random       *-7.82   *-48.78   *-69.35 
+z-score
+
+TT Assembly        1.43    *-2.28 
+z-score
+
+Omnivory           124       892     36423  
+
+OM Random       *15.38    *89.32  *1022.21
+z-score
+
+OM Assembly      -0.44    *-2.47
+z-score
+------------------------------------------
+
+Table: Motif counts and z-scores across scales, *Meta-web* represents the marine predator-prey relationships of Antarctica, the *Weddell Sea* and *Potter Cove* are local food webs. Z-scores were calculated against 1000 null model networks (random or meta-web assembly models). Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation for random networks; a positive z-score means that is greater. 
+
+
 
 ----------
 

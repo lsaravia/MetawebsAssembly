@@ -345,7 +345,48 @@ panderOptions('table.style', 'multiline')
 webs_tmp <- inner_join(websAssemblyModel,dplyr::select(websTbl,Q,mTI,Network), by="Network")
 pandoc.table(t(webs_tmp %>% dplyr::select(Network,Q,Qlow,Qhigh,mTI,TIlow,TIhigh,Modularity, MOlow,MOhigh) %>% mutate_if(is.numeric, round, digits=4)))
 
-pandoc.table(t(motif_metaWeb %>% dplyr::select(Network,) %>% mutate_if(is.numeric, round, digits=4)))
+pandoc.table(t(motif_metaWeb %>% rename(EC=explComp,AC=apprComp,TT=triTroph,OM=omnivory) %>%
+                 dplyr::select(Network,EC,EClow,EChigh,zEC,AC,AClow,AChigh,zAC,TT,TTlow,TThigh,zTT,OM,OMlow,OMhigh,zOM) %>% mutate_if(is.numeric, round, digits=2)))
+
+
+# Plot of random z-score motif normalized
+#
+#
+
+require(tidyr)
+names(motif)
+pFM1 <- motif %>% dplyr::select(Network,zEC:zOM) %>%gather(motif,value,zEC:zOM) %>% mutate(type="Random z-score")
+pFM1$Network <- factor(pFM1$Network)
+levels(pFM1$Network) <- c("Potter Cove","Meta-web","Weddell Sea")
+
+# Normalize z-scores
+#
+pFM1 <- pFM1 %>% group_by(Network) %>% mutate(normZ=value/sum(sqrt(value^2)))
+
+g1 <- ggplot(pFM1,aes(x=Network,y=normZ,fill=motif)) + geom_bar(stat="identity",position=position_dodge()) +
+   scale_fill_brewer(palette = "RdYlGn",breaks=c("zEC","zAC","zTT","zOM"),name="Motif\nZ-score",   labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")) + guides(fill=FALSE) +
+   xlab("") + ylab("") + theme_bw() + scale_x_discrete(limits=c("Potter Cove","Weddell Sea","Meta-web")) + expand_limits(y=c(0.75,-0.25)) #+ theme(legend.position="bottom")
+g1
+
+# Plot of assembly motifs normalized 
+#
+names(motif_metaWeb)
+pFM2 <- motif_metaWeb %>% dplyr::select(Network,zEC:zOM) %>%gather(motif,value,zEC:zOM) %>% mutate(type="Assembly z-score", Network=factor(Network))
+
+levels(pFM2$Network) <- c("Potter Cove","Weddell Sea")
+
+pFM2 <- pFM2 %>% group_by(Network) %>% mutate(normZ=value/sum(sqrt(value^2)))
+
+g2 <- ggplot(pFM2,aes(x=Network,y=normZ,fill=motif)) + geom_bar(stat="identity",position=position_dodge()) +
+   scale_fill_brewer(palette = "RdYlGn",breaks=c("zEC","zAC","zTT","zOM"),name="Motif\nZ-score",   labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")) +
+   xlab("") + ylab("") + theme_bw() + scale_x_discrete(limits=c("Potter Cove","Weddell Sea","Meta-web")) + expand_limits(y=c(0.75,-0.25)) #+ theme(legend.position="bottom")
+
+g2
+require(cowplot)
+g3 <- plot_grid(g1,g2,labels = c("A","B"),align = "h",rel_widths=c(.9,1.2))
+g3
+save_plot("Figures/Motif_Zs_ByNetwork.png",g3,base_width=8,base_height=5,dpi=600)
+
 
 
 ```

@@ -53,7 +53,8 @@ Table: Modularity, number of groups coherence (q) and mean trophic level with 99
 
 
 -----------------------------------------------
-**Network**        Local   Regional        Meta
+**Network**       Potter    Weddell    Meta-web
+                    Cove        Sea
 -------------- --------- ---------- -----------
 **EC**              830      42210      285866   
 
@@ -90,7 +91,46 @@ OM z-score      15.3853   89.3244    1022.2137
 Table: Motif counts and 99% confidence intervals based on 1000 random networks. Where EC is exploitative competition, AC apparent competition, TT tri-trophic chain and OM is omnivory.
 
 
-![Topological roles with 95% confidence intervals by Network. *Meta* represent the marine predator-prey relationships of Antarctica (34.8 million Km^2^), *Regional* represent the Weddell Sea (3.5 million Km^2^), and *Local* a small fjord (6.8 Km^2^). A. Z-scores of four three node motif important for food-web stability. Topological roles are based in within module degree $dz$ and the participation coefficient $PC$ that measures among module connectivity.](Figures/TopoRolesCI_ByNetwork.png){ width=75% }
+----------------------------------
+**Network**       Potter   Weddell
+                    Cove       Sea
+-------------- --------- --------- 
+   **EC**        830      42210   
+
+  EC low       170.88    15476.69 
+
+  EC high      3781.58   54200.32 
+
+  EC z-score     -0.73      1.41   
+
+   **AC**       1983       7842   
+
+  AC low       104.00    7283.44  
+
+  AC high      1780.11   22753.16 
+
+  AC z-score     4.86      -1.94   
+
+   **TT**        578       3101   
+
+  TT low        11.97    3127.93  
+
+  TT high      996.10    11868.91 
+
+  TT z-score     1.43      -2.28   
+
+   **OM**        124       892    
+
+  OM low         1.0      1362.8  
+
+  OM high      730.02    7866.68  
+
+  OM z-score    -0.44     -2.47   
+----------------------------------
+Table: Motif counts and 99% confidence intervals based on 1000 meta-web assembly model networks. Where EC is exploitative competition, AC apparent competition, TT tri-trophic chain and OM is omnivory.
+
+
+![Topological roles with 95% confidence intervals by Network. *Meta-web* represent the marine predator-prey relationships of Antarctica (34.8 million Km^2^); the *Weddell Sea* (3.5 million Km^2^) and *Potter Cove* (6.8 Km^2^) are local food webs. A. Z-scores of four three node motif present in all the networks. Topological roles are based in within module degree $dz$ and the participation coefficient $PC$ that measures among module connectivity.](Figures/TopoRolesCI_ByNetwork.png){ width=75% }
 
 \newpage
 
@@ -98,138 +138,138 @@ Table: Motif counts and 99% confidence intervals based on 1000 random networks. 
 Type      Network         Tropho-species            Preys   Predators      Trophic 
                                                                              Level 
 --------- ---------- ---------------------------- ------- ----------- ------------
- hubcon    Local        Notothenia coriiceps       48         0          2.86    
+ hubcon   Potter         Notothenia coriiceps       48         0          2.86    
 
- hubcon     Meta     Euphausia crystallorophias    23        59          2.11    
+ hubcon   Meta-web     Euphausia crystallorophias    23        59          2.11    
 
- hubcon     Meta        Electrona antarctica       111       25          2.53    
+ hubcon   Meta-web        Electrona antarctica       111       25          2.53    
 
- hubcon     Meta       Gymnoscopelus nicholsi      73        24          2.6     
+ hubcon   Meta-web       Gymnoscopelus nicholsi      73        24          2.6     
 
- hubcon     Meta       Protomyctophum bolini       71        20          2.64    
+ hubcon   Meta-web       Protomyctophum bolini       71        20          2.64    
 
- hubcon     Meta         Pygoscelis adeliae        75         4          3.03    
+ hubcon   Meta-web         Pygoscelis adeliae        75         4          3.03    
 
- hubcon     Meta        Aptenodytes forsteri       68         0          3.06    
+ hubcon   Meta-web        Aptenodytes forsteri       68         0          3.06    
 
- hubcon   Regional              Fish                0        57           1      
+ hubcon   Weddell                 Fish                0        57           1      
 
- hubcon   Regional          Euphausiacea            0        41           1      
+ hubcon   Weddell             Euphausiacea            0        41           1      
 
- hubcon   Regional          Zooplankton             0        57           1      
+ hubcon   Weddell             Zooplankton             0        57           1      
 
- hubcon   Regional       Euphausia superba          9        41           2      
+ hubcon   Weddell          Euphausia superba          9        41           2      
 
- modhub     Meta              Detritus              0        258          1      
+ modhub   Meta-web              Detritus              0        258          1      
 
- modhub     Meta             Polychaeta             0        75           1      
+ modhub   Meta-web             Polychaeta             0        75           1      
 
- modhub     Meta             Crustacea              0        93           1      
+ modhub   Meta-web             Crustacea              0        93           1      
 
- modhub     Meta             Radiolaria             0        103          1      
+ modhub   Meta-web             Radiolaria             0        103          1      
 
- modhub     Meta             Oncaea sp.             0        136          1      
+ modhub   Meta-web             Oncaea sp.             0        136          1      
 
- modhub     Meta          Bacillariophyta           0        179          1      
+ modhub   Meta-web          Bacillariophyta           0        179          1      
 
- modhub     Meta             Amphipoda              0        63           1      
+ modhub   Meta-web             Amphipoda              0        63           1      
 
- modhub     Meta                Fish                0        57           1      
+ modhub   Meta-web                Fish                0        57           1      
 
- modhub     Meta              Porifera              0        45           1      
+ modhub   Meta-web              Porifera              0        45           1      
 
- modhub     Meta            Oithona sp.             0        137          1      
+ modhub   Meta-web            Oithona sp.             0        137          1      
 
- modhub     Meta           Phytoplankton            0        92           1      
+ modhub   Meta-web           Phytoplankton            0        92           1      
 
- modhub     Meta            Zooplankton             1        71           2      
+ modhub   Meta-web            Zooplankton             1        71           2      
 
- modhub     Meta         Calanoides acutus         34        134         2.12    
+ modhub   Meta-web         Calanoides acutus         34        134         2.12    
 
- modhub     Meta         Metridia gerlachei        69        142         2.4     
+ modhub   Meta-web         Metridia gerlachei        69        142         2.4     
 
- modhub     Meta             Gastropoda            30        31          2.41    
+ modhub   Meta-web             Gastropoda            30        31          2.41    
 
- modhub     Meta        Thysanoessa macrura        66        132         2.42    
+ modhub   Meta-web        Thysanoessa macrura        66        132         2.42    
 
- modhub     Meta       Pseudosagitta gazellae      62        92          2.43    
+ modhub   Meta-web       Pseudosagitta gazellae      62        92          2.43    
 
- modhub     Meta          Eukrohnia hamata         63        131         2.45    
+ modhub   Meta-web          Eukrohnia hamata         63        131         2.45    
 
- modhub     Meta         Euphausia superba         57        171         2.47    
+ modhub   Meta-web         Euphausia superba         57        171         2.47    
 
- modhub     Meta              Copepoda              2        144         2.5     
+ modhub   Meta-web              Copepoda              2        144         2.5     
 
- modhub     Meta             Salpa sp.             48        128         2.51    
+ modhub   Meta-web             Salpa sp.             48        128         2.51    
 
- modhub     Meta       Protomyctophum normani      53        19          2.53    
+ modhub   Meta-web       Protomyctophum normani      53        19          2.53    
 
- modhub     Meta       Antarctomysis ohlinii       47        90          2.57    
+ modhub   Meta-web       Antarctomysis ohlinii       47        90          2.57    
 
- modhub     Meta       Pelagobia longicirrata      47        97          2.57    
+ modhub   Meta-web       Pelagobia longicirrata      47        97          2.57    
 
- modhub     Meta       Microcalanus pygmaeus       47        89          2.57    
+ modhub   Meta-web       Microcalanus pygmaeus       47        89          2.57    
 
- modhub     Meta       Trematomus bernacchii       103        4          2.61    
+ modhub   Meta-web       Trematomus bernacchii       103        4          2.61    
 
- modhub     Meta      Eusirus propeperdentatus     33        90          2.73    
+ modhub   Meta-web      Eusirus propeperdentatus     33        90          2.73    
 
- modhub     Meta           Primno macropa          33        111         2.73    
+ modhub   Meta-web           Primno macropa          33        111         2.73    
 
- modhub     Meta        Notothenia coriiceps       60         3          2.79    
+ modhub   Meta-web        Notothenia coriiceps       60         3          2.79    
 
- modhub     Meta        Dissostichus mawsoni       48         9          2.81    
+ modhub   Meta-web        Dissostichus mawsoni       48         9          2.81    
 
- modhub     Meta       Thalassoica antarctica      42         3          2.88    
+ modhub   Meta-web       Thalassoica antarctica      42         3          2.88    
 
- modhub     Meta          Pagodroma nivea          41         2          2.9     
+ modhub   Meta-web          Pagodroma nivea          41         2          2.9     
 
- modhub     Meta       Arctocephalus gazella       52         1          2.93    
+ modhub   Meta-web       Arctocephalus gazella       52         1          2.93    
 
- modhub     Meta            Ophiuroidea            42        28          2.95    
+ modhub   Meta-web            Ophiuroidea            42        28          2.95    
 
- modhub     Meta      Leptonychotes weddellii      82         3          2.96    
+ modhub   Meta-web      Leptonychotes weddellii      82         3          2.96    
 
- modhub     Meta          Mirounga leonina         41         2          2.99    
+ modhub   Meta-web          Mirounga leonina         41         2          2.99    
 
- modhub   Regional          Foraminifera            0        30           1      
+ modhub   Weddell             Foraminifera            0        30           1      
 
- modhub   Regional        Bacillariophyta           0        100          1      
+ modhub   Weddell           Bacillariophyta           0        100          1      
 
- modhub   Regional            Detritus              0        174          1      
+ modhub   Weddell               Detritus              0        174          1      
 
- modhub   Regional         Phytoplankton            0        49           1      
+ modhub   Weddell            Phytoplankton            0        49           1      
 
- modhub   Regional            Bryozoa               0        29           1      
+ modhub   Weddell               Bryozoa               0        29           1      
 
- modhub   Regional            Copepoda              0        55           1      
+ modhub   Weddell               Copepoda              0        55           1      
 
- modhub   Regional            Bivalvia              0        26           1      
+ modhub   Weddell               Bivalvia              0        26           1      
 
- modhub   Regional          Ophiuroidea             0        23           1      
+ modhub   Weddell             Ophiuroidea             0        23           1      
 
- modhub   Regional             Squid                0        17           1      
+ modhub   Weddell                Squid                0        17           1      
 
- modhub   Regional            Porifera              0        45           1      
+ modhub   Weddell               Porifera              0        45           1      
 
- modhub   Regional            Isopoda               0        33           1      
+ modhub   Weddell               Isopoda               0        33           1      
 
- modhub   Regional           Amphipoda              0        63           1      
+ modhub   Weddell              Amphipoda              0        63           1      
 
- modhub   Regional           Crustacea              0        71           1      
+ modhub   Weddell              Crustacea              0        71           1      
 
- modhub   Regional           Polychaeta             0        75           1      
+ modhub   Weddell              Polychaeta             0        75           1      
 
- modhub   Regional       Odontaster validus        24         4          2.34    
+ modhub   Weddell          Odontaster validus        24         4          2.34    
 
- modhub   Regional        Salpa thompsoni          16        16          2.4     
+ modhub   Weddell           Salpa thompsoni          16        16          2.4     
 
- modhub   Regional      Euchaeta antarctica        12        17          2.43    
+ modhub   Weddell         Euchaeta antarctica        12        17          2.43    
 
- modhub   Regional        Cyllopus lucasii         13        25          2.45    
+ modhub   Weddell           Cyllopus lucasii         13        25          2.45    
 
- modhub   Regional      Electrona antarctica       16        16          2.65    
+ modhub   Weddell         Electrona antarctica       16        16          2.65    
 
- modhub   Regional      Dissostichus mawsoni       14         9          2.82    
+ modhub   Weddell         Dissostichus mawsoni       14         9          2.82    
 ----------------------------------------------------------------------------------
 Table: Topological roles with high number of links: Hub connectors (hubcon) and module hubs (modhub) with number of preys and predators and trophic level. Hub connectors are species that have relatively high number of links (predators and/or preys) and these links are mostly between modules, and module hubs have most links inside its module. 

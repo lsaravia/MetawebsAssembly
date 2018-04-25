@@ -947,6 +947,7 @@ save_plot("Figures/PropMotif_Roles_ByNetwork.png",gP3,base_width=8,base_height=5
 require(ggplot2)
 
 topoRoles$Network <- factor(topoRoles$Network, levels = c("Local","Regional","Meta")) 
+levels(topoRoles$Network)= c("Potter Cove","Weddell Sea","Meta-web")
 
 g <- ggplot(topoRoles, aes(x=among_module_conn,y=within_module_degree,colour=Network),shape=21) +  theme_bw() + geom_point()+ 
 	geom_errorbar(aes(ymin=wtmLowCI, ymax=wtmHiCI),width=0.0,alpha=0.5) +
@@ -1074,13 +1075,18 @@ save.image()
 <https://rpubs.com/nickbearman/r-google-map-making>
 <http://www.polarmicrobes.org/making-maps-in-r/>
 
+<https://medium.com/planet-stories/a-gentle-introduction-to-gdal-part-1-a3253eb96082>
+<https://medium.com/planet-stories/a-gentle-introduction-to-gdal-part-2-map-projections-gdalwarp-e05173bd710a>
+
 ```{r AntarcitaWeddelPotterMap, eval=T,echo=F,message=T,warning=T}
 
 # 
 
 require(ggmap)
 
-map1 <- get_map(location = "King George Island", maptype = "satellite", source = "google")
+map1 <- get_map(location = "King George Island", maptype = "hybrid", source = "google")
+map1 <- get_map(location = "Antarctica", maptype = "hybrid", source = "google")
+
 ggmap(map1)
 
 

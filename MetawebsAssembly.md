@@ -136,7 +136,7 @@ where $s$ is the number of modules or compartments, $I_s$ is the number of links
 
 #### Motifs 
 
-We consider here four of thirteen possible three-species subnetworks: the tri-trophic chain, omnivory, apparent competition, and exploitative competition motifs (Figure 1). These are the only motifs present in all the networks analysed in the present study. We compared the frequency of these motifs to 1000 null model networks as previously described. We calculated the 99% confidence interval and the z-score of motif counts using the equation:  
+We consider here four of thirteen possible three-species subnetworks: the tri-trophic chain, omnivory, apparent competition, and exploitative competition motifs (Figure 1). These are the only motifs present in all networks analysed here. We compared the frequency of these motifs to 1000 null model networks as previously described. We calculated the 99% confidence interval and the z-score of motif counts using the equation:  
 
 $$z_i=\frac{N_{obs} - N_{null}}{\sigma_{null}}$$
 
@@ -235,63 +235,23 @@ Table: Network global properties across scales, the *Meta-web* represents the ma
 
 ### Sub-structural properties (motifs)
 
-The representation of three species sub-networks showed the same patterns in all networks (Figure 2 A, Table 2). Exploitative competition, apparent competition, and omnivory are over-represented, the three trophic chains are under-represented and all these patterns are significant (Table S2). The z-scores are lower for smaller sized networks showing that smaller networks are more variable. The motifs proportions for the three scales are different (Chi-squared = 12612, p-value < 9.999e-05), this means that local and regional networks are not a random sample of the meta-web. 
+The representation of three species sub-networks with respect to the random model showed the same patterns in all networks (Figure 2 A, Table 2). Exploitative competition, apparent competition, and omnivory are over-represented, the three trophic chains are under-represented and all these patterns are significant (Table S3). 
+With respect of the meta-web assembly model only apparent competition is higher for Potter Cove (Table 2 & S4), and TT and OM are lower for Weddell Sea.  
+The motifs proportions for the three scales are different (Chi-squared = 12612, p-value < 9.999e-05), this means that local and regional networks are not a random sample of the meta-web (Figure 2A).  
 
-![Network sub-structural properties across scales, the *Meta-web* represents the marine predator-prey relationships of Antarctica (34.8 million Km^2^), the *Weddell Sea* (3.5 million Km^2^), and *Potter Cove* (6.8 Km^2^) are local food-webs. A. proportions three node motif important for food-web stability. B. Proportion of topological roles based in within module degree and among module connectivity](Figures/PropMotif_Roles_ByNetwork.png){ width=100% }
+![Network motifs z-scores across scales. Motif represent three-node sub-networks counted on each of the complete networks: the *Meta-web* represents the marine predator-prey relationships of Antarctica (34.8 million Km^2^); the *Weddell Sea* (3.5 million Km^2^) and *Potter Cove* (6.8 Km^2^) are local food-webs. A. Z-scores estimated with a random null model. B. Z-scores estimated with a meta-web assembly model.](Figures/Motif_Zs_ByNetwork.png){ width=100% }
 
-
-\scriptsize
-
-------------------------------------------
-                Potter   Weddell  Meta-web   
-                 Cove        Sea
--------------- ------- --------- ---------
-Exploitative 
-competition       830     42210     285866  
-
-EC Random      *15.45   *592.22    *945.56 
-z-score
-
-EC Assembly     -0.73      1.41    
-z-score
-
-Apparent 
-competition       1983      7842    126552  
-
-AC Random       *63.29    *58.44   *320.36
-z-score
-
-AC Assembly     *4.86      -1.94
-z-score
-
-Tri-trophic 
-chain              578      3101     61739  
-
-TT Random       *-7.82   *-48.78   *-69.35 
-z-score
-
-TT Assembly        1.43    *-2.28 
-z-score
-
-Omnivory           124       892     36423  
-
-OM Random       *15.38    *89.32  *1022.21
-z-score
-
-OM Assembly      -0.44    *-2.47
-z-score
-------------------------------------------
-
-Table: Motif counts and z-scores across scales, *Meta-web* represents the marine predator-prey relationships of Antarctica, the *Weddell Sea* and *Potter Cove* are local food webs. Z-scores were calculated against 1000 null model networks (random or meta-web assembly models). Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation for random networks; a positive z-score means that is greater. The proportions for the three scales are different (Chi-squared = 12612, df = 6, p-value < 2.2e-16)
 
 \normalsize
+
+![Proportion of topological roles across scales, the *Meta-web* represents the marine predator-prey relationships of Antarctica (34.8 million Km^2^); the *Weddell Sea* (3.5 million Km^2^) and *Potter Cove* (6.8 Km^2^) are local food-webs. The topological roles are: *Hub connectors* have a high number of between module links, *Module connectors* have a low number of links mostly between modules,  *Module hubs* have a high number of links inside its module. *Module specialists* have a low number of links inside its module. The proportions for the three scales are different (Chi-squared = 79.308, p-value = 9.999e-05).](Figures/TopoRolesProportionByNetwork.png)
 
 ### Node level properties (Topological roles)
 
 The proportion of species with the four topological roles is different as the spatial scale changes (Chi-squared = 79.308, p-value = 9.999e-05). This is observed as a higher presence of module connectors (few links, mostly between modules) in regional network, and the lack of module hubs (high number of links inside its module) in the local network (Figure 2 B). This last characteristic of the local network can be related to its low modularity value (Table 1). The plot of topological roles combined with trophic levels and modularity reveals some unexpected details of the food webs (Figure 3): in the meta-web there are densely connected compartments but some compartments have few low connected species (module connectors or module specialists).We run the compartimentalization algorithm several times to check if this was a consistent result and always the same structure was obtained. This asymmetry in the number of species by module maybe a characteristic of meta-webs. The second surprising result is that we observed in the regional network hub connectors with a basal trophic level. These are aggregated nodes that represent generic preys, e.g. fish or zooplankton, they only have incoming links or predators and they cannot have outgoing links or preys because they comprise a lot of species. Different fish species are present in the regional food with correctly specified preys and predators, but this reflects the fact that for some predators there is insufficient knowledge of its preys and aggregated nodes must be added to the food-web. Thus the existence of these basal hub connectors is a spurious result of aggregating prey species. The other non-aggregated hub connectors are highly mobile species with an intermediate trophic level like krill (Table S3). The variation of maximum trophic levels is also observed in Figure 3, and both local and meta-web have similar values whereas the regional food-web has lower values. 
 
 
-![Food Web structure showing trophic level by compartments (modules) and topological roles. The topological roles are classified with reference to random networks: *Hub connectors* have a high number of between module links, *Module connectors* have a low number of links mostly between modules,  *Module hubs* have a high number of links inside its module. *Module specialists* have a low number of links inside its module. The size of the species nodes is proportional to the log of its degree](Figures/AllTopoRoles_TL_MOD.png)
+![Food Web structure showing trophic level by compartments (modules) and topological roles. The topological are: *Hub connectors* have a high number of between module links, *Module connectors* have a low number of links mostly between modules,  *Module hubs* have a high number of links inside its module. *Module specialists* have a low number of links inside its module. The size of the species nodes is proportional to the log of its degree.](Figures/AllTopoRoles_TL_MOD.png)
 
 
 
