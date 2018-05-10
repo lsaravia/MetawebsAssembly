@@ -334,11 +334,18 @@ select(motif_metaWeb, apprComp,AClow,AChigh,zAC)
 select(motif_metaWeb, triTroph,TTlow,TThigh,zTT)
 select(motif_metaWeb, omnivory,OMlow,OMhigh,zOM)
 
+# Generate tables for the manuscript
+#
+#
 require(pander)
 panderOptions('table.split.table',Inf)
 panderOptions('table.style', 'multiline')
 
 webs_tmp <- inner_join(websAssemblyModel,dplyr::select(websTbl,Q,mTI,Network), by="Network")
+
+pandoc.table(t(webs_tmp %>% dplyr::select(Network,SWness,SWnessCI,zQ,zTI,zMO,zGR,mTI) %>% mutate_if(is.numeric, round, digits=4)))
+
+
 pandoc.table(t(webs_tmp %>% dplyr::select(Network,Q,Qlow,Qhigh,mTI,TIlow,TIhigh,Modularity, MOlow,MOhigh) %>% mutate_if(is.numeric, round, digits=4)))
 
 pandoc.table(t(motif_metaWeb %>% rename(EC=explComp,AC=apprComp,TT=triTroph,OM=omnivory) %>%
@@ -525,7 +532,7 @@ gP2 <- ggplot(df2,aes(x=Network,y=Freq,fill=Rol)) + geom_bar(stat="identity") +
 legend_b <- get_legend(gP2 + theme(legend.position="bottom"))
 
 require(cowplot)
-gP3 <- plot_grid(gP1,gP2,labels = c("A","B"),align = "h")
+gP3 <- plot_grid(gP2,gP1,labels = c("A","B"),align = "h")
 gP3 <- plot_grid( gP3, legend_b, ncol = 1, rel_heights = c(1, .05))
 save_plot("Figures/PropRoles_ByNetwork_Model.png",gP3,base_width=8,base_height=5,dpi=600)
 #ggsave("Figures/PropMotif_Roles_ByNetwork.png",width=8,height=5,units="in",dpi=600)
