@@ -368,6 +368,8 @@ plot_topological_roles <- function(tRoles,g,spingB){
   modhub <- which(l>2.5)
   modhub <- modhub[which(l>2.5) %in% which(r<=0.625)]
   modlbl <- unlist(vertex_attr(g,index=modhub))
+  if(is.null(modlbl))
+    modlbl <- modhub
   hub_conn <- data.frame()
   
   if(length(modhub)) {
@@ -383,19 +385,25 @@ plot_topological_roles <- function(tRoles,g,spingB){
   modhub <- which(l>2.5)
   modhub <- modhub[which(l>2.5) %in% which(r>0.625)]
   modlbl <- unlist(vertex_attr(g,index=modhub))
+  if(is.null(modlbl))
+    modlbl <- modhub
   if(length(modhub)) {
     text(r[modhub],l[modhub],labels = modlbl,cex=0.7,pos=3)
   }
   
   #points(r[modhub], l[modhub], cex=4, col="blue", pch=20)
-  hub_conn <- rbind(hub_conn, data.frame(type="hubcon",node=modhub,name=modlbl))  
-
+  if(length(modhub)){
+    hub_conn <- rbind(hub_conn, data.frame(type="hubcon",node=modhub,name=modlbl))  
+  }
   
   # Which are the module specialist: Few links and most of them within its own module
   #
   modhub <- which(l<=2.5)
   modhub <- modhub[which(l<=2.5) %in% which(r<=0.625)]
   modlbl <- unlist(vertex_attr(g,index=modhub))
+  if(is.null(modlbl))
+    modlbl <- modhub
+  
   hub_conn <- rbind(hub_conn, data.frame(type="modspe",node=modhub,name=modlbl))  
   
   # Which are the module connectors: Few links and between modules
@@ -403,13 +411,67 @@ plot_topological_roles <- function(tRoles,g,spingB){
   modhub <- which(l<=2.5)
   modhub <- modhub[which(l<=2.5) %in% which(r>0.625)]
   modlbl <- unlist(vertex_attr(g,index=modhub))
+  if(is.null(modlbl))
+    modlbl <- modhub
+  
   hub_conn <- rbind(hub_conn, data.frame(type="modcon",node=modhub,name=modlbl))  
   
 }
 
 
+#' Calculate average topological roles doing nsimStep simulations and repeating until there is no
+#' differences using an Anderson Darling test.
+#'
+#' @param g igraph object with the network 
+#' @param nsimStep number of repeated simulations until testing for differences, the minimun number of simulations is nsimStep*2
+#'
+#' @return data.frame with topological roles averaged over n*nsimStep repetitions
+#' @export
+#'
+#' @examples
+calc_avg_topological_roles <- function(g, net_name,nsimStep){
+  
+  tR1 <- calc_topological_roles(g,nsimStep)                       # 30 simulations is enough to obtain stable topological roles
+  tsim <- nsimStep
+  topoRoles_mWA_temp  <- tR1 %>% group_by(node) %>% summarize(wtmLowCI=quantile(within_module_degree,0.005,na.rm=TRUE),
+                                              wtmHiCI=quantile(within_module_degree,0.995,na.rm=TRUE),
+                                              amcLowCI=quantile(among_module_conn,0.005,na.rm=TRUE),
+                                              amcHiCI=quantile(among_module_conn,0.995,na.rm=TRUE),
+                                              within_module_degree=mean(within_module_degree,na.rm=TRUE),
+                                              among_module_conn=mean(among_module_conn,na.rm=TRUE))
+  
+  
+  print(tsim)
+  # Loop
+  while(TRUE){
+    tR1 <- bind_rows(tR1, calc_topological_roles(g,nsimStep))
+    
+    saveRDS(tR1,"TopoRoles_mWA_temp.rds")
+    
+    #tR1 <- readRDS("TopoRoles_mWA_temp.rds")
+    
+    tR  <- tR1 %>% group_by(node) %>% summarize(wtmLowCI=quantile(within_module_degree,0.005,na.rm=TRUE),
+                                                wtmHiCI=quantile(within_module_degree,0.995,na.rm=TRUE),
+                                                amcLowCI=quantile(among_module_conn,0.005,na.rm=TRUE),
+                                                amcHiCI=quantile(among_module_conn,0.995,na.rm=TRUE),
+                                                within_module_degree=mean(within_module_degree,na.rm=TRUE),
+                                                among_module_conn=mean(among_module_conn,na.rm=TRUE))
+    
+    
+    require(kSamples)
+    t1 <- ad.test(list(tR$among_module_conn,topoRoles_mWA_temp$among_module_conn),method="simulated",nsim=1000)
+    t2 <- ad.test(list(tR$within_module_degree,topoRoles_mWA_temp$within_module_degree),method="simulated",nsim=1000)
+    topoRoles_mWA_temp <- tR %>% mutate(Network=net_name)
+    tsim <- tsim +nsimStep
+    print(tsim)
+    if(t1$ad[1,4]>0.1 && t2$ad[1,4]>0.1) break()
+    
+  }
+  
+  return(topoRoles_mWA_temp)
+}
 
-#' Plot topological roles
+#' Plot topological roles by trophic level and module
 #'
 #' @param netFrame dataframe with all the networks 
 #' @param netName String with name of the food web to analyse
@@ -417,22 +479,28 @@ plot_topological_roles <- function(tRoles,g,spingB){
 #' @param modulObj Igraph community object with the module organization of the food web
 #' @param topoFrame dataframe with topological role and node index
 #' @param legendPos position of the legend "topleft", "topright" or if "" no legend.
+#' @param redl igraph object, if it is not null the network is taken from it    
 #'
 #' @return
 #' @export
 #'
 #' @examples
 
-plotTopoRolesByTLByMod <- function(netFrame,netName,deadNodes,modulObj,topoFrame,legendPos=""){
+plotTopoRolesByTLByMod <- function(netFrame,netName,deadNodes,modulObj,topoFrame,legendPos="",redl=NULL){
   # 
   # Local 
   #
-  dtot1 <- as.matrix(netFrame %>% filter(Network==netName) %>% dplyr::select(Prey_name,Predator_name))
-  redl <- graph_from_edgelist(dtot1, directed  = T)
-  redl <- simplify(redl)
-  
+  if(is.null(redl)){
+    
+    dtot1 <- as.matrix(netFrame %>% filter(Network==netName) %>% dplyr::select(Prey_name,Predator_name))
+    redl <- graph_from_edgelist(dtot1, directed  = T)
+    redl <- simplify(redl)
+  }
   require(NetIndices)
-  troph.net2<-TrophInd(get.adjacency(redl,sparse=F),Dead=deadNodes)
+  if(deadNodes=="")
+      troph.net2<-TrophInd(get.adjacency(redl,sparse=F))
+  else
+      troph.net2<-TrophInd(get.adjacency(redl,sparse=F),Dead=deadNodes)
   layout.matrix.1<-matrix(
     nrow=length(V(redl)),  # Rows equal to the number of vertices
     ncol=2
@@ -569,20 +637,29 @@ getTopoRolesTLdegree <- function(netFrame,netName,deadNodes,topoFrame,topoType=N
 #'
 #' @param AA output of a net assembly model
 #' @param timeW time window used
+#' @param fname file name to save the plot 
 #'
 #' @return
 #' @export
 #'
 #' @examples
-plot_NetAssemblyModel <- function(AA,timeW){
+plot_NetAssemblyModel <- function(AA,timeW,fname=NULL){
   tf <- length(AA$L)
   if(tf<timeW) stop("timeW parameter must be less than the time of the simulation")
   
   dfA <- data.frame(S=AA$S[(tf-timeW):tf],L=as.numeric(AA$L[(tf-timeW):tf]),T=c((tf-timeW):tf))
   dfA$C <- dfA$L/(dfA$S*dfA$S)
-  print(ggplot(dfA, aes(x=T,y=S)) + geom_line() + theme_bw() + geom_hline(yintercept = mean(dfA$S)))
-  print(ggplot(dfA, aes(x=T,y=L)) + geom_line() + theme_bw() + ylab("L") + geom_hline(yintercept = mean(dfA$L)))
-  print(ggplot(dfA, aes(x=T,y=C)) + geom_line() + theme_bw() + ylab("C") + geom_hline(yintercept = mean(dfA$C)))
+  if(is.null(fname)){
+    print(ggplot(dfA, aes(x=T,y=S)) + geom_line() + theme_bw() + geom_hline(yintercept = mean(dfA$S)))
+    print(ggplot(dfA, aes(x=T,y=L)) + geom_line() + theme_bw() + ylab("L") + geom_hline(yintercept = mean(dfA$L)))
+    print(ggplot(dfA, aes(x=T,y=C)) + geom_line() + theme_bw() + ylab("C") + geom_hline(yintercept = mean(dfA$C)))
+  } else {
+    require(cowplot)
+    g1 <- ggplot(dfA, aes(x=T,y=S)) + geom_line() + theme_bw() + geom_hline(yintercept = mean(dfA$S))
+    g2 <- ggplot(dfA, aes(x=T,y=L)) + geom_line() + theme_bw() + ylab("L") + geom_hline(yintercept = mean(dfA$L))
+    g3 <- plot_grid(g1,g2,labels = c("A","B"),align = "h")
+    save_plot(fname,g3,base_width=8,base_height=5,dpi=600)
+  }
 }
 
 
@@ -590,12 +667,13 @@ plot_NetAssemblyModel <- function(AA,timeW){
 #'
 #' @param AA output of a net assembly model
 #' @param timeW time window used
+#' @param fname file name to save the plot 
 #'
 #' @return
 #' @export
 #'
 #' @examples
-plot_NetAssemblyModel_eqw <- function(AA,timeW){
+plot_NetAssemblyModel_eqw <- function(AA,timeW,fname=NULL){
 
   df <- data.frame(S=AA$S,L=as.numeric(AA$L),T=c(1:tf))
   grandS <- mean(df$S[timeW:nrow(df)])
@@ -603,8 +681,17 @@ plot_NetAssemblyModel_eqw <- function(AA,timeW){
   
   df$gr <- rep(1:(nrow(df)/timeW), each = timeW)
   df <- df %>% group_by(gr) %>% summarise(mS=mean(S),sdS=sd(S), mL=mean(L), sdL=sd(L),time=max(T))
-  print(ggplot(df,aes(y=mS,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mS-sdS,ymax=mS+sdS)) + scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandS,linetype=3 ))
-  print(ggplot(df,aes(y=mL,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mL-sdL,ymax=mL+sdL))+ scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandL,linetype=3 ))
+  if(is.null(fname)){
+    print(ggplot(df,aes(y=mS,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mS-sdS,ymax=mS+sdS)) + scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandS,linetype=3 ))
+    print(ggplot(df,aes(y=mL,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mL-sdL,ymax=mL+sdL))+ scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandL,linetype=3 ))
+  } else {
+    require(cowplot)
+    g1 <- ggplot(df,aes(y=mS,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mS-sdS,ymax=mS+sdS)) + scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandS,linetype=3 )
+    g2 <- ggplot(df,aes(y=mL,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mL-sdL,ymax=mL+sdL))+ scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandL,linetype=3 )
+    g3 <- plot_grid(g1,g2,labels = c("A","B"),align = "h")
+    save_plot(fname,g3,base_width=8,base_height=5,dpi=600)
+  }
+    
   return(df)
 }
 

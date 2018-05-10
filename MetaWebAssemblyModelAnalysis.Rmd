@@ -25,16 +25,10 @@ source("R/network_fun.r")
 
 ```{r fitMetaWebPC, eval=F,echo=F,message=T,warning=T}
 
-require(ggplot2)
-require(igraph)
-require(dplyr)
-require(stringr)
-require(devtools)
-require(MetaWebAssemblyModels)
 source("R/network_fun.r")
 # load_all('MetaWebAssemblyModels')
-# install_local('MetaWebAssemblyModels')
-#sourceCpp("src/NetAssemblyFromMetaWeb.cpp")
+# install_local('../MetaWebAssemblyModels')
+# sourceCpp("src/NetAssemblyFromMetaWeb.cpp")
 
 #
 # Read data and trim species names to avoid duplicates 
@@ -75,7 +69,7 @@ plot_NetAssemblyModel_eqw(AA,100)
 arguments <- expand.grid(m = seq(from=0.01,to=0.1,by=0.001), a = seq(from=0.01,to=0.1,by=0.001))
 simMetaWebAssembly <- data.frame()
 # repeat ten times
-#arguments<- bind_rows(arguments,arguments,arguments,arguments,arguments,arguments,arguments,arguments,arguments,arguments)
+arguments<- bind_rows(arguments,arguments,arguments,arguments,arguments,arguments,arguments,arguments,arguments,arguments)
 tf <- 500
 sim <- data.frame()
 require(doParallel)
@@ -98,7 +92,7 @@ toc()
 stopCluster(cl)
 simMetaWebAssembly <- bind_rows(simMetaWebAssembly,sim)
 saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
-#simMetaWebAssembly <- readRDS("Data/simulations_metaWebAssembly.rds")
+simMetaWebAssembly <- readRDS("Data/simulations_metaWebAssembly.rds")
 
 # To select the parameters I lowered the tolerance until there is only one value or few values
 #
@@ -111,35 +105,38 @@ simMetaWebAssembly %>% group_by(m,a) %>% summarize(S=mean(S),L=mean(L),C=mean(C)
 #       m     a        S        L         C    alpha
 # 4 0.019  0.08 108.0955 249.9427 0.02139875 0.2375
 # 7 0.023 0.096 109.0323 247.8472 0.02086496 0.2395833
-# 8 0.015 0.064 108.8941 251.1877 0.02111088 0.234375
-# 9 0.015 0.064 108.7829 250.4179 0.02109662 0.234375
+# 10 0.023 0.094 109.1362 247.9425 0.02079193 0.2446809
 
 # Weddell Sea
 #
-tol <- .13
+tol <- .128
 simMetaWebAssembly %>% group_by(m,a) %>% summarize(S=mean(S),L=mean(L),C=mean(C)) %>% mutate(alpha=m/a) %>% filter(L>1908*(1-tol),L<1908*(1+tol), S>436*(1-tol),S<437*(1+tol)) %>% arrange(S)
 
 # Simulations
 #       m     a        S        L         C    alpha
 # 4 0.022 0.021 385.7151 2143.468 0.0144348  1.047619
 # 7 0.044 0.041 381.4585 2150.424 0.01477366 1.073171
-# 8 0.014 0.014 380.1873 2101.99 0.01457585     1
-# 9 0.014 0.014 380.323 2106.511 0.01459287     1
+# 10 0.084 0.076 380.7409 2146.395 0.01480693 1.105263
 
-AA <- metaWebNetAssembly(A,0.019,1,0.08,tf)
+AA <- metaWebNetAssembly(A,0.023,1,0.094,tf)
 dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))
 c(mean(dfA$S),mean(dfA$L),mean(dfA$L)/(mean(dfA$S)*mean(dfA$S)))
 
-plot_NetAssemblyModel_eqw(AA,100)
-plot_NetAssemblyModel(AA,300)
+# Running averages
+plot_NetAssemblyModel_eqw(AA,100,"Figures/PotterCoveMeta-webSim_avg.png")
 
-AA <- metaWebNetAssembly(A,0.022,1,0.021,tf)
+# Time series plot
+plot_NetAssemblyModel(AA,300,"Figures/PotterCoveMeta-webSim_ts.png")
+
+AA <- metaWebNetAssembly(A,0.084,1,0.076,tf)
 dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))
 c(mean(dfA$S),mean(dfA$L),mean(dfA$L)/(mean(dfA$S)*mean(dfA$S)))
 
-plot_NetAssemblyModel_eqw(AA,100)
-plot_NetAssemblyModel(AA,300)
+plot_NetAssemblyModel_eqw(AA,100,"Figures/Weddell_Meta-webSim_avg.png")
+plot_NetAssemblyModel(AA,300,"Figures/Weddell_Meta-webSim_ts.png")
 
+rm(sim)
+save.image()
 ```
 
 
@@ -186,8 +183,8 @@ TL <-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Fresh detritus","Aged detritu
 # Compare modularity 
 #
 require(tictoc)
-m <- 0.015
-a <- 0.064
+m <- 0.023
+a <- 0.094
 tic()
 tblMdlWeb <- calc_modularity_metaWebAssembly(redl, A, m,a,1000,TL)
 toc()
@@ -199,8 +196,8 @@ tblMdlWeb <- tblMdlWeb %>% mutate(Network="Local") %>% inner_join(dplyr::select(
 #
 tblMdlWeb <- tblMdlWeb %>% mutate(zMO= (Modularity- mdlMO)/(MOhigh-MOlow)*2, zGR=(Groups-mdlGR)/(GRhigh-GRlow)*2)
 
-#websAssemblyModel <- dplyr::select(tblMdlWeb,Network:Modularity,mdlCC:zTI,zMO:zGR)
-websAssemblyModel <- bind_rows(websAssemblyModel, dplyr::select(tblMdlWeb,Network:Modularity,mdlCC:zTI,zMO:zGR))
+websAssemblyModel <- dplyr::select(tblMdlWeb,Network:Modularity,mdlCC:zTI,zMO:zGR)
+#websAssemblyModel <- bind_rows(websAssemblyModel, dplyr::select(tblMdlWeb,Network:Modularity,mdlCC:zTI,zMO:zGR))
 
 save.image()
 
@@ -227,8 +224,8 @@ TL<-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Detritus","Necromass"))
 # Compare modularity 
 #
 require(tictoc)
-m <- 0.014
-a <- 0.014
+m <- 0.084 
+a <- 0.076
 tic()
 tblMdlWeb <- calc_modularity_metaWebAssembly(redl, A, m,a,1000,TL)
 toc()
@@ -292,8 +289,8 @@ mot[9] # Omnivory
 #FreqMotif <- data.frame(Network="Local",t(mot))
 
 set.seed(123)
-m <- 0.015
-a <- 0.064
+m <- 0.023
+a <- 0.094
 motif_metaWeb <- calc_motif_metaWebAssembly(redl, A, m,a,1000)
 
 motif_metaWeb <- motif_metaWeb %>% mutate(Network="Local")
@@ -322,9 +319,8 @@ redl <- simplify(redl)
 #
 set.seed(123)
 
-m <- 0.014
-a <- 0.014
-
+m <- 0.084 
+a <- 0.076
 m_metaWeb <- calc_motif_metaWebAssembly(redl, A, m,a,1000)
 
 motif_metaWeb <- bind_rows(motif_metaWeb, m_metaWeb %>% mutate(Network="Regional"))
@@ -365,7 +361,7 @@ pFM1 <- pFM1 %>% group_by(Network) %>% mutate(normZ=value/sum(sqrt(value^2)))
 
 g1 <- ggplot(pFM1,aes(x=Network,y=normZ,fill=motif)) + geom_bar(stat="identity",position=position_dodge()) +
    scale_fill_brewer(palette = "RdYlGn",breaks=c("zEC","zAC","zTT","zOM"),name="Motif\nZ-score",   labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")) + guides(fill=FALSE) +
-   xlab("") + ylab("") + theme_bw() + scale_x_discrete(limits=c("Potter Cove","Weddell Sea","Meta-web")) + expand_limits(y=c(0.75,-0.25)) #+ theme(legend.position="bottom")
+   xlab("") + ylab("") + theme_bw() + scale_x_discrete(limits=c("Potter Cove","Weddell Sea","Meta-web")) + expand_limits(y=c(0.75,-0.35)) #+ theme(legend.position="bottom")
 g1
 
 # Plot of assembly motifs normalized 
@@ -379,7 +375,7 @@ pFM2 <- pFM2 %>% group_by(Network) %>% mutate(normZ=value/sum(sqrt(value^2)))
 
 g2 <- ggplot(pFM2,aes(x=Network,y=normZ,fill=motif)) + geom_bar(stat="identity",position=position_dodge()) +
    scale_fill_brewer(palette = "RdYlGn",breaks=c("zEC","zAC","zTT","zOM"),name="Motif\nZ-score",   labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")) +
-   xlab("") + ylab("") + theme_bw() + scale_x_discrete(limits=c("Potter Cove","Weddell Sea","Meta-web")) + expand_limits(y=c(0.75,-0.25)) #+ theme(legend.position="bottom")
+   xlab("") + ylab("") + theme_bw() + scale_x_discrete(limits=c("Potter Cove","Weddell Sea","Meta-web")) + expand_limits(y=c(0.75,-0.35)) #+ theme(legend.position="bottom")
 
 g2
 require(cowplot)
@@ -390,3 +386,150 @@ save_plot("Figures/Motif_Zs_ByNetwork.png",g3,base_width=8,base_height=5,dpi=600
 
 
 ```
+
+# Topologcal roles with meta-web assembly model 
+
+```{r MetaWebTopologicalRoles, eval=T,echo=F,message=T,warning=T}
+
+# Check the correct meta-web adjacency matrix is loaded
+
+dim(A)==c(859,859)
+
+#
+# 500 time steps 
+#
+tf <- 500
+set.seed(1234)
+
+# Weddell Sea 
+#
+#
+m <- 0.084 
+a <- 0.076
+tf <- 531
+AA <- metaWebNetAssembly(A,m,1,a,tf)
+dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))
+c(mean(dfA$S),mean(dfA$L),mean(dfA$L)/(mean(dfA$S)*mean(dfA$S)))
+dfA$S[tf-200]
+plot_NetAssemblyModel_eqw(AA,100)
+plot_NetAssemblyModel(AA,300)
+
+g <- graph_from_adjacency_matrix( AA$A, mode  = "directed")
+# Select only a connected subgraph graph 
+dg <- components(g)
+g <- induced_subgraph(g, which(dg$membership == which.max(dg$csize)))
+vcount(g)
+modulos<-cluster_spinglass(g)
+
+topoRoles_metaWebAssembly <- calc_avg_topological_roles(g,"Weddell",10)   # 30 simulations are enough to obtain stable topological roles
+
+# Initialize hub_conn
+hub_conn_Assembly <- data.frame()
+
+# Plot and clasify topological roles
+hub_conn_Assembly <- bind_rows(hub_conn_Assembly, 
+                               plot_topological_roles(topoRoles_metaWebAssembly,g,modulos) %>% mutate(Network="Weddell"))
+
+plotTopoRolesByTLByMod("","Weddell","",modulos,hub_conn_Assembly,"",g)
+
+
+# Potter Cove Simulations
+#
+#
+
+set.seed(123)
+m <- 0.023
+a <- 0.094
+tf <- 546
+#require(Rcpp)
+#sourceCpp("src/NetAssemblyFromMetaWeb.cpp")
+
+AA <- metaWebNetAssembly(A,m,1,a,tf)
+dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))
+c(mean(dfA$S),mean(dfA$L),mean(dfA$L)/(mean(dfA$S)*mean(dfA$S)))
+
+plot_NetAssemblyModel_eqw(AA,100)
+plot_NetAssemblyModel(AA,300)
+
+AA$S[tf]
+
+g <- graph_from_adjacency_matrix( AA$A*1, mode  = "directed")
+# Add Names
+#V(g)$label <- rownames(A)
+
+# Select only a connected subgraph graph 
+dg <- components(g)
+g <- induced_subgraph(g, which(dg$membership == which.max(dg$csize)))
+#plot(g,edge.arrow.size=.4,edge.color="orange", vertex.color="gray50",vertex.size=3,layout=layout_with_fr)
+vcount(g)
+sum(degree(g,mode="in")==0)
+V(g)[degree(g,mode="in")==0]$label
+
+modulos<-cluster_spinglass(g)
+
+tR <- calc_avg_topological_roles(g,"Potter",10)
+topoRoles_metaWebAssembly <- bind_rows(topoRoles_metaWebAssembly,tR )
+
+
+# Plot and clasify topological roles
+hub_conn_Assembly <- bind_rows(hub_conn_Assembly, 
+                               plot_topological_roles(tR,g,modulos) %>% mutate(Network="Potter"))
+
+plotTopoRolesByTLByMod("","Potter","",modulos,hub_conn_Assembly,"",g)
+
+save.image()
+# Topological Roles proportions test and plot
+#
+#
+names(hub_conn)
+
+
+tbl <- table(hub_conn$Network,hub_conn$type)
+
+tbl1 <- table(hub_conn_Assembly$Network,hub_conn_Assembly$type)
+tbl1 <- rbind(tbl,tbl1) 
+tbl1 <- tbl1[c(2,4,5),]
+class(tbl1) <- "table"
+
+chisq.test(tbl1,simulate.p.value = TRUE, B=10000)
+
+require(ggplot2)
+require(scales)
+df1 <- data.frame(tbl1) 
+names(df1) <- c("Network","Rol","count")
+df1 <- filter(df1,count!=0)
+df1 <- df1 %>% group_by(Network) %>% mutate(total=sum(count),Freq=count/total)
+df1$Network <- factor(df1$Network, levels=c("Potter","Weddell","Meta")) 
+
+levels(df1$Network) <- c("Potter Cove\nModel","Weddell Sea\nModel","Meta-web")
+
+
+gP1 <- ggplot(df1,aes(x=Network,y=Freq,fill=Rol)) + geom_bar(stat="identity") + 
+  scale_fill_brewer(palette = "RdYlGn",name="") + 
+  xlab("") + ylab("") + theme_bw() + theme(legend.position="none")
+
+
+# Proportion of topo roles of the real networks
+#
+df2 <- data.frame(tbl,stringsAsFactors = FALSE)
+names(df2) <- c("Network","Rol","count")
+df2 <- filter(df2,count!=0)
+df2 <- df2 %>% group_by(Network) %>% mutate(total=sum(count),Freq=count/total)
+df2$Network <- factor(df2$Network, levels=c("Local","Regional","Meta")) 
+levels(df2$Network) <- c("Potter Cove","Weddell Sea","Meta-web")
+
+gP2 <- ggplot(df2,aes(x=Network,y=Freq,fill=Rol)) + geom_bar(stat="identity") + 
+  scale_fill_brewer(palette = "RdYlGn",name="") + 
+  xlab("") + ylab("") + theme_bw() + theme(legend.position="none")
+
+legend_b <- get_legend(gP2 + theme(legend.position="bottom"))
+
+require(cowplot)
+gP3 <- plot_grid(gP1,gP2,labels = c("A","B"),align = "h")
+gP3 <- plot_grid( gP3, legend_b, ncol = 1, rel_heights = c(1, .05))
+save_plot("Figures/PropRoles_ByNetwork_Model.png",gP3,base_width=8,base_height=5,dpi=600)
+#ggsave("Figures/PropMotif_Roles_ByNetwork.png",width=8,height=5,units="in",dpi=600)
+
+save.image()
+```
+
