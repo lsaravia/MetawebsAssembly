@@ -188,17 +188,11 @@ PathLength            1.81       2.20       2.57
 
 Clustering            0.10      0.048       0.22 
 
-Small-World-ness      2.75       4.69      10.87
-
-SWness random         2.07       2.27       1.71
-99%CI        
-
+Small-World-ness     *2.75      *4.69      *10.87
+random
 
 Small-World-ness      0.42       0.21
 Assembly
-
-SWness assembly       2.53       1.14
-99%CI           
 
 Coherence             0.53       0.45       0.70  
 
@@ -239,9 +233,9 @@ Table: Network global properties across scales, the *Meta-web* represents the ma
 
 ### Sub-structural properties (motifs)
 
-The representation of three species sub-networks with respect to the random model showed the same patterns in all networks (Figure 2A). Exploitative competition, apparent competition, and omnivory are over-represented, the three trophic chains are under-represented and all these patterns are significant (Table S3). The motifs proportions for the three scales are different (Chi-squared = 12612, p-value < 9.999e-05), this means that local and regional networks are not a random sample of the meta-web. With respect to the meta-web assembly model only some of them are significant (Table S4): apparent competition is higher for Potter Cove, and TT and OM are lower for Weddell Sea (Figure 2B). Besides networks are clearly not-random, Potter Cove is more similar to the meta-web assembly model than Weddell Sea.
+The representation of three species sub-networks with respect to the random model showed the same patterns in all networks (Figure 2A). Exploitative competition, apparent competition, and omnivory are over-represented, three trophic chains are under-represented and all these patterns are significant (Table S3). The motifs proportions for the three scales are different (Chi-squared = 12612, p-value < 9.9e-05), this means that local and regional networks are not a random sample of the meta-web. With respect to the meta-web assembly model only some of them are significant (Table S4): apparent competition is higher for Potter Cove, and three trophic chains and omnivory are lower for Weddell Sea (Figure 2B). Besides networks are clearly not-random, Potter Cove is more similar to the meta-web assembly model than Weddell Sea.
 
-![Network motifs z-scores across scales. Motif represent three-node sub-networks counted on each of the complete networks: the *Meta-web* represents the marine predator-prey relationships of Antarctica (34.8 million Km^2^); the *Weddell Sea* (3.5 million Km^2^) and *Potter Cove* (6.8 Km^2^) are local food-webs. A. Z-scores estimated with a random null model. B. Z-scores estimated with a meta-web assembly model. The z-scores were normalized by dividing by the square root of the sum of the squared z-scores for that food web.](Figures/Motif_Zs_ByNetwork.png){ width=100% }
+![Network motifs z-scores across scales. Motifs are three-node sub-networks counted on each of the complete networks: the *Meta-web* represents the marine predator-prey relationships of Antarctica (34.8 million Km^2^); the *Weddell Sea* (3.5 million Km^2^) and *Potter Cove* (6.8 Km^2^) are local food-webs. A. Z-scores estimated with a random null model. B. Z-scores estimated with a meta-web assembly model. The z-scores were normalized by dividing by the square root of the sum of the squared z-scores for that food web.](Figures/Motif_Zs_ByNetwork.png){ width=100% }
 
 ![Proportion of topological roles across scales, the *Meta-web* represents the marine predator-prey relationships of Antarctica (34.8 million Km^2^); the *Weddell Sea* (3.5 million Km^2^) and *Potter Cove* (6.8 Km^2^) are local food-webs. The topological roles are: *Hub connectors* have a high number of between module links, *Module connectors* have a low number of links mostly between modules, *Module hubs* have a high number of links inside its module. *Module specialists* have a low number of links inside its module. A. Observed proportions for the networks, these are different (Chi-squared = 79.31, p-value = 9.9e-05). B. Proportions obtained from the meta-web assembly model, there are no differences between them (Chi-squared = 5.95, p-value = 0.41)](Figures/PropRoles_ByNetwork_Model.png){ width=80% }
 
@@ -255,10 +249,9 @@ The plot of topological roles combined with trophic levels and modularity reveal
 
 ## Discussion
 
-We expect that the meta-web structure reflects the evolutionary constraints of the species interactions and local and the regional networks should be more influenced by assembly processes and also strongly determined by the local environment. 
-Our results suggest that the structure of the meta-web does not change significantly as we change the scale with respect to the random network model, but there are indeed some evidences that the processes of dynamical assembly, habitat filtering and dispersal limitation are acting. Thus food-webs are mainly shaped by evolutionary forces and are also constrained by dynamical assembly processes.
+We expect that the meta-web structure reflects the evolutionary constraints of the species interactions and the local networks should be influenced by assembly processes and also strongly determined by the local environment. Our results suggest that the structure of the meta-web does not change significantly as we change the scale, but there are indeed some evidences that the processes of dynamical assembly, habitat filtering and dispersal limitation are acting. Thus food-webs are mainly shaped by evolutionary forces and are also constrained by dynamical assembly processes.
 
-Global level network properties showed the same patterns across scales and most of them are significantly different of the null random network model. Modularity for the local food-web is the only property not different from the null model, some studies showed that modularity enhance local stability [@Stouffer2011] but later was demonstrated that this strongly depends on the interaction strengths configuration [@Grilli2016] and on the existence of external perturbations [@Gilarranz2017]. This is consistent with the values we find for coherence, that is a proxy of dynamical local stability. Regional and local food-webs are more coherent than the meta-web, because dynamical stability is not expected to be maximized at the level of the meta-web. Then the local food-web is more stable but not modular. We cannot define if this effect is the product of dynamical pruning---the selection of more stable structures due to the dynamical assembly of the food-web---or if the consequence of the meta-web structure.
+Global level network properties showed the same patterns across scales; most of them are significantly different to the null random model but not different to the assembly model. Modularity for Potter Cove food-web is the only property not different from the random model, it was demonstrated that modularity enhance local stability [@Stouffer2011] besides this strongly depends on the interaction strengths configuration [@Grilli2016] and on the existence of external perturbations [@Gilarranz2017]. This is consistent with the values we find for coherence, that is a proxy of dynamical local stability. All networks are more stable than a random one, but only Weddell Sea food-web is more coherent than the assembly model. Dynamical stability is expected to be maximized at the local level but only the more modular food-web is more stable. But neither of the food webs is more modular than the assembly model, thus most of their structure seems to be a consequence of meta-web structure.
 
 All networks have a significant value of small-world-ness but the local and regional food-webs have lower values. In general food webs do not show small-world structure [@Dunne2002a; @Marina2018a] this suggest that small-world property is inherited from the meta-web to regional and local food-webs and that this property is not influenced by a greater percentage of realized interactions. If small-world-ness would be determinant for an increased resilience and robustness to secondary extinctions [@Bornatowski2017], this value should be bigger at local and regional food-webs, not the contrary.
 
