@@ -137,6 +137,19 @@ plot_NetAssemblyModel(AA,300,"Figures/Weddell_Meta-webSim_ts.png")
 
 rm(sim)
 save.image()
+
+# Plot of five simulations 
+#
+gg <- plot_NetAssemblyModel(AA,100)
+
+# Plot of S and C for Weddell 
+#
+require(cowplot)
+AA <- metaWebNetAssembly(A,0.084,1,0.076,tf)
+g3 <- plot_grid(gg[[1]],gg[[3]],labels = c("A","B"),align = "h")
+save_plot("Figures/Weddell_Meta-webSim_SC.png",g3,base_width=8,base_height=5,dpi=300)
+
+
 ```
 
 

@@ -904,28 +904,7 @@ gP1 <- ggplot(pFM1,aes(x=Network,y=count,fill=motif)) + geom_bar(stat="identity"
   scale_fill_brewer(palette = "RdYlGn", breaks=c("EC","AC","TT","OM"), name="", labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivo-\nry")) + 
   xlab("") + ylab("Proportion") + theme_bw() + theme(legend.position="bottom")
 
-# g2 <- ggplot(df1,aes(x=Network,y=count,fill=Rol)) + geom_bar(stat="identity",position=position_dodge()) + 
-#   scale_fill_brewer(palette = "RdYlGn",name="Topological\nRol") + scale_y_continuous(trans=log1p_trans(),breaks=c(1,10,100,1000)) +
-#   xlab("") + ylab("") + theme_bw() #+ theme(legend.position="bottom") 
-# 
-# # Combine g1 & g2 
-# 
-# require(tidyr)
-# 
-# names(motif)
-# pFM1 <- motif %>% dplyr::select(Network,zEC:zOM) %>%gather(motif,value,zEC:zOM)
-# 
-# g1 <- ggplot(pFM1,aes(x=Network,y=value,fill=motif)) + geom_bar(stat="identity",position=position_dodge()) + 
-#   scale_fill_brewer(palette = "RdYlGn",breaks=c("zEC","zAC","zTT","zOM"),name="Motif\nZ-score",   labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")) + 
-#   xlab("") + ylab("") + theme_bw() + scale_x_discrete(limits=c("Local","Regional","Meta")) #+ theme(legend.position="bottom")
 
-# Normalize z-scores
-#
-# pFM1 <- pFM1 %>% group_by(Network) %>% mutate(normZ=value/sum(sqrt(value^2)))
-# 
-# g1 <- ggplot(pFM1,aes(x=Network,y=normZ,fill=motif)) + geom_bar(stat="identity",position=position_dodge()) + 
-#   scale_fill_brewer(palette = "RdYlGn",breaks=c("zEC","zAC","zTT","zOM"),name="Motif\nZ-score",   labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")) + 
-#   xlab("") + ylab("") + theme_bw() + scale_x_discrete(limits=c("Local","Regional","Meta")) #+ theme(legend.position="bottom")
 
 gP1 <- gP1 +  theme(legend.key.width = unit(.5, "cm"))
 gP2 <- gP2 +  theme(legend.key.width = unit(.5, "cm"))

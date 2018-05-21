@@ -644,15 +644,22 @@ getTopoRolesTLdegree <- function(netFrame,netName,deadNodes,topoFrame,topoType=N
 #'
 #' @examples
 plot_NetAssemblyModel <- function(AA,timeW,fname=NULL){
+  require(viridis)
+  colnet <- viridis(3)
+  
   tf <- length(AA$L)
   if(tf<timeW) stop("timeW parameter must be less than the time of the simulation")
   
   dfA <- data.frame(S=AA$S[(tf-timeW):tf],L=as.numeric(AA$L[(tf-timeW):tf]),T=c((tf-timeW):tf))
   dfA$C <- dfA$L/(dfA$S*dfA$S)
   if(is.null(fname)){
-    print(ggplot(dfA, aes(x=T,y=S)) + geom_line() + theme_bw() + geom_hline(yintercept = mean(dfA$S)))
-    print(ggplot(dfA, aes(x=T,y=L)) + geom_line() + theme_bw() + ylab("L") + geom_hline(yintercept = mean(dfA$L)))
-    print(ggplot(dfA, aes(x=T,y=C)) + geom_line() + theme_bw() + ylab("C") + geom_hline(yintercept = mean(dfA$C)))
+    gS <- ggplot(dfA, aes(x=T,y=S)) + geom_line(colour=colnet[1]) + theme_bw() + geom_hline(yintercept = mean(dfA$S),linetype = 2,colour="grey50")
+    print(gS)
+    gL <- ggplot(dfA, aes(x=T,y=L)) + geom_line(colour=colnet[2]) + theme_bw() + ylab("L") + geom_hline(yintercept = mean(dfA$L),linetype = 2,colour="grey50")
+    print(gL)
+    gC <- ggplot(dfA, aes(x=T,y=C)) + geom_line(colour=colnet[3]) + theme_bw() + ylab("C") + geom_hline(yintercept = mean(dfA$C),linetype = 2,colour="grey50")
+    print(gC)
+    return(list(gS=gS,gL=gL,gC=gC))
   } else {
     require(cowplot)
     g1 <- ggplot(dfA, aes(x=T,y=S)) + geom_line() + theme_bw() + geom_hline(yintercept = mean(dfA$S))
@@ -835,3 +842,40 @@ calc_motif_metaWebAssembly<- function(red, Adj, mig, ext, nsim=1000)
   
   return(data_frame(explComp=obs[4],apprComp=obs[5],triTroph=obs[6],omnivory=obs[9],zEC=zEC,zAC=zAC,zTT=zTT,zOM=zOM,EClow=qEC[1],EChigh=qEC[2],AClow=qAC[1],AChigh=qAC[2],TTlow=qTT[1],TThigh=qTT[2],OMlow=qOM[1],OMhigh=qOM[2]))         
 }    
+
+
+
+#' Title Plot 5 simulations of net assembly model time series of S and L only the last timeW steps are ploted
+#'
+#' @param metaW meta-web adjacency matrix 
+#' @param m     migration
+#' @param q     probability of link
+#' @param a     extinction
+#' @param timeW time window used
+#'
+#' @return
+#' @export
+#'
+#' @examples
+plot_NetAssemblyModel_sims <- function(metaW,m, q, a, tf,timeW){
+  require(viridis)
+
+  if(tf<timeW) stop("timeW parameter must be less than the time of the simulation")
+  
+  dfA <- data.frame()
+  
+  for(n in 1:5){
+    AA <- metaWebNetAssembly(metaW,m,q,a,tf)
+    tdfA <- data.frame(S=AA$S[(tf-timeW):tf],L=as.numeric(AA$L[(tf-timeW):tf]),T=c((tf-timeW):tf))
+    tdfA$C <- tdfA$L/(tdfA$S*tdfA$S)
+    tdfA$sim <- n
+    dfA <- bind_rows(dfA,tdfA)
+  }
+  gS <- ggplot(dfA, aes(x=T,y=S,colour=sim)) + geom_point() + theme_bw() + geom_hline(yintercept = mean(dfA$S),linetype = 2,colour="grey50") + scale_color_viridis(guide=FALSE)
+  print(gS)
+  gL <- ggplot(dfA, aes(x=T,y=L,colour=sim)) + geom_point() + theme_bw() + ylab("L") + geom_hline(yintercept = mean(dfA$L),linetype = 2,colour="grey50") + scale_color_viridis(guide=FALSE)
+  print(gL)
+  gC <- ggplot(dfA, aes(x=T,y=C,colour=sim)) + geom_point() + theme_bw() + ylab("C") + geom_hline(yintercept = mean(dfA$C),linetype = 2,colour="grey50") + scale_color_viridis(guide=FALSE)
+  print(gC)
+  return(list(gS=gS,gL=gL,gC=gC))
+}
