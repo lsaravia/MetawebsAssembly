@@ -662,8 +662,8 @@ plot_NetAssemblyModel <- function(AA,timeW,fname=NULL){
     return(list(gS=gS,gL=gL,gC=gC))
   } else {
     require(cowplot)
-    g1 <- ggplot(dfA, aes(x=T,y=S)) + geom_line() + theme_bw() + geom_hline(yintercept = mean(dfA$S))
-    g2 <- ggplot(dfA, aes(x=T,y=L)) + geom_line() + theme_bw() + ylab("L") + geom_hline(yintercept = mean(dfA$L))
+    g1 <- ggplot(dfA, aes(x=T,y=S)) + geom_line() + theme_bw() + geom_hline(yintercept = mean(dfA$S),linetype=3)
+    g2 <- ggplot(dfA, aes(x=T,y=L)) + geom_line() + theme_bw() + ylab("L") + geom_hline(yintercept = mean(dfA$L),linetype=3)
     g3 <- plot_grid(g1,g2,labels = c("A","B"),align = "h")
     save_plot(fname,g3,base_width=8,base_height=5,dpi=600)
   }

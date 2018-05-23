@@ -83,11 +83,11 @@ For the random model we simulate networks with the same number of nodes $n$ and 
 
 #### Small-world topology
 
-The first emergent property we used is the small world pattern (SW), this property relates two other properties average distance between the nodes and the clustering that quantifies the extent to which the neighbours of a node are also interconnected [@Watts1998]. We first calculated the minimum path length $L$: minimum path length between two nodes is the minimum number of edges that must be gone through to get from origin node to the target one. Then $L$ is the mean value across all pairs of nodes of the minimum path length. The clustering coefficient of node $i$ was defined as 
+The first emergent property we used is the small world pattern, this relates the average distance between the nodes and the clustering of the network [@Watts1998]. We first calculated the minimum path length, that is the minimum number of edges between two nodes. Then $L$ is the mean value of the minimum path length across all pairs of nodes. The clustering coefficient of node $i$ was defined as 
 
 $$c_i =\frac{2 E_i}{k_i (k_i -1)}$$ 
 
-where $E_i$ is the number of edges between the neighbours of $i$. The clustering coefficient of the network $C$ is the average of $c_i$ over all nodes. The original definition of small world networks is conceptual [@Watts1998], a network $G$ is small world when if it has a similar path length but greater clustering than an Erdös-Rényi random network with the same number of nodes $n$ and edges $m$. For the quantitative version of the SW pattern we followed @Humphries2008, we need to define:
+where $E_i$ is the number of edges between the neighbours of $i$. The clustering coefficient of the network is the average of $c_i$ over all nodes. The original definition of small world networks is conceptual [@Watts1998], a network $G$ is small world when if it has a similar path length but greater clustering than an Erdös-Rényi random network with the same number of nodes $n$ and edges $m$. For the quantitative version of the small world pattern we followed @Humphries2008, we need to define:
 
 $$\gamma_g = \frac{C_g}{C_{null}}$$
 
@@ -99,11 +99,11 @@ where $C_g$ and $L_g$ are the clustering coefficient and the mean shortest path 
 
 $$S = \frac{\gamma_g}{\lambda_g}$$
 
-and to determine if $S$ is statistically significant monte carlo methods are used. We constructed 1000 null model networks with the same number of nodes $n$ and edges $m$---or approximately the same---than the empirical network; then we calculated $S$ for each random network and the lower and higher 99% quantiles of the $S$ distribution are called $ql,qh$:
+and to determine if $S$ is statistically significant Monte Carlo methods are used. We built 1000 null model networks with the same number of nodes $n$ and edges $m$ than the empirical network; then we calculated $S$ for each random network and the lower and higher 99% quantiles of the $S$ distribution are called $ql,qh$:
 
 $$CI = \frac{qh - ql}{2}$$
 
-the upper 99% confidence limit is then $CL^{0.01}= 1 + CI$. Thus if a network has $S > CL^{0.01}$ is considered a small world network [@Humphries2008]. 
+the upper 99% confidence limit is then $CL^{0.01}= 1 + CI$. Thus if a network has $S > CL^{0.01}$ is considered a small world network [@Humphries2008]. We also calculate small-world-ness and the CI using the meta-web assembly model as a null model.
 
 #### Coherence 
 

@@ -117,16 +117,16 @@ simMetaWebAssembly %>% group_by(m,a) %>% summarize(S=mean(S),L=mean(L),C=mean(C)
 # 4 0.022 0.021 385.7151 2143.468 0.0144348  1.047619
 # 7 0.044 0.041 381.4585 2150.424 0.01477366 1.073171
 # 10 0.084 0.076 380.7409 2146.395 0.01480693 1.105263
-
+set.seed(1110)
 AA <- metaWebNetAssembly(A,0.023,1,0.094,tf)
 dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))
 c(mean(dfA$S),mean(dfA$L),mean(dfA$L)/(mean(dfA$S)*mean(dfA$S)))
 
 # Running averages
-plot_NetAssemblyModel_eqw(AA,100,"Figures/PotterCoveMeta-webSim_avg.png")
+plot_NetAssemblyModel_eqw(AA,100,"Figures/PotterCove_Meta-webSim_avg.png")
 
 # Time series plot
-plot_NetAssemblyModel(AA,300,"Figures/PotterCoveMeta-webSim_ts.png")
+plot_NetAssemblyModel(AA,300,"Figures/PotterCove_Meta-webSim_ts.png")
 
 AA <- metaWebNetAssembly(A,0.084,1,0.076,tf)
 dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))

@@ -1,5 +1,24 @@
 # Supplementary Information
 
+
+## Meta-web assembly model simulations and fitting
+
+This model has two parameters: $c$ the probability of a species to colonize the local network from the meta-web,  and  $e$ the probability to become locally extinct. When a species arrive to the local web there are two options: 1. Basal species do not need predators to survive then they stay until an exctinction event. 2. Predators only stay if there are at least one of its preys. Whenever an extinction occur we check for secondary extinctions i.e. to enforce case 2. 
+
+To fit the model to different number of species and links we made simulations using all combinations of $c$ and $e$ in the range of 0.01 to 0.1 with a step of 0.001. For each combination we run 500 time steps and take the last 200 to calculate the average number of links and species. We made 10 repetitions for each combination which make a total of 82810 simulations, finally we take the average of these repetitions. To select the parameter that result in the closest number of links and species to the target we restrict the set of simulations a maximum tolerance of 20%. The figures S1-S4 show the dynamics of the model fitted to each local food web.    
+
+![Running averages of a simulation of the Meta-web assembly model fitted to Potter Cove food web. Where $mS$ and $mL$ are running averages of the number of species and the links, error bars are the standard deviation using a window of 100 time steps and the dashed is line the overall mean. The parameters were $c$=0.023, $e$=0.094, $\alpha=0.24$](Figures/PotterCove_Meta-webSim_avg.png)
+
+![Time series of a simulation of the Meta-web assembly model fitted to Potter Cove food web. Where $S$ is the number of species and $L$ the links and the dashed line is the overall mean. The parameters were $c$=0.023, $e$=0.094, $\alpha=0.24$](Figures/PotterCove_Meta-webSim_ts.png)
+
+
+![Running averages of a simulation of the Meta-web assembly model fitted to Weddell Sea food web. Where $mS$ and $mL$ are running averages of the number of species and the links, and error bars the are standard deviation using a window of 100 time steps and the dashed is line the overall mean. The parameters were $c$=0.084, $e$=0.076, $\alpha=1.11$](Figures/Weddell_Meta-webSim_avg.png)
+
+![Time series of a simulation of the Meta-web assembly model fitted to Weddell Sea food web. Where $S$ is the number of species and $L$ the links and the dashed line is the overall mean. The parameters were $c$=0.084, $e$=0.076, $\alpha=1.11$](Figures/Weddell_Meta-webSim_ts.png)
+
+
+\newpage
+
 ----------------------------------------------------
 **Network**            Potter    Weddell    Meta-web
 ----------------- ----------- ---------- -----------
