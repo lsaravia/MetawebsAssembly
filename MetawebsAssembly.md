@@ -102,21 +102,21 @@ $$S = \frac{\gamma_g}{\lambda_g}$$
 and to determine if $S$ is statistically significant Monte Carlo methods are used. We built 1000 null model networks with the same number of nodes $n$ and edges $m$ than the empirical network; then we calculated $S$ for each random network and the lower and higher 99% quantiles of the $S$ distribution are called $ql,qh$:
 
 $$CI = \frac{qh - ql}{2}$$
-
+ 
 the upper 99% confidence limit is then $CL^{0.01}= 1 + CI$. Thus if a network has $S > CL^{0.01}$ is considered a small world network [@Humphries2008]. We also calculate small-world-ness and the CI using the meta-web assembly model as a null model.
 
 #### Coherence 
 
-The second global property is called coherence [@Johnson2014], and is related to stability in the sense that small perturbations could get amplified or vanished, which is called local linear stability [@May1972;@Rohr2014]. We first need to estimate the trophic level of a node (species) $i$ that is defined as the average trophic level of its prey plus 1. That is:
+The second global property is called coherence [@Johnson2014], and is related to stability in the sense that small perturbations could get amplified or vanished, which is called local linear stability [@May1972;@Rohr2014]. We first need to estimate the trophic level of a node $i$ that is defined as the average trophic level of its preys plus 1. That is:
 
 $$tp_i= 1 + \frac{1}{k_i^{in}}\sum_{j}{a_{ij} tp_j}$$ 
 
-where $k_i^{in}=\sum_{j}a_{ji}$ is the number of preys of species $i$, basal species that do not have preys (then $k_i^{in}=0$) are assigned a $tp=1$. Then the trophic difference associated to each edge is defines as $x_{ij}=tp_i - tp_j$. The distribution of trophic differences, $p(x)$, has a mean $E^{-1} \sum_{ij} a_{ij} x_{ij} = 1$ by definition. The trophic coherence is measured by:
+where $k_i^{in}=\sum_{j}a_{ji}$ is the number of preys of species $i$, basal species that do not have preys (then $k_i^{in}=0$) are assigned a $tp=1$. Then the trophic difference associated to each edge is defined as $x_{ij}=tp_i - tp_j$. The distribution of trophic differences, $p(x)$, has a mean $E^{-1} \sum_{ij} a_{ij} x_{ij} = 1$ by definition. Then the trophic coherence is measured by:
 
 $$q = \sqrt{\frac{1}{E} \sum_{ij}a_{ij}x_{ij}^2 - 1}$$
 
 
-that is the SD of the distribution of trophic distances, a food web will be more coherent when $q$ is closer to zero. When $q = 0$ the maximal coherence is achieved and corresponds to a layered network in which every node has an integer trophic level [@Johnson2014; @Johnson2017]. To compare coherence and trophic level we generated 1000 null model networks with at least one basal species and the same number of species and links---or approximately the same---than the network of interest. Then we calculated the 99% CI using the 0.5% and 99.5% quantiles the distribution of $q$ and $tp$; and the z-scores as:
+that is the standard deviation of the distribution of trophic distances. A food web is more coherent when $q$ is closer to zero, thus the maximal coherence is achieved when $q = 0$  and corresponds to a layered network in which every node has an integer trophic level [@Johnson2014; @Johnson2017]. To compare coherence and trophic level we generated 1000 null model networks with at least one basal species and the same number of species and links---or approximately the same---than the network of interest. Then we calculated the 99% CI using the 0.5% and 99.5% quantiles the distribution of $q$; we also calculated the CI for the mean trophic level $tp$. We calculated the z-scores as:
 
 $$z_i=\frac{q_{obs} - q_{null}}{\sigma_{qnull}}$$
 
@@ -124,7 +124,7 @@ where $q_{obs}$ is the observed coherence, $q_{null}$ is the mean coherence from
 
 #### Modularity 
 
-An intermediate level property (i.e. between the whole network and the individual species) is modularity, that measures how densely sub-groups of species interact with one another compared to species of other sub-groups [@Newman2004]. These sub-groups are called compartments and to find the best partition we used a stochastic algorithm based on simulated annealing [@Reichardt2006]. Simulated annealing allows to maximize modularity without getting trapped in local maxima configurations [@Guimera2005], the index of modularity is then defined as: 
+An intermediate level property (i.e. between the whole network and the individual species) is modularity, that measures how strongly sub-groups of species interact between them compared with the strength of interaction with other sub-groups [@Newman2004]. These sub-groups are called compartments and to find the best partition we used a stochastic algorithm based on simulated annealing [@Reichardt2006]. Simulated annealing allows to maximize modularity without getting trapped in local maxima configurations [@Guimera2005], the index of modularity is then defined as: 
 
 $$M = \sum_s \left(\frac{I_s}{E} - \left(\frac{d_s}{2E}\right)^2 \right)$$
 
