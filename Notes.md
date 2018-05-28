@@ -1,6 +1,9 @@
 # From Local to regional and continental food web structure  
 
-words: 5438 - 73 -163 - 144 -51
+words: 5294 - 73 -163 - 144 -51
+
+mostly of motifs structure seems to be consequences of evolutionary or coevolutionary forces, this kind of structures that are a sub-product of process that happen at a different level have been called spandrels of assembly [@Sole2006a]. 
+
 
 # reviewers
 
