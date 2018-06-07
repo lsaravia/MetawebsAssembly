@@ -1,13 +1,11 @@
-# From Local to regional and continental food web structure in Antarctica 
+#  Ecological Network assembly: how the regional meta web influence local food webs 
 
 ## Abstract
 
-In recent years there has been an increased interest in spatial and temporal variation in food web structure. This is a necessary step to understand the influences of climate change and other global threats like biological invasions to ecosystems. The pool of species present in a broad geographic area and all their possible feeding interactions have been called metaweb, in analogy with the metacommunity concept. Local food webs are realizations of metawebs that resulting from assembly processes influenced by migration, habitat filtering, stochastic factors, and dynamical constraints imposed by food web structure. This paper analyzes the largest metaweb available up to now: the marine Antarctic metaweb and compares it with two food webs that represent different spatial scales: the regional Weddell Sea and the local Potter Cove. One gain insight into the processes that shape food webs is to use subgraphs of nodes (i.e. species) called motifs. The frequency of the following three-node motifs we analysed: tri-trophic chain, omnivory, apparent competition and exploitative competition. Due to the different spatial scales, the motif representation of the regional Weddel Sea network should be more similar to the metaweb than one exhibited in the local Potter Cove food web. Another important property that characterizes the structure of food webs is the existence of subsets of species that interact more frequently among themselves than with other species: compartmentalization. As the metaweb do not represent realized interactions we expect that the local and regional webs will be more compartmentalized. We will also assess the structural properties the food webs, and compare all the results among networks to disentangle which processes are more important to shape food webs at different spatial scales.
+The idea that ecological networks are built in a sequence of colonization events is not new but has been applied mostly to competitive interactions. Similar processes act in trophic networks (food webs): a regional pool of species is the source from which species colonize local areas, called the meta-web.  Local food webs are realizations of meta-webs that result from assembly processes influenced by migration, habitat filtering, stochastic factors, and dynamical constraints imposed by food web structure. We analyse how the structure of a meta-web influence local food-webs with different spatial scales, using an assembly model, a random model and properties at three levels: emergent global properties that take into account the whole network (like modularity), sub-structural properties that consider several nodes (like motifs), and properties related to one node (like topological roles). Three independent data-sets were included: the marine Antarctic meta-web (34.8 million Km^2^), the Weddell Sea (3.5 million Km^2^) and Potter Cove (6.8 Km^2^) food-webs. Looking at the global properties, the meta-web present a structure very different from the random model while the local food-webs follow the same pattern and are very similar to the assembly model. The assembly model only takes into account migration, local extinction and secondary extinctions. For sub-structural properties meta-web and the local food-webs also showed the same pattern against the random model, but we found differences compared to the assembly model that does not increase the local stability of food webs. Topological roles also showed differences between the meta-web and local food-webs that are not explained by the assembly model. We found that a great portion of the structure of the food webs is determined by evolutionary processes that act on large temporal and spatial scales. On the contrary, dynamical processes that favour stability have a small influence, but habitat filtering or dispersal limitations seem to be important factors that determine food web structure. 
 
-**Leonardo A. Saravia** ^1^ ^2^, **Tomás  I. Marina** ^1^ ^2^ ^3^, **Marleen De Troch** ^4^, **Fernando R. Momo** ^1^ ^2^ 
+**Leonardo A. Saravia**, **Tomás  I. Marina**, **Marleen De Troch**, **Fernando R. Momo** 
 
-
-*Target Journal*: []()
 
 * [raw manuscript source in markdown](https://github.com/lsaravia/MetawebsAssembly/blob/master/MetawebsAssembly.md) (figures and citations not rendered in this version)
 * [Draft PDF](https://github.com/lsaravia/MetawebsAssembly/blob/master/MetawebsAssembly.pdf) (contains parsed citations and figures)
@@ -23,9 +21,11 @@ In recent years there has been an increased interest in spatial and temporal var
 		Plots of food-webs by modularity and trophic level, package NetIndices
 		Analysis of 3-node motif
 
-* The R Package MetaWebAssemblyModels is needed to simulate the meta-web assembly model
-
-<https://github.com/lsaravia/MetaWebAssemblyModels>
+* MetaWebAssemblyModelAnalysis.Rmd: 
+		
+		Analysis of the meta-web assembly model.
+		The R Package MetaWebAssemblyModels is needed to simulate the model 
+		<https://github.com/lsaravia/MetaWebAssemblyModels>
 
 
 
