@@ -172,7 +172,7 @@ calc_modularity_random<- function(red, nsim=1000){
 calc_incoherence <- function(g,ti=NULL) {
   require(igraph)
   require(NetIndices)
-  if(is.null(ti))
+  if(is.null(ti) )
       ti<-TrophInd(get.adjacency(g,sparse=FALSE))
   v <- ti$TL
   z <- outer(v,v,'-');
@@ -203,7 +203,7 @@ calc_incoherence <- function(g,ti=NULL) {
 #' @export
 #'
 #' @examples
-calc_incoherence_z <- function(g,ti=0,nsim=1000) {
+calc_incoherence_z <- function(g,ti=NULL,nsim=1000) {
 
     t <- calc_topological_indices(g)
     
@@ -224,7 +224,7 @@ calc_incoherence_z <- function(g,ti=0,nsim=1000) {
     cl <- makeCluster(cn)
     registerDoParallel(cl)
     
-    ind <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE,.packages='igraph',.export = 'calc_incoherence') %dopar% 
+    ind <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE,.packages='igraph',.export = 'calc_incoherence') %do% 
     {
       m<-calc_incoherence(redes.r[[i]])
       data.frame(Q=m$Q,mTI=m$mTI)
