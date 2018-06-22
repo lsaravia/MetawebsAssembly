@@ -1,9 +1,14 @@
-OPTS= -H margins.sty --bibliography MetawebsAssembly.bib --csl=ecography.csl --latex-engine=xelatex 
+OPTS= -H margins.sty --bibliography MetawebsAssembly.bib --csl=plos.csl --latex-engine=xelatex 
 
-all: Appendices.pdf MetawebsAssembly.pdf MetawebsAssembly_bioRxiv.pdf MetawebsAssembly.docx
+all: Appendices.pdf MetawebsAssembly.pdf FiguresTables.pdf 
 
 %.pdf:%.md
 	pandoc $< -o $@ -H Appendices.sty
+	evince $@		
+
+FiguresTables.pdf: FiguresTables.md margins.sty 
+	pandoc $< -o $@ $(OPTS)
+	pdftk MetawebsAssembly.pdf FiguresTables.pdf cat output MetawebsAssemblyFigures.pdf
 	evince $@		
 
 MetawebsAssembly.pdf: MetawebsAssembly.md margins.sty 
