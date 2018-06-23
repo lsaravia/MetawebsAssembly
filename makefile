@@ -1,4 +1,4 @@
-OPTS= -H margins.sty --bibliography MetawebsAssembly.bib --csl=plos.csl --latex-engine=xelatex 
+OPTS= -H margins.sty --bibliography MetawebsAssembly.bib --csl=ecology-letters.csl --latex-engine=xelatex 
 
 all: Appendices.pdf MetawebsAssembly.pdf FiguresTables.pdf 
 
@@ -6,14 +6,14 @@ all: Appendices.pdf MetawebsAssembly.pdf FiguresTables.pdf
 	pandoc $< -o $@ -H Appendices.sty
 	evince $@		
 
-FiguresTables.pdf: FiguresTables.md margins.sty 
-	pandoc $< -o $@ $(OPTS)
-	pdftk MetawebsAssembly.pdf FiguresTables.pdf cat output MetawebsAssemblyFigures.pdf
-	evince $@		
-
 MetawebsAssembly.pdf: MetawebsAssembly.md margins.sty 
 	cp "/home/leonardo/BibTeX/Manuscritos-Meta-web local web assembly.bib" MetawebsAssembly.bib
 	pandoc $< -o $@ $(OPTS)
+	evince $@		
+
+FiguresTables.pdf: FiguresTables.md MetawebsAssembly.md margins.sty 
+	pandoc $< -o $@ $(OPTS)
+	pdftk MetawebsAssembly.pdf FiguresTables.pdf cat output MetawebsAssemblyFigures.pdf
 	evince $@		
 
 Appendices.pdf: Appendices.md 

@@ -1,6 +1,6 @@
-# Ecological Network assembly: how the regional meta web influence local food webs 
+# Ecological Network assembly: how the regional metaweb influence local food webs 
 
-**Leonardo A. Saravia** ^1^ ^2^, **Tomás  I. Marina** ^1^ ^2^ ^3^, **Marleen De Troch** ^4^, **Fernando R. Momo** ^1^ ^2^ 
+**Leonardo A. Saravia** ^1^ ^2^ ^5^, **Tomás  I. Marina** ^1^ ^2^ ^3^, **Marleen De Troch** ^4^, **Fernando R. Momo** ^1^ ^2^ 
 
 1. Instituto de Ciencias, Universidad Nacional de General Sarmiento, J.M. Gutierrez 1159 (1613), 
 Los Polvorines, Buenos Aires, Argentina.
@@ -10,6 +10,15 @@ Los Polvorines, Buenos Aires, Argentina.
 3. Consejo Nacional de Investigaciones Científicas y Técnicas (CONICET)
 
 4. Marine Biology, Ghent University, Krijgslaan 281/S8, B-9000, Ghent, Belgium.
+
+5. Corresponding author e-mail: <lsaravia@campus.ungs.edu.ar>
+
+
+**keywords**: Metaweb, ecological network assembly, network assembly model, local food web structure, metaweb model, modularity , trophic coherence, motif, topological roles, null models
+
+**Running title**: The influence of metawebs in local food webs.
+
+Word count Abstract: 150
 
 Word count main text: 4975
 
@@ -28,7 +37,7 @@ supporting the results will be archived at figshare public repository
 
 ## Abstract 
 
-The idea that ecological networks are built in a sequence of colonization events is not new but has been applied mostly to competitive interactions. Similar processes act in trophic networks, i.e. food webs: a regional pool of species act as the source from which species colonize local areas, called the metaweb. Local food webs are realizations of metawebs that result from assembly processes influenced by migration, habitat filtering, stochastic factors, and dynamical constraints imposed by food-web structure. We analyse how the structure of a metaweb influence local food webs with different spatial scales, using an assembly model, a random model and properties at three levels: emergent global properties that take into account the whole network e.g. modularity, sub-structural properties that consider several nodes e.g. motifs, and properties related to one node e.g. topological roles. Three independent data-sets were included: the marine Antarctic metaweb (34.8 million Km2), the Weddell Sea (3.5 million Km2) and Potter Cove (6.8 Km2) food webs. Looking at the global properties, the metaweb presents a structure very different from the random model, while the local food webs follow the same pattern and are very similar to the assembly model. The assembly model only takes into account migration, local extinction and secondary extinctions. For sub-structural properties the metaweb and the local food webs also showed the same pattern against the random model, but we found differences compared to the assembly model that did not increase the local stability of food webs. Topological roles also showed differences between the metaweb and local food webs that were explained by the assembly model. We found that a great portion of the structure of the food webs is determined by evolutionary processes that act on large temporal and spatial scales. On the contrary, dynamical processes that favour stability have a small influence, but habitat filtering or dispersal limitations seem to be important factors that determine food web structure. 
+The idea that ecological networks are built in a sequence of colonization events has been mostly applied to competitive interactions. Similar processes act in trophic networks: a regional pool of species is the source from which species colonize local areas, called the metaweb. Local food webs are realizations of metawebs that result from assembly processes influenced by migration, habitat filtering, stochastic factors, and dynamical constraints. We analyse how the structure of a metaweb influence local food webs evaluating structural properties by means of a random and an assembly model. Three data-sets were included: the marine Antarctic metaweb, the Weddell Sea and Potter Cove food webs. The metaweb presents a structure very different from the random model, while the local food webs are very similar to the assembly model. Thus most of the local food web structure is inherited from the metaweb, with changes produced by habitat filtering or dispersal limitations. 
 
 \newpage
 
