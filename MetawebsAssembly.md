@@ -14,9 +14,9 @@ Los Polvorines, Buenos Aires, Argentina.
 5. Corresponding author e-mail: <lsaravia@campus.ungs.edu.ar>
 
 
-**keywords**: Metaweb, ecological network assembly, network assembly model, local food web structure, metaweb model, modularity , trophic coherence, motif, topological roles, null models
+**keywords**: Metaweb, ecological network assembly, network assembly model, local food web structure, modularity , trophic coherence, motif, topological roles, null models
 
-**Running title**: The influence of metawebs in local food webs.
+**Running title**: The metaweb influence in local food webs.
 
 Word count Abstract: 150
 

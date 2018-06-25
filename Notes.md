@@ -10,6 +10,52 @@ mostly of motifs structure seems to be consequences of evolutionary or coevoluti
 Alyssa R. Cirtwill, School of Biological Sciences, University of Canterbury, Private Bag 4800, Christchurch 8140, New Zealand.E-mail: alyssa.cirtwill@gmail.com
 
 
+Recommended
+Reason: Extensive work in ecological interaction networks	
+Daniel Stouffer
+daniel.stouffer@canterbury.ac.nz
+University of Canterbury, School of Biological Sciences
+	
+Recommended
+Reason: Extensive work in food web and related analytical tools	
+Paulo R. Guimarães, Jr
+prguima@ib.usp.br
+Universidade de Sao Paulo
+	
+Recommended
+Reason: Knowledge of food web dynamics and assembly
+Sonia Kéfi
+sonia.kefi@umontpellier.fr
+Université de Montpellier
+	
+Recommended
+Reason: Knowledge of marine food webs
+Sergio A Navarrete
+snavarrete@bio.puc.cl
+Pontificia Universidad Catolica de Chile
+
+# Editors
+
+Recommended
+Reason: Knowledge of food webs in landscapes
+Bernd Blasius
+University of Oldenburg
+ICBM
++49-441-798-3638
+	
+Recommended
+Reason: Knowledge of food webs and stabilty
+Ulrich Brose
+German Centre for Integrative Biodiversity Research Halle-Jena-Lepizig
+Theory in Biodiversity Science
+	
+Recommended
+Reason: Knowledge of trophic interactions, stability and dynamical models	
+Ian Donohue
+Trinity College Dublin
+Zoology
++35318961356
+
 ## Hypothesis
 
 Meta-web --> Weddell Sea : Random sampling (Local Motif representation should match the meta-web)
