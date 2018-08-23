@@ -181,7 +181,7 @@ calc_incoherence <- function(g,ti=NULL) {
   x <- (A*t(z))[xx]
   #meanQ <- sum(x)/ecount(g) 
   #sdQ <- sqrt(sum((x-1)^2)/vcount(g) )
-  Q <- sqrt(sum(x*x-1)/ecount(g) )
+  Q <- round(sqrt(sum((x-1)^2)/ecount(g) ),8)
   
   basal <- which(round(v,8)==1)
   bedges <- sum(degree(g,basal,mode='out'))

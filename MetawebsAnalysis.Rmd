@@ -144,7 +144,7 @@ save.image()
 
 # Modularity Analysis - Regional
 
-```{r ModularityAnalysisRegional, eval=T,echo=F,message=T,warning=T}
+```{r ModularityAnalysisRegional, eval=F,echo=F,message=T,warning=T}
 
 source("R/network_fun.r")
 
