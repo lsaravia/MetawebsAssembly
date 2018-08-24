@@ -1,33 +1,9 @@
 # Ecological Network assembly: how the regional metaweb influence local food webs 
 
-**Leonardo A. Saravia** ^1^ ^2^ ^5^, **Tomás  I. Marina** ^1^ ^2^ ^3^, **Marleen De Troch** ^4^, **Fernando R. Momo** ^1^ ^2^ 
-
-1. Instituto de Ciencias, Universidad Nacional de General Sarmiento, J.M. Gutierrez 1159 (1613), 
-Los Polvorines, Buenos Aires, Argentina.
-
-2. INEDES, Universidad Nacional de Luján, CC 221, 6700 Luján, Argentina.
-
-3. Consejo Nacional de Investigaciones Científicas y Técnicas (CONICET)
-
-4. Marine Biology, Ghent University, Krijgslaan 281/S8, B-9000, Ghent, Belgium.
-
-5. Corresponding author e-mail: <lsaravia@campus.ungs.edu.ar>
-
-
-**keywords**: Metaweb, ecological network assembly, network assembly model, local food web structure, modularity , trophic coherence, motif, topological roles, null models
-
-**Running title**: The metaweb influence in local food webs.
-
-
-Statement of authorship: LAS TIM & MDT designed the study, LAS & FRM designed the models, LAS wrote the code and performed simulations, and LAS TIM FRM & MDT wrote the manuscript. 
-
-Data accessibility statement: all the raw data is from public repositories, the data
-supporting the results will be archived at figshare public repository
-
 
 ## Abstract 
 
-The idea that ecological networks are built in a sequence of colonization events is not new but has been applied mostly to competitive interactions. Similar processes act in trophic networks, i.e. food webs: a regional pool of species act as the source from which species colonize local areas, called the metaweb. Local food webs are realizations of metawebs that result from assembly processes influenced by migration, habitat filtering, stochastic factors, and dynamical constraints. We analyse how the structure of a metaweb influence local food webs with different spatial scales, using an assembly model, a random model and properties at three levels: emergent global properties that take into account the whole network e.g. modularity, sub-structural properties that consider several nodes e.g. motifs, and properties related to one node e.g. topological roles. Three independent data-sets were used: the marine Antarctic metaweb, built using a dietary database and representing 34.8 million Km^2^, the Weddell Sea (3.5 million Km^2^) and Potter Cove (6.8 Km^2^) food webs. We expected that local food webs show properties maximizing stability and robustness. Looking at the global properties, we found that local food webs are more similiar to the random model than the metaweb. The assembly model only takes into account migration, local extinction and secondary extinctions, local food webs showed almost no differences with the assembly model. For sub-structural properties the local food webs showed differences compared to the assembly model that did not increase its stability. Topological roles showed differences between the metaweb and local food webs that were not explained by the assembly model. We found that a great portion of the structure of the food webs is inherited from the metaweb implying that evolutionary processes acting on large temporal and spatial scales have a major influence. On the contrary, dynamical processes that favour stability have a small influence, but habitat filtering or dispersal limitations seem to be important factors that determine food web structure. 
+The idea that ecological networks are built in a sequence of colonization events is not new but has been applied mostly to competitive interactions. Similar processes act in trophic networks, i.e. food webs: a regional pool of species act as the source from which species colonize local areas, called the metaweb. Local food webs are realizations of metawebs that result from assembly processes influenced by migration, habitat filtering, stochastic factors, and dynamical constraints. We analyse how the structure of a metaweb influence local food webs with different spatial scales, using an assembly model, a random model and properties at three levels: emergent global properties that take into account the whole network e.g. modularity, sub-structural properties that consider several nodes e.g. motifs, and properties related to one node e.g. topological roles. Three independent data-sets were used: the marine Antarctic metaweb, built using a dietary database, the Weddell Sea and Potter Cove food webs. We expected that local food webs show properties maximizing stability and robustness. Looking at the global properties, we found that local food webs are more similar to the random model than the metaweb. Local food webs showed almost no differences with the assembly model. For sub-structural properties, the local food webs showed differences compared to the assembly model that did not increase its stability. Topological roles showed differences between the metaweb and local food webs that were not explained by the assembly model. We found that a great portion of the structure of the food webs is inherited from the metaweb implying that evolutionary processes acting on large temporal and spatial scales have a major influence. On the contrary, dynamical processes that favour stability have a small influence, but habitat filtering or dispersal limitations seem to be important factors that determine food web structure. 
 
 
 ## Introduction
@@ -161,7 +137,7 @@ To determine each species' role the $dz-PC$ parameter space was divided into fou
 
 With the aim of giving an integrated visualization of the sub-structural and local properties of the food webs, we combined in a single plot information about compartments and the topological roles with the trophic level for each species.
 
-All analyses and simulations were made in R version 3.4.3 [@RCoreTeam2017], using the igraph package version 1.1.2 [@Csardi2006] for motifs and topological roles analyses, and NetIndices [@Kones2009] for trophic level calculations. Source code and data is available at <https://github.com/lsaravia/MetawebsAssembly>.  
+All analyses and simulations were made in R version 3.4.3 [@RCoreTeam2017], using the igraph package version 1.1.2 [@Csardi2006] for motifs and topological roles analyses, and NetIndices [@Kones2009] for trophic level calculations. Source code and data is available at figshare <https://figshare.com/ADD_URL_HERE> and github <https://github.com//ADD_URL_HERE>.  
 
 
 ## Results
@@ -266,13 +242,6 @@ Topological roles are valuable to detect the existence of functional roles of sp
 The spatial scales involved in our study do not represent a continuity; the metaweb and regional web have a 10 to 1 ratio but the local web is 10^6^ smaller, besides that most of the global network properties and the motif structure showed no changes relative to the null model. Thus, we found evidence that local processes that limit species from the metaweb to local scales are influencing the assembly process but the structure of the food web originated through an emergent process from evolutionary or co-evolutionary forces seems to be more important. This could guide us to find a unified theory of ecological interactions that could describe the diversity of patterns observed in the natural world. 
 
 
-## Acknowledgements
-
-We are grateful to the National University of General Sarmiento for financial support. LAS would like to thank Susanne Kortsch that shared with us her source code for topological analysis and also made comments on an earlier version of the manuscript. This work was partially supported by a grant from CONICET (PIO 144-20140100035-CO). 
-
-## Conflict of interest disclosure
-
-The authors of this preprint declare that they have no financial conflict of interest with the content of this article
 
 ## References
 
