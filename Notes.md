@@ -402,3 +402,17 @@ This comparison reveals that the topological approach overestimates robustness i
 @Monteiro2017
 
 * Historically, food-web theory has examined the aspects of natural communities that are responsible for maintaining stability in complex communities. The two main lines of research emphasize either topological aspects damping the propagation of perturbations, or population–stability mechanisms that regulate population outbreaks and prevent a total system destabilization. Recent studies, however, have demonstrated that these two aspects act synergistically to produce a single conceptual framework. * Nevertheless, causal relationships are still unexplored: it remains uncertain if topological patterns maintain population stability, or alternatively, if population stability promotes food-web topology. * In this contribution, we explored the causal relationships between food-web topology and population stability within complex communities. We generated food webs, using three models with specific biological assumptions, and measured three population-stability variables, i.e. the proportion of locally stable three-species and four-species modules and the proportion of stable matrices; and two topological variables, i.e. modularity and degree of omnivory. We then used path analysis to evaluate two causality hypotheses, in which (i) topology promotes population stability, and (ii) population stability promotes food-web topology. * We found that population stability promoted food-web topology for all models, despite the different biological assumptions. We also observed consistent causal relationships between variables, in accordance with recent literature. * These results suggest that studies that intend to discuss the appearance of omnivorous behaviour or the stabilization aspect of compartmentalization, should first consider the stability of population dynamics. Additionally, they strongly support a recently proposed theory of an intrinsic mechanism to natural communities, selecting topologies capable of producing an equilibrium point where all species could coexist, and shaping natural communities to a similar and consistent pattern.
+
+
+--------------------
+
+@Rezende2009
+
+to show that a large marine food web is organized in compartments, and that body size, phylogeny, and spatial structure are jointly associated with such a compartmentalized structure. Sharks account for the majority of predatory interactions within their compartments. Phylogenetically closely related shark species tend to occupy different compartments and have divergent trophic levels, suggesting that competition may play an important role structuring some of these compartments. Current overfishing of sharks has the potential to change the structural properties, which might eventually affect the stability of the food web.
+
+
+--------------------
+
+@Fortuna2010
+
+Nevertheless, since the seminal work of May (1972), it has been considered that modular or compartmentalized patterns described in food webs increase network stability, retaining the impacts of a perturbation within a single module and minimizing impacts on other modules (Krause et al. 2003; Teng & McCann 2004; see, however, Pimm 1979).
