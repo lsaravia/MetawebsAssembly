@@ -416,3 +416,26 @@ to show that a large marine food web is organized in compartments, and that body
 @Fortuna2010
 
 Nevertheless, since the seminal work of May (1972), it has been considered that modular or compartmentalized patterns described in food webs increase network stability, retaining the impacts of a perturbation within a single module and minimizing impacts on other modules (Krause et al. 2003; Teng & McCann 2004; see, however, Pimm 1979).
+
+
+--------------------
+@Hirt2018
+
+Li, Y. et al. (2017) How patch size and refuge availability change
+interaction strength and population dynamics: a combined indi-
+vidual- and population-based modeling experiment. PeerJ 5,
+e2993
+
+
+
+----------------------
+@Coll2011
+
+Finally, our results illustrate the importance of spatial scale for understanding how food webs are structured and how they function. Cumulative or aggregated food webs are useful to represent and compare food-web structure of larger regions (NS, NB, PEI, Atlantic). However, these cumulative webs produce different results from food webs at smaller spatial scales (study sites, region by impact level, or region). These differences are mainly driven by changes in the number of trophic groups that occur at each site and their ecological roles, as well as by the uncertainty of the data and sampling limitations. Therefore, the best approach to study food-web structure and functioning may be to combine ecological data with different spatial resolutions. Neighboring areas may show significant differences in food-web organization driven by local or regional factors that are overlooked when data are integrated and only cumulative food webs are studied, as commonly done (e.g. [21,38]). Similar conclusions regarding the importance of the spatial scale of study were drawn in an analysis of data collected in several streams at various spatial scales [44] and more generally in other ecosystems [45]. This is a relevant issue in food-web ecology in general as food webs are typically assembled in aggregated forms (cumula- tive or summary webs) due to limited data availability on trophic interactions.
+
+
+---------------------
+@Thompson2005
+
+It has been suggested that food webs should be constrained by the home range of the top predator in the system (Cousins 1996). For many streams, this would require inclusion of information appropriate to the large scales over which predatory fish forage, or flying adults disperse. Equally, however, moving to larger scales can obscure important information or introduce error into our measurement of food-web attributes. This study suggests that patch-scale ecological processes structure food webs at a small spatial scale, but that these are not emergent at a larger spatial scale. Aggregating individuals from across patches may result in underestimates of food-web attributes such as connectance, with consequent implications for the generation of models that rely on those attributes.
+
