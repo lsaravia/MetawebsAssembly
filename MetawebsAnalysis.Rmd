@@ -65,9 +65,12 @@ mod_by_red[[1]] <- modulos
 #
 tbl <- data.frame()
 tbl <- calc_modularity_random(redl,1000)
-#saveRDS(tbl,"tbl.rds")
+saveRDS(tbl,"tbl.rds")
 #tbl <- readRDS("tbl.rds")
-websTbl <- websTbl %>% bind_cols(tbl)
+websTbl <- websTbl %>% bind_cols(tbl$su)
+
+sim <- tbl$sim
+sd(sim$modularity)
 
 # Check for detritos
 # 
@@ -111,8 +114,9 @@ websTbl$TIlow[1] <- zq$TIlow
 websTbl$TIhigh[1] <- zq$TIhigh
 websTbl$zQ[1] <- zq$zQ
 websTbl$zTI[1] <- zq$zTI
+websTbl$zMO[1] <- with(websTbl[1,], (Modularity - rndMO)/sd(sim$modularity))
 
-
+rm(sim,tbl)
 # Plot the red
 # 
 # Add colors to nodes 
@@ -195,11 +199,12 @@ mod_by_red[[2]] <- modulos
 #
 tbl <- data.frame()
 tbl <- calc_modularity_random(redl,1000)
-#saveRDS(tbl,"tbl.rds")
+saveRDS(tbl,"tbl.rds")
 #tbl <- readRDS("tbl.rds")
-websTbl1 <- websTbl1 %>% bind_cols(tbl)
+websTbl1 <- websTbl1 %>% bind_cols(tbl$su)
 websTbl <- bind_rows(websTbl,websTbl1)
 
+sim <- tbl$sim
 rm(websTbl1)
 
 # Check for detritos
@@ -238,6 +243,9 @@ websTbl$TIlow[2] <- zq$TIlow
 websTbl$TIhigh[2] <- zq$TIhigh
 websTbl$zQ[2] <- zq$zQ
 websTbl$zTI[2] <- zq$zTI
+websTbl$zMO[2] <- with(websTbl[2,], (Modularity - rndMO)/sd(sim$modularity))
+
+rm(sim,tbl)
 
 
 
@@ -342,12 +350,13 @@ mod_by_red[[3]] <- modulos
 #
 tbl <- data.frame()
 tbl <- calc_modularity_random(redl,1000)
-#saveRDS(tbl,"tbl.rds")
+saveRDS(tbl,"tbl.rds")
 #tbl <- readRDS("tbl.rds")
-websTbl1 <- websTbl1 %>% bind_cols(tbl)
+websTbl1 <- websTbl1 %>% bind_cols(tbl$su)
 
 websTbl <- bind_rows(websTbl,websTbl1)
 
+sim <- tbl$sim
 rm(websTbl1)
 
 
@@ -386,6 +395,9 @@ websTbl$TIlow[3] <- zq$TIlow
 websTbl$TIhigh[3] <- zq$TIhigh
 websTbl$zQ[3] <- zq$zQ
 websTbl$zTI[3] <- zq$zTI
+websTbl$zMO[3] <- with(websTbl[3,], (Modularity - rndMO)/sd(sim$modularity))
+
+rm(sim,tbl)
 
 
 # 
@@ -415,11 +427,6 @@ plot(redl, vertex.color=vertex_attr(redl)$cor,vertex.label=NA,
 dev.off()
 
 save.image()
-
-#
-# Calculate z-score of modularity
-#
-websTbl <- websTbl %>% mutate(zMO= (Modularity- rndMO)/(MOhigh-MOlow)*2, zGR=(Groups-rndGR)/(GRhigh-GRlow)*2)
 
 
 require(pander)

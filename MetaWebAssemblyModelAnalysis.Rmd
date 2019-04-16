@@ -199,19 +199,21 @@ require(tictoc)
 m <- 0.023
 a <- 0.094
 tic()
-tblMdlWeb <- calc_modularity_metaWebAssembly(redl, A, m,a,1000,TL)
+tbl <- calc_modularity_metaWebAssembly(redl, A, m,a,1000,TL)
 toc()
-
-tblMdlWeb <- tblMdlWeb %>% mutate(Network="Local") %>% inner_join(dplyr::select(websTbl,Size:Modularity), by="Network")
+sim <- tbl$sim
+tblMdlWeb <- tbl$su %>% mutate(Network="Potter") %>% inner_join(dplyr::select(websTbl,Size:Modularity), by="Network")
 
 #
 # Calculate z-score of modularity
 #
-tblMdlWeb <- tblMdlWeb %>% mutate(zMO= (Modularity- mdlMO)/(MOhigh-MOlow)*2, zGR=(Groups-mdlGR)/(GRhigh-GRlow)*2)
+tblMdlWeb <- tblMdlWeb %>% mutate(zMO= (Modularity- mdlMO)/MOsd, zGR=(Groups-mdlGR)/(GRhigh-GRlow)*2)
 
 websAssemblyModel <- dplyr::select(tblMdlWeb,Network:Modularity,mdlCC:zTI,zMO:zGR)
 #websAssemblyModel <- bind_rows(websAssemblyModel, dplyr::select(tblMdlWeb,Network:Modularity,mdlCC:zTI,zMO:zGR))
-
+websAssemblyModel$mdlMO[2] <- with(tblMdlWeb,mdlMO)
+websAssemblyModel$zMO[2] <- with(tblMdlWeb, (Modularity- mdlMO)/MOsd)
+rm(tbl,sti)
 save.image()
 
 ```
