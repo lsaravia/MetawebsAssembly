@@ -792,7 +792,6 @@ calc_modularity_metaWebAssembly<- function(red, Adj, mig,ext,nsim=1000,ti=NULL){
 #' @examples
 calc_motif_metaWebAssembly<- function(red, Adj, mig, ext, nsim=1000)
 {
-  ind <- data.frame()
   require(doParallel)
   cn <-detectCores()
   #  cl <- makeCluster(cn,outfile="foreach.log") # Logfile to debug 
@@ -800,17 +799,20 @@ calc_motif_metaWebAssembly<- function(red, Adj, mig, ext, nsim=1000)
   registerDoParallel(cl)
   
   final_time <- 500  # Final time used in simulations of the meta-web assembly
-  
+  mig <- rep(mig,nrow(Adj))
+  ext <- rep(ext,nrow(Adj))
+
   ind <- data.frame()
   require(doParallel)
   cn <-detectCores()
   #  cl <- makeCluster(cn,outfile="foreach.log") # Logfile to debug 
   cl <- makeCluster(cn)
   registerDoParallel(cl)
+
   ind <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE,.packages=c('MetaWebAssemblyModels','igraph'), 
                  .export = c('Adj','ext','mig','final_time')) %dopar% 
   {
-    AA <- metaWebNetAssembly(Adj,mig,1,ext,final_time)
+    AA <- metaWebNetAssembly(Adj,mig,ext,final_time)
     g <- graph_from_adjacency_matrix( AA$A, mode  = "directed")
     # Select only a connected subgraph graph 
     dg <- components(g)

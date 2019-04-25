@@ -26,9 +26,6 @@ source("R/network_fun.r")
 ```{r fitMetaWebPC, eval=F,echo=F,message=T,warning=T}
 
 source("R/network_fun.r")
-# load_all('MetaWebAssemblyModels')
-# install_local('../MetaWebAssemblyModels')
-# sourceCpp("src/NetAssemblyFromMetaWeb.cpp")
 
 #
 # Read data and trim species names to avoid duplicates 
@@ -210,12 +207,16 @@ tblMdlWeb <- tbl$su %>% mutate(Network="Potter") %>% inner_join(dplyr::select(we
 tblMdlWeb <- tblMdlWeb %>% mutate(zMO= (Modularity- mdlMO)/MOsd, zGR=(Groups-mdlGR)/(GRhigh-GRlow)*2)
 
 websAssemblyModel <- dplyr::select(tblMdlWeb,Network:Modularity,mdlCC:zTI,zMO:zGR)
-#websAssemblyModel <- bind_rows(websAssemblyModel, dplyr::select(tblMdlWeb,Network:Modularity,mdlCC:zTI,zMO:zGR))
+
+#
+# Correct the calculation of z-score
+#
 websAssemblyModel$mdlMO[2] <- with(tblMdlWeb,mdlMO)
 websAssemblyModel$zMO[2] <- with(tblMdlWeb, (Modularity- mdlMO)/MOsd)
-rm(tbl,sti)
-save.image()
+rm(tbl)
 
+websAssemblyModelSim <-websAssemblyModelSim %>% bind_rows(sim %>% mutate(Network="Potter"))  
+save.image()
 ```
 
 
@@ -242,20 +243,104 @@ require(tictoc)
 m <- 0.084 
 a <- 0.076
 tic()
-tblMdlWeb <- calc_modularity_metaWebAssembly(redl, A, m,a,1000,TL)
+tbl <- calc_modularity_metaWebAssembly(redl, A, m,a,1000,TL)
 toc()
+sim <- tbl$sim
 
-tblMdlWeb <- tblMdlWeb %>% mutate(Network="Regional") %>% inner_join(dplyr::select(websTbl,Size:Modularity), by="Network")
+tblMdlWeb <- tbl$su %>% mutate(Network="Weddell") %>% inner_join(dplyr::select(websTbl,Size:Modularity), by="Network")
 
 #
 # Calculate z-score of modularity
 #
-tblMdlWeb <- tblMdlWeb %>% mutate(zMO= (Modularity- mdlMO)/(MOhigh-MOlow)*2, zGR=(Groups-mdlGR)/(GRhigh-GRlow)*2)
+tblMdlWeb <- tblMdlWeb %>% mutate(zMO= (Modularity- mdlMO)/MOsd, zGR=(Groups-mdlGR)/(GRhigh-GRlow)*2)
 
 websAssemblyModel <- bind_rows(websAssemblyModel, dplyr::select(tblMdlWeb,Network:Modularity,mdlCC:zTI,zMO:zGR))
 
+#
+# Correct the calculation of z-score
+#
+# websAssemblyModel$mdlMO[1] <- with(tblMdlWeb,mdlMO)
+# websAssemblyModel$zMO[1] <- with(tblMdlWeb, (Modularity- mdlMO)/MOsd)
+websAssemblyModelSim <-  sim %>% mutate(Network="Weddell")
+
 save.image()
 
+#
+# Plots of the distribution of simulated indices
+#
+require(RColorBrewer)
+col <- brewer.pal(8,"Dark2")
+col <- c("#0097A7","#448AFF","#212121")
+dat <- websAssemblyModel %>% filter(Network=="Regional") %>% rename(modularity=Modularity) %>% bind_cols(websTbl %>% filter(Network=="Weddell") %>% select(Q,mTI))
+
+sim <- websAssemblyModelSim %>% filter(Network=="Weddell")
+names(dat)
+names(sim)
+#
+# Plot for the figure 1 
+#
+p <- ggplot(sim,aes(Q))+ geom_histogram(alpha=0.5,fill=col[1],color=col[1]) + theme_classic() + xlab("Network metric")
+p + geom_segment(data=dat,aes(x=Q+0.4,xend=Q+0.4, y=30, yend = 0), colour=col[2], size=1, arrow = arrow(length = unit(0.5, "cm"))) +
+    geom_segment(data=dat,aes(x=Qlow,xend=Qlow, y=20, yend = 0), colour=col[3], size=1, linetype=1 ) +
+    geom_segment(data=dat,aes(x=Qhigh,xend=Qhigh, y=20, yend = 0), colour=col[3], size=1, linetype=1 )
+
+
+p1 <- ggplot(sim,aes(SWness))+ geom_histogram(alpha=0.5,fill=col[1],color=col[1]) + theme_bw() + 
+    geom_segment(data=dat,aes(xend=SWness, y=85, yend = 0), colour=col[3], size=1, arrow = arrow(length = unit(0.5, "cm"))) +
+    geom_segment(data=dat,aes(x=SWnessCI,xend=SWnessCI, y=55, yend = 0), colour=col[2], size=1, linetype=1 )
+
+
+p2 <- ggplot(sim,aes(Q))+ geom_histogram(alpha=0.5,fill=col[1],color=col[1]) + theme_bw() + 
+    geom_segment(data=dat,aes(xend=Q, y=30, yend = 0), colour=col[3], size=1, arrow = arrow(length = unit(0.5, "cm"))) +
+    geom_segment(data=dat,aes(x=Qlow,xend=Qlow, y=20, yend = 0), colour=col[2], size=1, linetype=1 ) +
+    geom_segment(data=dat,aes(x=Qhigh,xend=Qhigh, y=20, yend = 0), colour=col[2], size=1, linetype=1 )
+
+p3 <- ggplot(sim,aes(mTI))+ geom_histogram(alpha=0.5,fill=col[1],color=col[1]) + theme_bw() + 
+    geom_segment(data=dat,aes(xend=mTI, y=25, yend = 0), colour=col[3], size=1, arrow = arrow(length = unit(0.5, "cm"))) +
+    geom_segment(data=dat,aes(x=TIlow,xend=TIlow, y=18, yend = 0), colour=col[2], size=1, linetype=1 ) +
+    geom_segment(data=dat,aes(x=TIhigh,xend=TIhigh, y=18, yend = 0), colour=col[2], size=1, linetype=1 )
+
+
+p4 <- ggplot(sim,aes(modularity))+ geom_histogram(alpha=0.5,fill=col[1],color=col[1]) + theme_bw() +
+    geom_segment(data=dat,aes(xend=modularity, y=25, yend = 0), colour=col[3], size=1, arrow = arrow(length = unit(0.5, "cm"))) +
+    geom_segment(data=dat,aes(x=MOlow,xend=MOlow, y=18, yend = 0), colour=col[2], size=1, linetype=1 ) +
+    geom_segment(data=dat,aes(x=MOhigh,xend=MOhigh, y=18, yend = 0), colour=col[2], size=1, linetype=1 )
+
+
+dat <- websAssemblyModel %>% filter(Network=="Local") %>% rename(modularity=Modularity) %>% bind_cols(websTbl %>% filter(Network=="Potter") %>% select(Q,mTI))
+
+sim <- websAssemblyModelSim %>% filter(Network=="Potter")
+
+q1 <- ggplot(sim,aes(SWness))+ geom_histogram(alpha=0.5,fill=col[1],color=col[1]) + theme_bw() + 
+    geom_segment(data=dat,aes(xend=SWness, y=185, yend = 0), colour=col[3], size=1, arrow = arrow(length = unit(0.5, "cm"))) +
+    geom_segment(data=dat,aes(x=SWnessCI,xend=SWnessCI, y=120, yend = 0), colour=col[2], size=1, linetype=1 )
+
+
+q2 <- ggplot(sim,aes(Q))+ geom_histogram(alpha=0.5,fill=col[1],color=col[1]) + theme_bw() + 
+    geom_segment(data=dat,aes(xend=Q, y=32, yend = 0), colour=col[3], size=1, arrow = arrow(length = unit(0.5, "cm"))) +
+    geom_segment(data=dat,aes(x=Qlow,xend=Qlow, y=21, yend = 0), colour=col[2], size=1, linetype=1 ) +
+    geom_segment(data=dat,aes(x=Qhigh,xend=Qhigh, y=21, yend = 0), colour=col[2], size=1, linetype=1 )
+
+q3 <- ggplot(sim,aes(mTI))+ geom_histogram(alpha=0.5,fill=col[1],color=col[1]) + theme_bw() + 
+    geom_segment(data=dat,aes(xend=mTI, y=32, yend = 0), colour=col[3], size=1, arrow = arrow(length = unit(0.5, "cm"))) +
+    geom_segment(data=dat,aes(x=TIlow,xend=TIlow, y=21, yend = 0), colour=col[2], size=1, linetype=1 ) +
+    geom_segment(data=dat,aes(x=TIhigh,xend=TIhigh, y=21, yend = 0), colour=col[2], size=1, linetype=1 )
+
+
+q4 <- ggplot(sim,aes(modularity))+ geom_histogram(alpha=0.5,fill=col[1],color=col[1]) + theme_bw() +
+    geom_segment(data=dat,aes(xend=modularity, y=24, yend = 0), colour=col[3], size=1, arrow = arrow(length = unit(0.5, "cm"))) +
+    geom_segment(data=dat,aes(x=MOlow,xend=MOlow, y=16, yend = 0), colour=col[2], size=1, linetype=1 ) +
+    geom_segment(data=dat,aes(x=MOhigh,xend=MOhigh, y=16, yend = 0), colour=col[2], size=1, linetype=1 )
+
+
+require(cowplot)
+p5 <- plot_grid(q1+xlab(""),q2+ylab("")+xlab(""),q3+ylab("")+xlab(""),q4+ylab("")+xlab(""),
+                p1,p2+ylab(""),p3+ylab(""),p4+ylab(""),align = "h",nrow=2,labels = c("A","","","","B"))
+save_plot("Figures/globProp_assembly_ByNetwork.png",p5,base_width=8,base_height=5,dpi=600)
+
+
+
+save.image()
 ```
 
 

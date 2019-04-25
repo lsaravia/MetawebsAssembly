@@ -82,7 +82,10 @@ To unravel the mechanisms of network assembly we considered two models, a random
 
 The first model that we used is the Erdös-Rényi random graph [@Erdos1959]. An Erdös-Rényi network is constructed fixing the number of edges and nodes and assigning at random the $m$ edges to the $n$ nodes with equal probability [@Erdos1959; @Baiser2016]. We restricted the random model eliminating double arrows and cannibalistic links. In a small number of cases the algorithm generates two separated network components or network without basal species, we discarded such cases to make possible the calculation of trophic level, the coherence parameter (see below) and modularity. 
 
-To consider network assembly mechanisms we used a dynamic metaweb assembly model called the trophic theory of island biogeography [@Gravel2011]. In this model species migrate from the metaweb to a local web with a uniform probability $c$, and become extinct from the local web with probability $e$; a reminiscence of the theory of island biogeography [@MacArthur1967;@Gravel2011], but with the addition of network structure. Species migrate with their potential network links from the metaweb, then in the local web species can only survive if at least one of its preys is present, or if it is a basal species. When a species goes extinct locally it may produce secondary extinctions; we check that the local predators maintain at least one prey if not they become extinct independent of the probability $e$. We simulated this model in time and it eventually reaches an equilibrium that depends on the migration and extinction probabilities but also on the structure of the metaweb. The ratio of immigration vs. extinction $\alpha= c/e$ is hypothesized to be inversely related to the distance to the mainland [@MacArthur1967], and as extinction $e$ should be inversely proportional to population size [@Hanski1999], the ratio $\alpha$ is also hypothesized to be related to the local area.
+To consider network assembly mechanisms we used a dynamic metaweb assembly model called the trophic theory of island biogeography [@Gravel2011]. In this model species migrate from the metaweb to a local web with a uniform probability $c$, and become extinct from the local web with probability $e$; a reminiscence of the theory of island biogeography [@MacArthur1967], but with the addition of network structure. Species migrate with their potential network links from the metaweb, then in the local web species can only survive if at least one of its preys is present, or if it is a basal species. When a species goes extinct locally it may produce secondary extinctions; we check that the local predators maintain at least one prey if not they become extinct independent of the probability $e$. We simulated this model in time and it eventually reaches an equilibrium that depends on the migration and extinction probabilities but also on the structure of the metaweb. The ratio of immigration vs. extinction $\alpha= c/e$ is hypothesized to be inversely related to the distance to the mainland [@MacArthur1967], and as extinction $e$ should be inversely proportional to population size [@Hanski1999], the ratio $\alpha$ is also hypothesized to be related to the local area.
+
+![Schematic diagram of the metacommunity assembly model: species migrate from the metaweb with a probability $c$ to a local network carrying their potential links to preys, here they have a probability of extinction $e$, additionally predators can become extinct if their preys are locally extinct. We simulate 1000 local networks and calculate global topological properties. From the distribution of these topological properties we calculate 1% confidence intervals to compare with empirical networks](Figures/MetaWebAssemblyModelFigure.pdf)
+
 
 For the random model we simulated networks with the same number of nodes $n$ and edges $m$ as the empirical networks; for the metaweb model we fitted the parameters $c$ and $e$ to obtain networks with $n$ and $m$ close to the empirical networks. This implies that $\alpha$ should reflect the differences in areas of the two local food webs. For details of the fitting and simulations see Appendix. 
 
@@ -136,9 +139,8 @@ where $s$ is the number of modules or compartments, $I_s$ is the number of links
 
 ### Sub-structural properties (motifs)
 
-We considered four of the thirteen possible three-species sub-networks: apparent competition, exploitative competition, tri-trophic chain, and omnivory (Figure 1). These are the only motifs present in all networks analysed here. We compared the frequency of these motifs to 1000 null model networks using the 99% confidence interval and the z-score as previously described. To determine if the proportions of motifs change across networks we use the Pearson's Chi-squared test with simulated p-value based on 10000 Monte Carlo replicates.
+We considered four of the thirteen possible three-species sub-networks: apparent competition, exploitative competition, tri-trophic chain, and omnivory (Figure S1). These are the only motifs present in all networks analysed here. We compared the frequency of these motifs to 1000 null model networks using the 99% confidence interval and the z-score as previously described. To determine if the proportions of motifs change across networks we use the Pearson's Chi-squared test with simulated p-value based on 10000 Monte Carlo replicates.
 
-![The four three-species sub-networks analysed: apparent competition, exploitative competition, tri-trophic chain, and omnivory. These four sub-networks have been explored both theoretically and empirically in ecological networks and are the most common sub-networks found in food webs](Figures/Fig1Motifs.png)
 
 ### Node-level properties (Topological roles)
 
@@ -188,17 +190,10 @@ Clustering            0.10      0.048       0.22
 Small-World-ness     *2.75      *4.69      *10.87
 random
 
-Small-World-ness      0.42       0.21
-Assembly
-
 Coherence             0.53       0.45       0.70  
 
 Coherence           *-0.54     *-2.08     *-3.54
 random 
-z-score    
-
-Coherence            -0.20     *-3.41 
-assembly
 z-score    
 
 Mean Trophic          2.13       1.98       1.91
@@ -208,23 +203,15 @@ Trophic level       *-0.27     *-0.86     *-1.60
 random
 z-score        
 
-Trophic level         1.29       1.09
-assembly
-z-score        
-
 
 Modularity            0.37       0.48      0.45 
 
 Modularity            0.89     *18.97    *85.75
 random
 z-score
-
-Modularity           -0.38       0.41            
-assembly 
-z-score
 ------------------------------------------------
 
-Table: Network global properties across scales. The *Metaweb* represents the marine predator-prey relationships of Antarctica, the *Weddell Sea* and *Potter Cove* are the local food webs. Z-scores were calculated against 1000 null model networks (random or metaweb assembly models). Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation from null model simulations; a positive z-score means that is greater.
+Table: Network global properties across scales. The *Metaweb* represents the marine predator-prey relationships of Antarctica, the *Weddell Sea* and *Potter Cove* are the local food webs. Z-scores were calculated against 1000 random model networks. Quantities marked with '*' are significant at 1% level. A negative z-score means that the quantity is smaller than the expectation from null model simulations; a positive z-score means that is greater.
 
 \normalsize
 
