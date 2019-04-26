@@ -1,6 +1,6 @@
 OPTS= -H margins.sty --bibliography MetawebsAssembly.bib --csl=ecography.csl --latex-engine=xelatex 
 
-all: Appendices.pdf MetawebsAssembly.pdf TitlePage.pdf
+all: Appendices.pdf MetawebsAssembly.pdf 
 
 %.pdf:%.md
 	pandoc $< -o $@ -H Appendices.sty

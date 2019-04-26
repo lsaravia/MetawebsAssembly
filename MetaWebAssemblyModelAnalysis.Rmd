@@ -465,9 +465,8 @@ levels(pFM1$Network) <- c("Potter Cove","Meta-web","Weddell Sea")
 # Normalize z-scores
 #
 pFM1 <- pFM1 %>% group_by(Network) %>% mutate(normZ=value/sum(sqrt(value^2)))
-
 g1 <- ggplot(pFM1,aes(x=Network,y=normZ,fill=motif)) + geom_bar(stat="identity",position=position_dodge()) +
-   scale_fill_brewer(palette = "RdYlGn",breaks=c("zEC","zAC","zTT","zOM"),name="Motif\nZ-score",   labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")) + guides(fill=FALSE) +
+   scale_fill_brewer(palette = "Paired",breaks=c("zAC","zEC","zOM","zTT"),name="Motif\nZ-score",   labels=c("Apparent\ncompetition","Exploitative\ncompetition","Omnivory", "Tri-trophic\nchain")) + guides(fill=FALSE) +
    xlab("") + ylab("") + theme_bw() + scale_x_discrete(limits=c("Potter Cove","Weddell Sea","Meta-web")) + expand_limits(y=c(0.8,-0.35)) #+ theme(legend.position="bottom")
 
 # Add asteriscs to significative motifs
@@ -485,7 +484,7 @@ levels(pFM2$Network) <- c("Potter Cove","Weddell Sea")
 pFM2 <- pFM2 %>% group_by(Network) %>% mutate(normZ=value/sum(sqrt(value^2)))
 
 g2 <- ggplot(pFM2,aes(x=Network,y=normZ,fill=motif)) + geom_bar(stat="identity",position=position_dodge()) +
-   scale_fill_brewer(palette = "RdYlGn",breaks=c("zEC","zAC","zTT","zOM"),name="Motif\nZ-score",   labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")) +
+     scale_fill_brewer(palette = "Paired",breaks=c("zAC","zEC","zOM","zTT"),name="Motif\nZ-score",   labels=c("Apparent\ncompetition","Exploitative\ncompetition","Omnivory", "Tri-trophic\nchain")) + 
    xlab("") + ylab("") + theme_bw() + scale_x_discrete(limits=c("Potter Cove","Weddell Sea","Meta-web")) + expand_limits(y=c(0.8,-0.35)) #+ theme(legend.position="bottom")
 
 # Add asteriscs to significative motifs
@@ -621,8 +620,8 @@ df1$Network <- factor(df1$Network, levels=c("Potter","Weddell","Meta"))
 levels(df1$Network) <- c("Potter Cove\nModel","Weddell Sea\nModel","Meta-web")
 
 
-gP1 <- ggplot(df1,aes(x=Network,y=Freq,fill=Rol)) + geom_bar(stat="identity") + 
-  scale_fill_brewer(palette = "RdYlGn",name="") + 
+gP1 <- ggplot(df1,aes(x=Network,y=Freq,fill=Rol)) + geom_bar(stat="identity", position=position_dodge()) + 
+  scale_fill_brewer(palette = "Paired",name="") + 
   xlab("") + ylab("") + theme_bw() + theme(legend.position="none")
 
 
@@ -635,8 +634,8 @@ df2 <- df2 %>% group_by(Network) %>% mutate(total=sum(count),Freq=count/total)
 df2$Network <- factor(df2$Network, levels=c("Local","Regional","Meta")) 
 levels(df2$Network) <- c("Potter Cove","Weddell Sea","Meta-web")
 
-gP2 <- ggplot(df2,aes(x=Network,y=Freq,fill=Rol)) + geom_bar(stat="identity") + 
-  scale_fill_brewer(palette = "RdYlGn",name="") + 
+gP2 <- ggplot(df2,aes(x=Network,y=Freq,fill=Rol)) + geom_bar(stat="identity", position=position_dodge()) + 
+  scale_fill_brewer(palette = "Paired",name="") + 
   xlab("") + ylab("") + theme_bw() + theme(legend.position="none")
 
 legend_b <- get_legend(gP2 + theme(legend.position="bottom"))
