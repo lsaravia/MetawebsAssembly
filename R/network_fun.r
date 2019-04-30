@@ -510,7 +510,7 @@ plotTopoRolesByTLByMod <- function(netFrame,netName,deadNodes,modulObj,topoFrame
   # Add colors with topological roles to nodes 
   #
   require(RColorBrewer)
-  colnet <- brewer.pal(4,"RdYlGn")
+  colnet <- brewer.pal(4,"Paired")
   
   hc <- topoFrame %>% mutate(type = factor(type)) %>% filter(Network==netName) %>% arrange(node) %>% mutate(col= as.numeric(type), TL=troph.net2[,1]) 
   V(redl)$color <- colnet[hc$col]

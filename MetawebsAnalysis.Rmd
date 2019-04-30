@@ -13,7 +13,7 @@ oldcd <-getwd()
 ```
 
 
-# Modularity Analysis - Local  
+# Modularity Analysis - Potter 
 
 ```{r ModularityAnalysisLocal, eval=T,echo=F,message=T,warning=T}
 
@@ -146,7 +146,7 @@ dev.off()
 save.image()
 ```
 
-# Modularity Analysis - Regional
+# Modularity Analysis - Weddell
 
 ```{r ModularityAnalysisRegional, eval=F,echo=F,message=T,warning=T}
 
@@ -438,7 +438,7 @@ pandoc.table(t(websTbl %>% dplyr::select(Network,Size,Links,Connectance,PathLeng
 
 ```
 
-# Analysis of motif - Local
+# Analysis of motif - Potter
 
 ```{r motifAnalysisLocal, eval=T,echo=F,message=T,warning=T}
 
@@ -490,7 +490,7 @@ motif <- motif %>% mutate(Network="Local")
 save.image()
 ```
 
-# Analysis of motif - Regional
+# Analysis of motif - Weddell
 
 ```{r motifAnalysisRegional, eval=T,echo=F,message=T,warning=T}
 
@@ -512,7 +512,6 @@ dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_tri
 dtot1 <- as.matrix(dtot %>% filter(Network=="Regional") %>% dplyr::select(Prey_name,Predator_name))
 redl <- graph_from_edgelist(dtot1, directed  = T)
 redl <- simplify(redl)
-
 #
 # Make short names 
 #
@@ -602,6 +601,10 @@ for( i in 1:length(dup)){
 
 V(redl)$name[which_loop(redl)]
 
+# Check Krill
+#
+E(redl)[from(V(redl)["Euphausia superba"])]
+dtot %>% filter(grepl("Euphausia superba",Prey_name))
 
 #
 # Motif
@@ -709,7 +712,7 @@ dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_tri
 
 #################################################
 #
-# Select local food web 
+# Select Potter food web 
 #
 dtot1 <- as.matrix(dtot %>% filter(Network=="Local") %>% dplyr::select(Prey_name,Predator_name))
 redl <- graph_from_edgelist(dtot1, directed  = T)
@@ -756,7 +759,7 @@ rm(tR1,tR2,tR3)
 
 ######################################################
 #
-# Select regional food web 
+# Select Weddell food web 
 #
 dtot1 <- as.matrix(dtot %>% filter(Network=="Regional") %>% dplyr::select(Prey_name,Predator_name))
 redl <- graph_from_edgelist(dtot1, directed  = T)
@@ -813,7 +816,7 @@ dev.off()
 
 ##############################################################
 #
-# Select meta food web 
+# Select metaweb 
 #
 dtot1 <- as.matrix(dtot %>% filter(Network=="Meta") %>% dplyr::select(Prey_name,Predator_name))
 redl <- graph_from_edgelist(dtot1, directed  = T)
@@ -994,7 +997,7 @@ mtext("B", side = 3, adj = 0.05, line=1,cex=1.2)
 
 
 require(RColorBrewer)
-colnet <- brewer.pal(4,"RdYlGn")
+colnet <- brewer.pal(4,"Paired")
 
 #par( mar=c(1,1,0.5,0.5), oma=c(2,2,2,1))
 
