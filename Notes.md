@@ -1,8 +1,16 @@
 # From Local to regional and continental food web structure  
 
+
+Hypothesis: 
+1) food-webs have evolutionary, assembly and dynamical constraints that shape their structure
+2) 
+
+
 At Potter Cove that has a smaller extent we expected to be more constrained by biotic interactions than the Weddell sea [@Araujo2014], so it should be more stable and more modular than the metaweb, on the contrary Weddell see food-web is the only more coherent than the metaweb   
 
 The inclusion of traits in the metaweb assembly model will likely improve it, traits like mobility, body size, and depth range, would prevent species to go Potter Cove e.g. large and highly mobile species will seldom enter the Cove, and species of deep waters will also be excluded. 
+
+Another possible explication is that there is a feedback from local dynamical process towards regional and that the structure of the metaweb already have incorporated the dynamical constraints [@Mittelbach2015].  
 
 
 # Abstract 1889294
