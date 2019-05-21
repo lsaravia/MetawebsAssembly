@@ -16,7 +16,11 @@ require(igraph)
 require(dplyr)
 require(stringr)
 require(devtools)
-require(MetaWebAssemblyModels)
+if( require(MetaWebAssemblyModels) == FALSE)
+  install_github("lsaravia/MetaWebAssemblyModels")
+if( require(EcoNetwork) == FALSE)
+  install_github("lsaravia/EcoNetwork")
+
 source("R/network_fun.r")
 
 ```
