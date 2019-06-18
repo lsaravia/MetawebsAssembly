@@ -777,6 +777,66 @@ calc_modularity_metaWebAssembly<- function(red, Adj, mig,ext,nsim=1000,ti=NULL){
 
 
 
+#' Estimation of QSS z-scores using Meta-Web assembly model as a null 
+#'
+#' @param red This is the reference network as an igraph object
+#' @param Adj Adyacency matrix for the meta-web
+#' @param mig Migration parameter of the meta-Web assembly model
+#' @param ext Exctinction parameter of the meta-Web assembly model
+#' @param nsim number of simulations
+#'
+#' @return
+#' @export
+#'
+#' @examples
+calc_qss_metaWebAssembly<- function(red, Adj, mig,ext,nsim=1000,ncores=0){
+  
+  t <- calc_QSS(red,10000,ncores)
+  final_time <- 500  # Final time used in simulations of the meta-web assembly
+  mig <- rep(mig,nrow(Adj))
+  ext <- rep(ext,nrow(Adj))
+  ind <- data.frame()
+
+  require(doFuture)
+  registerDoFuture()
+  if(ncores) {
+    cn <- future::availableCores()
+    if(ncores>cn)
+      ncores <- cn
+    plan(multiprocess, workers=ncores)
+    # cl <- makeCluster(cn,outfile="foreach.log") # Logfile to debug
+    # cl <- parallel::makeCluster(ncores)
+    # doParallel::registerDoParallel(cl)
+    # on.exit(parallel::stopCluster(cl))
+  } else {
+    plan(sequential)
+  }
+
+  ind <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE) %do% 
+    {
+      AA <- metaWebNetAssembly(Adj,mig,ext,final_time)
+      g <- graph_from_adjacency_matrix( AA$A, mode  = "directed")
+      dg <- components(g)
+      g <- induced_subgraph(g, which(dg$membership == which.max(dg$csize)))
+      
+      size <- vcount(g)
+      links <- ecount(g)
+      
+      # Select only a connected subgraph graph 
+      print(paste("Sim:",i, "Size:", size))
+      bind_cols(data.frame(Size=size,Links=links),calc_QSS(g,10000,ncores))
+    }
+  # 99% confidence interval
+  #
+  q_qss <- quantile(ind$QSS,c(0.005,0.995),na.rm = TRUE)
+  m_qss <- mean(ind$QSS)
+
+  zQSS <- (t$QSS - m_qss)/sd(ind$QSS) # the same as sd(ind$mTI)
+  
+  return(list(su=data_frame(QSS=t$QSS,mdlQSS=m_qss,QSSlow=q_qss[1],QSShigh=q_qss[2],
+                zQSS=zQSS),sim=ind))         
+}
+
 
 #' Calculate motif counts for observed network and CI for meta-web assembly model networks and Z-scores 
 #'

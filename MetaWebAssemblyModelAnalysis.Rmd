@@ -119,21 +119,28 @@ simMetaWebAssembly %>% group_by(m,a) %>% summarize(S=mean(S),L=mean(L),C=mean(C)
 # 7 0.044 0.041 381.4585 2150.424 0.01477366 1.073171
 # 10 0.084 0.076 380.7409 2146.395 0.01480693 1.105263
 set.seed(1110)
-AA <- metaWebNetAssembly(A,0.023,1,0.094,tf)
+mig <- rep(0.023,nrow(A))
+ext <- rep(0.094,nrow(A))
+AA <- metaWebNetAssembly(A,mig,ext,tf)
 dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))
 c(mean(dfA$S),mean(dfA$L),mean(dfA$L)/(mean(dfA$S)*mean(dfA$S)))
 
 # Running averages
-plot_NetAssemblyModel_eqw(AA,100,"Figures/PotterCove_Meta-webSim_avg.png")
+plot_NetAssemblyModel_eqw(AA,50,"Figures/PotterCove_Meta-webSim_avg.png")
 
 # Time series plot
 plot_NetAssemblyModel(AA,300,"Figures/PotterCove_Meta-webSim_ts.png")
 
-AA <- metaWebNetAssembly(A,0.084,1,0.076,tf)
+mig <- rep(0.084,nrow(A))
+ext <- rep(0.076,nrow(A))
+
+AA <- metaWebNetAssembly(A,mig,ext,tf)
+
 dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))
 c(mean(dfA$S),mean(dfA$L),mean(dfA$L)/(mean(dfA$S)*mean(dfA$S)))
-
-plot_NetAssemblyModel_eqw(AA,100,"Figures/Weddell_Meta-webSim_avg.png")
+plot_NetAssemblyModel_eqw(AA,50)
+plot_NetAssemblyModel(AA,300)
+plot_NetAssemblyModel_eqw(AA,50,"Figures/Weddell_Meta-webSim_avg.png")
 plot_NetAssemblyModel(AA,300,"Figures/Weddell_Meta-webSim_ts.png")
 
 rm(sim)
@@ -146,7 +153,6 @@ gg <- plot_NetAssemblyModel(AA,100)
 # Plot of S and C for Weddell 
 #
 require(cowplot)
-AA <- metaWebNetAssembly(A,0.084,1,0.076,tf)
 g3 <- plot_grid(gg[[1]],gg[[3]],labels = c("A","B"),align = "h")
 save_plot("Figures/Weddell_Meta-webSim_SC.png",g3,base_width=8,base_height=5,dpi=300)
 
@@ -158,9 +164,6 @@ save_plot("Figures/Weddell_Meta-webSim_SC.png",g3,base_width=8,base_height=5,dpi
 # Local web (Potter Cove) compared to  metaWeb assembly model 
 
 ```{r PotterGlobalMetaWebAssembly, eval=F,echo=F,message=T,warning=T}
-
-
-#sourceCpp("src/NetAssemblyFromMetaWeb.cpp")
 
 #
 # Read data and trim species names to avoid duplicates 
@@ -221,6 +224,37 @@ rm(tbl)
 
 websAssemblyModelSim <-websAssemblyModelSim %>% bind_rows(sim %>% mutate(Network="Potter"))  
 save.image()
+
+
+#
+# Calc QSS with Potter Metaweb Assembly 
+#
+require(tictoc)
+m <- 0.023
+a <- 0.094
+tic()
+tbl <- calc_qss_metaWebAssembly(redl, A, m,a,1000,48)
+toc()
+simQSS <- tbl$sim  %>% mutate(Network="Potter")
+tblQSS <- tbl$su   %>% mutate(Network="Potter")
+save.image() 
+#
+# 566190.131 sec elapsed
+#
+
+## Correct two sided CI to one sided CI
+#
+tblQSS$QSShigh[1] <- quantile(simQSS$QSS,c(0.99))
+
+col <- c("#0097A7","#448AFF","#212121")
+
+ggplot(simQSS,aes(QSS))+ geom_histogram(alpha=0.5,fill=col[1],color=col[1]) + theme_bw() + 
+    geom_segment(data=tblQSS,aes(xend=QSS, y=30, yend = 0), colour=col[3], size=1, arrow = arrow(length = unit(0.5, "cm"))) +
+    geom_segment(data=tblQSS,aes(x=QSShigh,xend=QSShigh, y=20, yend = 0), colour=col[2], size=1, linetype=1 )
+
+
+ggplot(simQSS,aes(Size, QSS,colour=Network))+ geom_point(alpha=0.5,shape = 21,fill="white") +  geom_point(data=websTbl[1,],aes(Size, QSS,colour=Network),shape = 21, size=2,fill="black") + theme_bw() +  scale_color_viridis_d() +  stat_ellipse(type="t") + coord_cartesian(ylim=c(0,0.8),expand = FALSE) 
+
 ```
 
 
@@ -266,6 +300,32 @@ websAssemblyModel <- bind_rows(websAssemblyModel, dplyr::select(tblMdlWeb,Networ
 # websAssemblyModel$mdlMO[1] <- with(tblMdlWeb,mdlMO)
 # websAssemblyModel$zMO[1] <- with(tblMdlWeb, (Modularity- mdlMO)/MOsd)
 websAssemblyModelSim <-  sim %>% mutate(Network="Weddell")
+
+
+#
+# Calc QSS with Weddell Metaweb Assembly 
+#
+require(tictoc)
+m <- 0.084 
+a <- 0.076
+tic()
+tbl <- calc_qss_metaWebAssembly(redl, A, m,a,1000,48)
+toc()
+simQSS <- bind_rows(simQSS, tbl$sim  %>% mutate(Network="Weddell"))
+tblQSS <- bind_rows(tblQSS, tbl$su  %>% mutate(Network="Weddell"))
+save.image()
+
+# 566190.131 sec elapsed
+
+col <- c("#0097A7","#448AFF","#212121")
+    geom_segment(data=tblQSS,aes(xend=QSS, y=30, yend = 0), colour=col[3], size=1, arrow = arrow(length = unit(0.5, "cm"))) +
+pf <- filter(simQSS, Network=="Weddell")
+ggplot(pf,aes(QSS))+ geom_histogram(alpha=0.5,fill=col[1],color=col[1]) + theme_bw() + 
+    geom_segment(data=tblQSS,aes(x=QSShigh,xend=QSShigh, y=20, yend = 0), colour=col[2], size=1, linetype=1 ) + facet_wrap(~Network)
+
+
+ggplot(filter(simQSS, Network=="Weddell"),aes(Size, QSS,colour=Network))+ geom_point(alpha=0.5,shape = 21,fill="white") +  geom_point(data=websTbl[1:2,],aes(Size, QSS,colour=Network),shape = 21, size=2,fill="black") + theme_bw() +  scale_color_viridis_d() +  stat_ellipse(type="t") + coord_cartesian(ylim=c(0,0.8),expand = FALSE) 
+
 
 save.image()
 

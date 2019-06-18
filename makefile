@@ -1,12 +1,18 @@
 OPTS= -H margins.sty --bibliography MetawebsAssembly.bib --csl=ecography.csl --latex-engine=xelatex 
 
-all: Appendices.pdf MetawebsAssembly.pdf MetawebsAssembly.docx
+all: Appendices.pdf MetawebsAssembly.pdf MetawebsAssembly_NPK.pdf
+
 
 %.pdf:%.md
 	pandoc $< -o $@ -H Appendices.sty
 	evince $@		
 
 MetawebsAssembly.pdf: MetawebsAssembly.md margins.sty 
+	cp "/home/leonardo/BibTeX/Manuscritos-Meta-web local web assembly.bib" MetawebsAssembly.bib
+	pandoc $< -o $@ $(OPTS)
+	evince $@		
+
+MetawebsAssembly_NPK.pdf: MetawebsAssembly_NPK.md margins.sty 
 	cp "/home/leonardo/BibTeX/Manuscritos-Meta-web local web assembly.bib" MetawebsAssembly.bib
 	pandoc $< -o $@ $(OPTS)
 	evince $@		
