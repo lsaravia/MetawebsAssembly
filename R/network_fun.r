@@ -830,11 +830,13 @@ calc_qss_metaWebAssembly<- function(red, Adj, mig,ext,nsim=1000,ncores=0){
   #
   q_qss <- quantile(ind$QSS,c(0.005,0.995),na.rm = TRUE)
   m_qss <- mean(ind$QSS)
-
-  zQSS <- (t$QSS - m_qss)/sd(ind$QSS) # the same as sd(ind$mTI)
+  q_meing <- quantile(ind$MEing,c(0.005,0.995),na.rm = TRUE)
+  m_meing <- mean(ind$MEing)
   
+  zQSS <- (t$QSS - m_qss)/sd(ind$QSS) # the same as sd(ind$mTI)
+  zMEing <- (t$MEing - m_meing)/sd(ind$MEing)
   return(list(su=data_frame(QSS=t$QSS,mdlQSS=m_qss,QSSlow=q_qss[1],QSShigh=q_qss[2],
-                zQSS=zQSS),sim=ind))         
+                zQSS=zQSS,MEing=t$MEing,mdlMEing=m_meing,MEingLow=q_meing[1],MEingHigh=q_meing[2],zMEing=zMEing),sim=ind))         
 }
 
 
