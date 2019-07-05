@@ -226,37 +226,6 @@ websAssemblyModelSim <-websAssemblyModelSim %>% bind_rows(sim %>% mutate(Network
 save.image()
 
 
-#
-# Calc QSS with Potter Metaweb Assembly 
-#
-require(tictoc)
-m <- 0.023
-a <- 0.094
-tic()
-tbl <- calc_qss_metaWebAssembly(redl, A, m,a,1000,48)
-toc()
-simQSS <- tbl$sim  %>% mutate(Network="Potter")
-tblQSS <- tbl$su   %>% mutate(Network="Potter")
-save.image() 
-#
-# 566190.131 sec elapsed
-#
-
-## Correct two sided CI to one sided CI
-#
-tblQSS$QSShigh[1] <- quantile(simQSS$QSS,c(0.99))
-
-col <- c("#0097A7","#448AFF","#212121")
-
-ggplot(simQSS,aes(QSS))+ geom_histogram(alpha=0.5,fill=col[1],color=col[1]) + theme_bw() + 
-    geom_segment(data=tblQSS,aes(xend=QSS, y=30, yend = 0), colour=col[3], size=1, arrow = arrow(length = unit(0.5, "cm"))) +
-    geom_segment(data=tblQSS,aes(x=QSShigh,xend=QSShigh, y=20, yend = 0), colour=col[2], size=1, linetype=1 ) + facet_wrap(~Network)
-
-
-ggplot(simQSS,aes(MEing))+ geom_histogram(alpha=0.5,fill=col[1],color=col[1]) + theme_bw() + 
-    geom_segment(data=tblQSS,aes(xend=MEing, y=30, yend = 0), colour=col[3], size=1, arrow = arrow(length = unit(0.5, "cm"))) +
-    geom_segment(data=tblQSS,aes(x=MEingLow,xend=MEingLow, y=20, yend = 0), colour=col[2], size=1, linetype=1 ) +
-    geom_segment(data=tblQSS,aes(x=MEingHigh,xend=MEingHigh, y=20, yend = 0), colour=col[2], size=1, linetype=1 ) + facet_wrap(~Network)
 
 ```
 
@@ -304,55 +273,6 @@ websAssemblyModel <- bind_rows(websAssemblyModel, dplyr::select(tblMdlWeb,Networ
 # websAssemblyModel$zMO[1] <- with(tblMdlWeb, (Modularity- mdlMO)/MOsd)
 websAssemblyModelSim <-  sim %>% mutate(Network="Weddell")
 
-
-#
-# Calc QSS with Weddell Metaweb Assembly 
-#
-require(tictoc)
-m <- 0.084 
-a <- 0.076
-tic()
-tbl <- calc_qss_metaWebAssembly(redl, A, m,a,1000,48)
-toc()
-simQSS <- bind_rows(simQSS, tbl$sim  %>% mutate(Network="Weddell"))
-tblQSS <- bind_rows(tblQSS, tbl$su  %>% mutate(Network="Weddell"))
-save.image()
-
-# 177496.195 sec elapsed
-
-pf <- filter(simQSS, Network=="Weddell")
-ggplot(pf,aes(QSS))+ geom_histogram(alpha=0.5,fill=col[1],color=col[1]) + theme_bw() + 
-    geom_segment(data=tblQSS[2,],aes(xend=QSS, y=30, yend = 0), colour=col[3], size=1, arrow = arrow(length = unit(0.5, "cm"))) +
-    geom_segment(data=tblQSS[2,],aes(x=QSShigh,xend=QSShigh, y=20, yend = 0), colour=col[2], size=1, linetype=1 )
-
-
-me2 <- ggplot(pf,aes(MEing))+ geom_histogram(alpha=0.5,fill=col[1],color=col[1]) + theme_bw() + 
-    geom_segment(data=tblQSS[2,],aes(xend=MEing, y=30, yend = 0), colour=col[3], size=1, arrow = arrow(length = unit(0.5, "cm"))) +
-    geom_segment(data=tblQSS[2,],aes(x=MEingLow,xend=MEingLow, y=20, yend = 0), colour=col[2], size=1, linetype=1 ) +
-    geom_segment(data=tblQSS[2,],aes(x=MEingHigh,xend=MEingHigh, y=20, yend = 0), colour=col[2], size=1, linetype=1 ) + xlab("Max Eingenvalue")
-
-pf <- filter(simQSS, Network=="Potter")
-
-me1 <- ggplot(pf,aes(MEing))+ geom_histogram(alpha=0.5,fill=col[1],color=col[1]) + theme_bw() + 
-    geom_segment(data=tblQSS[1,],aes(xend=MEing, y=30, yend = 0), colour=col[3], size=1, arrow = arrow(length = unit(0.5, "cm"))) +
-    geom_segment(data=tblQSS[1,],aes(x=MEingLow,xend=MEingLow, y=20, yend = 0), colour=col[2], size=1, linetype=1 ) +
-    geom_segment(data=tblQSS[1,],aes(x=MEingHigh,xend=MEingHigh, y=20, yend = 0), colour=col[2], size=1, linetype=1 ) + xlab("Max Eingenvalue")
-
-
-
-pf <- left_join(websTbl,tblQSS, by="Network") %>% dplyr::select(Network,Size,Links,QSS.y,MEing) %>% rename(QSS=QSS.y)
-
-ggplot(filter(simQSS,Network=="Weddell"),aes(Size, MEing,colour=Network))+ geom_point(alpha=0.5,shape = 21,fill="white",color=col[1]) +  geom_point(data=pf[2,],aes(Size, MEing,colour=Network),color=col[3],shape = 21, size=2,fill=col[3]) + theme_bw()  +  stat_ellipse(type="t",color=col[2])# + coord_cartesian(ylim=c(0,0.8),expand = FALSE) 
-
-ggplot(filter(simQSS,Network=="Potter"),aes(Size, MEing,colour=Network))+ geom_point(alpha=0.5,shape = 21,fill="white",color=col[1]) +  geom_point(data=pf[1,],aes(Size, MEing,colour=Network),color=col[3],shape = 21, size=2,fill=col[3]) + theme_bw()  +  stat_ellipse(type="t",color=col[2])# + coord_cartesian(ylim=c(0,0.8),expand = FALSE) 
-
-#
-# Links vs Size of models and empirical data
-#
-ggplot(simQSS,aes(Size, Links,colour=Network))+ geom_point(alpha=0.5,shape = 21,fill="white",color=col[1]) +  geom_point(data=pf[1:2,],aes(Size, Links,colour=Network),color=col[3],shape = 21, size=2,fill=col[3]) + theme_bw()  +  stat_ellipse(type="t",color=col[2]) + facet_wrap(~Network)# + coord_cartesian(ylim=c(0,0.8),expand = FALSE) 
-
-
-save.image()
 
 #
 # Plots of the distribution of simulated indices
@@ -423,8 +343,8 @@ q4 <- ggplot(sim,aes(modularity))+ geom_histogram(alpha=0.5,fill=col[1],color=co
 
 
 require(cowplot)
-p5 <- plot_grid(q1+xlab(""),q2+ylab("")+xlab(""),q3+ylab("")+xlab(""),q4+ylab("")+xlab(""),me1+ylab("")+xlab(""),
-                p1,p2+ylab(""),p3+ylab(""),p4+ylab(""),me2+ylab("") ,align = "h",nrow=2,labels = c("A","","","","B"))
+p5 <- plot_grid(q1+xlab(""),q2+ylab("")+xlab(""),q3+ylab("")+xlab(""),q4+ylab("")+xlab(""),
+                p1,p2+ylab(""),p3+ylab(""),p4+ylab(""),align = "h",nrow=2,labels = c("A","","","","B"))
 save_plot("Figures/globProp_assembly_ByNetwork.png",p5,base_width=8,base_height=5,dpi=600)
 
 
