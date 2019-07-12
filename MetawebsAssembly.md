@@ -1,21 +1,22 @@
 # Ecological Network assembly: how the regional metaweb influences local food webs 
 
-**Leonardo A. Saravia** ^1^ ^2^ ^5^, **Tomás  I. Marina** ^1^ ^2^ ^3^, **Marleen De Troch** ^4^, **Fernando R. Momo** ^1^ ^2^ 
 
-1. Instituto de Ciencias, Universidad Nacional de General Sarmiento, J.M. Gutierrez 1159 (1613), 
-Los Polvorines, Buenos Aires, Argentina.
+Leonardo A. Saravia ^1^ ^2^ ^6^, Tomás I. Marina ^1^ ^2^ ^3^, Marleen De Troch ^4^, Nadiah P. Kristensen ^5^, Fernando R. Momo ^1^ ^2^
+
+1. Instituto de Ciencias, Universidad Nacional de General Sarmiento, J.M. Gutierrez 1159 (1613), Los Polvorines, Buenos Aires, Argentina.
 
 2. INEDES, Universidad Nacional de Luján, CC 221, 6700 Luján, Argentina.
 
-3. Centro Austral de Investigaciones Científicas (CADIC-CONICET)
+3. Centro Austral de Investigaciones Científicas (CADIC-CONICET).
 
 4. Marine Biology, Ghent University, Krijgslaan 281/S8, B-9000, Ghent, Belgium.
 
-5. Corresponding author e-mail <lsaravia@campus.ungs.edu.ar>, ORCID  <https://orcid.org/0000-0002-7911-4398>
+5. Department of Biological Sciences, National University of Singapore, 14 Science Drive 4 Singapore 117543, Singapore.
+
+6. Corresponding author e-mail lsaravia@campus.ungs.edu.ar, ORCID https://orcid.org/0000-0002-7911-4398
 
 
-
-**keywords**: Metaweb, ecological network assembly, network assembly model, food web structure, modularity , trophic coherence, motif, topological roles, null models
+**keywords**: Metaweb, ecological network assembly, assembly model, food web structure, modularity , trophic coherence, motif, topological roles
 
 **Running title**: The metaweb influence on local food webs.
 
@@ -25,11 +26,11 @@ Los Polvorines, Buenos Aires, Argentina.
 
 1. Local food webs can be studied as the realisation of a sequence of colonising and extinction events, where a regional pool of species ---called the metaweb--- acts as a source for new species. Food webs are thus the result of assembly processes that are influenced by migration, habitat filtering, stochastic factors, and dynamical constraints. Therefore, we expect their structure to reflect the action of these influences.
 
-2. We compared the structure of real local food webs to (1) a metaweb, (2) randomly-constructed webs, and (3) webs resulting from a trophic assembly model. The assembly model had no population dynamic constraints, but simply required that consumer species have at least one prey present in the local web in order to colonise and remain extant. We compared global properties and network sub-structures---motifs---related to ecological stability, and topological roles that are node-level properties. We hypothesised that the structure of real food webs should differ from other webs in a way that reflected dynamical stability constraints. Three data-sets were used: (1) the marine Antarctic metaweb, built using a dietary database; (2) the Weddell Sea local food web; and (3) the Potter Cove local food web.
+2. We compared the structure of empirical local food webs to (1) a metaweb, (2) randomly-constructed webs, and (3) webs resulting from a trophic assembly model. The assembly model had no population dynamic constraints, but simply required that consumer species have at least one prey present in the local web in order to colonise and remain extant. We compared global properties and network sub-structures---motifs---related to ecological stability, and topological roles that are node-level properties. We hypothesised that the structure of empirical food webs should differ from other webs in a way that reflected dynamical stability constraints. Three data-sets were used: (1) the marine Antarctic metaweb, built using a dietary database; (2) the Weddell Sea local food web; and (3) the Potter Cove local food web.
 
 3. Contrary to our expectation, we found that, while most network global properties of real webs were different from random webs, there were almost no differences between real webs and those resulting from the assembly model. Further, while real webs showed different motif representations compared to the assembly model, these were not motifs associated with increased stability. Species' topological roles showed differences between the metaweb and local food webs that were not explained by the assembly model, suggesting that species in real webs are selected by habitat or dispersal limitations. 
 
-4. Our results suggest that there is not a strong dynamical restriction upon food web structure that operates at local scales. Instead, the structure of local webs is inherited from the metaweb, implying that evolutionary processes acting on large temporal and spatial scales have a more important influence.
+4. Our results suggest that there is not a strong dynamical restriction upon food web structure that operates at local scales. Instead, the structure of local webs is inherited from the metaweb, implying that evolutionary processes acting on large temporal and spatial scales may have a more important influence.
 
 5. Recently, it has been found in competitive and mutualistic networks that structures that are often attributed as causes or consequences of ecological stability are probably a by-product of the assembly processes (i.e. spandrels). We extended these results to trophic networks suggesting that this could be a more general phenomenon.
 
@@ -248,13 +249,16 @@ All networks have a significant value of small-world-ness compared with the rand
 
 Motifs have the same representation patterns across networks against the random model. If food web structure is influenced by dynamical constraints, then we would expect real food webs to have a higher frequency of stability-enhancing motifs than assembled model webs. If we take into account the stability of three species motifs, the expected pattern is an over-representation tri-trophic chains, exploitative and apparent competition [@Borrelli2015a], and the omnivory motif could enhance or diminish stability [@Monteiro2016]. As food webs are more than the sum of its three species modules [@Cohen2009a], if the persistence of the whole food web is considered, tri-trophic and omnivory should be over-represented, exploitative and apparent competition under-represented [@Stouffer2010]. Instead, our empirical food webs had an under-representation of tri-trophic chains while the other motifs were over-represented. More importantly, the motif structure observed in the metaweb is not maintained in local food webs: apparent competition is over-represented in Potter Cove, which would enhance stability and diminish persistence, and both omnivory and tri-trophic chains are under-represented in Weddell Sea this combination would have opposite effects on both stability and persistence. Thus, the assembly process is not random, there are differences in the frequencies of motifs as the scale change, but the selection of motifs due to its dynamical stability does not seem to be the main driver. This implies that other processes that influence the presence or absence of species like habitat filtering or dispersal limitation would be acting and probably modifying motif frequencies in empirical food webs.
 
-As expected, all the networks have a short mean trophic level [@Williams2002;@Borrelli2014] compared with the random model. Different hypotheses have been posed to explain this pattern: the low efficiency of energy transfer between trophic levels, predator size, predator behaviour, and consumer diversity [@Young2013]. These have contradictory support, reviewed by @Ward2017. Recently, it has been proposed that maximum trophic level could be related to productivity and ecosystem size depending on the context but related to energy fluxes that promote omnivory [@Ward2017]. A different mechanism based on dynamic stability of the whole web was proposed: food webs with shorter trophic levels (between 2 and 4) that have more omnivore chains are more likely to be stable, which increase the probability of being observed in nature [@Borrelli2014]. We found that mean trophic level of the local food webs was not different from the assembly model, and omnivory was under-represented. This combination suggests that the trophic level could also be a spandrel of assembly, inherited from the metaweb structure. 
+As expected, all the networks have a short mean trophic level [@Williams2002;@Borrelli2014] compared with the random model. Different hypotheses have been posed to explain this pattern: the low efficiency of energy transfer between trophic levels, predator size, predator behaviour, and consumer diversity [@Young2013]. Recently, it has been proposed that maximum trophic level could be related to productivity and ecosystem size depending on the context but related to energy fluxes that promote omnivory [@Ward2017]. We found that mean trophic level of the local food webs was not different from the assembly model, and omnivory was under-represented. This combination suggests that the trophic level could also be a spandrel of assembly, inherited from the metaweb structure. 
 
 Topological roles are valuable to detect the existence of functional roles of species, like super-generalists (or hub connectors). These roles may change as the scale changes. A simple explanation is that modules also change. It was demonstrated in Arctic and Caribbean marine food webs that modules are usually associated with habitats [@Kortsch2015; @Rezende2009]. For example, the Antarctic cod (*Notothenia coriiceps*) is a super-generalist for Potter Cove and a module hub---a species with most of their links within its module---for the metaweb. This means that the same species can have different influences on the food web depending on the type or extension of the habitat considered. Although the networks based on metaweb assembly model showed no change in the frequency of topological roles, we found a change in topological roles with the scale. That means that as in smaller areas there will be different proportions and different kinds of habitats, and probably as a product of habitat filtering, there should be a change in the frequency of species that represent a particular topological role. 
 
-The spatial scales involved in our study do not represent a continuity; the metaweb and the Weddell sea web have a 10 to 1 ratio but the local web is 10^6^ smaller, besides that most of the global network properties and the motif structure showed no changes relative to the null model. We did not find evidence that the structure of the food web was influenced by dynamical constraints. Instead, we hypothesise that other local processes, that limit which species from the metaweb can colonise the local web, are influencing the assembly process. Although our results are limited to Antarctic marine food webs, our findings suggest that future studies about food webs should give more attention to evolutionary and assembly processes, and less emphasis to local dynamics. This kind of analysis needs to be expanded to different regions and other kinds of habitats (e.g. terrestrial, freshwater, etc. ) to confirm if this is a general pattern or not.
+The spatial scales involved in our study do not represent a continuity; the metaweb and the Weddell sea web have a 10 to 1 ratio but the local web is 10^6^ smaller, besides that most of the global network properties and the motif structure showed no changes relative to the null model. We did not find evidence that the structure of the food web was strongly influenced by dynamical constraints. Instead, we hypothesise that other local processes, that limit which species from the metaweb can colonise the local web, are influencing the assembly process. Although our results are limited to Antarctic marine food webs, our findings suggest that future studies about food webs should give more attention to evolutionary and assembly processes, and less emphasis to local dynamics. This kind of analysis needs to be expanded to different regions and other kinds of habitats (e.g. terrestrial, freshwater, etc. ) to confirm if this is a general pattern or not.
 
 
+## Acknowledgements
+
+We are grateful to the National University of General Sarmiento for financial support. LAS would like to thank Susanne Kortsch that shared with us her source code for topological analysis and the corresponding figures. This work was partially supported by a grant from CONICET (PIO 144-20140100035-CO). 
 
 ## References
 
