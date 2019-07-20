@@ -1,4 +1,4 @@
-OPTS= -H margins.sty --bibliography MetawebsAssembly.bib --csl=journal-of-animal-ecology.csl --latex-engine=xelatex 
+OPTS= -H margins.sty --bibliography MetawebsAssembly.bib --csl=journal-of-animal-ecology.csl --pdf-engine=xelatex 
 
 all: Appendices.pdf MetawebsAssembly.pdf 
 
@@ -15,7 +15,7 @@ MetawebsAssembly_NPK.pdf: MetawebsAssembly_NPK.md margins.sty
 	pandoc $< -o $@ $(OPTS)
 	evince $@		
 
-TitlePage.pdf: TitlePage.md MetawebsAssembly.md margins.sty 
+FiguresTables.pdf: FiguresTables.md MetawebsAssembly.md margins.sty 
 	pandoc $< -o $@ $(OPTS)
 	evince $@		
 

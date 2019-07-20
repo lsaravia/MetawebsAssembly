@@ -126,8 +126,9 @@ OM high CI           51        104        1198
 
 OM z-score      15.3853   89.3244    1022.2137
 -----------------------------------------------
-Table: Motif counts for the empirical networks and 99% confidence intervals based on 1000 random networks. Where EC is exploitative competition, AC apparent competition, TT tri-trophic chain and OM is omnivory.
+Table: Motif counts for the empirical networks and 99% confidence intervals based on 1000 random networks. Where EC is exploitative competition, AC apparent competition, TT tri-trophic chain and OM is omnivory. Quantities marked with '*' are significant at 1% level.
 
+\newpage
 
 ----------------------------------
 **Network**       Potter   Weddell
@@ -141,7 +142,7 @@ Table: Motif counts for the empirical networks and 99% confidence intervals base
 
   EC z-score     -0.73      1.41   
 
-   **AC**       1983       7842   
+   **AC**       1983*      7842   
 
   AC low CI     104.00    7283.44  
 
@@ -149,7 +150,7 @@ Table: Motif counts for the empirical networks and 99% confidence intervals base
 
   AC z-score     4.86      -1.94   
 
-   **TT**        578       3101   
+   **TT**        578       3101*   
 
   TT low CI      11.97    3127.93  
 
@@ -157,7 +158,7 @@ Table: Motif counts for the empirical networks and 99% confidence intervals base
 
   TT z-score     1.43      -2.28   
 
-   **OM**        124       892    
+   **OM**        124       892*    
 
   OM low CI       1.0      1362.8  
 
@@ -165,7 +166,7 @@ Table: Motif counts for the empirical networks and 99% confidence intervals base
 
   OM z-score    -0.44     -2.47   
 ----------------------------------
-Table: Motif counts for the empirical networks and 99% confidence intervals based on 1000 meta-web assembly model networks. Where EC is exploitative competition, AC apparent competition, TT tri-trophic chain and OM is omnivory.
+Table: Motif counts for the empirical networks and 99% confidence intervals based on 1000 meta-web assembly model networks. Where EC is exploitative competition, AC apparent competition, TT tri-trophic chain and OM is omnivory. Quantities marked with '*' are significant at 1% level.
 
 
 

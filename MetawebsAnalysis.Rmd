@@ -1058,39 +1058,4 @@ save.image()
 
 ```
 
-## Make a map of antarctica weddell sea and Potter Cove
 
-<http://eriqande.github.io/rep-res-web/lectures/making-maps-with-R.html#map-making-in-R>
-<https://rpubs.com/nickbearman/r-google-map-making>
-<http://www.polarmicrobes.org/making-maps-in-r/>
-
-<https://medium.com/planet-stories/a-gentle-introduction-to-gdal-part-1-a3253eb96082>
-<https://medium.com/planet-stories/a-gentle-introduction-to-gdal-part-2-map-projections-gdalwarp-e05173bd710a>
-
-```{r AntarcitaWeddelPotterMap, eval=T,echo=F,message=T,warning=T}
-
-# bajé http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/raster/NE1_50M_SR_W.zip
-
-# gdal_translate -r lanczos -tr 0.1 0.1  -co COMPRESS=LZW NE1_50M_SR_W.tif NE1_50M_SR_W_tenth.tif
-# gdal_translate -of VRT -projwin -180 -60 180 -90 NE1_50M_SR_W_tenth.tif NE1_50M_SR_W_SH60.vrt
-# gdalwarp -t_srs EPSG:3976 -ts 7200 0 -r near -dstalpha -wo SOURCE_EXTRA=1000 -co COMPRESS=LZW NE1_50M_SR_W_SH60.vrt NE1_50M_SR_W_sh60_polarstereo.tif
-# gdal_translate -r lanczos -ts 1000 0  -co COMPRESS=LZW NE1_50M_SR_W_sh60_polarstereo.tif NE1_50M_SR_W_sh60_polarstereo_small.tif
-
-require(ggmap)
-
-map1 <- get_map(location = "King George Island", maptype = "hybrid", source = "google")
-map1 <- get_map(location = "Antarctica", maptype = "hybrid", source = "google")
-
-ggmap(map1)
-
-
-library(ggplot2)
-world <- map_data("world")
-worldmap <- ggplot(world, aes(x=long, y=lat, group=group)) +
-   geom_path() +
-   scale_y_continuous(breaks=(-2:2) * 30) +
-   scale_x_continuous(breaks=(-4:4) * 45)
-
-worldmap + coord_map("ortho", orientation=c(-90, 0, 0))
-
-```
