@@ -18,8 +18,8 @@ require(stringr)
 require(devtools)
 if( require(MetaWebAssemblyModels) == FALSE)
   install_github("lsaravia/MetaWebAssemblyModels")
-if( require(EcoNetwork) == FALSE)
-  install_github("lsaravia/EcoNetwork")
+if( require(multiweb) == FALSE)
+  install_github("lsaravia/multiweb")
 
 source("R/network_fun.r")
 
