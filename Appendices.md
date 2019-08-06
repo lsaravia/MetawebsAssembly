@@ -3,9 +3,9 @@
 
 ## Meta-web assembly model simulations and fitting
 
-This model has two parameters: $c$ the probability of a species to colonize the local network from the meta-web,  and  $e$ the probability to become locally extinct. When a species arrive to the local web there are two options: 1. Basal species do not need predators to survive then they stay until an exctinction event. 2. Predators only stay if there are at least one of its preys. Whenever an extinction occur we check for secondary extinctions i.e. to enforce case 2. 
+This model has two parameters: $c$ the probability of a species to colonize the local network from the meta-web,  and  $e$ the probability to become locally extinct. When a species arrives to the local web there are two options: 1. Basal species do not need predators to survive then they persist until an extinction event. 2. Predators only survive if there are at least one of its preys. Whenever an extinction occurs we check for secondary extinctions i.e. to enforce case 2. 
 
-To fit the model to different number of species and links we made simulations using all combinations of $c$ and $e$ in the range of 0.01 to 0.1 with a step of 0.001. For each combination we run 500 time steps and take the last 200 to calculate the average number of links and species. We made 10 repetitions for each combination which make a total of 82810 simulations, finally we take the average of these repetitions. To select the parameter that result in the closest number of links and species to the target we restrict the set of simulations a maximum tolerance of 20%. The figures S1-S4 show the dynamics of the model fitted to each local food web.    
+To fit the model to different number of species (S) and links (L) we made simulations using all combinations of $c$ and $e$ in the range of 0.01 to 0.1 with a step of 0.001. For each combination we run 500 time steps and take the last 200 to calculate the average number of links and species. We made 10 repetitions for each combination which make a total of 82810 simulations, finally we take the average of these repetitions. To select the parameter that result in the closest number of links and species to the target we restrict the set of simulations a maximum tolerance of 20%. The figures S1-S4 show the dynamics of the model fitted to each local food web.    
 
 ![Running averages of a simulation of the Meta-web assembly model fitted to Potter Cove food web. Where $mS$ and $mL$ are running averages of the number of species and the links, error bars are the standard deviation using a window of 100 time steps and the dashed is line the overall mean. The parameters were $c$=0.023, $e$=0.094, $\alpha=0.24$](Figures/PotterCove_Meta-webSim_avg.png)
 
@@ -310,7 +310,7 @@ Type      Network         Tropho-species            Preys   Predators      Troph
 
  modhub   Weddell         Dissostichus mawsoni       14         9          2.82    
 ----------------------------------------------------------------------------------
-Table: Topological roles with high number of links (Preys and Predators) and trophic level. Hub connectors (hubcon) have a high number of between module links; and module hubs (modhub) have a high number of links inside its module. Trophospecies with trophic level 1 could be detritus, autotrophs, or agregated nodes of preys. 
+Table: Topological roles and trophic level of tropho-species with high number of links (Preys and Predators) . Hub connectors (hubcon) have a high number of between module links; and module hubs (modhub) have a high number of links inside its module. Tropho-species with trophic level 1 could be detritus, autotrophs, or aggregated nodes of preys. 
 
 ![The four three-species sub-networks analysed: apparent competition, exploitative competition, tri-trophic chain, and omnivory. These four sub-networks have been explored both theoretically and empirically in ecological networks and are the most common sub-networks found in food webs](Figures/Fig1Motifs.png)
 
