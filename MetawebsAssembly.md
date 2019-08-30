@@ -1,5 +1,17 @@
 # Ecological Network assembly: how the regional metaweb influences local food webs 
 
+Leonardo A. Saravia ^1^ ^2^ ^5^, Tomás I. Marina ^1^ ^2^ ^3^, Marleen De Troch ^4^, Fernando R. Momo ^1^ ^2^
+
+1. Instituto de Ciencias, Universidad Nacional de General Sarmiento, J.M. Gutierrez 1159 (1613), Los Polvorines, Buenos Aires, Argentina.
+
+2. INEDES, Universidad Nacional de Luján, CC 221, 6700 Luján, Argentina.
+
+3. Centro Austral de Investigaciones Científicas (CADIC-CONICET).
+
+4. Marine Biology, Ghent University, Krijgslaan 281/S8, B-9000, Ghent, Belgium.
+
+5. Corresponding author e-mail lsaravia@campus.ungs.edu.ar, ORCID https://orcid.org/0000-0002-7911-4398
+
 
 **keywords**: Metaweb, ecological network assembly, assembly model, food web structure, modularity, trophic coherence, motif, topological roles
 
@@ -9,8 +21,16 @@
 
 ## Abstract 
 
-Local food webs can be studied as the realisation of a sequence of colonising and extinction events from a  regional pool of species ---called the metaweb--- . This assembly process is influenced by migration, habitat filtering, stochastic factors, and dynamical constraints. Therefore, we expect that food webs' topological structure reflect the action of these influences. We compared the structure of empirical local food webs to (1) a metaweb, (2) randomly-constructed webs, and (3) webs resulting from an assembly model with no population dynamics. We built a marine Antarctic metaweb from a dietary database to apply the models and compare the results with the Weddell Sea local food web and the Potter Cove local food web. Our results suggest that there is not a strong dynamical restriction upon food web structure that operates at local scales. Instead, the structure of local webs is inherited from the metaweb with modifications imposed by local habitats.
 
+1. Local food webs can be studied as the realisation of a sequence of colonising and extinction events, where a regional pool of species ---called the metaweb--- acts as a source for new species. Food webs are thus the result of assembly processes that are influenced by migration, habitat filtering, stochastic factors, and dynamical constraints.
+
+2. We compared the structure of empirical local food webs to (1) a metaweb, (2) randomly-constructed webs, and (3) webs resulting from an assembly model. The assembly model had no population dynamics but simply required that consumer species have at least one prey present in the local web. We compared global properties, network sub-structures---motifs--- and topological roles. We hypothesised that the structure of empirical food webs should differ from other webs in a way that reflected dynamical stability and other local constraints. Three data-sets were used: (1) the marine Antarctic metaweb, built using a dietary database; (2) the Weddell Sea local food web; and (3) the Potter Cove local food web.
+
+3. Contrary to our expectation, we found that, while most network global properties of empirical webs were different from random webs, there were almost no differences between empirical webs and those resulting from the assembly model. Further, while empirical webs showed different motif representations compared to the assembly model, these were not motifs associated with increased stability. Species' topological roles showed differences between the metaweb and local food webs that were not explained by the assembly model, suggesting that species in empirical webs are selected by habitat or dispersal limitations. 
+
+4. Our results suggest that there is not a strong dynamical restriction upon food web structure that operates at local scales. Instead, the structure of local webs is inherited from the metaweb with modifications imposed by local habitats.
+
+5. Recently, it has been found in competitive and mutualistic networks that structures that are often attributed as causes or consequences of ecological stability are probably a by-product of the assembly processes (i.e. spandrels). We extended these results to trophic networks suggesting that this could be a more general phenomenon.
 
 ## Introduction
 
@@ -29,6 +49,92 @@ Finally we consider the abundance sub-networks that deviates significantly from 
 In this study we analysed the assembly process utilizing a probabilistic model that simulates colonization from a metaweb with the restriction that predators must have prey to persist locally (Figure 1), this model lacks any restriction related to dynamical stability and local habitats. Additionally as some properties (Small-network, motifs, topological roles) were defined regarding a random network, we also use the random network to compare the properties of a metaweb and two local empirical networks. 
 
 ![Schematic diagram of the metaweb assembly model: species migrate from the metaweb with a probability $c$ to a local network carrying their potential links; here they have a probability of extinction $e$. Additionally, predators become extinct if their preys are locally extinct. We simulate 1000 local networks and calculate global properties. From the distribution of these topological properties we calculate 1% confidence intervals to compare with empirical networks](Figures/MetaWebAssemblyModelFigure.pdf)
+
+## Methods
+
+The three datasets used in this study encompass a wide range of spatial scales and were collected independently. The Southern Ocean database compiled by @Raymond2011 was used to construct the Antarctic metaweb selecting only species located at latitudes higher than 60°S. @Raymond2011 compiled information from direct sampling methods of dietary assessment, including gut, scat, and bolus content analysis, stomach flushing, and observed feeding. We considered that the metaweb is the regional pool of species defined by the biogeographic Antarctic region. Next, we analysed two local food webs: the Weddell Sea food web dataset includes species situated between 74°S and 78°S with a West-East extension of approximately 450 km and comprises all information about trophic interactions available for the zone since 1983 [@Jacob2011]. The Potter Cove dataset comes from a 4 km long and 2.5 km wide Antarctic fjord located at 62°14'S, 58°40'W, South Shetland Islands [@Marina2018]. These food web datasets comprise benthic and pelagic habitats of the Antarctic ecosystem, few aggregated low-trophic level groups (e.g. detritus, diatoms, phytoplankton, zooplankton) and a high resolution of the macroalgae community (i.e. 24 biological species of red, brown and green macroalgae). The macroalgae community is responsible for the majority of the primary production and supports a large fraction of secondary production in Antarctic fjords [@Quartino2008a; @Valdivia2015]. Higher trophic levels comprise invertebrate (e.g. ascidians, sponges, isopods, amphipods, bivalves, gastropods, cephalopods, echinoderms) and vertebrate predator groups (e.g. demersal and pelagic fishes, penguins, seals and whales). For more information about these datasets refer to the original publications. To make datasets compatible, we first checked taxonomic names for synonyms, and second, we added species (either prey or predator) with their interactions to the metaweb when the local food webs contain a greater taxonomic resolution. This resulted in the addition of 258 species to the metaweb, which represent 33% of the total. We removed cannibalistic (self-links) and double arrows (i.e. A eats B and B eats A).  
+
+To describe food webs as networks each species is represented as a node or vertex and the trophic interactions are represented as edges or links between nodes. These links are directed, from the prey to the predator, as the flow of energy and matter. Two nodes are neighbours if they are connected by an edge and the degree $k_i$ of node $i$ is the number of neighbours it has. The food web can be represented by an adjacency matrix $A=(a_{ij})$ where $a_{ij}=1$ if species $j$ predates on species $i$, else is 0. Then $k_i^{in}=\sum_j{a_{ji}}$ is the number of preys of species $i$ or its in-degree, and $k_i^{out}=\sum_j{a_{ij}}$ is the number of predators of $i$ or its out-degree. The total number of edges is $E=\sum_{ij}a_{ij}$. 
+
+### Models 
+
+To unravel the mechanisms of network assembly we considered two models:1) a random network model without any ecological mechanism, and 2) a colonization-extinction model constrained by the network structure, with no consideration of population dynamics and interaction strength. Then we compared the empirical networks with such models using a null model approach: if we observe a deviation from the property obtained with the null model then mechanisms that are excluded from the model may be acting [@DeBello2012]. 
+
+The random network model that we used is the Erdös-Rényi random graph [-@Erdos1959]. An Erdös-Rényi network is constructed fixing the number of edges and nodes and assigning at random the $m$ edges to the $n$ nodes with equal probability [@Erdos1959; @Baiser2016]. We restricted the random model by eliminating double arrows and cannibalistic links. In a small number of cases, the algorithm generates two separated network components or networks without basal species; we discarded such cases to make possible the calculation of trophic level, trophic coherence and modularity. We included the random model because it is the baseline model to calculate the small-world structure and motif representations, so it is logical to apply it to the other properties. 
+
+To consider network assembly mechanisms we used a metaweb assembly model (Figure 1), called the trophic theory of island biogeography [@Gravel2011]. In this model species migrate from the metaweb to a local web with a uniform probability $c$, and become extinct from the local web with probability $e$; a reminiscence of the theory of island biogeography [@MacArthur1967], but with the addition of network structure. Species migrate with their potential network links from the metaweb, then in the local web species can only survive if at least one of its preys is present, or if it is a basal species. When a species goes extinct locally it may produce secondary extinctions; we check that the local predators maintain at least one prey if not they become extinct independent of the probability $e$. We simulated this model in time and it eventually reaches an equilibrium that depends on the migration and extinction probabilities but also on the structure of the metaweb. The ratio of immigration vs. extinction $\alpha= c/e$ is hypothesized to be inversely related to the distance to the mainland [@MacArthur1967], and as extinction should be inversely proportional to population size [@Hanski1999], the ratio $\alpha$ is also hypothesized to be related to the local area.
+
+For the random model, we simulated networks with the same number of nodes $n$ and edges $m$ as the empirical networks; for the metaweb assembly model, we fitted the parameters $c$ and $e$ to obtain networks with $n$ and $m$ close to the empirical networks. This implies that $\alpha$ should reflect the differences in areas of the two local food webs. For details of the fitting and simulations see Appendix. 
+
+### Structural network properties
+
+
+The first property we analysed is the small-world pattern, which examines the average of the shortest distance between nodes and the clustering coefficient of the network [@Watts1998]. This property is associated with increased resilience and resistance to secondary extinctions [@Sole2001; @Bornatowski2017]. We first calculated the characteristic path length that is the shortest path between any two nodes. Then $L$ is the mean value of the shortest path length across all pairs of nodes. 
+The clustering coefficient of node $i$ was defined as 
+
+$$cc_i =\frac{2 E_i}{k_i (k_i -1)}$$ 
+
+where $E_i$ is the number of edges between the neighbours of $i$. The clustering coefficient of the network $CC$ is the average of $cc_i$ over all nodes. The original definition of small-world networks is conceptual [@Watts1998], a network $G$ is small-world when it has a similar mean shortest path length but greater clustering than an Erdös-Rényi random network with the same number of nodes $n$ and edges $m$. For the quantitative version of the small-world pattern, we followed @Humphries2008; we need to define:
+
+$$\gamma_g = \frac{CC_g}{CC_{null}}$$
+
+and
+
+$$\lambda_g = \frac{L_g}{L_{null}}$$
+
+where $CC_g$ and $L_g$ are the clustering coefficient and the mean shortest path length of the network of interest $G$; $CC_{null}$ and $L_{null}$ are the same quantities for the null model. Thus, quantitative small-world-ness is defined as:
+
+$$S = \frac{\gamma_g}{\lambda_g}$$
+
+and to determine if $S$ is statistically significant Monte Carlo methods were used [@Crowley1992]. We built 1000 null model networks with the same number of nodes $n$ and edges $m$ than the empirical network; then we calculated $S$ for each random network and the lower and higher 99% quantiles of the $S$ distribution are called $ql,qh$:
+
+$$CI = \frac{qh - ql}{2}$$
+ 
+the upper 99% confidence limit is then $CL^{0.01}= 1 + CI$. Thus, if a network has $S > CL^{0.01}$ it is considered a small-world network [@Humphries2008]. We also calculated the small-world-ness and the CI using the metaweb assembly model as a null model.
+
+The second property is trophic coherence [@Johnson2014], that is related to stability in the sense that small perturbations could get amplified or vanished, which is called local linear stability [@May1972;@Rohr2014]. We first needed to estimate the trophic level of a node $i$, defined as the average trophic level of its preys plus 1. That is:
+
+$$tp_i= 1 + \frac{1}{k_i^{in}}\sum_{j}{a_{ij} tp_j}$$ 
+
+where $k_i^{in}=\sum_{j}a_{ji}$ is the number of preys of species $i$, basal species that do not have preys (then $k_i^{in}=0$) are assigned a $tp=1$. Then the trophic difference associated to each edge is defined as $x_{ij}=tp_i - tp_j$. The distribution of trophic differences, $p(x)$, has a mean $E^{-1} \sum_{ij} a_{ij} x_{ij} = 1$ by definition. Then the trophic coherence is measured by:
+
+$$q = \sqrt{\frac{1}{E} \sum_{ij}a_{ij}x_{ij}^2 - 1}$$
+
+
+that is the standard deviation of the distribution of all trophic distances. A food web is more coherent when $q$ is closer to zero, thus the maximal coherence is achieved when $q = 0$, and corresponds to a layered network in which every node has an integer trophic level [@Johnson2014; @Johnson2017]. To compare coherence and trophic level we generated 1000 null model networks with at least one basal species and the same number of species and links---or approximately the same---than the network of interest. Then we calculated the 99% confidence interval using the 0.5% and 99.5% quantiles of the distribution of $q$; we also calculated the confidence interval for the mean trophic level $tp$. We calculated the z-scores as:
+
+$$z_i=\frac{q_{obs} - q_{null}}{\sigma_{qnull}}$$
+
+where $q_{obs}$ is the observed coherence, $q_{null}$ is the mean coherence from the null model networks and $\sigma_{qnull}$ is the standard deviation. The same formula is used for $tp$. The z -score thus measures the significance of deviations of the empirical network from the null hypothesis. If the distribution of the quantity ($q$, $tp$) under the null model is normal, a z-score greater than 2 is evidence that the observed quantity is significantly greater than its random counterpart, and a z-score less than -2 means that the quantity is significantly lower. If the distribution under the null model is skewed this is not necessarily true and thus we must rely on confidence intervals. 
+
+Another property related to stability is modularity, since the impacts of a perturbation are retained within modules minimizing impacts on the food web [@Fortuna2010; @Grilli2016]. It measures how strongly sub-groups of species interact between them compared with the strength of interaction with other sub-groups [@Newman2004]. These sub-groups are called compartments. To find the best partition, we used a stochastic algorithm based on simulated annealing [@Reichardt2006]. Simulated annealing allows maximizing modularity without getting trapped in local maxima configurations [@Guimera2005]. The index of modularity was defined as: 
+
+$$M = \sum_s \left(\frac{I_s}{E} - \left(\frac{d_s}{2E}\right)^2 \right)$$
+
+where $s$ is the number of modules or compartments, $I_s$ is the number of links between species in the module $s$, $d_s$ is the sum of degrees for all species in module $s$ and $E$ is the total number of links for the network. To assess the significance of our networks we calculate the 99% confidence intervals and z-scores based on 1000 null model networks as previously described. 
+
+### Motifs
+
+We considered four of the thirteen possible three-species sub-networks: apparent competition, exploitative competition, tri-trophic chain and omnivory (Figure S5). These are the only motifs present in all networks analysed here. We compared the frequency of these motifs to 1000 null model networks using the 99% confidence interval and the z-score as previously described. To determine if the proportions of motifs change across networks we use the Pearson's Chi-squared test with simulated p-value based on 10000 Monte Carlo replicates.
+
+
+### Topological roles
+
+
+As a local property that reflects the ecological role of each species we determined topological roles using the method of functional cartography [@Guimera2005], which is based on module membership (See modularity). The roles are characterized by two parameters: the standardized within-module degree $dz$ and the among-module connectivity participation coefficient $PC$.  The within-module degree is a z-score that measures how well a species is connected to other species within its module:
+
+$$dz_i = \frac{k_{is}-\bar{k_s} }{\sigma_{ks}}$$ 
+
+
+where $k_{is}$ is the number of links of species $i$ within its own module $s$, $\bar{k_s}$ and $\sigma_{ks}$ are the average and standard deviation of $k_{is}$ over all species in $s$. The participation coefficient $PC$ estimates the distribution of the links of species $i$ among modules; thus it can be defined as:
+
+$$PC_i =  1 - \sum_s \frac{k_{is}}{k_i}$$ 
+
+where $k_i$ is the degree of species $i$ (i.e. the number of links), $k_{is}$ is the number of links of species $i$ to species in module $s$. Due to the stochastic nature of the module detection algorithm, we made repeated runs of the algorithm until there were no statistical differences between the distributions of $PC_i$ and $dz_i$ in successive repetitions; to test such statistical difference we used the k-sample Anderson-Darling test [@Scholz1987]. Then we calculated the mean and 95% confidence interval of $dz$ and $PC$.
+
+To determine each species' role the $dz-PC$ parameter space was divided into four areas, modified from @Guimera2005, using the same scheme as @Kortsch2015. Two thresholds were used to define the species’ roles: $PC=0.625$ and $dz=2.5$. If a species had at least 60% of links within its module then $PC<0.625$, and if it also had $dz\ge 2.5$, thus it was classified as a module hub. This parameter space defines species with a relatively high number of links, the majority within its module. If a species had $PC<0.625$ and $dz<2.5$, then it was called a peripheral or specialist; this refers to a species with relatively few links, mostly within its module. Species that had $PC\ge0.625$ and $dz<2.5$ were considered module connectors, since they have relatively few links, mostly between modules. Finally, if a species had $PC\ge0.625$ and $dz\ge 2.5$, then it was classified as a super-generalist or hub-connector because it has high between- and within-module connectivity. To test if the proportion of species’ roles changed between networks we performed a Pearson's Chi-squared test with simulated p-value based on 10000 Monte Carlo replicates. Also, we tested if these proportions changed for one realization of the metaweb assembly model fitted for each local network.
+
+All analyses and simulations were made in R version 3.4.3 [@RCoreTeam2017], using the igraph package version 1.1.2 [@Csardi2006] for motifs and topological role estimations, and NetIndices [@Kones2009] for trophic level calculations. Source code and data are available at zenodo <https://doi.org/10.5281/zenodo.3370022> and Github <https://github.com/lsaravia/MetawebsAssembly/>.  
 
 
 ## Results
@@ -128,91 +234,17 @@ In this work, we assume that the metaweb influences the structure of local webs 
 
 Although our results are limited to Antarctic marine food webs, our findings suggest that future studies about food webs should give more attention to evolutionary and assembly processes, and less emphasis on local dynamics. This kind of analysis needs to be expanded to different regions and other kinds of habitats (e.g. terrestrial, freshwater, etc. ) to confirm if this is a general pattern or not.
 
+## Acknowledgements
 
-## Methods
+We are grateful to the National University of General Sarmiento for financial support. LAS would like to thank Susanne Kortsch that shared with us her source code for topological analysis and figures, and to Nadiah Kristensen for a constructive review of the manuscript. This work was partially supported by a grant from CONICET (PIO 144-20140100035-CO). 
 
-The three datasets used in this study encompass a wide range of spatial scales and were collected independently. The Southern Ocean database compiled by @Raymond2011 was used to construct the Antarctic metaweb selecting only species located at latitudes higher than 60°S. @Raymond2011 compiled information from direct sampling methods of dietary assessment, including gut, scat, and bolus content analysis, stomach flushing, and observed feeding. We considered that the metaweb is the regional pool of species defined by the biogeographic Antarctic region. Next, we analysed two local food webs: the Weddell Sea food web dataset includes species situated between 74°S and 78°S with a West-East extension of approximately 450 km and comprises all information about trophic interactions available for the zone since 1983 [@Jacob2011]. The Potter Cove dataset comes from a 4 km long and 2.5 km wide Antarctic fjord located at 62°14'S, 58°40'W, South Shetland Islands [@Marina2018]. These food web datasets comprise benthic and pelagic habitats of the Antarctic ecosystem, few aggregated low-trophic level groups (e.g. detritus, diatoms, phytoplankton, zooplankton) and a high resolution of the macroalgae community (i.e. 24 biological species of red, brown and green macroalgae). The macroalgae community is responsible for the majority of the primary production and supports a large fraction of secondary production in Antarctic fjords [@Quartino2008a; @Valdivia2015]. Higher trophic levels comprise invertebrate (e.g. ascidians, sponges, isopods, amphipods, bivalves, gastropods, cephalopods, echinoderms) and vertebrate predator groups (e.g. demersal and pelagic fishes, penguins, seals and whales). For more information about these datasets refer to the original publications. To make datasets compatible, we first checked taxonomic names for synonyms, and second, we added species (either prey or predator) with their interactions to the metaweb when the local food webs contain a greater taxonomic resolution. This resulted in the addition of 258 species to the metaweb, which represent 33% of the total. We removed cannibalistic (self-links) and double arrows (i.e. A eats B and B eats A).  
+## Authors’ contributions
 
-To describe food webs as networks each species is represented as a node or vertex and the trophic interactions are represented as edges or links between nodes. These links are directed, from the prey to the predator, as the flow of energy and matter. Two nodes are neighbours if they are connected by an edge and the degree $k_i$ of node $i$ is the number of neighbours it has. The food web can be represented by an adjacency matrix $A=(a_{ij})$ where $a_{ij}=1$ if species $j$ predates on species $i$, else is 0. Then $k_i^{in}=\sum_j{a_{ji}}$ is the number of preys of species $i$ or its in-degree, and $k_i^{out}=\sum_j{a_{ij}}$ is the number of predators of $i$ or its out-degree. The total number of edges is $E=\sum_{ij}a_{ij}$. 
+LAS, TIM, MDT and FRM conceived the ideas and designed methodology; TIM and LAS collected the data; LAS wrote the code; LAS and TIM analysed the data; LAS and TIM led the writing of the manuscript. All authors contributed critically to the drafts and gave final approval for publication.
 
-### Models 
+## Data Availability Statement
 
-To unravel the mechanisms of network assembly we considered two models:1) a random network model without any ecological mechanism, and 2) a colonization-extinction model constrained by the network structure, with no consideration of population dynamics and interaction strength. Then we compared the empirical networks with such models using a null model approach: if we observe a deviation from the property obtained with the null model then mechanisms that are excluded from the model may be acting [@DeBello2012]. 
+The source code and data is available at zenodo <https://doi.org/10.5281/zenodo.3370022> and Github <https://github.com/lsaravia/MetawebsAssembly/>.  
 
-The random network model that we used is the Erdös-Rényi random graph [-@Erdos1959]. An Erdös-Rényi network is constructed fixing the number of edges and nodes and assigning at random the $m$ edges to the $n$ nodes with equal probability [@Erdos1959; @Baiser2016]. We restricted the random model by eliminating double arrows and cannibalistic links. In a small number of cases, the algorithm generates two separated network components or networks without basal species; we discarded such cases to make possible the calculation of trophic level, trophic coherence and modularity. We included the random model because it is the baseline model to calculate the small-world structure and motif representations, so it is logical to apply it to the other properties. 
-
-To consider network assembly mechanisms we used a metaweb assembly model (Figure 1), called the trophic theory of island biogeography [@Gravel2011]. In this model species migrate from the metaweb to a local web with a uniform probability $c$, and become extinct from the local web with probability $e$; a reminiscence of the theory of island biogeography [@MacArthur1967], but with the addition of network structure. Species migrate with their potential network links from the metaweb, then in the local web species can only survive if at least one of its preys is present, or if it is a basal species. When a species goes extinct locally it may produce secondary extinctions; we check that the local predators maintain at least one prey if not they become extinct independent of the probability $e$. We simulated this model in time and it eventually reaches an equilibrium that depends on the migration and extinction probabilities but also on the structure of the metaweb. The ratio of immigration vs. extinction $\alpha= c/e$ is hypothesized to be inversely related to the distance to the mainland [@MacArthur1967], and as extinction should be inversely proportional to population size [@Hanski1999], the ratio $\alpha$ is also hypothesized to be related to the local area.
-
-For the random model, we simulated networks with the same number of nodes $n$ and edges $m$ as the empirical networks; for the metaweb assembly model, we fitted the parameters $c$ and $e$ to obtain networks with $n$ and $m$ close to the empirical networks. This implies that $\alpha$ should reflect the differences in areas of the two local food webs. For details of the fitting and simulations see Appendix. 
-
-### Structural network properties
-
-
-The first property we analysed is the small-world pattern, which examines the average of the shortest distance between nodes and the clustering coefficient of the network [@Watts1998]. This property is associated with increased resilience and resistance to secondary extinctions [@Sole2001; @Bornatowski2017]. We first calculated the characteristic path length that is the shortest path between any two nodes. Then $L$ is the mean value of the shortest path length across all pairs of nodes. 
-The clustering coefficient of node $i$ was defined as 
-
-$$cc_i =\frac{2 E_i}{k_i (k_i -1)}$$ 
-
-where $E_i$ is the number of edges between the neighbours of $i$. The clustering coefficient of the network $CC$ is the average of $cc_i$ over all nodes. The original definition of small-world networks is conceptual [@Watts1998], a network $G$ is small-world when it has a similar mean shortest path length but greater clustering than an Erdös-Rényi random network with the same number of nodes $n$ and edges $m$. For the quantitative version of the small-world pattern, we followed @Humphries2008; we need to define:
-
-$$\gamma_g = \frac{CC_g}{CC_{null}}$$
-
-and
-
-$$\lambda_g = \frac{L_g}{L_{null}}$$
-
-where $CC_g$ and $L_g$ are the clustering coefficient and the mean shortest path length of the network of interest $G$; $CC_{null}$ and $L_{null}$ are the same quantities for the null model. Thus, quantitative small-world-ness is defined as:
-
-$$S = \frac{\gamma_g}{\lambda_g}$$
-
-and to determine if $S$ is statistically significant Monte Carlo methods were used [@Crowley1992]. We built 1000 null model networks with the same number of nodes $n$ and edges $m$ than the empirical network; then we calculated $S$ for each random network and the lower and higher 99% quantiles of the $S$ distribution are called $ql,qh$:
-
-$$CI = \frac{qh - ql}{2}$$
- 
-the upper 99% confidence limit is then $CL^{0.01}= 1 + CI$. Thus, if a network has $S > CL^{0.01}$ it is considered a small-world network [@Humphries2008]. We also calculated the small-world-ness and the CI using the metaweb assembly model as a null model.
-
-The second property is trophic coherence [@Johnson2014], that is related to stability in the sense that small perturbations could get amplified or vanished, which is called local linear stability [@May1972;@Rohr2014]. We first needed to estimate the trophic level of a node $i$, defined as the average trophic level of its preys plus 1. That is:
-
-$$tp_i= 1 + \frac{1}{k_i^{in}}\sum_{j}{a_{ij} tp_j}$$ 
-
-where $k_i^{in}=\sum_{j}a_{ji}$ is the number of preys of species $i$, basal species that do not have preys (then $k_i^{in}=0$) are assigned a $tp=1$. Then the trophic difference associated to each edge is defined as $x_{ij}=tp_i - tp_j$. The distribution of trophic differences, $p(x)$, has a mean $E^{-1} \sum_{ij} a_{ij} x_{ij} = 1$ by definition. Then the trophic coherence is measured by:
-
-$$q = \sqrt{\frac{1}{E} \sum_{ij}a_{ij}x_{ij}^2 - 1}$$
-
-
-that is the standard deviation of the distribution of all trophic distances. A food web is more coherent when $q$ is closer to zero, thus the maximal coherence is achieved when $q = 0$, and corresponds to a layered network in which every node has an integer trophic level [@Johnson2014; @Johnson2017]. To compare coherence and trophic level we generated 1000 null model networks with at least one basal species and the same number of species and links---or approximately the same---than the network of interest. Then we calculated the 99% confidence interval using the 0.5% and 99.5% quantiles of the distribution of $q$; we also calculated the confidence interval for the mean trophic level $tp$. We calculated the z-scores as:
-
-$$z_i=\frac{q_{obs} - q_{null}}{\sigma_{qnull}}$$
-
-where $q_{obs}$ is the observed coherence, $q_{null}$ is the mean coherence from the null model networks and $\sigma_{qnull}$ is the standard deviation. The same formula is used for $tp$. The z -score thus measures the significance of deviations of the empirical network from the null hypothesis. If the distribution of the quantity ($q$, $tp$) under the null model is normal, a z-score greater than 2 is evidence that the observed quantity is significantly greater than its random counterpart, and a z-score less than -2 means that the quantity is significantly lower. If the distribution under the null model is skewed this is not necessarily true and thus we must rely on confidence intervals. 
-
-Another property related to stability is modularity, since the impacts of a perturbation are retained within modules minimizing impacts on the food web [@Fortuna2010; @Grilli2016]. It measures how strongly sub-groups of species interact between them compared with the strength of interaction with other sub-groups [@Newman2004]. These sub-groups are called compartments. To find the best partition, we used a stochastic algorithm based on simulated annealing [@Reichardt2006]. Simulated annealing allows maximizing modularity without getting trapped in local maxima configurations [@Guimera2005]. The index of modularity was defined as: 
-
-$$M = \sum_s \left(\frac{I_s}{E} - \left(\frac{d_s}{2E}\right)^2 \right)$$
-
-where $s$ is the number of modules or compartments, $I_s$ is the number of links between species in the module $s$, $d_s$ is the sum of degrees for all species in module $s$ and $E$ is the total number of links for the network. To assess the significance of our networks we calculate the 99% confidence intervals and z-scores based on 1000 null model networks as previously described. 
-
-### Motifs
-
-We considered four of the thirteen possible three-species sub-networks: apparent competition, exploitative competition, tri-trophic chain and omnivory (Figure S5). These are the only motifs present in all networks analysed here. We compared the frequency of these motifs to 1000 null model networks using the 99% confidence interval and the z-score as previously described. To determine if the proportions of motifs change across networks we use the Pearson's Chi-squared test with simulated p-value based on 10000 Monte Carlo replicates.
-
-
-### Topological roles
-
-
-As a local property that reflects the ecological role of each species we determined topological roles using the method of functional cartography [@Guimera2005], which is based on module membership (See modularity). The roles are characterized by two parameters: the standardized within-module degree $dz$ and the among-module connectivity participation coefficient $PC$.  The within-module degree is a z-score that measures how well a species is connected to other species within its module:
-
-$$dz_i = \frac{k_{is}-\bar{k_s} }{\sigma_{ks}}$$ 
-
-
-where $k_{is}$ is the number of links of species $i$ within its own module $s$, $\bar{k_s}$ and $\sigma_{ks}$ are the average and standard deviation of $k_{is}$ over all species in $s$. The participation coefficient $PC$ estimates the distribution of the links of species $i$ among modules; thus it can be defined as:
-
-$$PC_i =  1 - \sum_s \frac{k_{is}}{k_i}$$ 
-
-where $k_i$ is the degree of species $i$ (i.e. the number of links), $k_{is}$ is the number of links of species $i$ to species in module $s$. Due to the stochastic nature of the module detection algorithm, we made repeated runs of the algorithm until there were no statistical differences between the distributions of $PC_i$ and $dz_i$ in successive repetitions; to test such statistical difference we used the k-sample Anderson-Darling test [@Scholz1987]. Then we calculated the mean and 95% confidence interval of $dz$ and $PC$.
-
-To determine each species' role the $dz-PC$ parameter space was divided into four areas, modified from @Guimera2005, using the same scheme as @Kortsch2015. Two thresholds were used to define the species’ roles: $PC=0.625$ and $dz=2.5$. If a species had at least 60% of links within its module then $PC<0.625$, and if it also had $dz\ge 2.5$, thus it was classified as a module hub. This parameter space defines species with a relatively high number of links, the majority within its module. If a species had $PC<0.625$ and $dz<2.5$, then it was called a peripheral or specialist; this refers to a species with relatively few links, mostly within its module. Species that had $PC\ge0.625$ and $dz<2.5$ were considered module connectors, since they have relatively few links, mostly between modules. Finally, if a species had $PC\ge0.625$ and $dz\ge 2.5$, then it was classified as a super-generalist or hub-connector because it has high between- and within-module connectivity. To test if the proportion of species’ roles changed between networks we performed a Pearson's Chi-squared test with simulated p-value based on 10000 Monte Carlo replicates. Also, we tested if these proportions changed for one realization of the metaweb assembly model fitted for each local network.
-
-All analyses and simulations were made in R version 3.4.3 [@RCoreTeam2017], using the igraph package version 1.1.2 [@Csardi2006] for motifs and topological role estimations, and NetIndices [@Kones2009] for trophic level calculations. Source code and data are available at zenodo <https://> and Github <https://>.  
 
 ## References

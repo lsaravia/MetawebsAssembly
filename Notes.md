@@ -38,6 +38,10 @@ Ashkaan K. Fahimipour,  afahimipour@ucdavis.edu, University of California, Davis
 
 Alyssa R. Cirtwill, School of Biological Sciences, University of Canterbury, Private Bag 4800, Christchurch 8140, New Zealand.E-mail: alyssa.cirtwill@gmail.com
 
+Timothee Poisot
+Université de Montréal
+Département de sciences biologiques 
+E-mail: timothee.poisot@umontreal.ca
 
 Recommended
 Reason: Extensive work in ecological interaction networks	
