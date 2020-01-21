@@ -8,6 +8,11 @@ editor_options:
 
 ## Setup
 
+- **I run the analysis chunk by chunk, not the whole Rmd** 
+
+- So I set `eval=True` or `eval=False` to run a particular chunk or I run it interactively 
+
+
 ```{r setup, eval=T,echo=FALSE }
 load(".RData")
 oldcd <-getwd()
@@ -81,7 +86,7 @@ cl <- makeCluster(cn)
 registerDoParallel(cl)
 nsim <- dim(arguments)[1]
 tic()
-sim <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE,.packages='MetaWebAssemblyModels') %dopar% 
+sim <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE,.packages='meweasmo') %dopar% 
 {
   mm <- arguments[i,1]
   aa <- arguments[i,2]
@@ -540,7 +545,9 @@ plot_NetAssemblyModel_eqw(AA,100)
 plot_NetAssemblyModel(AA,300)
 
 g <- graph_from_adjacency_matrix( AA$A, mode  = "directed")
+
 # Select only a connected subgraph graph 
+#
 dg <- components(g)
 g <- induced_subgraph(g, which(dg$membership == which.max(dg$csize)))
 vcount(g)
@@ -566,8 +573,6 @@ set.seed(123)
 m <- 0.023
 a <- 0.094
 tf <- 546
-#require(Rcpp)
-#sourceCpp("src/NetAssemblyFromMetaWeb.cpp")
 
 AA <- metaWebNetAssembly(A,m,1,a,tf)
 dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))
@@ -583,6 +588,7 @@ g <- graph_from_adjacency_matrix( AA$A*1, mode  = "directed")
 #V(g)$label <- rownames(A)
 
 # Select only a connected subgraph graph 
+#
 dg <- components(g)
 g <- induced_subgraph(g, which(dg$membership == which.max(dg$csize)))
 #plot(g,edge.arrow.size=.4,edge.color="orange", vertex.color="gray50",vertex.size=3,layout=layout_with_fr)
@@ -597,12 +603,14 @@ topoRoles_metaWebAssembly <- bind_rows(topoRoles_metaWebAssembly,tR )
 
 
 # Plot and clasify topological roles
+#
 hub_conn_Assembly <- bind_rows(hub_conn_Assembly, 
                                plot_topological_roles(tR,g,modulos) %>% mutate(Network="Potter"))
 
 plotTopoRolesByTLByMod("","Potter","",modulos,hub_conn_Assembly,"",g)
 
 save.image()
+
 # Topological Roles proportions test and plot
 #
 #

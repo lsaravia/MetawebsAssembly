@@ -497,10 +497,11 @@ plotTopoRolesByTLByMod <- function(netFrame,netName,deadNodes,modulObj,topoFrame
     redl <- simplify(redl)
   }
   require(NetIndices)
-  if(deadNodes=="")
+  if(deadNodes[1]=="")
       troph.net2<-TrophInd(get.adjacency(redl,sparse=F))
   else
       troph.net2<-TrophInd(get.adjacency(redl,sparse=F),Dead=deadNodes)
+  
   layout.matrix.1<-matrix(
     nrow=length(V(redl)),  # Rows equal to the number of vertices
     ncol=2
@@ -943,4 +944,59 @@ plot_NetAssemblyModel_sims <- function(metaW,m, q, a, tf,timeW){
   gC <- ggplot(dfA, aes(x=T,y=C,colour=sim)) + geom_point() + theme_bw() + ylab("C") + geom_hline(yintercept = mean(dfA$C),linetype = 2,colour="grey50") + scale_color_viridis(guide=FALSE)
   print(gC)
   return(list(gS=gS,gL=gL,gC=gC))
+}
+
+
+#' Calculate means and CI for within module degree dz and among-module connectivity participation coefficient pc. 
+#' Do 100 simulations and then 10 simulations more to check if dz and pc are stable
+#' 
+#' @param gr  igraph network
+#' @param name name of the network
+#' @param mod_gr intial modular structure (igraph community)
+#'
+#' @return a data frame with mean dz, pc, and 99% CI 
+#' @export
+#'
+#' @examples
+incremental_topoRoles <- function(gr,name)
+{
+  cond1 <- cond2 <- FALSE
+  tR2 <- data.frame()
+  
+  while (!(cond1 & cond2)) {
+      
+    #
+    # Calc topological roles 100 simulations
+    #
+    tR1 <- calc_topological_roles(gr,100)
+    tR  <- tR1 %>% group_by(node) %>% summarize(wtmLowCI=quantile(within_module_degree,0.005,na.rm=TRUE),
+                                                wtmHiCI=quantile(within_module_degree,0.995,na.rm=TRUE),
+                                                amcLowCI=quantile(among_module_conn,0.005,na.rm=TRUE),
+                                                amcHiCI=quantile(among_module_conn,0.995,na.rm=TRUE),
+                                                within_module_degree=mean(within_module_degree,na.rm=TRUE),
+                                                among_module_conn=mean(among_module_conn,na.rm=TRUE))
+    
+    tR1 <- bind_rows(tR1, calc_topological_roles(redl,10))
+
+    tR2 <-   tR1 %>% group_by(node) %>% summarize(wtmLowCI=quantile(within_module_degree,0.005,na.rm=TRUE),
+                                                  wtmHiCI=quantile(within_module_degree,0.995,na.rm=TRUE),
+                                                  amcLowCI=quantile(among_module_conn,0.005,na.rm=TRUE),
+                                                  amcHiCI=quantile(among_module_conn,0.995,na.rm=TRUE),
+                                                  within_module_degree=mean(within_module_degree,na.rm=TRUE),
+                                                  among_module_conn=mean(among_module_conn,na.rm=TRUE))
+    
+    
+    
+    
+    require(kSamples)
+    ad1 <- ad.test(list(tR$among_module_conn,tR2$among_module_conn))
+    ad2 <- ad.test(list(tR$within_module_degree,tR2$within_module_degree))
+    
+    cond1 <- all(ad1$ad[,3] > 0.1)
+    cond2 <- all(ad2$ad[,3] > 0.1)
+    
+    print( nrow(tR1)/igraph::gorder(gr))
+  }
+  dz_pc <- tR2 %>% mutate(Network=name)
+  return(dz_pc)
 }
