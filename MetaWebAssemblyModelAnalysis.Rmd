@@ -15,22 +15,26 @@ editor_options:
 
 ```{r setup, eval=T,echo=FALSE }
 load(".RData")
-oldcd <-getwd()
-require(ggplot2)
-require(igraph)
-require(dplyr)
-require(stringr)
-require(devtools)
+
+needed_packages <- c(
+    "ggplot2"
+  , "igraph"
+  , "dplyr"
+  , "stringr"
+  , "devtools")
+
+lapply(needed_packages, function(x) { if(!require(x,character.only = TRUE)){ install.packages(x) }} )
+
+theme_set(theme_bw())
+
 if( require(meweasmo) == FALSE)
   install_github("lsaravia/meweasmo")
 if( require(multiweb) == FALSE)
   install_github("lsaravia/multiweb")
 
-source("R/network_fun.r")
-
 ```
 
-# Fitting metaWeb assembly models to Potter Cove   
+# Check the steady state of the model   
 
 ```{r fitMetaWebPC, eval=F,echo=F,message=T,warning=T}
 
@@ -39,39 +43,84 @@ source("R/network_fun.r")
 #
 # Read data and trim species names to avoid duplicates 
 #
-dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
-dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
-
+# dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
+# dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
+# 
 #
 # Select food web 
 #
-dtot1 <- as.matrix(dtot %>% filter(Network=="Meta") %>% dplyr::select(Prey_name,Predator_name))
-redl <- graph_from_edgelist(dtot1, directed  = T)
+# dtot1 <- as.matrix(dtot %>% filter(Network=="Meta") %>% dplyr::select(Prey_name,Predator_name))
+# redl <- graph_from_edgelist(dtot1, directed  = T)
 # Delete cannibalistic 
-redl <- simplify(redl)
-sum(degree(redl,mode="in")==0)
+
+redl <- meta 
+sum(degree(redl,mode="in")==0) == websTbl$Basal[3]
 
 A <- get.adjacency(redl,sparse=F)
-dim(A)
+dimA <- dim(A)[1]
 
 #
 # Testing if 500 time steps is enough to find equilibrium point
 #
 tf <- 2000
-AA <- metaWebNetAssembly(A,0.05,1,0.2,tf)
-plot_NetAssemblyModel(AA,400)
+m <- rep(0.05,times=dimA)
+e <- rep(0.2, times=dimA)
+AA <- metaWebNetAssembly(A,m,e,tf)
 plot_NetAssemblyModel_eqw(AA,100)
+AAdf <- tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S)) 
+
+tf <- 1500
+AA <- metaWebNetAssembly(A,m,e,tf)
+plot_NetAssemblyModel_eqw(AA,50)
+AAdf1 <- tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S)) 
+
+tf <- 1000
+AA <- metaWebNetAssembly(A,m,e,tf)
+plot_NetAssemblyModel_eqw(AA,50)
+AAdf2 <- tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S)) 
+
 tf <- 500
-AA <- metaWebNetAssembly(A,0.05,1,0.2,tf)
-plot_NetAssemblyModel_eqw(AA,100)
+AA <- metaWebNetAssembly(A,m,e,tf)
+plot_NetAssemblyModel_eqw(AA,50)
+AAdf3 <- tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S)) 
+
+#
+# Kernel density based global two-sample comparison test 2d 
+# to determine if the last 100 time steps have the same distribution of C and S 
+# and therefore there is steady state
+#
+kde.test(AAdf3[,1:2],AAdf[,1:2])$pvalue
+# [1] 0.9934058
+kde.test(AAdf3[,1:2],AAdf1[,1:2])$pvalue
+# [1] 0.7734683
+kde.test(AAdf3[,1:2],AAdf2[,1:2])$pvalue
+# [1] 0.6778419
+
+AAdf <- bind_rows(AAdf %>% mutate(Sim="2000"), AAdf1 %>% mutate(Sim="1500"), AAdf2 %>% mutate(Sim="1000"), AAdf3 %>% mutate(Sim="500"))
+ggplot(AAdf, aes(S,C,color=Sim))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC))
+
+# There are no differences we can use 500 time steps
 
 
+```
+
+# Simulate a grid of parameters to select the best options
+
+* The idea is to calculate a bivariate confidence ellipse and check if the desired object is inside it 
+
+* A method using the t-bidimensional distribution is here https://github.com/tidyverse/ggplot2/blob/master/R/stat-ellipse.R
+
+```{r fitMetaWebPC, eval=F,echo=F,message=T,warning=T}
 
 # Simulate a grid of parameters to select the best options
 #
 #
-
+# Use require(lhs)
+# https://cran.r-project.org/web/packages/lhs/vignettes/lhs_basics.html
+# require(GenSA)
+# https://cran.r-project.org/web/packages/GenSA/GenSA.pdf
 # Combine parameters
+
 arguments <- expand.grid(m = seq(from=0.01,to=0.1,by=0.001), a = seq(from=0.01,to=0.1,by=0.001))
 simMetaWebAssembly <- data.frame()
 # repeat ten times

@@ -488,3 +488,65 @@ In general, biotic interactions are likely to be more important at the finest sc
 @Dupont2009 Ecological modules and roles of species in heathland plant–insect flower visitor networks
 
 A stable modular pattern may influence network robustness. In theoretical networks, modularity enhanced stability (May 1972; Krause et al. 2003). Sinha (2005), on the other hand, found that the transition point from stability to instability did not differ between modular and random networks, but the transition was more gradual in the former. Modular networks avoid abrupt deterioration leading to extinctions, and thus modularity may slow down the rate of biodiversity loss (Wilmers 2007).
+
+
+
+--------------------
+
+@Camacho2007 Quantitative analysis of the local structure of food webs
+
+Stouffer et al. (2005) demonstrated, however, that it can
+be easily generalized to provide similar agreement to the
+niche (Williams and Martinez, 2000) or the nested-hierarchy
+(Cattin et al., 2004) models as compared to many empirical
+food webs. The generalization consists in that the prob-
+ability x with which a species i feeds on species j with n j pn i
+is not the same for every predator i, but it is drawn at
+random from a probability distribution pðxÞ given by
+pðxÞ 1⁄4 bð1  xÞ ðb1Þ ,
+(1)
+the so-called beta-distribution (see Fig. 2).
+
+--------------------
+@Dunne2008
+
+The use of degree distributions to
+characterize and compare network structure provides a
+limited view of topology, because networks that have similar
+degree distributions can have other properties that differ
+quite dramatically [18,42]. A number of important properties
+beyond degree distributions have been calculated for food
+webs such as percentages of different types of taxa (e.g., basal
+species, omnivores, cannibals) [15], overall web statistics (e.g.,
+mean trophic level, standard deviation of chain lengths,
+variability in the numbers of consumers or resources per
+species) [15], ‘‘small-world’’ properties (mean shortest path
+length, clustering coefficient) [21], the occurrence of small
+motifs [20,43], and the scaling of minimum spanning trees
+[22,24]. A simple network model called the ‘‘niche model’’ [15]
+successfully reproduces many of these features of empirical
+food-web structure [15,18,25,31,41,43], in addition to degree
+distributions [17,19]
+
+
+--------------------
+@Dunne2014
+
+Generalities of food web structure have been identified for extant ecosystems.
+However, the trophic organization of ancient ecosystems is unresolved,
+as prior studies of fossil webs have been limited by low-resolution, high-
+uncertainty data. We compiled highly resolved, well-documented feeding inter-
+action data for 700 taxa from the 48 million-year-old latest early Eocene Messel
+Shale, which contains a species assemblage that developed after an interval of
+protracted environmental and biotal change during and following the end-
+Cretaceous extinction. We compared the network structure of Messel lake and
+forest food webs to extant webs using analyses that account for scale dependence
+of structure with diversity and complexity.
+
+
+--------------------
+@Ontiveros2019
+
+The r package island is inspired by the simplicity of the Theory of Island Biogeography. Our package includes a suite of functions to easily confront models of increasing complexity to community data from the simplest stochastic model underlying Island Biogeography Theory to more elaborate models that include species responses to environmental variables and imperfect detectability, obtained at regular or irregular sampling times, using maximum‐likelihood and AIC ‐based model selection.
+Models implemented in island should be regarded as simple approximations of true temporal community dynamics. In this sense, we call them effective models which we use to estimate effective parameters . These models are simple, but dynamic, as opposed to purely statistical. We illustrate the concept of dynamic effective models by using an immigration–birth–death stochastic model of population dynamics. We generated simulated community data to demonstrate the correspondence between the underlying true model parameters values and our effective parameter estimates.
+We present three examples showcasing the uses of our package: detectability estimation and model selection, influence of environmental covariates on community dynamics and estimation of co‐occurrence networks. Three detailed vignettes with a full set of examples accompany the r Package island available on CRAN .

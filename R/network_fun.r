@@ -241,9 +241,8 @@ calc_incoherence_z <- function(g,ti=NULL,nsim=1000) {
     zQ <-  (m$Q- rndQ)/sd(ind$Q)
     zTI <- (m$mTI - rndTI)/sd(ind$mTI) # the same as sd(ind$mTI)
     #
-    return(data_frame(rndQ=rndQ,rndTI=rndTI,Qlow=qQ[1],Qhigh=qQ[2],
-                      TIlow=qTI[1],TIhigh=qTI[2],zQ=zQ,zTI=zTI))         
-    
+    return(list(su=data_frame(rndQ=rndQ,rndTI=rndTI,Qlow=qQ[1],Qhigh=qQ[2],
+                      TIlow=qTI[1],TIhigh=qTI[2],zQ=zQ,zTI=zTI),sim=ind))         
     
 }
   
@@ -486,7 +485,7 @@ calc_avg_topological_roles <- function(g, net_name,nsimStep){
 #'
 #' @examples
 
-plotTopoRolesByTLByMod <- function(netFrame,netName,deadNodes,modulObj,topoFrame,legendPos="",redl=NULL){
+plotTopoRolesByTLByMod <- function(netName,deadNodes,modulObj,topoFrame,legendPos="",redl=NULL,netFrame=NULL){
   # 
   # Local 
   #
@@ -510,6 +509,7 @@ plotTopoRolesByTLByMod <- function(netFrame,netName,deadNodes,modulObj,topoFrame
   # 
   # Add colors with topological roles to nodes 
   #
+  require(dplyr)
   require(RColorBrewer)
   colnet <- brewer.pal(4,"Paired")
   
@@ -999,4 +999,66 @@ incremental_topoRoles <- function(gr,name)
   }
   dz_pc <- tR2 %>% mutate(Network=name)
   return(dz_pc)
+}
+
+
+
+compare_with_ER <- function(redl, network_name,nsims=1000,rnd_seed=123){
+  #
+  # Run modularity 
+  #
+  set.seed(rnd_seed)
+  modulos<-cluster_spinglass(redl)
+  websTbl <- multiweb::calc_topological_indices(redl)  %>% mutate(Network=network_name,Groups=length(modulos$csize),Modularity=modulos$modularity)
+  
+  #
+  # Compare with random networks
+  #
+  tbl <- data.frame()
+  tbl <- calc_modularity_random(redl,nsims)
+  #saveRDS(tbl,"tbl.rds")
+  #tbl <- readRDS("tbl.rds")
+  websTbl <- websTbl %>% bind_cols(tbl$su)
+  
+  sim <- tbl$sim
+
+  #
+  # Calculate Trophic Position
+  #
+  require(NetIndices)
+  trophl<-TrophInd(get.adjacency(redl,sparse=F))
+  
+  #
+  # Calc incoherence
+  #
+  q <- calc_incoherence(redl,trophl)
+  websTbl$Q[1] <- q$Q
+  websTbl$rQ[1] <- q$rQ  # ratio of Q/eQ expected coherence under null -  Significant coherence rQ< 1, Significant incoherence rQ>1
+  websTbl$mTI[1] <- q$mTI # mean trophic level 
+  websTbl$rTI[1] <- q$rTI   # ratio of mTI/eTI expected under null 
+  
+  # Calc incoherence z-score based in random E-R networks with the condition of at least one basal node
+  #
+  #
+  tbl <- calc_incoherence_z(redl,trophl,nsims)
+  zq <- tbl$su
+  websTbl$rndQ[1] <- zq$rndQ
+  websTbl$rndTI[1] <- zq$rndTI
+  websTbl$Qlow[1] <- zq$Qlow
+  websTbl$Qhigh[1] <- zq$Qhigh
+  websTbl$TIlow[1] <- zq$TIlow
+  websTbl$TIhigh[1] <- zq$TIhigh
+  websTbl$zQ[1] <- zq$zQ
+  websTbl$zTI[1] <- zq$zTI
+  websTbl$zMO[1] <- with(websTbl[1,], (Modularity - rndMO)/sd(sim$modularity))
+  
+  sim <- sim %>% bind_cols(tbl$sim) %>% mutate(Network=network_name) 
+  
+  
+  return(list(su=websTbl,sim=sim))
+}
+
+approximate_incident_edges <- function(g, v){
+  vv <- V(wedd)[grep(v, V(wedd)$name)]
+  incident_edges(wedd, vv,mode= "all") 
 }

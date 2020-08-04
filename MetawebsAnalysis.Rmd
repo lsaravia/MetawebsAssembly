@@ -10,31 +10,35 @@ editor_options:
 
 - **I run the analysis chunk by chunk, not the whole Rmd** 
 
-- So I set `eval=True` or `eval=False` to run a particular chunk or I run it interactively 
+- So I set `eval=TRUE` or `eval=FALSE` to run a particular chunk or I run it interactively 
 
-```{r setup, eval=T,echo=FALSE }
-load(".RData")
-oldcd <-getwd()
+```{r setup, eval=TRUE,echo=FALSE }
 
-```
-
-
-# Modularity Analysis - Potter 
-
-```{r ModularityAnalysisLocal, eval=T,echo=F,message=T,warning=T}
+if(file.exists(".RData")) load(".RData")
 
 source("R/network_fun.r")
 
 require(igraph)
 require(dplyr)
 require(stringr)
+if( require(meweasmo) == FALSE)
+  install_github("lsaravia/meweasmo")
+if( require(multiweb) == FALSE)
+  install_github("lsaravia/multiweb")
 
 #
 # Read data and trim species names to avoid duplicates 
 #
-dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
+#dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
+dtot <- read.delim("Data/FoodwebsFixed.dat", quote="",stringsAsFactors = F)
 dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
 
+```
+
+
+# Modularity Analysis - Potter 
+
+```{r ModularityAnalysisLocal, eval=FALSE,echo=F,message=T,warning=T}
 #
 # Select local food web - Potter Cove
 #
@@ -52,13 +56,21 @@ spnames <- make.cepnames(V(redl)$name)
 #
 V(redl)$name[grep(".1",spnames)]
 
+# Check for detritos
+# 
+grep("detr", V(redl)$name, ignore.case = TRUE, value=TRUE  )
+grep("necr", V(redl)$name, ignore.case = TRUE, value=TRUE  )
 
+
+res <- compare_with_ER(redl, "local",1000)
+
+simulations_ER <- res$sim
+websTbl <- res$su
 #
 # Run modularity 
 #
 set.seed(123)
 modulos<-cluster_spinglass(redl)
-websTbl <- calc_topological_indices(redl)  %>% mutate(Network="Local",Groups=length(modulos$csize),Modularity=modulos$modularity)
 
 #
 # Add the modulos object to a vector  
@@ -66,33 +78,34 @@ websTbl <- calc_topological_indices(redl)  %>% mutate(Network="Local",Groups=len
 mod_by_red <- vector(mode="list", length=3)
 mod_by_red[[1]] <- modulos
 
-#
-# Compare with random networks
-#
-tbl <- data.frame()
-tbl <- calc_modularity_random(redl,1000)
-saveRDS(tbl,"tbl.rds")
-#tbl <- readRDS("tbl.rds")
-websTbl <- websTbl %>% bind_cols(tbl$su)
 
-sim <- tbl$sim
-sd(sim$modularity)
 
-# Check for detritos
+# Plot the Network
 # 
-grep("detr", V(redl)$name, ignore.case = TRUE, value=TRUE  )
-grep("necr", V(redl)$name, ignore.case = TRUE, value=TRUE  )
 
 #
 # Calculate Trophic Position
 #
 require(NetIndices)
-troph.net2<-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Fresh detritus","Aged detritus","Necromass"))
+trophl<-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Fresh detritus","Aged detritus","Necromass"))
 
-# Number of basal species
+# Add colors to nodes 
 #
-sum(round(troph.net2[,1])==1)
+require(RColorBrewer)
 
+colTL <-as.numeric(cut(trophl$TL,11))
+colnet <- brewer.pal(11,"RdYlGn")
+V(redl)$color <- colnet[12-colTL]
+
+#
+# Calculate Trophic Position
+#
+require(NetIndices)
+trophl<-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Fresh detritus","Aged detritus","Necromass"))
+
+#
+# Generate a matrix layout
+#
 layout.matrix.1<-matrix(
   nrow=length(V(redl)),  # Rows equal to the number of vertices
   ncol=2
@@ -100,43 +113,9 @@ layout.matrix.1<-matrix(
 
 
 #
-# Calc incoherence
-#
-q <- calc_incoherence(redl,troph.net2)
-websTbl$Q[1] <- q$Q
-websTbl$rQ[1] <- q$rQ  # ratio of Q/eQ expected coherence under null -  Significant coherence rQ< 1, Significant incoherence rQ>1
-websTbl$mTI[1] <- q$mTI # mean trophic level 
-websTbl$rTI[1] <- q$rTI   # ratio of mTI/eTI expected under null 
-
-# Calc incoherence z-score based in random E-R networks with the condition of at least one basal node
-#
-#
-zq <- calc_incoherence_z(redl,troph.net2)
-websTbl$rndQ[1] <- zq$rndQ
-websTbl$rndTI[1] <- zq$rndTI
-websTbl$Qlow[1] <- zq$Qlow
-websTbl$Qhigh[1] <- zq$Qhigh
-websTbl$TIlow[1] <- zq$TIlow
-websTbl$TIhigh[1] <- zq$TIhigh
-websTbl$zQ[1] <- zq$zQ
-websTbl$zTI[1] <- zq$zTI
-websTbl$zMO[1] <- with(websTbl[1,], (Modularity - rndMO)/sd(sim$modularity))
-
-rm(sim,tbl)
-# Plot the red
-# 
-# Add colors to nodes 
-#
-require(RColorBrewer)
-
-colTL <-as.numeric(cut(troph.net2$TL,11))
-colnet <- brewer.pal(11,"RdYlGn")
-V(redl)$color <- colnet[12-colTL]
-
-#
 # Plot modules
 #
-layout.matrix.1[,2]<-jitter(troph.net2$TL,0.4) # y-axis value based on trophic level
+layout.matrix.1[,2]<-jitter(trophl$TL,0.4) # y-axis value based on trophic level
 layout.matrix.1[,1]<-jitter(modulos$membership,1) # randomly assign along x-axis
 
 #png("Figures/LocalFoodWeb.png",width=6,height=6,units="in",res=600)
@@ -149,24 +128,16 @@ plot(redl, vertex.color=vertex_attr(redl)$cor,vertex.label=NA,
      edge.curved=0.3, layout=layout.matrix.1)
 
 dev.off()
+
+pott <- redl
+rm(res,redl)
+
 save.image()
 ```
 
 # Modularity Analysis - Weddell
 
-```{r ModularityAnalysisRegional, eval=F,echo=F,message=T,warning=T}
-
-source("R/network_fun.r")
-
-require(igraph)
-require(dplyr)
-require(stringr)
-
-#
-# Read data and trim species names to avoid duplicates 
-#
-dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
-dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
+```{r ModularityAnalysisRegional, eval=FALSE,echo=F,message=T,warning=T}
 
 #
 # Select food web 
@@ -188,90 +159,58 @@ V(redl)$name[grep(".1",spnames)]
 
 V(redl)$name[which_loop(redl)]
 
+
+res <- compare_with_ER(redl, "Regional",1000)
+
+simulations_ER <- bind_rows(simulations_ER, res$sim)
+websTbl <-bind_rows(websTbl, res$su)
+
+
 #
 # Run modularity 
 #
 set.seed(123)
 modulos<-cluster_spinglass(redl)
-websTbl1 <- calc_topological_indices(redl)  %>% mutate(Network="Regional",Groups=length(modulos$csize),Modularity=modulos$modularity)
-
 #
 # Add the modulos object to a vector  
 #
 mod_by_red[[2]] <- modulos
 
+# Plot Network
 #
-# Compare with random networks
-#
-tbl <- data.frame()
-tbl <- calc_modularity_random(redl,1000)
-saveRDS(tbl,"tbl.rds")
-#tbl <- readRDS("tbl.rds")
-websTbl1 <- websTbl1 %>% bind_cols(tbl$su)
-websTbl <- bind_rows(websTbl,websTbl1)
-
-sim <- tbl$sim
-rm(websTbl1)
 
 # Check for detritos
 # 
 grep("detr", V(redl)$name, ignore.case = TRUE, value=TRUE  )
 grep("necr", V(redl)$name, ignore.case = TRUE, value=TRUE  )
 
-#
 # Calculate Trophic Position
 #
 require(NetIndices)
-troph.net2<-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Detritus","Necromass"))
+trophl<-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Detritus","Necromass"))
+#trophl1<-TrophInd(get.adjacency(redl,sparse=F))
+#any(trophl!=trophl1)
 layout.matrix.1<-matrix(
   nrow=length(V(redl)),  # Rows equal to the number of vertices
   ncol=2
 )
-
-#
-# Calc incoherence
-#
-q <- calc_incoherence(redl,troph.net2)
-websTbl$Q[2] <- q$Q
-websTbl$rQ[2] <- q$rQ  # ratio of Q/eQ expected coherence under null -  Significan coherence rQ< 1, Significant incoherence rQ>1
-websTbl$mTI[2] <- q$mTI # mean trophic level 
-websTbl$rTI[2] <- q$rTI   # ratio of mTI/eTI expected under null 
-
-#
-# Calc incoherence z-score based in random E-R networks with the condition of at least one basal node
-#
-zq <- calc_incoherence_z(redl,troph.net2)
-websTbl$rndQ[2] <- zq$rndQ
-websTbl$rndTI[2] <- zq$rndTI
-websTbl$Qlow[2] <- zq$Qlow
-websTbl$Qhigh[2] <- zq$Qhigh
-websTbl$TIlow[2] <- zq$TIlow
-websTbl$TIhigh[2] <- zq$TIhigh
-websTbl$zQ[2] <- zq$zQ
-websTbl$zTI[2] <- zq$zTI
-websTbl$zMO[2] <- with(websTbl[2,], (Modularity - rndMO)/sd(sim$modularity))
-
-rm(sim,tbl)
-
-
-
 
 # 
 # Add colors to nodes 
 #
 require(RColorBrewer)
 
-colTL <-as.numeric(cut(troph.net2$TL,11))
+colTL <-as.numeric(cut(trophl$TL,11))
 colnet <- brewer.pal(11,"RdYlGn")
 V(redl)$color <- colnet[12-colTL]
 
 #
 # Plot modules
 #
-layout.matrix.1[,2]<-jitter(troph.net2$TL,0.4) # y-axis value based on trophic level
+layout.matrix.1[,2]<-jitter(trophl$TL,0.4) # y-axis value based on trophic level
 layout.matrix.1[,1]<-jitter(modulos$membership,1) # randomly assign along x-axis
 
-png("Figures/RegionalFoodWeb.png",width=6,height=6,units="in",res=600)
+#png("Figures/RegionalFoodWeb.png",width=6,height=6,units="in",res=600)
 par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0))
 
 plot(redl, vertex.color=vertex_attr(redl)$cor,vertex.label=NA,
@@ -281,6 +220,10 @@ plot(redl, vertex.color=vertex_attr(redl)$cor,vertex.label=NA,
      edge.curved=0.3, layout=layout.matrix.1)
 
 dev.off()
+
+wedd <- redl
+
+rm(redl,res,trophl,trophl1,troph.net2,q,layout.matrix.1,modulos,zq)
 save.image()
 
 ```
@@ -288,19 +231,7 @@ save.image()
 
 # Modularity Analysis - MetaWEB!
 
-```{r ModularityAnalysisMetaWeb, eval=T,echo=F,message=T,warning=T}
-
-source("R/network_fun.r")
-
-require(igraph)
-require(dplyr)
-require(stringr)
-
-#
-# Read data and trim species names to avoid duplicates 
-#
-dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
-dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
+```{r ModularityAnalysisMetaWeb, eval=FALSE,echo=F,message=T,warning=T}
 
 #
 # Select food web 
@@ -333,40 +264,25 @@ spnames <- make.cepnames(V(redl)$name)
 #
 V(redl)$name[grep(".1",spnames)]
 
+
+# Compare with Random Erdos Renyi networks
+#
+res <- compare_with_ER(redl, "Meta",1000)
+
+simulations_ER <- bind_rows(simulations_ER, res$sim)
+websTbl <-bind_rows(websTbl, res$su)
+
+
 #
 # Run modularity 
 #
 set.seed(123)
 modulos<-cluster_spinglass(redl)
-websTbl1 <- calc_topological_indices(redl)  %>% mutate(Network="Meta",Groups=length(modulos$csize),Modularity=modulos$modularity)
 
 #
 # Add the modulos object to a vector  
 #
 mod_by_red[[3]] <- modulos
-
-# Print species by module
-#
-# for( i in 1:length(modulos$csize)){
-#   if(modulos$csize[i]<10){
-#     cat("Group",i, "\n")
-#     print(degree(redl,V(redl)[modulos$membership==i]))
-#   }
-# }
-
-#
-# Compare with random networks
-#
-tbl <- data.frame()
-tbl <- calc_modularity_random(redl,1000)
-saveRDS(tbl,"tbl.rds")
-#tbl <- readRDS("tbl.rds")
-websTbl1 <- websTbl1 %>% bind_cols(tbl$su)
-
-websTbl <- bind_rows(websTbl,websTbl1)
-
-sim <- tbl$sim
-rm(websTbl1)
 
 
 #
@@ -374,57 +290,32 @@ rm(websTbl1)
 #
 V(redl)$name[grep("Detritus",spnames)]
 V(redl)[V(redl)$name=="Necromass"]
+grep("detr", V(redl)$name, ignore.case = TRUE, value=TRUE  )
+grep("necr", V(redl)$name, ignore.case = TRUE, value=TRUE  )
 
 require(NetIndices)
-troph.net2<-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Detritus","Necromass"))
+trophl<-TrophInd(get.adjacency(redl,sparse=F))
 layout.matrix.1<-matrix(
   nrow=length(V(redl)),  # Rows equal to the number of vertices
   ncol=2
 )
-
-#
-# Calc incoherence
-#
-q <- calc_incoherence(redl,troph.net2)
-websTbl$Q[3] <- q$Q
-websTbl$rQ[3] <- q$rQ  # ratio of Q/eQ expected coherence under null -  Significan coherence rQ< 1, Significant incoherence rQ>1
-websTbl$mTI[3] <- q$mTI # mean trophic level 
-websTbl$rTI[3] <- q$rTI   # ratio of mTI/eTI expected under null 
-
-
-#
-# Calc incoherence z-score based in random E-R networks with the condition of at least one basal node
-#
-zq <- calc_incoherence_z(redl,troph.net2)
-websTbl$rndQ[3] <- zq$rndQ
-websTbl$rndTI[3] <- zq$rndTI
-websTbl$Qlow[3] <- zq$Qlow
-websTbl$Qhigh[3] <- zq$Qhigh
-websTbl$TIlow[3] <- zq$TIlow
-websTbl$TIhigh[3] <- zq$TIhigh
-websTbl$zQ[3] <- zq$zQ
-websTbl$zTI[3] <- zq$zTI
-websTbl$zMO[3] <- with(websTbl[3,], (Modularity - rndMO)/sd(sim$modularity))
-
-rm(sim,tbl)
-
 
 # 
 # Add colors to nodes 
 #
 require(RColorBrewer)
 
-colTL <-as.numeric(cut(troph.net2$TL,11))
+colTL <-as.numeric(cut(trophl$TL,11))
 colnet <- brewer.pal(11,"RdYlGn")
 V(redl)$color <- colnet[12-colTL]
 
 #
 # Plot modules
 #
-layout.matrix.1[,2]<-jitter(troph.net2$TL,0.4) # y-axis value based on trophic level
+layout.matrix.1[,2]<-jitter(trophl$TL,0.4) # y-axis value based on trophic level
 layout.matrix.1[,1]<-jitter(modulos$membership,1) # randomly assign along x-axis
 
-png("Figures/MetaFoodWeb.png",width=6,height=6,units="in",res=600)
+#png("Figures/MetaFoodWeb.png",width=6,height=6,units="in",res=600)
 par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0))
 
 plot(redl, vertex.color=vertex_attr(redl)$cor,vertex.label=NA,
@@ -434,6 +325,10 @@ plot(redl, vertex.color=vertex_attr(redl)$cor,vertex.label=NA,
      edge.curved=0.3, layout=layout.matrix.1)
 
 dev.off()
+
+meta <- redl
+
+rm(redl, dtot,dtot1,res,trophl,q,layout.matrix.1,modulos,zq,oldcd)
 
 save.image()
 
@@ -449,210 +344,98 @@ pandoc.table(t(websTbl %>% dplyr::select(Network,Size,Links,Connectance,PathLeng
 
 # Analysis of motif - Potter
 
-```{r motifAnalysisLocal, eval=T,echo=F,message=T,warning=T}
+```{r motifAnalysisLocal, eval=FALSE,echo=F,message=T,warning=T}
 
-source("R/network_fun.r")
-
-require(igraph)
-require(dplyr)
-require(stringr)
-
-#
-# Read data and trim species names to avoid duplicates 
-#
-dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
-dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
-
-#
-# Select local food web - Potter Cove
-#
-dtot1 <- as.matrix(dtot %>% filter(Network=="Local") %>% dplyr::select(Prey_name,Predator_name))
-redl <- graph_from_edgelist(dtot1, directed  = T)
-
-#
-# Make short names 
-#
-require(vegan)
-spnames <- make.cepnames(V(redl)$name)
-#write.csv(V(redl)$name,"Local.csv")
-
-# Test if there are duplicated species
-#
-V(redl)$name[grep(".1",spnames)]
 
 #
 # Motif
 #
-mot <- triad_census(redl)
+mot <- triad_census(pott)
 
 mot[4] # Exploitative competition
 mot[5] # Apparent competition
 mot[6] # Tri-trophic chain
 mot[9] # Omnivory
 
-FreqMotif <- data.frame(Network="Local",t(mot))
+freq_all_Motif <- data.frame(Network="Local",t(mot))
 
 set.seed(123)
-motif <- calc_motif_random(redl)
-motif <- motif %>% mutate(Network="Local")
+motif_ER <- calc_motif_random(pott)
+motif_ER <- motif_ER %>% mutate(Network="Local")
 
+rm(mot)
 save.image()
 ```
 
 # Analysis of motif - Weddell
 
-```{r motifAnalysisRegional, eval=T,echo=F,message=T,warning=T}
-
-source("R/network_fun.r")
-
-require(igraph)
-require(dplyr)
-require(stringr)
-
-#
-# Read data and trim species names to avoid duplicates 
-#
-dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
-dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
-
-#
-# Select food web 
-#
-dtot1 <- as.matrix(dtot %>% filter(Network=="Regional") %>% dplyr::select(Prey_name,Predator_name))
-redl <- graph_from_edgelist(dtot1, directed  = T)
-redl <- simplify(redl)
-#
-# Make short names 
-#
-require(vegan)
-spnames <- make.cepnames(V(redl)$name)
-#write.csv(V(redl)$name,"Regional.csv")
-
-# Test if there are duplicated species
-#
-V(redl)$name[grep(".1",spnames)]
-dup <- str_sub(spnames[grep(".1",spnames)], start = 1, end = -3)
-V(redl)$name[str_detect(spnames,dup[1])]
-V(redl)$name[str_detect(spnames,dup[2])]
-V(redl)$name[str_detect(spnames,dup[3])]
-
-V(redl)$name[which_loop(redl)]
-
-
+```{r motifAnalysisRegional, eval=FALSE,echo=F,message=T,warning=T}
 #
 # Motif
 #
-mot <- triad_census(redl)
+mot <- triad_census(wedd)
 mot[4] # Exploitative competition
 mot[5] # Apparent competition
 mot[6] # Tri-trophic chain
 mot[9] # Omnivory
 
 
-FreqMotif <- rbind(FreqMotif,data.frame(Network="Regional",t(mot)))
+freq_all_Motif <- rbind(freq_all_Motif,data.frame(Network="Regional",t(mot)))
 
 mot[10] # Loop 
 
 set.seed(123)
-motif <- bind_rows(motif, calc_motif_random(redl) %>% mutate(Network="Regional"))
+motif_ER <- bind_rows( motif_ER, calc_motif_random(wedd) %>% mutate(Network="Regional"))
 
+rm(mot)
 save.image()
+
 ```
 
 
 # Motif Analysis - MetaWEB!
 
-```{r MotifAnalysisMetaWeb, eval=T,echo=F,message=T,warning=T}
-
-source("R/network_fun.r")
-
-require(igraph)
-require(dplyr)
-require(stringr)
-
-#
-# Read data and trim species names to avoid duplicates 
-#
-dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
-dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
-
-#
-# Select food web 
-#
-dtot1 <- as.matrix(dtot %>% filter(Network=="Meta") %>% dplyr::select(Prey_name,Predator_name))
-redl <- graph_from_edgelist(dtot1, directed  = T)
-
-# Select only a connected subgraph graph 
-V(redl)$comp <- components(redl)$membership
-redm <- induced_subgraph(redl,V(redl)$comp==1)
-
-# Unconnected components 
-redd <- induced_subgraph(redl,V(redl)$comp==2)
-
-# Delete cannibalistic 
-redl <- simplify(redm)
-
-#
-# Make short names 
-#
-require(vegan)
-spnames <- make.cepnames(V(redl)$name)
-#write.csv(V(redl)$name,"Meta.csv")
-
-
-# Test if there are duplicated species
-#
-V(redl)$name[grep(".1",spnames)]
-dup <- str_sub(spnames[grep(".1",spnames)], start = 1, end = -3)
-for( i in 1:length(dup)){
-  print(V(redl)$name[str_detect(spnames,dup[i])])
-}
-
-V(redl)$name[which_loop(redl)]
-
-# Check Krill
-#
-E(redl)[from(V(redl)["Euphausia superba"])]
-dtot %>% filter(grepl("Euphausia superba",Prey_name))
-
+```{r MotifAnalysisMetaWeb, eval=FALSE,echo=F,message=T,warning=T}
 #
 # Motif
 #
-mot <- triad_census(redl)
+mot <- triad_census(meta)
 mot[4] # Exploitative competition
 mot[5] # Apparent competition
 mot[6] # Tri-trophic chain
 mot[9] # Omnivory
 
-FreqMotif <- rbind(FreqMotif,data.frame(Network="Meta",t(mot)))
+freq_all_Motif <- rbind(freq_all_Motif,data.frame(Network="Meta",t(mot)))
 
 mot[10] # Loop 
 
-set.seed(123)
-motif <- bind_rows(motif, calc_motif_random(redl) %>% mutate(Network="Meta"))
 
+set.seed(123)
+motif_ER <- bind_rows( motif_ER, calc_motif_random(meta) %>% mutate(Network="Meta"))
+
+rm(mot)
 save.image()
 
 require(pander)
 panderOptions('table.split.table',Inf)
 panderOptions('table.style', 'multiline')
 
-motif <- motif %>% dplyr::select(Network, 1:length(names(motif)))
+motif_ER <- motif_ER %>% dplyr::select(Network, everything())
 
-pandoc.table(t(motif %>% mutate_if(is.numeric, round, digits=4)))
+pandoc.table(t(motif_ER %>% mutate_if(is.numeric, round, digits=4)))
 
 ```
 
-# Analisis of motif frequency change across networks
+# Analisis of motif frequency change across networks !!! SEGUIR ACA !!!!!!
 
 Pag 616 The R book
 
-```{r MotifAnalysisMetaWeb, eval=T,echo=F,message=T,warning=T}
+```{r MotifAnalysisMetaWebAcross, eval=FALSE,echo=F,message=T,warning=T}
 require(dplyr)
 #
 # Build a dataframe with the relevant motifs
 # 
-pFM<- FreqMotif %>% group_by(Network) %>% dplyr::select(X4:X6,X9) %>% rename(EC=X4,AC=X5,TT=X6,OM=X9) %>% mutate(Tot=sum(EC,AC,TT,OM)) %>% ungroup()
+pFM<- freq_all_Motif %>% group_by(Network) %>% dplyr::select(X4:X6,X9) %>% rename(EC=X4,AC=X5,TT=X6,OM=X9) %>% mutate(Tot=sum(EC,AC,TT,OM)) %>% ungroup()
 
 require(tidyr)
 
@@ -679,9 +462,9 @@ anova(model1,model2,test="Chi")
 # Pearson Chi-squared independence 
 #
 
-x <- FreqMotif %>% dplyr::select(X4:X6,X9) %>% rename(EC=X4,AC=X5,TT=X6,OM=X9)
+x <- freq_all_Motif %>% dplyr::select(X4:X6,X9) %>% rename(EC=X4,AC=X5,TT=X6,OM=X9)
 x <- as.matrix(x)
-rownames(x) <- FreqMotif$Network
+rownames(x) <- c("Potter Cove","Weddell Sea","Meta-web")
 require(RColorBrewer)
 colnet <- brewer.pal(11,"RdYlGn")[c(1,11)]
 png("Figures/NetworkByMotifFreq.png",width=6,height=6,units="in",res=600)
@@ -705,7 +488,7 @@ The role is described by two parameters: (i) the standardized within-module degr
 connectivity participation coefficient PC. The z-score reflects how well a species is connected to other species inside the module relative to other species within its own module. The PC parameter estimates the distribution of a species’ connections across the modules.
 
 
-```{r topologicalRoles, eval=T,echo=F,message=T,warning=T}
+```{r topologicalRoles, eval=TRUE,echo=F,message=T,warning=T}
 
 source("R/network_fun.r")
 
@@ -714,17 +497,9 @@ require(dplyr)
 require(stringr)
 
 #
-# Read data and trim species names to avoid duplicates 
+# assign variable redl to work with Potter Cove
 #
-dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
-dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
-
-#################################################
-#
-# Select Potter food web 
-#
-dtot1 <- as.matrix(dtot %>% filter(Network=="Local") %>% dplyr::select(Prey_name,Predator_name))
-redl <- graph_from_edgelist(dtot1, directed  = T)
+redl <- pott
 
 # 110 Simulations 
 #
@@ -746,9 +521,7 @@ rm(tR,tR1,tR2,tR3)
 #
 # Select Weddell food web 
 #
-dtot1 <- as.matrix(dtot %>% filter(Network=="Regional") %>% dplyr::select(Prey_name,Predator_name))
-redl <- graph_from_edgelist(dtot1, directed  = T)
-redl <- simplify(redl)
+redl <- wedd
 
 # Incremental calculation of topological roles
 #
@@ -771,9 +544,7 @@ save.image()
 #
 # Select metaweb 
 #
-dtot1 <- as.matrix(dtot %>% filter(Network=="Meta") %>% dplyr::select(Prey_name,Predator_name))
-redl <- graph_from_edgelist(dtot1, directed  = T)
-redl <- simplify(redl)
+redl <- meta
 
 
 # Incremental calculation of topological roles
@@ -816,7 +587,7 @@ ggsave("Figures/TopoRolesProportionByNetwork.png",width=6,height=6,units="in",dp
 # Plot motif frequency 
 # 
 #
-pFM<- FreqMotif %>% group_by(Network) %>% dplyr::select(X4:X6,X9) %>% rename(EC=X4,AC=X5,TT=X6,OM=X9) %>% mutate(Tot=sum(EC,AC,TT,OM)) %>% ungroup()
+pFM<- freq_all_Motif %>% group_by(Network) %>% dplyr::select(X4:X6,X9) %>% rename(EC=X4,AC=X5,TT=X6,OM=X9) %>% mutate(Tot=sum(EC,AC,TT,OM)) %>% ungroup()
 require(tidyr)
 pFM1 <- pFM %>% mutate(EC=EC/Tot,AC=AC/Tot,TT=TT/Tot, OM=OM/Tot) %>% dplyr::select(Network:OM) %>%gather(motif,count,EC:OM)
 levels(pFM1$Network) <- c("Potter Cove","Weddell Sea","Meta-web")
@@ -875,17 +646,24 @@ exp(4.2822)*(websTbl$Area[2])^0.1193
 
 # Integrated plot of topological roles, trophic level and modularity
 
-```{r plotTopoRolesTLmod, eval=T,echo=F,message=T,warning=T}
+```{r plotTopoRolesTLmod, eval=FALSE,echo=F,message=T,warning=T}
 
 # Read data and trim species names to avoid duplicates 
 #
-dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
-dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
+# dtot <- read.delim("Data/FoodwebsFixed.dat", quote="",stringsAsFactors = F)
+# dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
 
 # Data frame hub_conn have the topological roles of species by network
 #
 
 # mod_by_red have the modules
+#
+# Correct hub_conn if it has more nodes
+if ( sum(websTbl$Size)!= nrow(hub_conn) ) {
+
+  hub_conn <- hub_conn %>% filter(!grepl("#",name)) 
+
+}
 
 # 
 # Local 
@@ -895,13 +673,13 @@ par(mfcol=c(2,2), mar=c(1,1.2,0.5,0.5), oma=c(2,2,2,0))
 
 #plotTopoRolesByTLByMod(dtot,"Local", "",mod_by_red[[1]],hub_conn)
 
-plotTopoRolesByTLByMod(dtot,"Local",c("Fresh detritus","Aged detritus","Necromass"),mod_by_red[[1]],hub_conn)
+plotTopoRolesByTLByMod("Local",c("Fresh detritus","Aged detritus","Necromass"),mod_by_red[[1]],topoFrame=hub_conn,redl=pott)
 mtext("A", side = 3, adj = 0.05, line=1 ,cex=1.2)
 
 #
 # Metaweb
 #
-plotTopoRolesByTLByMod(dtot,"Meta",c("Detritus","Necromass"),mod_by_red[[3]],hub_conn)
+plotTopoRolesByTLByMod(netName ="Meta",c("Detritus","Necromass"),mod_by_red[[3]],topoFrame= hub_conn,redl=meta)
 mtext("C", side = 3, adj = 0.05, line = 0,cex=1.2)
 
 # modulos<-cluster_spinglass(redl)
@@ -911,7 +689,7 @@ mtext("C", side = 3, adj = 0.05, line = 0,cex=1.2)
 #
 # Regional 
 #
-plotTopoRolesByTLByMod(dtot,"Regional",c("Detritus","Necromass"),mod_by_red[[2]],hub_conn)
+plotTopoRolesByTLByMod(netName ="Regional",c("Detritus","Necromass"),mod_by_red[[2]],topoFrame= hub_conn,redl=wedd)
 mtext("B", side = 3, adj = 0.05, line=1,cex=1.2)
 
 
@@ -942,7 +720,7 @@ dev.off()
 
 # Generate datafrane with topological roles species names trophic level and degree 
 
-```{r checkTopoRolesTLmod, eval=T,echo=F,message=T,warning=T}
+```{r checkTopoRolesTLmod, eval=FALSE,echo=F,message=T,warning=T}
 require(dplyr)
 hub_conn %>% filter(type=="hubcon")
 
