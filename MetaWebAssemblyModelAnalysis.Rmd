@@ -152,14 +152,14 @@ ggplot(AAdf %>% filter(Sim=="500"), aes(S,C,color=factor(e)))+ geom_point() + th
 * One possible modification is to calculate a bivariate confidence ellipse and check if the desired object is inside it 
 * A method using the t-bidimensional distribution is here https://github.com/tidyverse/ggplot2/blob/master/R/stat-ellipse.R
 
-```{r makeSimulations50002, eval=TRUE,echo=F,message=T,warning=T}
+```{r makeSimulations100000, eval=TRUE,echo=F,message=T,warning=T}
 
 
 redl <- meta 
 sum(degree(redl,mode="in")==0) == websTbl$Basal[3]
 
 A <- get.adjacency(redl,sparse=F)
-dimA <- dim(A)[1]
+dimA <- nrow(A)
 
 # Simulate a grid of parameters to select the best options using latin hypercubic sampling
 #
@@ -174,60 +174,55 @@ dimA <- dim(A)[1]
 #   0.100000     0.3         0.001     0.5
 
 require(lhs)
-X <- randomLHS(50000, 3)
-m <- qunif(X[,1], 0.01, 0.3)
-e <- qunif(X[,2], 0.001, 0.5)
-se <- qunif(X[,2], 0.1, .9)
-arguments <- data.frame(m = m , e = e, se = se)
+# simMetaWebAssembly <- tibble()
+# simulations with probability of secondary extinction == 1
+# par_ranges <- matrix(c(0.01, 0.3,0.001, 0.5, 1, 1),nrow=3,byrow = TRUE)
+# sim <- sim_metaWebAssembly_lhs(2, 20, par_ranges,A )
+# 
+# simMetaWebAssembly <- bind_rows(simMetaWebAssembly,sim)
+# saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
 
-# simMetaWebAssembly <- data.frame()
 
-tf <- 500
-sim <- data.frame()
-require(doParallel)
-require(tictoc)
-cn <-detectCores()
-#  cl <- makeCluster(cn,outfile="foreach.log") # Logfile to debug 
-cl <- makeCluster(cn)
-registerDoParallel(cl)
-nsim <- dim(arguments)[1]
-tic()
-sim <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE,.packages='meweasmo') %dopar% 
-{
-  mm <- rep(arguments[i,1],times=dimA)
-  aa <- rep(arguments[i,2],times=dimA)
-  ee <- rep(arguments[i,3],times=dimA)
-  AA <- metaWebNetAssembly(A,mm,aa,ee,tf)
-  dfA <- data.frame(S=AA$S[(tf-100):tf],L=as.numeric(AA$L[(tf-100):tf]),T=c((tf-100):tf))
-  #dfA [dfA$T %% 10 == 0,]$L 
-  data.frame(m=mm[1],a=aa[1], se=ee[1], S=mean(dfA$S),L=mean(dfA$L),C=mean(dfA$L)/(mean(dfA$S)*mean(dfA$S)))
-}
-toc()
-stopCluster(cl)
+
+# simulations with probability of secondary extinction != 1
+par_ranges <- matrix(c(0.01, 0.3,0.001, 0.5, 0.1, 0.9),nrow=3,byrow = TRUE)
+sim <- sim_metaWebAssembly_lhs(3, 150000, par_ranges,A )
+
 simMetaWebAssembly <- bind_rows(simMetaWebAssembly,sim)
 saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
+
+# simulations with probability of secondary extinction == 0
+par_ranges <- matrix(c(0.01, 0.3,0.001, 0.5, 0, 0),nrow=3,byrow = TRUE)
+sim <- sim_metaWebAssembly_lhs(2,  50000, par_ranges,A )
+
+simMetaWebAssembly <- bind_rows(simMetaWebAssembly,sim)
+saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
+
 #simMetaWebAssembly <- readRDS("Data/simulations_metaWebAssembly.rds")
+simMetaWebAssembly <- simMetaWebAssembly %>% mutate(model = ifelse(se==1, "Fixed", ifelse(se>0, "Prob", "No SecExt") ))
+knitr::kable(simMetaWebAssembly %>% group_by(model) %>% summarise(n=n()))
 
-ggplot(simMetaWebAssembly, aes(S,C))+ geom_point(size=0.1,alpha=0.5) + theme_bw() + geom_point(data=websTbl, aes(Size,Connectance,color=Network),size=0.3) + coord_cartesian(ylim=c(0,0.1))
+ggplot(simMetaWebAssembly, aes(S,C))+ geom_point(size=0.1,alpha=0.5) + theme_bw() + geom_point(data=websTbl, aes(Size,Connectance,color=Network),size=0.3) + coord_cartesian(ylim=c(0,0.1)) + facet_wrap(~model)
 
-ggplot(simMetaWebAssembly, aes(S,L))+ geom_point(size=0.1,alpha=0.5) + theme_bw() + geom_point(data=websTbl, aes(Size,Links,color=Network),size=0.3) + coord_cartesian(ylim=c(0,3000))
+ggplot(simMetaWebAssembly, aes(S,L))+ geom_point(size=0.1,alpha=0.5) + theme_bw() + geom_point(data=websTbl, aes(Size,Links,color=Network),size=0.3) + coord_cartesian(ylim=c(0,3000)) + facet_wrap(~model)
 
-ggplot(simMetaWebAssembly %>% mutate(secExt = se<1 ), aes(S,L,color=secExt))+ geom_point(size=0.1,alpha=0.5) + theme_bw() + geom_point(data=websTbl, aes(Size,Links,color=Network),size=0.3) + coord_cartesian(ylim=c(0,9100)) + scale_color_brewer(palette= "Paired",name="", labels=c("Fixed Sec.Ext.", "Potter","Meta","Weddell", "Prob. Sec.Ext." ))  
+ggplot(simMetaWebAssembly %>% mutate(secExt = ifelse(se==1, "Fixed", ifelse(se>0, "Prob", "No SecExt") )), aes(S,L,color=secExt))+ geom_point(size=.1,alpha=0.5) + theme_bw() + geom_point(data=websTbl, aes(Size,Links,color=Network),size=0.4) + coord_cartesian(ylim=c(0,9100)) + scale_color_brewer(palette= "Dark2",name="", labels=c("Fixed Sec.Ext.", "Potter","Meta", "No Sec.Ext.", "Prob. Sec.Ext.","Weddell" ))  
 
 
 ```
 
 ## Make the fit finding the parameters with less distance to empirical networks
 
-```{r fitMetaWebPC50002, eval=TRUE,echo=F,message=T,warning=T}
+```{r fitMetaWebPC50002, eval=FALSE,echo=F,message=T,warning=T}
 
 
 #
 # Potter Cove
 #
+# Use this tolerance = tol to display a more detailed plot 
 
 tol <- .01
-sel <- simMetaWebAssembly %>% mutate(alpha=m/a) %>% filter(S>websTbl$Size[1]*(1-tol),S<websTbl$Size[1]*(1+tol), se<1) %>% arrange(S)
+sel <- simMetaWebAssembly %>% mutate(alpha=m/a) %>% filter(S>websTbl$Size[1]*(1-tol),S<websTbl$Size[1]*(1+tol), se<0) %>% arrange(S)
 #
 # One option is to fit using the distance to S and C
 #

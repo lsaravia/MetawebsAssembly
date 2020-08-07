@@ -1062,3 +1062,45 @@ approximate_incident_edges <- function(g, v){
   vv <- V(wedd)[grep(v, V(wedd)$name)]
   incident_edges(wedd, vv,mode= "all") 
 }
+
+
+
+sim_metaWebAssembly_lhs <- function(no_parms,no_sims,par_ranges,A){
+
+  stopifnot( no_parms %in% c(2,3))
+  dimA <- nrow(A)
+  X <- randomLHS(no_sims, no_parms)
+  
+  if(no_parms==2) {
+    m <- qunif(X[,1], par_ranges[1,1], par_ranges[1,2])
+    e <- qunif(X[,2], par_ranges[2,1], par_ranges[2,2])
+    se <- rep(par_ranges[3,1],times=no_sims)
+  } else {
+    m <- qunif(X[,1], par_ranges[1,1], par_ranges[1,2])
+    e <- qunif(X[,2], par_ranges[2,1], par_ranges[2,2])
+    se <- qunif(X[,3], par_ranges[3,1], par_ranges[3,2])
+  }
+  arguments <- data.frame(m = m , e = e, se = se)
+  
+  # simMetaWebAssembly <- data.frame()
+  
+  tf <- 500
+  sim <- data.frame()
+  require(doParallel)
+  cn <-detectCores()
+  #  cl <- makeCluster(cn,outfile="foreach.log") # Logfile to debug 
+  cl <- makeCluster(cn)
+  registerDoParallel(cl)
+  sim <- foreach(i=1:no_sims,.combine='rbind',.inorder=FALSE,.packages='meweasmo') %dopar% 
+  {
+      mm <- rep(arguments[i,1],times=dimA)
+      aa <- rep(arguments[i,2],times=dimA)
+      ee <- rep(arguments[i,3],times=dimA)
+      AA <- metaWebNetAssembly(A,mm,aa,ee,tf)
+      dfA <- data.frame(S=AA$S[(tf-100):tf],L=as.numeric(AA$L[(tf-100):tf]),T=c((tf-100):tf))
+      #dfA [dfA$T %% 10 == 0,]$L 
+      data.frame(m=mm[1],a=aa[1], se=ee[1], S=mean(dfA$S),L=mean(dfA$L),C=mean(dfA$L)/(mean(dfA$S)*mean(dfA$S)))
+  }
+  stopCluster(cl)
+  return(sim)
+}
