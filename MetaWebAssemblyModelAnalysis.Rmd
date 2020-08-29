@@ -36,24 +36,11 @@ source("R/network_fun.r")
 
 ```
 
-# Check the steady state of the model   
+# Check the steady state of the model    
 
 ```{r checkSteadyState, eval=F,echo=F,message=T,warning=T}
 
 source("R/network_fun.r")
-
-#
-# Read data and trim species names to avoid duplicates 
-#
-# dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
-# dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
-# 
-#
-# Select food web 
-#
-# dtot1 <- as.matrix(dtot %>% filter(Network=="Meta") %>% dplyr::select(Prey_name,Predator_name))
-# redl <- graph_from_edgelist(dtot1, directed  = T)
-# Delete cannibalistic 
 
 redl <- meta 
 sum(degree(redl,mode="in")==0) == websTbl$Basal[3]
@@ -61,28 +48,31 @@ sum(degree(redl,mode="in")==0) == websTbl$Basal[3]
 A <- get.adjacency(redl,sparse=F)
 dimA <- dim(A)[1]
 
+set.seed(2312)
 #
 # Testing if 500 time steps is enough to find equilibrium point
 #
 tf <- 2000
-m <- rep(0.05,times=dimA)
-e <- rep(0.2, times=dimA)
-AA <- metaWebNetAssembly(A,m,e,tf)
+m <- rep(0.1,times=dimA)
+e <- rep(0.3, times=dimA)
+se <- rep(0.3, times=dimA)
+AA <- metaWebNetAssembly(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
 AAdf <- tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S)) 
 
+
 tf <- 1500
-AA <- metaWebNetAssembly(A,m,e,tf)
+AA <- metaWebNetAssembly(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,50)
 AAdf1 <- tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S)) 
 
 tf <- 1000
-AA <- metaWebNetAssembly(A,m,e,tf)
+AA <- metaWebNetAssembly(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,50)
 AAdf2 <- tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S)) 
 
 tf <- 500
-AA <- metaWebNetAssembly(A,m,e,tf)
+AA <- metaWebNetAssembly(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,50)
 AAdf3 <- tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S)) 
 
@@ -99,8 +89,50 @@ kde.test(AAdf3[,1:2],AAdf1[,1:2])$pvalue
 kde.test(AAdf3[,1:2],AAdf2[,1:2])$pvalue
 # [1] 0.6778419
 
-AAdf <- bind_rows(AAdf %>% mutate(Sim="2000"), AAdf1 %>% mutate(Sim="1500"), AAdf2 %>% mutate(Sim="1000"), AAdf3 %>% mutate(Sim="500"))
-ggplot(AAdf, aes(S,C,color=Sim))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC))
+AAdfTot <- bind_rows(AAdf %>% mutate(Sim="2000"), AAdf1 %>% mutate(Sim="1500"), AAdf2 %>% mutate(Sim="1000"), AAdf3 %>% mutate(Sim="500")) %>% mutate(model_type="Discrete")
+ggplot(AAdfTot, aes(S,C,color=Sim))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC))
+
+#
+# Testing for the CT model
+#
+tf <- 2000
+m <- rep(0.1,times=dimA)
+e <- rep(0.3, times=dimA)
+se <- rep(0.3, times=dimA)
+AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
+plot_NetAssemblyModel_eqw(AA,100)
+AAdf <- tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S)) 
+tf <- 1500
+AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
+AAdf1 <- tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S)) 
+tf <- 1000
+AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
+AAdf2 <- tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S)) 
+tf <- 500
+AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
+AAdf3 <- tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S)) 
+AAdf4 <- tibble(C=AA$L[2:100]/ (AA$S[2:100])^2 ,S=AA$S[2:100]) %>% mutate(mC = mean(C), mS=mean(S)) 
+
+require(ks)
+kde.test(AAdf3[,1:2],AAdf[,1:2])$pvalue
+#[1] 0.5309769
+kde.test(AAdf3[,1:2],AAdf1[,1:2])$pvalue
+# [1] 0.07517768
+kde.test(AAdf3[,1:2],AAdf2[,1:2])$pvalue
+# [1] 0.331641
+##
+# Testing the first 100 time steps against the last 100 of the '500' simulation
+kde.test(AAdf4[,1:2],AAdf3[,1:2])$pvalue
+# [1] 0.001407754
+
+AAdfTot <- bind_rows(AAdfTot, 
+                     bind_rows(AAdf %>% mutate(Sim="2000"), AAdf1 %>% mutate(Sim="1500"), AAdf2 %>% mutate(Sim="1000"), AAdf3 %>% mutate(Sim="500")) %>% mutate(model_type="Continuous")
+                     )
+ggplot(AAdfTot, aes(S,C,color=Sim))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC)) + facet_wrap( ~ model_type)
+ggsave("Figures/Metaweb_SteadyState_byModel.pdf",width=8,height=5,units="in",dpi=600)
+
+
+
 
 #
 # Testing if there are difference with different m/e 
@@ -147,12 +179,13 @@ ggplot(AAdf %>% filter(Sim=="500"), aes(S,C,color=factor(e)))+ geom_point() + th
 
 ```
 
+
+
+
 # Simulate a grid of parameters to select the best options
 
-* One possible modification is to calculate a bivariate confidence ellipse and check if the desired object is inside it 
-* A method using the t-bidimensional distribution is here https://github.com/tidyverse/ggplot2/blob/master/R/stat-ellipse.R
 
-```{r makeSimulations100000, eval=TRUE,echo=F,message=T,warning=T}
+```{r makeSimulations150000, eval=TRUE,echo=F,message=T,warning=T}
 
 
 redl <- meta 
@@ -166,50 +199,73 @@ dimA <- nrow(A)
 #
 # Use require(lhs)
 # https://cran.r-project.org/web/packages/lhs/vignettes/lhs_basics.html
-# require(GenSA)
-# https://cran.r-project.org/web/packages/GenSA/GenSA.pdf
+#
 # Combine parameters
 
 #    min(m)    max(m)      min(a)    max(a)
 #   0.100000     0.3         0.001     0.5
 
 require(lhs)
-# simMetaWebAssembly <- tibble()
+simMetaWebAssembly <- tibble()
 # simulations with probability of secondary extinction == 1
-# par_ranges <- matrix(c(0.01, 0.3,0.001, 0.5, 1, 1),nrow=3,byrow = TRUE)
-# sim <- sim_metaWebAssembly_lhs(2, 20, par_ranges,A )
-# 
-# simMetaWebAssembly <- bind_rows(simMetaWebAssembly,sim)
-# saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
+#
+# Discrete time
+par_ranges <- matrix(c(0.01, 0.3,0.001, 0.5, 1, 1),nrow=3,byrow = TRUE)
+sim <- sim_metaWebAssembly_lhs(2, 150000, par_ranges,A )
 
+simMetaWebAssembly <- bind_rows(simMetaWebAssembly,sim)
+saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
+
+# simulations with probability of secondary extinction != 1
+#
+# Discrete time
+par_ranges <- matrix(c(0.01, 0.3,0.001, 0.5, 0.1, 0.9),nrow=3,byrow = TRUE)
+sim <- sim_metaWebAssembly_lhs(3, 150000, par_ranges,A) %>% mutate(model_type="Discrete") 
+
+simMetaWebAssembly <- bind_rows(simMetaWebAssembly,sim)
+saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
 
 
 # simulations with probability of secondary extinction != 1
+#
+# Continuous time
 par_ranges <- matrix(c(0.01, 0.3,0.001, 0.5, 0.1, 0.9),nrow=3,byrow = TRUE)
-sim <- sim_metaWebAssembly_lhs(3, 150000, par_ranges,A )
+sim <- sim_metaWebAssembly_lhs(3, 150000, par_ranges,A, 1 ) %>% mutate(model_type="Continuous") 
 
 simMetaWebAssembly <- bind_rows(simMetaWebAssembly,sim)
 saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
 
 # simulations with probability of secondary extinction == 0
+#
+# Discrete time
 par_ranges <- matrix(c(0.01, 0.3,0.001, 0.5, 0, 0),nrow=3,byrow = TRUE)
 sim <- sim_metaWebAssembly_lhs(2,  50000, par_ranges,A )
 
 simMetaWebAssembly <- bind_rows(simMetaWebAssembly,sim)
 saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
 
+# Set the type of models according to probability of secoondary extinction
+#
 #simMetaWebAssembly <- readRDS("Data/simulations_metaWebAssembly.rds")
-simMetaWebAssembly <- simMetaWebAssembly %>% mutate(model = ifelse(se==1, "Fixed", ifelse(se>0, "Prob", "No SecExt") ))
-knitr::kable(simMetaWebAssembly %>% group_by(model) %>% summarise(n=n()))
+simMetaWebAssembly <- simMetaWebAssembly %>% mutate(model = ifelse(se==1, "Fixed", ifelse(se>0, "Prob", "No SecExt") ), model_type=ifelse(is.na(model_type), "Discrete", "Continuous"))
+knitr::kable(simMetaWebAssembly %>% group_by(model,model_type) %>% summarise(n=n()))
 
-ggplot(simMetaWebAssembly, aes(S,C))+ geom_point(size=0.1,alpha=0.5) + theme_bw() + geom_point(data=websTbl, aes(Size,Connectance,color=Network),size=0.3) + coord_cartesian(ylim=c(0,0.1)) + facet_wrap(~model)
+ggplot(simMetaWebAssembly, aes(S,C))+ geom_point(size=0.1,alpha=0.5) + theme_bw() + geom_point(data=websTbl, aes(Size,Connectance,color=Network),size=0.3) + coord_cartesian(ylim=c(0,0.1)) + facet_wrap(model_type ~ model)
 
 ggplot(simMetaWebAssembly, aes(S,L))+ geom_point(size=0.1,alpha=0.5) + theme_bw() + geom_point(data=websTbl, aes(Size,Links,color=Network),size=0.3) + coord_cartesian(ylim=c(0,3000)) + facet_wrap(~model)
 
-ggplot(simMetaWebAssembly %>% mutate(secExt = ifelse(se==1, "Fixed", ifelse(se>0, "Prob", "No SecExt") )), aes(S,L,color=secExt))+ geom_point(size=.1,alpha=0.5) + theme_bw() + geom_point(data=websTbl, aes(Size,Links,color=Network),size=0.4) + coord_cartesian(ylim=c(0,9100)) + scale_color_brewer(palette= "Dark2",name="", labels=c("Fixed Sec.Ext.", "Potter","Meta", "No Sec.Ext.", "Prob. Sec.Ext.","Weddell" ))  
+ggplot(simMetaWebAssembly %>% filter(model_type=="Discrete"), aes(S,C,color=model))+ geom_point(size=.1,alpha=0.5) + theme_bw() + geom_point(data=websTbl, aes(Size,Connectance,color=Network),size=0.4) + coord_cartesian(ylim=c(0,0.1)) + scale_color_brewer(palette= "Dark2",name="")#, labels=c("Fixed Sec.Ext.", "Potter","Meta", "No Sec.Ext.", "Prob. Sec.Ext.","Weddell" ))  
+
+ggplot(simMetaWebAssembly %>% filter(model=="Prob"), aes(S,C,color=model_type))+ geom_point(size=.1,alpha=0.5) + theme_bw() + coord_cartesian(ylim=c(0,0.1)) + scale_color_brewer(palette= "Dark2",name="")#, labels=c("Fixed Sec.Ext.", "Potter","Meta", "No Sec.Ext.", "Prob. Sec.Ext.","Weddell" ))  
+ggsave("Figures/Metaweb_Continuous_Discrete.pdf",width=8,height=5,units="in",dpi=600)
 
 
+ggplot(simMetaWebAssembly %>% filter(model=="Prob"), aes(S,C,color=model_type))+ geom_point(size=.1,alpha=0.5) + theme_bw() + geom_point(data=websTbl, aes(Size,Connectance,color=Network),size=0.4) + coord_cartesian(ylim=c(0,0.1)) + scale_color_brewer(palette= "Dark2",name="")#, labels=c("Fixed Sec.Ext.", "Potter","Meta", "No Sec.Ext.", "Prob. Sec.Ext.","Weddell" ))  
+rm(sim,par_ranges,AAdf,AAdf1,AAdf2,AAdf3,AAdf4,AAdfTot,f)
+save.image()
 ```
+
+* The discrete time and continuous time models give the same results, this is a verification that the models are well implemented and that the timmings of events have no influence on the results. So we keep using the discrete time model.  
 
 ## Make the fit finding the parameters with less distance to empirical networks
 
@@ -221,143 +277,124 @@ ggplot(simMetaWebAssembly %>% mutate(secExt = ifelse(se==1, "Fixed", ifelse(se>0
 #
 # Use this tolerance = tol to display a more detailed plot 
 
-tol <- .01
-sel <- simMetaWebAssembly %>% mutate(alpha=m/a) %>% filter(S>websTbl$Size[1]*(1-tol),S<websTbl$Size[1]*(1+tol), se<0) %>% arrange(S)
-#
-# One option is to fit using the distance to S and C
-#
-sel <- sel %>% mutate(distance = sqrt(((websTbl$Size[1] - S)/websTbl$Size[1])^2 + ((websTbl$Connectance[1] - C )/websTbl$Connectance[1])^2), min_dist = (distance == min(distance))) %>% arrange(distance)
-sel %>% filter(min_dist)
-#
-# Other option is to fit using the distance to S and L
-#
-sel <- sel %>% mutate(distance = sqrt(((websTbl$Size[1] - S)/websTbl$Size[1])^2 + ((websTbl$Links[1] - L )/websTbl$Links[1])^2), min_dist = (distance == min(distance))) %>% arrange(distance)
-sel %>% filter(min_dist)
+tol <- .1
+sel <- simMetaWebAssembly %>% mutate(alpha=m/a) %>% filter(S>websTbl$Size[1]*(1-tol),S<websTbl$Size[1]*(1+tol), se>0 & se<1) %>% arrange(S)
+sel <- bind_rows(sel, simMetaWebAssembly %>% mutate(alpha=m/a) %>% filter(S>websTbl$Size[1]*(1-tol),S<websTbl$Size[1]*(1+tol), se==0) %>% arrange(S))
+sel <- bind_rows(sel, simMetaWebAssembly %>% mutate(alpha=m/a) %>% filter(S>websTbl$Size[1]*(1-tol),S<websTbl$Size[1]*(1+tol), se==1) %>% arrange(S))
+# ggplot(sel, aes(S,C, color=model)) + geom_point(alpha=0.5,size=0.1) + theme_bw() + geom_point(data=websTbl %>% filter(Network=="local"), aes(Size,Connectance,color=Network))  + scale_color_viridis_d()
 
-ggplot(sel, aes(S,C, color=min_dist)) + geom_point(alpha=0.5) + theme_bw() + geom_point(data=websTbl %>% filter(Network=="local"), aes(Size,Connectance,color=Network))  
-fittedMetaWeb <- bind_rows(fittedMetaWeb, sel %>% filter(min_dist) %>% mutate(Network="Potter",fit_type="S-L se<1"))
-# Simulations
-#       m     a        S        L         C    alpha
-# 4 0.019  0.08 108.0955 249.9427 0.02139875 0.2375
-# 7 0.023 0.096 109.0323 247.8472 0.02086496 0.2395833
-# 10 0.023 0.094 109.1362 247.9425 0.02079193 0.2446809
-#           m         a        S        L         C     alpha    distance min_dist
-# 1 0.1085565 0.3033321 93.42574 323.0396 0.0370103 0.3578801 0.007572439     TRUE
-# 1 0.07614384 0.2346869 93.17822 324.6337 0.0373908 0.3244487 0.00222325     TRUE  Potter
-simMetaWebAssembly %>% transmute(min(m),max(m),min(a),max(a)) %>% distinct()
+#
+# Fit using the distance to S and C
+#
+sel <- sel %>% group_by(model) %>% mutate(distance = sqrt(((websTbl$Size[1] - S)/websTbl$Size[1])^2 +  ((websTbl$Connectance[1] - C )/websTbl$Connectance[1])^2), min_dist = (distance == min(distance))) %>% arrange(distance)
+sel %>% group_by(model) %>% filter(min_dist)
+
+fittedMetaWeb <- sel %>% filter(min_dist) %>% mutate(Network="Potter",fit_type="S-C")
+
+ggplot(sel, aes(S,C, color=min_dist)) + geom_point(alpha=0.5) + theme_bw() + geom_point(data=websTbl %>% filter(Network=="local"), aes(Size,Connectance,color=Network)) + facet_wrap(~model)  + scale_color_viridis_d(name="",labels=c("Simulations", "Empirical (Potter)","Fit" ))
+ggsave("Figures/Metaweb_fit_Potter_byModel.pdf",width=8,height=5,units="in",dpi=600)
 
 # Weddell Sea
 #
-tol <- .2
-sel <- simMetaWebAssembly %>% mutate(alpha=m/a) %>% filter(S>websTbl$Size[2]*(1-tol),S<websTbl$Size[2]*(1+tol),se<1) %>% arrange(S)
+tol <- .1
+sel <- simMetaWebAssembly %>% mutate(alpha=m/a) %>% filter(S>websTbl$Size[2]*(1-tol),S<websTbl$Size[2]*(1+tol), se>0 & se<1) %>% arrange(S)
+sel <- bind_rows(sel, simMetaWebAssembly %>% mutate(alpha=m/a) %>% filter(S>websTbl$Size[2]*(1-tol),S<websTbl$Size[2]*(1+tol), se==0) %>% arrange(S))
+sel <- bind_rows(sel, simMetaWebAssembly %>% mutate(alpha=m/a) %>% filter(S>websTbl$Size[2]*(1-tol),S<websTbl$Size[2]*(1+tol), se==1) %>% arrange(S))
+
+# Restricting L by tol=10% result in no records selected
+#
+sel %>% filter(L>websTbl$Links[2]*(1-tol),L<websTbl$Links[2]*(1+tol), se>0 & se<1) %>% arrange(S)
 
 #
-# One option is to fit using the distance to S and C
+# Fit using the distance to S and C
 #
-sel <- sel %>% mutate(distance = sqrt(((websTbl$Size[2] - S)/websTbl$Size[2])^2 + ((websTbl$Connectance[2] - C )/websTbl$Connectance[2])^2), min_dist = (distance == min(distance)))
+sel <- sel  %>% group_by(model) %>% mutate(distance = sqrt(((websTbl$Size[2] - S)/websTbl$Size[2])^2 + ((websTbl$Connectance[2] - C )/websTbl$Connectance[2])^2), min_dist = (distance == min(distance))) %>% arrange(distance)
 sel %>% filter(min_dist)
+fittedMetaWeb <- bind_rows(fittedMetaWeb, sel %>% filter(min_dist) %>% mutate(Network="Weddell",fit_type="S-C"))
 
-#
-# Other option is to fit using the distance to S and L
-#
-sel <- sel %>% mutate(distance = sqrt(((websTbl$Size[2] - S)/websTbl$Size[2])^2 + ((websTbl$Links[2] - L )/websTbl$Links[2])^2), min_dist = (distance == min(distance))) %>% arrange(distance)
-sel %>% filter(min_dist)
+ggplot(sel, aes(S,C, color=min_dist)) + geom_point(alpha=0.5) + theme_bw() + geom_point(data=websTbl %>% filter(Network=="Regional"), aes(Size,Connectance,color=Network)) + facet_wrap(~model)  + scale_color_viridis_d(name="",labels=c("Simulations", "Empirical (Weddell)","Fit" ))
+ggsave("Figures/Metaweb_fit_Weddell_byModel.pdf",width=8,height=5,units="in",dpi=600)
 
 
-fittedMetaWeb <- bind_rows(fittedMetaWeb, sel %>% filter(min_dist) %>% mutate(Network="Weddell",fit_type="S-L se<1"))
 
-ggplot(sel, aes(S,C, color=min_dist)) + geom_point(alpha=0.5) + theme_bw() + geom_point(data=websTbl %>% filter(Network=="Regional"), aes(Size,Connectance,color=Network))  
-ggplot(sel, aes(S,L, color=min_dist)) + geom_point(alpha=0.5) + theme_bw() + geom_point(data=websTbl %>% filter(Network=="Regional"), aes(Size,Links,color=Network)) + scale_color_discrete(name="",
-                         labels=c("Simulations", "Empirical (Weddell)","Fit" ))  
-
-# Simulations
-#       m     a        S        L         C    alpha
-# 4 0.022 0.021 385.7151 2143.468 0.0144348  1.047619
-# 7 0.044 0.041 381.4585 2150.424 0.01477366 1.073171
-# 10 0.084 0.076 380.7409 2146.395 0.01480693 1.105263
-#           m          a        S        L          C    alpha distance min_dist
-# 1 0.1052653 0.09006522 369.3861 2166.782 0.01588013 1.168768   0.2043     TRUE
-# 1 0.01695172 0.014541 366.8317 2061.772 0.0153217 1.165787 0.1779407     TRUE
 knitr::kable(fittedMetaWeb %>% dplyr::select( Network,  everything(), -min_dist) %>% arrange(Network))
 
-rm(X,dfA,AAdf,AAdf1,AAdf2,AAdf3,arguments,sim,sel,g3,gg,ravg)
+rm(X,dfA,AAdf,AAdf1,AAdf2,AAdf3,arguments,sim,sel,g3,gg,ravg,sel)
 save.image()
 
 ```
 
-# Make simulations with fitted parameters with S-L method
+
+* Fit of Metaweb model by variant usin C and S
+
+
+|Network |         m|         a|         S|         L|         C|        se|model     |     alpha|  distance|fit_type |
+|:-------|---------:|---------:|---------:|---------:|---------:|---------:|:---------|---------:|---------:|:--------|
+|Potter  | 0.1089198| 0.3126573|  93.00990|  325.8119| 0.0376624| 0.4051581|Prob      | 0.3483679| 0.0022872|S-C      |
+|Potter  | 0.0358264| 0.1225775|  92.88119|  323.3861| 0.0374857| 1.0000000|Fixed     | 0.2922756| 0.0027351|S-C      |
+|Potter  | 0.0188347| 0.0825856|  93.39604|  328.4158| 0.0376502| 0.0000000|No SecExt | 0.2280627| 0.0046872|S-C      |
+|Weddell | 0.0124007| 0.0106208| 419.51485| 2415.0990| 0.0137227| 0.0000000|No SecExt | 1.1675867| 0.3691503|S-C      |
+|Weddell | 0.0181701| 0.0120232| 453.00990| 2963.9604| 0.0144430| 1.0000000|Fixed     | 1.5112539| 0.4406999|S-C      |
+|Weddell | 0.0208599| 0.0122194| 466.19802| 3147.9604| 0.0144840| 0.3841983|Prob      | 1.7071073| 0.4484365|S-C      |
+
+
+*  Using number of species, number of links the results are similar (Deleted from the code)
+
+|Network |         m|         a|         S|         L|         C|        se|model     |     alpha|  distance|fit_type |
+|:-------|---------:|---------:|---------:|---------:|---------:|---------:|:---------|---------:|---------:|:--------|
+|Potter  | 0.2084439| 0.4719407|  92.83168|  325.3168| 0.0377498| 0.8194494|Prob      | 0.4416740| 0.0020557|S-L      |
+|Potter  | 0.0761438| 0.2346869|  93.17822|  324.6337| 0.0373908| 1.0000000|Fixed     | 0.3244487| 0.0022233|S-L      |
+|Potter  | 0.0188347| 0.0825856|  93.39604|  328.4158| 0.0376502| 0.0000000|No SecExt | 0.2280627| 0.0113402|S-L      |
+|Weddell | 0.0200153| 0.0154432| 399.28713| 2357.1980| 0.0147851| 0.0000000|No SecExt | 1.2960572| 0.2500339|S-L      |
+|Weddell | 0.0248818| 0.0193673| 398.34653| 2374.5941| 0.0149647| 0.7391516|Prob      | 1.2847377| 0.2593474|S-L      |
+|Weddell | 0.0370119| 0.0274324| 397.75248| 2444.2772| 0.0154499| 1.0000000|Fixed     | 1.3492030| 0.2944393|S-L      |
+
+
+# Make simulations with fitted parameters with S-C method
+
+* As connectivity is determines most of other network properties we fit by connectivity and number of species
 
 ```{r fitMetaWebSims, eval=FALSE,echo=F,message=T,warning=T}
 
-fittedMetaWeb <- fittedMetaWeb %>% arrange(Network,fit_type)
+# Model with probability of secundary extinction se>0 & se<1
+#
+# Potter
+#
 tf <- 500
-set.seed(1110)
-mm <- rep(fittedMetaWeb$m[3],nrow(A))
-aa <- rep(fittedMetaWeb$a[3],nrow(A))
-se <- rep(1,nrow(A))
+set.seed(1110) 
+f <- fittedMetaWeb %>% filter(Network=="Potter")
+mm <- rep(f$m[1],nrow(A))
+aa <- rep(f$a[1],nrow(A))
+se <- rep(f$se[1],nrow(A))
 AA <- metaWebNetAssembly(A,mm,aa,se,tf)
 dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))
 c(mean(dfA$S),mean(dfA$L),mean(dfA$L)/(mean(dfA$S)*mean(dfA$S)))
-#  98.74418605 325.01993355   0.03333396
-#  96.3887043 335.3953488   0.0360998
-#  94.51827243 314.86710963   0.03524486
-#  93.1661130 295.3023256   0.0340213
-#  96.05647841 318.84053156   0.03455574
-#  95.39867110 309.66445183   0.03402567
-#  96.18272425 314.94352159   0.03404384
-#  96.80066445 314.12292359   0.03352301
-#  100.98338870 329.87043189   0.03234771
-#  115.76079734 364.94352159   0.02723345
 
 # Running averages
 ravg <- tibble()
-ravg <- bind_rows( ravg, plot_NetAssemblyModel_eqw(AA,50,"Figures/PotterCove_Meta-webSim_avg.png") %>% mutate(Network = "Potter"))
+ravg <- bind_rows( ravg, plot_NetAssemblyModel_eqw(AA,50,"Figures/PotterCove_Meta-webSim_avg_Prob.pdf",websTbl[1,]) %>% mutate(Network = "Potter"))
 
 # Time series plot
-plot_NetAssemblyModel(AA,300,"Figures/PotterCove_Meta-webSim_ts.png")
+plot_NetAssemblyModel(AA,300,"Figures/PotterCove_Meta-webSim_ts_Prob.pdf",websTbl[1,])
 
+#
+# Weddell 
+#
+
+f <- fittedMetaWeb %>% filter(Network=="Weddell")
+
+# Modelo Prob
+# 
 tf <- 500
 set.seed(1110)
-mm <- rep(fittedMetaWeb$m[4],nrow(A))
-aa <- rep(fittedMetaWeb$a[4],nrow(A))
-se <- rep(fittedMetaWeb$se[4],nrow(A))
+mm <- rep(f$m[3],nrow(A))
+aa <- rep(f$a[3],nrow(A))
+se <- rep(f$se[3],nrow(A))
 AA <- metaWebNetAssembly(A,mm,aa,se,tf)
 dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))
 c(mean(dfA$S),mean(dfA$L),mean(dfA$L)/(mean(dfA$S)*mean(dfA$S)))
-ravg <- bind_rows( ravg, plot_NetAssemblyModel_eqw(AA,50,"Figures/PotterCove_Meta-webSim_avg_se.png") %>% mutate(Network = "PotterSe"))
-plot_NetAssemblyModel(AA,300,"Figures/PotterCove_Meta-webSim_ts_se.png")
-
-# Weddell 
-#
-mm <- rep(fittedMetaWeb$m[7],nrow(A))
-aa <- rep(fittedMetaWeb$a[7],nrow(A))
-se <- rep(fittedMetaWeb$se[7],nrow(A))
-
-AA <- metaWebNetAssembly(A,mm,aa,se,tf)
-
-dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))
-c(mean(dfA$S),mean(dfA$L),mean(dfA$L)/(mean(dfA$S)*mean(dfA$S)))
-# [1] 3.505017e+02 2.248110e+03 1.829942e-02
-ravg <- bind_rows( ravg, plot_NetAssemblyModel_eqw(AA,50) %>% mutate(Network = "Weddell"))
-plot_NetAssemblyModel(AA,300)
-plot_NetAssemblyModel_eqw(AA,50,"Figures/Weddell_Meta-webSim_avg.png")
-plot_NetAssemblyModel(AA,300,"Figures/Weddell_Meta-webSim_ts.png")
-
-# Weddell 
-#
-mm <- rep(fittedMetaWeb$m[8],nrow(A))
-aa <- rep(fittedMetaWeb$a[8],nrow(A))
-se <- rep(fittedMetaWeb$se[8],nrow(A))
-
-AA <- metaWebNetAssembly(A,mm,aa,se,tf)
-
-dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))
-c(mean(dfA$S),mean(dfA$L),mean(dfA$L)/(mean(dfA$S)*mean(dfA$S)))
-# [1] 3.505017e+02 2.248110e+03 1.829942e-02
-ravg <- bind_rows( ravg, plot_NetAssemblyModel_eqw(AA,50) %>% mutate(Network = "WeddellSe"))
-plot_NetAssemblyModel(AA,300)
-plot_NetAssemblyModel_eqw(AA,50,"Figures/Weddell_Meta-webSim_avg_se.png")
-plot_NetAssemblyModel(AA,300,"Figures/Weddell_Meta-webSim_ts_se.png")
+ravg <- bind_rows( ravg, plot_NetAssemblyModel_eqw(AA,50,"Figures/Weddell_Meta-webSim_avg_Prob.pdf",websTbl[2,]) %>% mutate(Network = "Weddell"))
+plot_NetAssemblyModel(AA,300,"Figures/Weddell_Meta-webSim_ts_Prob.pdf",websTbl[2,])
 
 
 
@@ -365,7 +402,7 @@ plot_NetAssemblyModel(AA,300,"Figures/Weddell_Meta-webSim_ts_se.png")
 rm(X,dfA,AAdf,AAdf1,AAdf2,AAdf3,arguments,sim,ravg,dfA,dtot,dtot1,cl,sel,redl,e,ee,ext,aa,m,mig,mm,se,colTL,cn,colnet)
 save.image()
 
-# Plot of five simulations 
+  # Plot of five simulations 
 #
 gg <- plot_NetAssemblyModel(AA,100)
 
@@ -381,6 +418,8 @@ save_plot("Figures/Weddell_Meta-webSim_SC.png",g3,base_width=8,base_height=5,dpi
 
 
 # Local web (Potter Cove) compared to  metaWeb assembly model
+
+* Ideas to compare is to select the simulations with the same C or Same S ?????
 
 ```{r PotterGlobalMetaWebAssembly, eval=F,echo=F,message=T,warning=T}
 

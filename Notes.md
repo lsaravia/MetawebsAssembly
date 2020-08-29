@@ -1,6 +1,15 @@
 # From Local to regional and continental food web structure  
 
 
+### Migration/dispersal
+
+@RyserRemo2019
+
+Based on empirical observations (e.g. [35]) and previous theoretical frameworks (e.g. [4,12,34,42]), we assume that the maximum dispersal distance of animal species increases with their body mass. As plants are passive dispersers, we model their maximum dispersal distance as random and body mass independent. We model emigration rates as a function of each species’ per capita net growth rate, which is summarizing local conditions such as resource availability, predation pressure, and inter- and intraspecific competition [43]
+
+
+
+
 Hypothesis: 
 1) food-webs have evolutionary, assembly and dynamical constraints that shape their structure
 2) 

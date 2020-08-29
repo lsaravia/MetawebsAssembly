@@ -39,21 +39,6 @@ plot_modules_TL <- function(redl,modulos)
   
 }
 
-# Calc connectivity clustering coeficient and path length 
-#
-#
-calc_topological_indices <- function(red.e)
-{
-  size.e <- vcount(red.e)
-  links.e <- ecount(red.e)
-  link.den <- links.e/size.e
-  conn.e <- links.e/size.e^2
-  cha.path.e <- average.path.length(red.e)
-  clus.coef.e <- transitivity(red.e, type = "global") 
-  #degree.e <- degree(red.e)
-  return(data.frame(Size=size.e,Links=links.e, LD=link.den,Connectance=conn.e,PathLength=cha.path.e,Clustering=clus.coef.e))
-}
-
 #' Calculate motif counts for observed network and CI for erdos-renyi random networks and Z-scores 
 #'
 #' @param red igraph network object
@@ -210,26 +195,29 @@ calc_incoherence_z <- function(g,ti=NULL,nsim=1000) {
     redes.r <- lapply(1:nsim, function (x) {
         e <- erdos.renyi.game(t$Size, t$Links, type="gnm",directed = TRUE)
         basal <- length(V(e)[degree(e,mode="in")==0])
-        while(components(e)$no>1 | basal==0){
-          e <- erdos.renyi.game(t$Size, t$Links, type="gnm",directed = TRUE)
-          basal <- length(V(e)[degree(e,mode="in")==0])
-        }
+        # while(components(e)$no>1 | basal==0){
+        #   e <- erdos.renyi.game(t$Size, t$Links, type="gnm",directed = TRUE)
+        #   basal <- length(V(e)[degree(e,mode="in")==0])
+        # }
       return(e) }
     )
     
     ind <- data.frame()
-    require(doParallel)
-    cn <-detectCores()
-    # #  cl <- makeCluster(cn,outfile="foreach.log") # Logfile to debug 
-    cl <- makeCluster(cn)
-    registerDoParallel(cl)
+    
+    # require(doParallel)
+    # cn <-detectCores()
+    # # #  cl <- makeCluster(cn,outfile="foreach.log") # Logfile to debug 
+    # cl <- makeCluster(cn)
+    # registerDoParallel(cl)
+    require(future.apply)
+    plan(multiprocess)
     
     ind <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE,.packages='igraph',.export = 'calc_incoherence') %do% 
     {
       m<-calc_incoherence(redes.r[[i]])
       data.frame(Q=m$Q,mTI=m$mTI)
     }
-    stopCluster(cl)
+    #stopCluster(cl)
     
     qQ <- quantile(ind$Q,c(0.005,0.995))
     qTI <- quantile(ind$mTI,c(0.005,0.995))
@@ -241,6 +229,8 @@ calc_incoherence_z <- function(g,ti=NULL,nsim=1000) {
     zQ <-  (m$Q- rndQ)/sd(ind$Q)
     zTI <- (m$mTI - rndTI)/sd(ind$mTI) # the same as sd(ind$mTI)
     #
+    plan(sequential)
+    
     return(list(su=data_frame(rndQ=rndQ,rndTI=rndTI,Qlow=qQ[1],Qhigh=qQ[2],
                       TIlow=qTI[1],TIhigh=qTI[2],zQ=zQ,zTI=zTI),sim=ind))         
     
@@ -616,16 +606,15 @@ curve_ball<-function(g){
 #'
 #' @examples
 
-getTopoRolesTLdegree <- function(netFrame,netName,deadNodes,topoFrame,topoType=NULL){
+getTopoRolesTLdegree <- function(redl,netName,topoFrame,deadNodes="",topoType=NULL){
   # 
   # Igraph object from dataframe
   #
-  dtot1 <- as.matrix(netFrame %>% filter(Network==netName) %>% dplyr::select(Prey_name,Predator_name))
-  redl <- graph_from_edgelist(dtot1, directed  = T)
-  redl <- simplify(redl)
-  
-  require(NetIndices)
-  TL<-TrophInd(get.adjacency(redl,sparse=F),Dead=deadNodes)
+  require(NetIndices)  
+  if(deadNodes[1]=="")
+    TL<-TrophInd(get.adjacency(redl,sparse=F))
+  else
+    TL<-TrophInd(get.adjacency(redl,sparse=F),Dead=deadNodes)
 
   if(!is.null(topoType)){
     topoFrame %>% filter(type==topoType,Network==netName) %>% rowwise() %>% mutate( preys=degree(redl,node,mode=c("in")), predators= degree(redl,node,mode=c("out")), trophLevel=TL[node,1])
@@ -644,7 +633,7 @@ getTopoRolesTLdegree <- function(netFrame,netName,deadNodes,topoFrame,topoType=N
 #' @export
 #'
 #' @examples
-plot_NetAssemblyModel <- function(AA,timeW,fname=NULL){
+plot_NetAssemblyModel <- function(AA,timeW,fname=NULL,emp=NULL){
   require(viridis)
   colnet <- viridis(3)
   
@@ -663,8 +652,8 @@ plot_NetAssemblyModel <- function(AA,timeW,fname=NULL){
     return(list(gS=gS,gL=gL,gC=gC))
   } else {
     require(cowplot)
-    g1 <- ggplot(dfA, aes(x=T,y=S)) + geom_line() + theme_bw() + geom_hline(yintercept = mean(dfA$S),linetype=3)
-    g2 <- ggplot(dfA, aes(x=T,y=L)) + geom_line() + theme_bw() + ylab("L") + geom_hline(yintercept = mean(dfA$L),linetype=3)
+    g1 <- ggplot(dfA, aes(x=T,y=S)) + geom_line(colour=colnet[1]) + theme_bw() + geom_hline(yintercept = mean(dfA$S),linetype=3) + geom_hline(yintercept = mean(emp$Size),linetype=2)
+    g2 <- ggplot(dfA, aes(x=T,y=C)) + geom_line(colour=colnet[3]) + theme_bw() + ylab("C") + geom_hline(yintercept = mean(dfA$C),linetype=3) + geom_hline(yintercept = mean(emp$Connectance),linetype=2)
     g3 <- plot_grid(g1,g2,labels = c("A","B"),align = "h")
     save_plot(fname,g3,base_width=8,base_height=5,dpi=600)
   }
@@ -676,26 +665,27 @@ plot_NetAssemblyModel <- function(AA,timeW,fname=NULL){
 #' @param AA output of a net assembly model
 #' @param timeW time window used
 #' @param fname file name to save the plot 
+#' @param emp data.frame with empirical values of S an C
 #'
 #' @return
 #' @export
 #'
 #' @examples
-plot_NetAssemblyModel_eqw <- function(AA,timeW,fname=NULL){
+plot_NetAssemblyModel_eqw <- function(AA,timeW,fname=NULL,emp=NULL){
 
-  df <- data.frame(S=AA$S,L=as.numeric(AA$L),T=c(1:tf))
+  df <- data.frame(S=AA$S,L=as.numeric(AA$L),T=c(1:tf)) %>% mutate(C=L/(S*S))
   grandS <- mean(df$S[timeW:nrow(df)])
-  grandL <- mean(df$L[timeW:nrow(df)])
+  grandC <- mean(df$C[timeW:nrow(df)])
   
   df$gr <- rep(1:(nrow(df)/timeW), each = timeW)
-  df <- df %>% group_by(gr) %>% summarise(mS=mean(S),sdS=sd(S), mL=mean(L), sdL=sd(L),time=max(T))
+  df <- df %>% filter(!is.nan(C)) %>% group_by(gr) %>% summarise(mS=mean(S),sdS=sd(S), mL=mean(L), sdL=sd(L),time=max(T),mC=mean(C),sdC=sd(C))
   if(is.null(fname)){
     print(ggplot(df,aes(y=mS,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mS-sdS,ymax=mS+sdS)) + scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandS,linetype=3 ))
-    print(ggplot(df,aes(y=mL,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mL-sdL,ymax=mL+sdL))+ scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandL,linetype=3 ))
+    print(ggplot(df,aes(y=mC,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mC-sdC,ymax=mC+sdC))+ scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandC,linetype=3 ))
   } else {
     require(cowplot)
-    g1 <- ggplot(df,aes(y=mS,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mS-sdS,ymax=mS+sdS)) + scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandS,linetype=3 )
-    g2 <- ggplot(df,aes(y=mL,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mL-sdL,ymax=mL+sdL))+ scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandL,linetype=3 )
+    g1 <- ggplot(df,aes(y=mS,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mS-sdS,ymax=mS+sdS)) + scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandS,linetype=3 ) + geom_hline(yintercept =emp$Size,linetype=2 )
+    g2 <- ggplot(df,aes(y=mC,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mC-sdC,ymax=mC+sdC))+ scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandC,linetype=3 ) + geom_hline(yintercept =emp$Connectance,linetype=2 )
     g3 <- plot_grid(g1,g2,labels = c("A","B"),align = "h")
     save_plot(fname,g3,base_width=8,base_height=5,dpi=600)
   }
@@ -967,7 +957,10 @@ incremental_topoRoles <- function(gr,name)
       
     #
     # Calc topological roles 100 simulations
-    #
+    #  
+    message(paste("\n calc_topological_roles 100-", name))
+
+    
     tR1 <- calc_topological_roles(gr,100)
     tR  <- tR1 %>% group_by(node) %>% summarize(wtmLowCI=quantile(within_module_degree,0.005,na.rm=TRUE),
                                                 wtmHiCI=quantile(within_module_degree,0.995,na.rm=TRUE),
@@ -976,7 +969,8 @@ incremental_topoRoles <- function(gr,name)
                                                 within_module_degree=mean(within_module_degree,na.rm=TRUE),
                                                 among_module_conn=mean(among_module_conn,na.rm=TRUE))
     
-    tR1 <- bind_rows(tR1, calc_topological_roles(redl,10))
+    message(paste("\n calc_topological_roles 10-", name))
+    tR1 <- bind_rows(tR1, calc_topological_roles(gr,10))
 
     tR2 <-   tR1 %>% group_by(node) %>% summarize(wtmLowCI=quantile(within_module_degree,0.005,na.rm=TRUE),
                                                   wtmHiCI=quantile(within_module_degree,0.995,na.rm=TRUE),
@@ -1004,30 +998,39 @@ incremental_topoRoles <- function(gr,name)
 
 
 compare_with_ER <- function(redl, network_name,nsims=1000,rnd_seed=123){
+  
+  message(paste("\n calc_topological_indices -", network_name))
   #
-  # Run modularity 
+  # calc topological indices  
   #
   set.seed(rnd_seed)
   modulos<-cluster_spinglass(redl)
   websTbl <- multiweb::calc_topological_indices(redl)  %>% mutate(Network=network_name,Groups=length(modulos$csize),Modularity=modulos$modularity)
-  
+
+  message(paste("\ncalc_modularity_random -", network_name))
   #
   # Compare with random networks
   #
   tbl <- data.frame()
   tbl <- calc_modularity_random(redl,nsims)
-  #saveRDS(tbl,"tbl.rds")
-  #tbl <- readRDS("tbl.rds")
+  
   websTbl <- websTbl %>% bind_cols(tbl$su)
   
   sim <- tbl$sim
-
+  
+  #
+  # Modularity z-score
+  #
+  websTbl$zMO[1] <- with(websTbl[1,], (Modularity - rndMO)/sd(sim$modularity))
+  
+  message(paste("\n TrophInd -", network_name))
   #
   # Calculate Trophic Position
   #
   require(NetIndices)
   trophl<-TrophInd(get.adjacency(redl,sparse=F))
   
+  message(paste("\n calc_incoherence -", network_name))
   #
   # Calc incoherence
   #
@@ -1036,9 +1039,11 @@ compare_with_ER <- function(redl, network_name,nsims=1000,rnd_seed=123){
   websTbl$rQ[1] <- q$rQ  # ratio of Q/eQ expected coherence under null -  Significant coherence rQ< 1, Significant incoherence rQ>1
   websTbl$mTI[1] <- q$mTI # mean trophic level 
   websTbl$rTI[1] <- q$rTI   # ratio of mTI/eTI expected under null 
-  
-  # Calc incoherence z-score based in random E-R networks with the condition of at least one basal node
+
+    
+  message(paste("\n calc_incoherence_z -", network_name))
   #
+  # Calc incoherence z-score based in random E-R networks with the condition of at least one basal node
   #
   tbl <- calc_incoherence_z(redl,trophl,nsims)
   zq <- tbl$su
@@ -1050,11 +1055,17 @@ compare_with_ER <- function(redl, network_name,nsims=1000,rnd_seed=123){
   websTbl$TIhigh[1] <- zq$TIhigh
   websTbl$zQ[1] <- zq$zQ
   websTbl$zTI[1] <- zq$zTI
-  websTbl$zMO[1] <- with(websTbl[1,], (Modularity - rndMO)/sd(sim$modularity))
   
   sim <- sim %>% bind_cols(tbl$sim) %>% mutate(Network=network_name) 
   
+  message(paste("\n calc_QSS -", network_name))
   
+  websTbl <- bind_cols(websTbl, calc_QSS(redl,10000,48))
+  
+  message(paste("\n calc_QSS1 -", network_name))
+  
+  websTbl <- bind_cols(websTbl, calc_QSS(redl,10000,48,negative=-1,positive=1))
+    
   return(list(su=websTbl,sim=sim))
 }
 
@@ -1065,7 +1076,7 @@ approximate_incident_edges <- function(g, v){
 
 
 
-sim_metaWebAssembly_lhs <- function(no_parms,no_sims,par_ranges,A){
+sim_metaWebAssembly_lhs <- function(no_parms,no_sims,par_ranges,A,model_type=0){
 
   stopifnot( no_parms %in% c(2,3))
   dimA <- nrow(A)
@@ -1096,11 +1107,58 @@ sim_metaWebAssembly_lhs <- function(no_parms,no_sims,par_ranges,A){
       mm <- rep(arguments[i,1],times=dimA)
       aa <- rep(arguments[i,2],times=dimA)
       ee <- rep(arguments[i,3],times=dimA)
-      AA <- metaWebNetAssembly(A,mm,aa,ee,tf)
+      
+      if( model_type == 0 ) {
+        AA <- metaWebNetAssembly(A,mm,aa,ee,tf)
+      } else { 
+        AA <- metaWebNetAssemblyCT(A,mm,aa,ee,tf)
+      }
+      
       dfA <- data.frame(S=AA$S[(tf-100):tf],L=as.numeric(AA$L[(tf-100):tf]),T=c((tf-100):tf))
       #dfA [dfA$T %% 10 == 0,]$L 
       data.frame(m=mm[1],a=aa[1], se=ee[1], S=mean(dfA$S),L=mean(dfA$L),C=mean(dfA$L)/(mean(dfA$S)*mean(dfA$S)))
   }
   stopCluster(cl)
   return(sim)
+}
+
+
+#' Return the names of the basal species: nodes with no incoming links 
+#'
+#' @param g igraph network
+#'
+#' @return the basal species 
+#' @export
+#'
+#' @examples
+basal_species <- function(g){
+  deg <- degree(g, mode="in") # calculate the in-degree: the number of preys
+  
+  V(g)$indegree <-  deg
+  
+  basal <- V(g)[indegree==0]
+  
+  V(g)[basal]$name
+  
+}
+
+
+calc_compare_motif <- function(redl, network_name,nsims=1000,rnd_seed=123){
+  #
+  # Motif
+  #
+  mot <- triad_census(redl)
+  
+  # mot[4] = Exploitative competition
+  # mot[5] = Apparent competition
+  # mot[6] = Tri-trophic chain
+  # mot[9] = Omnivory
+  # mot[10] = Loop 
+  
+  freq_all_Motif <- data.frame(Network=network_name,t(mot))
+  
+  set.seed(rnd_seed)
+  motif_ER <- calc_motif_random(redl,nsims) %>% mutate(Network=network_name)
+  
+  return(list(moter=motif_ER,fallm=freq_all_Motif))
 }

@@ -176,136 +176,64 @@ Table: Motif counts for the empirical networks and 99% confidence intervals base
 Type      Network         Tropho-species            Preys   Predators      Trophic 
                                                                              Level 
 --------- ---------- ---------------------------- ------- ----------- ------------
- hubcon    Potter       Notothenia coriiceps       49         0          2.86    
+  hubcon    Potter      Notothenia coriiceps        49         0          2.86    
 
- hubcon   Meta-web          Euphausiacea            0        115          1      
+  hubcon   Weddell       Ophiosparte gigas          280       21          3.43    
 
- hubcon   Meta-web   Euphausia crystallorophias    23        59          2.12    
+  hubcon   Weddell     Eunoe spica spicoides        185       64          3.94    
 
- hubcon   Meta-web      Electrona antarctica       109       25          2.56    
+  hubcon   Meta-web      Ophiosparte gigas          301       21          3.35    
 
- hubcon   Meta-web     Gymnoscopelus nicholsi      73        24          2.63    
+  hubcon   Meta-web      Eurythenes gryllus         184       64          3.45    
 
- hubcon   Meta-web     Protomyctophum bolini       71        20          2.66    
+  modhub   Weddell         Phytodetritus             0        226          1      
 
- hubcon   Meta-web       Pygoscelis adeliae        75         4          3.04    
+  modhub   Weddell       Harmothoe spinosa          148       64          3.72    
 
- hubcon   Meta-web      Aptenodytes forsteri       68         0          3.07    
+  modhub   Weddell          Eunoe spica             146       68          4.04    
 
- hubcon   Weddell           Zooplankton             0        57           1      
+  modhub   Meta-web        Phytodetritus             0        226          1      
 
- hubcon   Weddell               Fish                0        57           1      
+  modhub   Meta-web          Oncaea sp.              0        120          1      
 
- hubcon   Weddell           Euphausiacea            0        41           1      
+  modhub   Meta-web           Detritus               0        182          1      
 
- hubcon   Weddell        Euphausia superba          9        41           2      
+  modhub   Meta-web      Calanoides acutus          101       194         2.19    
 
- modhub   Meta-web            Detritus              0        258          1      
+  modhub   Meta-web         Oithona sp.              6        121         2.25    
 
- modhub   Meta-web           Oncaea sp.             0        138          1      
+  modhub   Meta-web      Metridia gerlachei         116       196         2.33    
 
- modhub   Meta-web        Bacillariophyta           0        180          1      
+  modhub   Meta-web    Pelagobia longicirrata       92        147         2.36    
 
- modhub   Meta-web           Polychaeta             0        75           1      
+  modhub   Meta-web      Euphausia superba          115       199         2.38    
 
- modhub   Meta-web            Porifera              0        45           1      
+  modhub   Meta-web       Eukrohnia hamata          41        138         2.63    
 
- modhub   Meta-web          Oithona sp.             0        138          1      
+  modhub   Meta-web    Pseudosagitta gazellae       41        88          2.63    
 
- modhub   Meta-web           Crustacea              0        93           1      
+  modhub   Meta-web          Salpa sp.              42        118         2.64    
 
- modhub   Meta-web              Fish                0        57           1      
+  modhub   Meta-web     Electrona antarctica        103       60          2.66    
 
- modhub   Meta-web           Amphipoda              0        63           1      
+  modhub   Meta-web    Trematomus bernacchii        170       29          3.12    
 
- modhub   Meta-web         Phytoplankton            0        93           1      
+  modhub   Meta-web       Waldeckia obesa           159       51          3.49    
 
- modhub   Meta-web          Zooplankton             1        75           2      
+  modhub   Meta-web      Harmothoe spinosa          153       64          3.68    
 
- modhub   Meta-web       Calanoides acutus         31        134         2.18    
+  modhub   Meta-web    Harmothoe crosetensis        109       64          3.69    
 
- modhub   Meta-web       Metridia gerlachei        66        143         2.42    
+  modhub   Meta-web      Harmotoe hartmanae         106       64          3.73    
 
- modhub   Meta-web     Pseudosagitta gazellae      62        92          2.43    
+  modhub   Meta-web    Eunoe spica spicoides        191       64          3.85    
 
- modhub   Meta-web      Thysanoessa macrura        64        132         2.43    
+  modhub   Meta-web         Eunoe spica             150       69          3.93    
 
- modhub   Meta-web           Gastropoda            30        31          2.44    
+  modhub   Meta-web     Trematomus pennellii        174       26          3.95    
 
- modhub   Meta-web        Eukrohnia hamata         63        132         2.45    
-
- modhub   Meta-web       Euphausia superba         56        170         2.48    
-
- modhub   Meta-web            Copepoda              2        145         2.5     
-
- modhub   Meta-web           Salpa sp.             52        131         2.54    
-
- modhub   Meta-web     Protomyctophum normani      53        19          2.54    
-
- modhub   Meta-web     Pelagobia longicirrata      47        105         2.57    
-
- modhub   Meta-web     Microcalanus pygmaeus       47        89          2.57    
-
- modhub   Meta-web     Antarctomysis ohlinii       47        90          2.57    
-
- modhub   Meta-web     Trematomus bernacchii       104        4          2.62    
-
- modhub   Meta-web         Primno macropa          33        111         2.73    
-
- modhub   Meta-web    Eusirus propeperdentatus     33        90          2.73    
-
- modhub   Meta-web      Notothenia coriiceps       64         3          2.82    
-
- modhub   Meta-web      Dissostichus mawsoni       48         9          2.82    
-
- modhub   Meta-web     Arctocephalus gazella       51         1          2.95    
-
- modhub   Meta-web          Ophiuroidea            42        28           3      
-
- modhub   Meta-web     Leptonychotes weddelli      82         3          3.01    
-
- modhub   Meta-web        Mirounga leonina         40         2          3.11    
-
- modhub   Weddell             Copepoda              0        55           1      
-
- modhub   Weddell             Bryozoa               0        29           1      
-
- modhub   Weddell             Porifera              0        45           1      
-
- modhub   Weddell            Crustacea              0        71           1      
-
- modhub   Weddell          Phytoplankton            0        49           1      
-
- modhub   Weddell              Squid                0        17           1      
-
- modhub   Weddell            Amphipoda              0        63           1      
-
- modhub   Weddell            Polychaeta             0        75           1      
-
- modhub   Weddell         Bacillariophyta           0        100          1      
-
- modhub   Weddell             Isopoda               0        33           1      
-
- modhub   Weddell           Foraminifera            0        30           1      
-
- modhub   Weddell             Bivalvia              0        26           1      
-
- modhub   Weddell             Detritus              0        174          1      
-
- modhub   Weddell           Ophiuroidea             0        23           1      
-
- modhub   Weddell        Odontaster validus        24         4          2.39    
-
- modhub   Weddell         Salpa thompsoni          16        16          2.4     
-
- modhub   Weddell       Euchaeta antarctica        12        17          2.43    
-
- modhub   Weddell         Cyllopus lucasii         13        25          2.45    
-
- modhub   Weddell       Electrona antarctica       16        16          2.65    
-
- modhub   Weddell       Dissostichus mawsoni       14         9          2.82    
-----------------------------------------------------------------------------------
+  modhub   Meta-web   Abyssorchomene nodimanus      89        48          4.07    
+-------------------------------------------------------------------------------
 
 Table: Topological roles and trophic level of tropho-species with high number of links (Preys and Predators) . Hub connectors (hubcon) have a high number of between module links; and module hubs (modhub) have a high number of links inside its module. Tropho-species with trophic level 1 could be detritus, autotrophs, or aggregated nodes of preys. 
 
