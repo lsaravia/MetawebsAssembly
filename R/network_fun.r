@@ -95,7 +95,7 @@ calc_motif_random <- function(red, nsim=1000)
     zTT <- (obs[6] - mean(ind$triTroph))/sd(ind$triTroph)
     zOM <- (obs[9] - mean(ind$omnivory))/sd(ind$omnivory)
     
-    return(data_frame(explComp=obs[4],apprComp=obs[5],triTroph=obs[6],omnivory=obs[9],zEC=zEC,zAC=zAC,zTT=zTT,zOM=zOM,EClow=qEC[1],EChigh=qEC[2],AClow=qAC[1],AChigh=qAC[2],TTlow=qTT[1],TThigh=qTT[2],OMlow=qOM[1],OMhigh=qOM[2]))         
+    return(tibble(explComp=obs[4],apprComp=obs[5],triTroph=obs[6],omnivory=obs[9],zEC=zEC,zAC=zAC,zTT=zTT,zOM=zOM,EClow=qEC[1],EChigh=qEC[2],AClow=qAC[1],AChigh=qAC[2],TTlow=qTT[1],TThigh=qTT[2],OMlow=qOM[1],OMhigh=qOM[2]))         
 }    
 
 # Calculation of the clustering coefficients and average path for random network simulations
@@ -114,26 +114,31 @@ calc_modularity_random<- function(red, nsim=1000){
     )
 
   ind <- data.frame()
-  require(doParallel)
-  cn <-detectCores()
-#  cl <- makeCluster(cn,outfile="foreach.log") # Logfile to debug 
-  cl <- makeCluster(cn)
-  registerDoParallel(cl)
+  require(doFuture)
+  registerDoFuture()
+  plan(multiprocess)
+  
+#   require(doParallel)
+#   cn <-detectCores()
+# #  cl <- makeCluster(cn,outfile="foreach.log") # Logfile to debug 
+#   cl <- makeCluster(cn)
+#   registerDoParallel(cl)
   
   ind <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE,.packages='igraph') %dopar% 
     {
-    m<-cluster_spinglass(redes.r[[i]])
+    m<-calc_modularity_unconnected(redes.r[[i]])
     modl <- m$modularity
-    ngrp <- length(m$csize)
+    ngrp <- max(m$membership) 
     clus.coef <- transitivity(redes.r[[i]], type="Global")
     cha.path  <- average.path.length(redes.r[[i]])
     data.frame(modularity=modl,ngroups=ngrp,clus.coef=clus.coef,cha.path=cha.path)
   }
-  stopCluster(cl)
+  # stopCluster(cl)
+  plan(sequential)
   ind <- ind %>% mutate(gamma=t$Clustering/clus.coef,lambda=t$PathLength/cha.path,SWness=gamma/lambda)
   # 99% confidence interval
   #
-  qSW <- quantile(ind$SWness,c(0.005,0.995))
+  qSW <- quantile(ind$SWness,c(0.005,0.995),na.rm = TRUE)
   qmo <- quantile(ind$modularity,c(0.005,0.995))
   qgr <- quantile(ind$ngroups,c(0.005,0.995))
   mcc <- mean(ind$clus.coef)
@@ -142,7 +147,7 @@ calc_modularity_random<- function(red, nsim=1000){
   mgr <- mean(ind$ngroups)
   mSW <- mean(t$Clustering/mcc*mcp/t$PathLength)
   mCI <- 1+(qSW[2]-qSW[1])/2  
-  return(list(su=data_frame(rndCC=mcc,rndCP=mcp,rndMO=mmo,rndGR=mgr,SWness=mSW,SWnessCI=mCI,MOlow=qmo[1],MOhigh=qmo[2],
+  return(list(su=tibble(rndCC=mcc,rndCP=mcp,rndMO=mmo,rndGR=mgr,SWness=mSW,SWnessCI=mCI,MOlow=qmo[1],MOhigh=qmo[2],
                     GRlow=qgr[1],GRhigh=qgr[2]), sim=ind))         
 }
 
@@ -231,7 +236,7 @@ calc_incoherence_z <- function(g,ti=NULL,nsim=1000) {
     #
     plan(sequential)
     
-    return(list(su=data_frame(rndQ=rndQ,rndTI=rndTI,Qlow=qQ[1],Qhigh=qQ[2],
+    return(list(su=tibble(rndQ=rndQ,rndTI=rndTI,Qlow=qQ[1],Qhigh=qQ[2],
                       TIlow=qTI[1],TIhigh=qTI[2],zQ=zQ,zTI=zTI),sim=ind))         
     
 }
@@ -250,11 +255,13 @@ calc_topological_roles <- function(g,nsim=1000)
 {
   
   toRol <- data.frame()
-  require(doParallel)
-  cn <-detectCores()
-  #  cl <- makeCluster(cn,outfile="foreach.log") # Logfile to debug 
-  cl <- makeCluster(cn)
-  registerDoParallel(cl)
+  require(doFuture)
+  registerDoFuture()
+  plan(multiprocess)
+  # cn <-detectCores()
+  # #  cl <- makeCluster(cn,outfile="foreach.log") # Logfile to debug 
+  # cl <- makeCluster(cn)
+  # registerDoParallel(cl)
   
   toRol <- foreach(idx=1:nsim,.combine='rbind',.inorder=FALSE,.packages='igraph') %dopar% 
   {
@@ -262,7 +269,7 @@ calc_topological_roles <- function(g,nsim=1000)
     #
     # Standarized Within module degree z-score 
     #
-    m<-cluster_spinglass(g)
+    m<-calc_modularity_unconnected(g)
     spingB.mem<- m$membership
     
     l<-vector()
@@ -304,8 +311,8 @@ calc_topological_roles <- function(g,nsim=1000)
     return(data.frame(node=1:vcount(g),within_module_degree=l, among_module_conn=r))
     
   }
-  stopCluster(cl)
-  
+  #stopCluster(cl)
+  plan(sequential)
   # toRol %>% group_by(node) %>% summarize(wtmLowCI=quantile(within_module_degree,0.005,na.rm=TRUE),
   #                                        wtmHiCI=quantile(within_module_degree,0.995,na.rm=TRUE),
   #                                        amcLowCI=quantile(among_module_conn,0.005,na.rm=TRUE),
@@ -326,8 +333,10 @@ calc_topological_roles <- function(g,nsim=1000)
 #' @export
 #'
 #' @examples
-plot_topological_roles <- function(tRoles,g,spingB){
+plot_topological_roles <- function(tRoles,g,spingB=NULL){
   
+  if( is.null(spingB) )
+    spingB <- calc_modularity_unconnected(g)
   
   spingB.mem<- spingB$membership
   
@@ -366,7 +375,7 @@ plot_topological_roles <- function(tRoles,g,spingB){
     hub_conn <- data.frame(type="modhub",node=modhub,name=modlbl)  
   }
   
-  #points(r[modhub], l[modhub], cex=4, col="blue", pch=20)
+  points(r[modhub], l[modhub], cex=4, col="blue", pch=20)
   
   # Which are the hub connectors: high within and between-module connectivity
   #                              and are classified super-generalists
@@ -378,10 +387,6 @@ plot_topological_roles <- function(tRoles,g,spingB){
     modlbl <- modhub
   if(length(modhub)) {
     text(r[modhub],l[modhub],labels = modlbl,cex=0.7,pos=3)
-  }
-  
-  #points(r[modhub], l[modhub], cex=4, col="blue", pch=20)
-  if(length(modhub)){
     hub_conn <- rbind(hub_conn, data.frame(type="hubcon",node=modhub,name=modlbl))  
   }
   
@@ -392,9 +397,9 @@ plot_topological_roles <- function(tRoles,g,spingB){
   modlbl <- unlist(vertex_attr(g,index=modhub))
   if(is.null(modlbl))
     modlbl <- modhub
-  
-  hub_conn <- rbind(hub_conn, data.frame(type="modspe",node=modhub,name=modlbl))  
-  
+  if(length(modhub)){
+    hub_conn <- rbind(hub_conn, data.frame(type="modspe",node=modhub,name=modlbl))  
+  }
   # Which are the module connectors: Few links and between modules
   #
   modhub <- which(l<=2.5)
@@ -402,11 +407,71 @@ plot_topological_roles <- function(tRoles,g,spingB){
   modlbl <- unlist(vertex_attr(g,index=modhub))
   if(is.null(modlbl))
     modlbl <- modhub
-  
-  hub_conn <- rbind(hub_conn, data.frame(type="modcon",node=modhub,name=modlbl))  
-  
+  if(length(modhub)){
+    hub_conn <- rbind(hub_conn, data.frame(type="modcon",node=modhub,name=modlbl))  
+  }
+  return(hub_conn)
 }
 
+
+classify_topological_roles <- function(tRoles,g,spingB=NULL){
+  
+  if( is.null(spingB) )
+    spingB <- calc_modularity_unconnected(g)
+  
+  spingB.mem<- spingB$membership
+  
+  l <- tRoles$within_module_degree
+  r <- tRoles$among_module_conn
+  # Plot
+
+  # Which are the module hubs: many links within its own module.
+  #
+  modhub <- which(l>2.5)
+  modhub <- modhub[which(l>2.5) %in% which(r<=0.625)]
+  modlbl <- unlist(vertex_attr(g,index=modhub))
+  if(is.null(modlbl))
+    modlbl <- modhub
+  hub_conn <- data.frame()
+  
+  if(length(modhub)) {
+    hub_conn <- data.frame(type="modhub",node=modhub,name=modlbl)  
+  }
+  
+  # Which are the hub connectors: high within and between-module connectivity
+  #                              and are classified super-generalists
+  #
+  modhub <- which(l>2.5)
+  modhub <- modhub[which(l>2.5) %in% which(r>0.625)]
+  modlbl <- unlist(vertex_attr(g,index=modhub))
+  if(is.null(modlbl))
+    modlbl <- modhub
+  if(length(modhub)) {
+    hub_conn <- rbind(hub_conn, data.frame(type="hubcon",node=modhub,name=modlbl))  
+  }
+  
+  # Which are the module specialist: Few links and most of them within its own module
+  #
+  modhub <- which(l<=2.5)
+  modhub <- modhub[which(l<=2.5) %in% which(r<=0.625)]
+  modlbl <- unlist(vertex_attr(g,index=modhub))
+  if(is.null(modlbl))
+    modlbl <- modhub
+  if(length(modhub)){
+    hub_conn <- rbind(hub_conn, data.frame(type="modspe",node=modhub,name=modlbl))  
+  }
+  # Which are the module connectors: Few links and between modules
+  #
+  modhub <- which(l<=2.5)
+  modhub <- modhub[which(l<=2.5) %in% which(r>0.625)]
+  modlbl <- unlist(vertex_attr(g,index=modhub))
+  if(is.null(modlbl))
+    modlbl <- modhub
+  if(length(modhub)){
+    hub_conn <- rbind(hub_conn, data.frame(type="modcon",node=modhub,name=modlbl))  
+  }
+  return(hub_conn)
+}
 
 #' Calculate average topological roles doing nsimStep simulations and repeating until there is no
 #' differences using an Anderson Darling test.
@@ -475,7 +540,7 @@ calc_avg_topological_roles <- function(g, net_name,nsimStep){
 #'
 #' @examples
 
-plotTopoRolesByTLByMod <- function(netName,deadNodes,modulObj,topoFrame,legendPos="",redl=NULL,netFrame=NULL){
+plotTopoRolesByTLByMod <- function(netName,deadNodes,modulObj=NULL,topoFrame,legendPos="",redl=NULL,netFrame=NULL){
   # 
   # Local 
   #
@@ -487,11 +552,14 @@ plotTopoRolesByTLByMod <- function(netName,deadNodes,modulObj,topoFrame,legendPo
   }
   require(NetIndices)
   if(deadNodes[1]=="")
-      troph.net2<-TrophInd(get.adjacency(redl,sparse=F))
+      tl<-TrophInd(get.adjacency(redl,sparse=F))
   else
-      troph.net2<-TrophInd(get.adjacency(redl,sparse=F),Dead=deadNodes)
-  
-  layout.matrix.1<-matrix(
+      tl<-TrophInd(get.adjacency(redl,sparse=F),Dead=deadNodes)
+
+  if(is.null(modulObj))
+    modulObj<-cluster_spinglass(redl)
+    
+  lMat<-matrix(
     nrow=length(V(redl)),  # Rows equal to the number of vertices
     ncol=2
   )
@@ -503,7 +571,7 @@ plotTopoRolesByTLByMod <- function(netName,deadNodes,modulObj,topoFrame,legendPo
   require(RColorBrewer)
   colnet <- brewer.pal(4,"Paired")
   
-  hc <- topoFrame %>% mutate(type = factor(type)) %>% filter(Network==netName) %>% arrange(node) %>% mutate(col= as.numeric(type), TL=troph.net2[,1]) 
+  hc <- topoFrame %>% mutate(type = factor(type)) %>% filter(Network==netName) %>% arrange(node) %>% mutate(col= as.numeric(type), TL=tl[,1]) 
   V(redl)$color <- colnet[hc$col]
   
   # Transform y-axis coordinates
@@ -518,15 +586,18 @@ plotTopoRolesByTLByMod <- function(netName,deadNodes,modulObj,topoFrame,legendPo
   #
   # Plot modules
   #
-  layout.matrix.1[,2]<-jitter(troph.net2$TL,0.4) # y-axis value based on trophic level
-  layout.matrix.1[,1]<-jitter(modulObj$membership,1) # randomly assign along x-axis
-  
+  lMat[,2]<-jitter(tl$TL,0.4) # y-axis value based on trophic level
+  # Order groups in ascending trofic level
+  #
+  df <- data.frame(tl=tl$TL,m=modulObj$membership)
+  df <- df %>% mutate(m = dense_rank(ave(tl, m, FUN = max)))
+  lMat[,1]<-jitter(df$m,1) # randomly assign along x-axis
   
   plot(redl, vertex.color=vertex_attr(redl)$cor,vertex.label=NA,
        vertex.size=log(3*igraph::degree(redl)),
        edge.width=.3,edge.arrow.size=.2, 
        edge.color=add.alpha("grey50",0.5),
-       edge.curved=0.3, layout=layout.matrix.1)
+       edge.curved=0.3, layout=lMat)
   
   
   axis(side=2,at=t2(1:4),labels=1:4,  las=1, col = NA, col.ticks = 1)
@@ -680,8 +751,8 @@ plot_NetAssemblyModel_eqw <- function(AA,timeW,fname=NULL,emp=NULL){
   df$gr <- rep(1:(nrow(df)/timeW), each = timeW)
   df <- df %>% filter(!is.nan(C)) %>% group_by(gr) %>% summarise(mS=mean(S),sdS=sd(S), mL=mean(L), sdL=sd(L),time=max(T),mC=mean(C),sdC=sd(C))
   if(is.null(fname)){
-    print(ggplot(df,aes(y=mS,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mS-sdS,ymax=mS+sdS)) + scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandS,linetype=3 ))
-    print(ggplot(df,aes(y=mC,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mC-sdC,ymax=mC+sdC))+ scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandC,linetype=3 ))
+    print(g1 <- ggplot(df,aes(y=mS,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mS-sdS,ymax=mS+sdS)) + scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandS,linetype=3 ))
+    print(g2 <- ggplot(df,aes(y=mC,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mC-sdC,ymax=mC+sdC))+ scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandC,linetype=3 ))
   } else {
     require(cowplot)
     g1 <- ggplot(df,aes(y=mS,x=time,colour=time))+ theme_bw() + geom_point() + geom_errorbar(aes(ymin=mS-sdS,ymax=mS+sdS)) + scale_color_distiller(palette = "RdYlGn",guide=FALSE)+ geom_hline(yintercept =grandS,linetype=3 ) + geom_hline(yintercept =emp$Size,linetype=2 )
@@ -690,7 +761,7 @@ plot_NetAssemblyModel_eqw <- function(AA,timeW,fname=NULL,emp=NULL){
     save_plot(fname,g3,base_width=8,base_height=5,dpi=600)
   }
     
-  return(df)
+  return(list(g1=g1,g2=g2))
 }
 
 
@@ -761,7 +832,7 @@ calc_modularity_metaWebAssembly<- function(red, Adj, mig,ext,nsim=1000,ti=NULL){
   zQ <-  (m$Q- mdlQ)/sd(ind$Q)
   zTI <- (m$mTI - mdlTI)/sd(ind$mTI) # the same as sd(ind$mTI)
   
-  return(list(su=data_frame(mdlCC=mcc,mdlCP=mcp,mdlMO=mmo,mdlGR=mgr,SWness=mSW,SWnessCI=mCI,MOlow=qmo[1],MOhigh=qmo[2],
+  return(list(su=tibble(mdlCC=mcc,mdlCP=mcp,mdlMO=mmo,mdlGR=mgr,SWness=mSW,SWnessCI=mCI,MOlow=qmo[1],MOhigh=qmo[2],
                     GRlow=qgr[1],GRhigh=qgr[2], mdlQ=mdlQ,mdlTI=mdlTI,Qlow=qQ[1],Qhigh=qQ[2],
                                                  TIlow=qTI[1],TIhigh=qTI[2],zQ=zQ,zTI=zTI,MOsd=sd(ind$modularity)),sim=ind))         
 }
@@ -826,7 +897,7 @@ calc_qss_metaWebAssembly<- function(red, Adj, mig,ext,nsim=1000,ncores=0){
   
   zQSS <- (t$QSS - m_qss)/sd(ind$QSS) # the same as sd(ind$mTI)
   zMEing <- (t$MEing - m_meing)/sd(ind$MEing)
-  return(list(su=data_frame(QSS=t$QSS,mdlQSS=m_qss,QSSlow=q_qss[1],QSShigh=q_qss[2],
+  return(list(su=tibble(QSS=t$QSS,mdlQSS=m_qss,QSSlow=q_qss[1],QSShigh=q_qss[2],
                 zQSS=zQSS,MEing=t$MEing,mdlMEing=m_meing,MEingLow=q_meing[1],MEingHigh=q_meing[2],zMEing=zMEing),sim=ind))         
 }
 
@@ -896,7 +967,7 @@ calc_motif_metaWebAssembly<- function(red, Adj, mig, ext, nsim=1000)
   zTT <- (obs[6] - mean(ind$triTroph))/sd(ind$triTroph)
   zOM <- (obs[9] - mean(ind$omnivory))/sd(ind$omnivory)
   
-  return(data_frame(explComp=obs[4],apprComp=obs[5],triTroph=obs[6],omnivory=obs[9],zEC=zEC,zAC=zAC,zTT=zTT,zOM=zOM,EClow=qEC[1],EChigh=qEC[2],AClow=qAC[1],AChigh=qAC[2],TTlow=qTT[1],TThigh=qTT[2],OMlow=qOM[1],OMhigh=qOM[2]))         
+  return(tibble(explComp=obs[4],apprComp=obs[5],triTroph=obs[6],omnivory=obs[9],zEC=zEC,zAC=zAC,zTT=zTT,zOM=zOM,EClow=qEC[1],EChigh=qEC[2],AClow=qAC[1],AChigh=qAC[2],TTlow=qTT[1],TThigh=qTT[2],OMlow=qOM[1],OMhigh=qOM[2]))         
 }    
 
 
@@ -952,7 +1023,7 @@ incremental_topoRoles <- function(gr,name)
 {
   cond1 <- cond2 <- FALSE
   tR2 <- data.frame()
-  
+  nsim <- 0
   while (!(cond1 & cond2)) {
       
     #
@@ -970,6 +1041,7 @@ incremental_topoRoles <- function(gr,name)
                                                 among_module_conn=mean(among_module_conn,na.rm=TRUE))
     
     message(paste("\n calc_topological_roles 10-", name))
+    nsim <- nsim + 100
     tR1 <- bind_rows(tR1, calc_topological_roles(gr,10))
 
     tR2 <-   tR1 %>% group_by(node) %>% summarize(wtmLowCI=quantile(within_module_degree,0.005,na.rm=TRUE),
@@ -980,16 +1052,19 @@ incremental_topoRoles <- function(gr,name)
                                                   among_module_conn=mean(among_module_conn,na.rm=TRUE))
     
     
+    nsim <- nsim + 10
     
+    if(nsim >=1000)
+       break
     
     require(kSamples)
     ad1 <- ad.test(list(tR$among_module_conn,tR2$among_module_conn))
     ad2 <- ad.test(list(tR$within_module_degree,tR2$within_module_degree))
     
-    cond1 <- all(ad1$ad[,3] > 0.1)
-    cond2 <- all(ad2$ad[,3] > 0.1)
+    cond1 <- (ad1$ad[2,3] > 0.1)
+    cond2 <- (ad2$ad[2,3] > 0.1)
     
-    print( nrow(tR1)/igraph::gorder(gr))
+#    message( nrow(tR1)/igraph::gorder(gr))
   }
   dz_pc <- tR2 %>% mutate(Network=name)
   return(dz_pc)
@@ -1004,7 +1079,7 @@ compare_with_ER <- function(redl, network_name,nsims=1000,rnd_seed=123){
   # calc topological indices  
   #
   set.seed(rnd_seed)
-  modulos<-cluster_spinglass(redl)
+  modulos<-calc_modularity_unconnected(redl)
   websTbl <- multiweb::calc_topological_indices(redl)  %>% mutate(Network=network_name,Groups=length(modulos$csize),Modularity=modulos$modularity)
 
   message(paste("\ncalc_modularity_random -", network_name))
@@ -1162,3 +1237,38 @@ calc_compare_motif <- function(redl, network_name,nsims=1000,rnd_seed=123){
   
   return(list(moter=motif_ER,fallm=freq_all_Motif))
 }
+
+
+
+#' Calc modularity for taking into account possible unconected networks, and for the connected components using [igrap::cluster_spinglass]
+#' the same could be done using [igrap::cluster_infomap] that is much faster.
+#'  
+#' @param g igraph Network
+#'
+#' @return community object
+#' @export
+#'
+#' @examples
+calc_modularity_unconnected <- function(g)
+{
+  if(count_components(g)>1){
+    if(!is.named(g)) V(g)$name <- (1:vcount(g))
+    dg <- components(g)
+    V(g)$membership = 0
+    for(comp in unique(dg$membership)) {
+      g1 <- induced_subgraph(g, which(dg$membership == comp))
+      m<-cluster_spinglass(g1)
+      if(comp == 1 ) {
+        V(g)[V(g1)$name]$membership <-  m$membership 
+      } else {
+        V(g)[V(g1)$name]$membership <-  m$membership + max(V(g)$membership)
+      }
+    }
+    m$membership <- V(g)$membership
+    m$modularity <- modularity(g,m$membership)
+  } else {
+    m<-cluster_spinglass(g)
+  }
+  return(m)
+}
+

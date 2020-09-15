@@ -21,16 +21,18 @@ source("R/network_fun.r")
 require(igraph)
 require(dplyr)
 require(stringr)
+require(cowplot)
 if( require(meweasmo) == FALSE)
   install_github("lsaravia/meweasmo")
 if( require(multiweb) == FALSE)
   install_github("lsaravia/multiweb")
 
+require(tidyverse)
 ```
 
 # Read the Antarctic Metawebs files with New Weddell from @Brose2019 (GATEWAy database)
 
-```{r readAnt, eval=FALSE,echo=TRUE,message=FALSE }
+```{r readAnt, eval=FALSE,echo=FALSE,message=FALSE }
 #
 dn <- list.files("Data",pattern = "^[MWP].*\\.dat$")
 dn <- paste0("Data/", dn)
@@ -116,7 +118,7 @@ pandoc.table(t(motif_ER %>% mutate_if(is.numeric, round, digits=4)))
 
 ```
 
-# Analisis of motif frequency change across networks !!! SEGUIR ACA !!!!!!
+# Analisis of motif frequency change across networks
 
 Pag 616 The R book
 
@@ -194,24 +196,19 @@ require(dplyr)
 require(stringr)
 
 #
-# Motif
-#
-if( length(mod_by_red) == 0) {
-  set.seed(123)
-  mod_by_red <- vector(mode="list", length=length(ig_list))
-  require(future.apply)
-  plan(multiprocess)
-  future_lapply( seq_len(length(ig_list)), function(i){
-    modulos<-cluster_spinglass(ig_list[[i]])
-    mod_by_red[[i]] <<- modulos
-  })
-  plan(sequential)
-}
-
-#
 # Add the modulos object to a vector  
 #
-# mod_by_red[[1]] <- modulos
+set.seed(123)
+mod_by_red <- vector(mode="list", length=length(ig_list))
+require(future.apply)
+plan(multiprocess)
+future_lapply( seq_len(length(ig_list)), function(i){
+  modulos<-cluster_spinglass(ig_list[[i]])
+  mod_by_red[[i]] <<- modulos
+})
+plan(sequential)
+
+
 topo_roles <- tibble()
 hub_conn <- tibble()
 
@@ -222,76 +219,28 @@ lapply(names(ig_list), function(fw){
 
 })
 
+
+# unique(topo_roles$Network)
+# topo_roles <- topo_roles %>% mutate(Network = factor(Network), Network=fct_recode(Network, Ant_Potter = "Potter Cove", Ant_Weddell = "Weddell Sea",Ant_Meta = "Meta-web" ))  
+
 save.image()
 
 ```
 
+# Antarctic Plot of topological roles with confidence interval
 
-# Topological Roles proportions test and plot
-
-```{r topologicalRolesTestPlot, eval=FALSE,echo=F,message=T,warning=T}
-
-#
-#
-names(hub_conn)
-
-tbl <- table(hub_conn$Network,hub_conn$type)
-
-tbl1 <- tbl[c(1,3,2),] 
-
-chisq.test(tbl,simulate.p.value = TRUE, B=10000)
-
-
-require(ggplot2)
-require(scales)
-df1 <- data.frame(tbl1)
-names(df1) <- c("Network","Rol","count")
-df1 <- filter(df1,count!=0)
-df1 <- df1 %>% group_by(Network) %>% mutate(total=sum(count),Freq=count/total)
-levels(df1$Network) <- c("Meta-web","Weddell Sea","Potter Cove")
-
-
-gP2 <- ggplot(df1,aes(x=forcats::fct_relevel(Network, "Potter Cove","Weddell Sea"),y=Freq,fill=Rol)) + geom_bar(stat="identity") + 
-  scale_fill_brewer(palette = "RdYlGn",name="") + 
-  xlab("") + ylab("") + theme_bw() + theme(legend.position="bottom")
-#ggsave("Figures/TopoRolesProportionByNetwork.png",width=6,height=6,units="in",dpi=600)
-
-
-# Plot motif frequency 
-# 
-#
-pFM<- all_motif_freq %>% group_by(Network) %>% dplyr::select(X4:X6,X9) %>% rename(EC=X4,AC=X5,TT=X6,OM=X9) %>% mutate(Tot=sum(EC,AC,TT,OM)) %>% ungroup()
-require(tidyr)
-pFM1 <- pFM %>% mutate(EC=EC/Tot,AC=AC/Tot,TT=TT/Tot, OM=OM/Tot) %>% dplyr::select(Network:OM) %>%gather(motif,count,EC:OM)
-pFM1$Network <- factor(pFM1$Network)
-levels(pFM1$Network) <- c("Meta-web","Potter Cove","Weddell Sea")
-forcats::fct_relevel()
-require(ggplot2)
-gP1 <- ggplot(pFM1,aes(x=forcats::fct_relevel(Network, "Potter Cove","Weddell Sea"),y=count,fill=motif)) + geom_bar(stat="identity") + 
-  scale_fill_brewer(palette = "RdYlGn", breaks=c("EC","AC","TT","OM"), name="", labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivo-\nry")) + 
-  xlab("") + ylab("Proportion") + theme_bw() + theme(legend.position="bottom")
-
-
-
-gP1 <- gP1 +  theme(legend.key.width = unit(.5, "cm"))
-gP2 <- gP2 +  theme(legend.key.width = unit(.5, "cm"))
-
-require(cowplot)
-gP3 <- plot_grid(gP1,gP2,labels = c("A","B"),align = "h")
-save_plot("Figures/PropMotif_Roles_ByNetwork.png",gP3,base_width=8,base_height=5,dpi=600)
-#ggsave("Figures/PropMotif_Roles_ByNetwork.png",width=8,height=5,units="in",dpi=600)
-
+```{r Ant_topologicalRolesCI, eval=FALSE,echo=F,message=T,warning=T}
 
 #
-#   Plot of topological roles with confidence interval
 #
 
 require(ggplot2)
+unique(topo_roles$Network)
+tp <- topo_roles %>% filter(grepl("Ant_", Network))
+tp$Network <- factor(tp$Network, levels = c("Ant_Potter","Ant_Weddell","Ant_Meta")) 
+levels(tp$Network)= c("Potter Cove","Weddell Sea","Meta")
 
-topo_roles$Network <- factor(topo_roles$Network, levels = c("Ant_Potter","Ant_Weddell","Ant_Meta")) 
-levels(topo_roles$Network)= c("Potter Cove","Weddell Sea","Meta-web")
-
-g <- ggplot(topo_roles, aes(x=among_module_conn,y=within_module_degree,colour=Network),shape=21) +  theme_bw() + geom_point()+ 
+g <- ggplot(tp, aes(x=among_module_conn,y=within_module_degree,colour=Network),shape=21) +  theme_bw() + geom_point()+ 
 	geom_errorbar(aes(ymin=wtmLowCI, ymax=wtmHiCI),width=0.0,alpha=0.5) +
   geom_errorbarh(aes(xmin = amcLowCI, xmax = amcHiCI),height=0.0,alpha=0.5) + 
   ylab("Within module degree") + xlab("Among module connectivity") +
@@ -299,7 +248,7 @@ g <- ggplot(topo_roles, aes(x=among_module_conn,y=within_module_degree,colour=Ne
 
 g + geom_hline(aes(yintercept=2.5),linetype = 2) + geom_vline(aes(xintercept=0.625),linetype = 2) +facet_wrap( ~Network)
 
-ggsave("Figures/TopoRolesCI_ByNetwork.png",width=7,height=5,units="in",dpi=600)
+#ggsave("Figures/Ant_TopoRolesCI_ByNetwork.png",width=7,height=5,units="in",dpi=600)
 
 #
 # Add network area to the table with network info
@@ -311,11 +260,6 @@ websTbl$Area <- c(6.8,3.5e6,34.8e6)
 # Integrated plot of topological roles, trophic level and modularity
 
 ```{r plotTopoRolesTLmod, eval=FALSE,echo=F,message=T,warning=T}
-
-# Read data and trim species names to avoid duplicates 
-#
-# dtot <- read.delim("Data/FoodwebsFixed.dat", quote="",stringsAsFactors = F)
-# dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
 
 # Data frame hub_conn have the topological roles of species by network
 #
@@ -368,7 +312,7 @@ dev.off()
 
 ```
 
-# Generate datafrane with topological roles species names trophic level and degree 
+# Generate dataframe with topological roles species names trophic level and degree 
 
 ```{r checkTopoRolesTLmod, eval=FALSE,echo=F,message=T,warning=T}
 require(dplyr)
@@ -377,9 +321,6 @@ tRD <- tibble()
 lapply(names(ig_list), function(fw){
     tRD <<-  bind_rows(tRD, getTopoRolesTLdegree(ig_list[[fw]], fw, hub_conn))
 })
-# tRD <- getTopoRolesTLdegree(dtot,"Potter",c("Fresh detritus","Aged detritus","Necromass"),hub_conn)
-# tRD <- bind_rows(tRD, getTopoRolesTLdegree(dtot,"Weddell",c("Detritus","Necromass"),hub_conn))
-# tRD <- bind_rows(tRD, getTopoRolesTLdegree(dtot,"Meta",c("Detritus","Necromass"),hub_conn))
 
 topoRolesDegree <- tRD
 
@@ -411,7 +352,7 @@ save.image()
 
 ## Read the Islands data set and make topological analysis
 
-```{r readIslands, eval=TRUE,echo=TRUE,message=FALSE }
+```{r readIslands, eval=FALSE,echo=TRUE,message=FALSE }
 
 require(readr)
 
@@ -532,8 +473,7 @@ chisq.test(x,simulate.p.value = T, B=10000)
 
 # Islands Topological Roles
 
-```{r IslandsTopologicalRoles, eval=TRUE,echo=F,message=FALSE,warning=T}
-
+```{r IslandsTopologicalRoles, eval=FALSE,echo=F,message=FALSE,warning=T}
 
 #
 # Add the modulos object to a vector  
@@ -558,5 +498,459 @@ lapply(names(ig_list), function(fw){
 })
 
 save.image()
+
+```
+
+#  Islands Plot of topological roles with confidence interval
+
+```{r IsltopologicalRolesCI, eval=FALSE,echo=F,message=T,warning=T}
+
+#
+tp <- topo_roles %>% filter(grepl("Isl_", Network)) %>% mutate(Network=factor(Network))
+levels(tp$Network) <-gsub('^(.{7})(.{6})(.*)$', '\\1\\\n\\2 \\3', str_sub(levels(tp$Network),5))
+
+gsub('^([a-z])([A-z])(.*)$', '\\1\\\n\\2 \\3', str_sub(levels(tp$Network),5))
+
+g <- ggplot(tp, aes(x=among_module_conn,y=within_module_degree,colour=Network),shape=21) +  theme_bw() + geom_point()+ 
+	geom_errorbar(aes(ymin=wtmLowCI, ymax=wtmHiCI),width=0.0,alpha=0.5) +
+  geom_errorbarh(aes(xmin = amcLowCI, xmax = amcHiCI),height=0.0,alpha=0.5) + 
+  ylab("Within module degree") + xlab("Among module connectivity") +
+	scale_colour_brewer(palette="Dark2",name="Network") + theme(legend.position="none") +  theme(axis.text.x = element_text(angle = 90, hjust = 0))
+
+g + geom_hline(aes(yintercept=2.5),linetype = 2) + geom_vline(aes(xintercept=0.625),linetype = 2) +facet_wrap( ~Network)
+
+
+#
+# Plot topological roles by module and trophic level
+#
+plotTopoRolesByTLByMod("Isl_FloridaIslandE1","",topoFrame=hub_conn,redl=ig_list[["Isl_FloridaIslandE1"]])
+plotTopoRolesByTLByMod("Isl_FloridaIslandE2","",topoFrame=hub_conn,redl=ig_list[["Isl_FloridaIslandE2"]])
+plotTopoRolesByTLByMod("Isl_Meta","",topoFrame=hub_conn,redl=ig_list[["Isl_Meta"]])
+
+
+#
+#
+#
+require(dplyr)
+
+tRD <- tibble()
+lapply(names(ig_list), function(fw){
+    tRD <<-  bind_rows(tRD, getTopoRolesTLdegree(ig_list[[fw]], fw, hub_conn))
+})
+
+topoRolesDegree <- bind_rows(tRD,topoRolesDegree)
+
+topoRolesDegree %>% group_by(Network,type) %>% summarise(n=n())
+
+topoRolesDegree$Network <- factor(topoRolesDegree$Network)
+levels(topoRolesDegree$Network) <- c("Florida\nIsland E1","Florida\nIsland E2","Florida\nIsland E3","Florida\nIsland E7", "Florida\nIsland E9","Islands\nMetaweb","Antarctic\nMetaweb","Potter","Weddell"    )
+# Generate table of more connected topological roles
+#
+require(pander)
+panderOptions('table.split.table',Inf)
+panderOptions('table.style', 'multiline')
+
+#
+# Change names of networks
+#
+pandoc.table(topoRolesDegree %>% filter(type=="hubcon" | type=="modhub" ) %>% arrange(type,Network,trophLevel) %>%  dplyr::select(type,Network,name,preys,predators,trophLevel) %>% mutate_if(is.numeric, round, digits=2))
+
+# 
+#
+
+topoRolesDegree %>% mutate(basal=(round(trophLevel,2)<=1)) %>% group_by(type,Network,basal) %>% summarise(n=n())
+
+rm(tRD,topoRoles)
+
+save.image()
+
+
+```
+
+## Read the 50 Lakes Havens Food Webs
+
+
+```{r readLakes, eval=FALSE,echo=TRUE,message=FALSE }
+
+require(tidyverse)
+
+#
+# Extract Weddell Sea from GATEWAy database
+#
+ga <- readr::read_csv("~/Dropbox/Projects/MetaWebsAssembly/Data/283_2_FoodWebDataBase_2018_12_10.csv",col_types = "icccccccccccccddddddccccccccddddddcddccddciicc")
+
+fw_name <- ga %>% filter(grepl("Havens",link.citation )) %>% distinct(foodweb.name)                
+Have_df <- ga %>% filter(grepl("Havens",link.citation )) %>% dplyr::select(con.taxonomy,con.taxonomy.level,res.taxonomy,res.taxonomy,foodweb.name)
+require(igraph)
+dtot1 <- as.matrix(Have_df %>% dplyr::select(res.taxonomy,con.taxonomy))
+have1  <- graph_from_edgelist(dtot1, directed  = T)
+
+df_list <- Have_df %>% group_split(foodweb.name)
+ig_list <- lapply(df_list, function(fw) {
+  d1 <- as.matrix(fw %>% dplyr::select(res.taxonomy,con.taxonomy))
+  graph_from_edgelist(d1, directed  = T)
+})
+
+names(ig_list) <- paste0("Lak_",str_replace_all(fw_name$foodweb.name," ","_"))
+ig_list <- c(ig_list, list(Lak_Meta=have1))
+
+```
+
+# QSS -  Modularity - SW - Analysis - Lakes metaweb  
+
+```{r qssLakes, eval=FALSE,echo=TRUE,message=FALSE }
+
+lapply(names(ig_list), function(fw){
+    res <- compare_with_ER(ig_list[[fw]], fw,1000)
+    simulations_ER <<- bind_rows(simulations_ER, res$sim)
+    websTbl <<- bind_rows(websTbl, res$su)
+})
+
+rm(sim,dtot,dtot1,f,ga,have1,Have_df,df_list,df1,tp,x,pFM,pFM1)
+
+save.image()
+
+require(pander)
+panderOptions('table.split.table',Inf)
+panderOptions('table.style', 'multiline')
+
+pandoc.table(t(websTbl %>% filter(grepl("Lak_", Network)) %>%
+                                  dplyr::select(Network,Size,Links,Connectance,PathLength,Clustering,SWness,SWnessCI,Q,zQ,Qlow,Qhigh,mTI,zTI,TIlow,TIhigh,Modularity,zMO,MOlow,MOhigh) %>% mutate_if(is.numeric, round, digits=4)))
+
+```
+
+# Motif Analysis - Lakes
+
+```{r MotifIsLakes, eval=FALSE,echo=F,message=T,warning=T}
+#
+# Motif
+#
+
+lapply(names(ig_list), function(fw){
+    res <- calc_compare_motif(ig_list[[fw]], fw,1000)
+    motif_ER <<- bind_rows(motif_ER, res$moter)
+    all_motif_freq <<- bind_rows(all_motif_freq, res$fallm)
+})
+
+save.image()
+
+require(pander)
+panderOptions('table.split.table',Inf)
+panderOptions('table.style', 'multiline')
+
+motif_ER <- motif_ER %>% dplyr::select(Network, everything())
+
+save.image()
+require(pander)
+pandoc.table(t(motif_ER %>% filter(grepl("Lak_", Network)) %>% mutate_if(is.numeric, round, digits=4)))
+
+#
+# Build a dataframe with the relevant motifs
+# 
+pFM<- all_motif_freq %>% filter(grepl("Lak_", Network)) %>% group_by(Network) %>% dplyr::select(X4:X6,X9) %>% rename(EC=X4,AC=X5,TT=X6,OM=X9) %>% mutate(Tot=sum(EC,AC,TT,OM)) %>% ungroup()
+
+require(tidyr)
+
+pFM1 <- pFM %>% mutate(EC=EC/Tot,AC=AC/Tot,TT=TT/Tot, OM=OM/Tot) %>% dplyr::select(Network:OM) %>%gather(motif,count,EC:OM)
+#levels(pFM1$Network) <- c("Potter Cove","Weddell Sea","Meta-web")
+require(ggplot2)
+gP1 <- ggplot(pFM1,aes(x=Network,y=count,fill=motif)) + geom_bar(stat="identity") + 
+  scale_fill_brewer(palette = "RdYlGn", breaks=c("EC","AC","TT","OM"), name="", labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")) + 
+  xlab("") + ylab("Proportion") + theme_bw() + theme(legend.position="bottom") + theme(axis.text.x = element_text(angle = 90, hjust=0))
+#ggsave("Figures/MotifProportionByNetwork.png",width=6,height=6,units="in",dpi=600)
+
+
+#
+# Pearson Chi-squared independence 
+#
+
+x <- all_motif_freq %>% filter(grepl("Lak_", Network)) %>% dplyr::select(Network,X4:X6,X9) %>% rename(EC=X4,AC=X5,TT=X6,OM=X9)
+rnames <- x$Network
+x <- as.matrix(x[,2:5])
+rownames(x) <- rnames
+require(RColorBrewer)
+colnet <- brewer.pal(11,"RdYlGn")[c(1,11)]
+#png("Figures/NetworkByMotifFreq.png",width=6,height=6,units="in",res=600)
+par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(2, 2, 0, 2))
+colnames(x) <- c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")
+assocplot(t(x),col=colnet)
+#dev.off()
+
+chisq.test(x,simulate.p.value = T, B=10000)
+
+# Pearson's Chi-squared test with simulated p-value (based on 10000 replicates)
+# 
+# data:  x
+# X-squared = 5503.2, df = NA, p-value = 9.999e-05
+
+
+```
+
+
+# Lakes Topological Roles
+
+```{r LakesTopologicalRoles, eval=TRUE,echo=F,message=FALSE,warning=T}
+
+
+#
+# Add the modulos object to a vector  
+#
+set.seed(123)
+# mod_by_red <- vector(mode="list", length=length(ig_list))
+# require(future.apply)
+# plan(multiprocess)
+# future_lapply( seq_len(length(ig_list)), function(i){
+#   modulos<-calc_modularity_unconnected(ig_list[[i]])
+#   mod_by_red[[i]] <<- modulos
+# })
+# plan(sequential)
+
+topo_roles$Network <- as.character(topo_roles$Network)
+
+lapply(names(ig_list), function(fw){
+    topo_roles <<- bind_rows(topo_roles,incremental_topoRoles(ig_list[[fw]], fw))
+    i <- which( names(ig_list)==fw)
+    hub_conn <<- bind_rows(hub_conn, classify_topological_roles(filter(topo_roles,Network==fw),ig_list[[fw]]) %>% mutate(Network=fw))
+
+})
+
+topo_roles %>% group_by(Network) %>% summarise(n=n())
+
+save.image()
+
+```
+
+# Antarctic Topological Roles proportions test and plot
+
+```{r Ant_topologicalRolesTestPlot, eval=FALSE,echo=F,message=T,warning=T}
+
+#
+#
+unique(hub_conn$Network)
+tbl <- hub_conn %>% filter(grepl("Ant_", Network))
+tbl <- table(tbl$Network,tbl$type)
+
+
+tbl1 <- tbl[c(1,3,2),] 
+
+chisq.test(tbl,simulate.p.value = TRUE, B=10000)
+
+
+require(ggplot2)
+require(scales)
+df1 <- data.frame(tbl1)
+names(df1) <- c("Network","Rol","count")
+df1 <- filter(df1,count!=0)
+df1 <- df1 %>% group_by(Network) %>% mutate(total=sum(count),Freq=count/total)
+levels(df1$Network) <- c("Metaweb","Weddell Sea","Potter Cove")
+
+
+gP2 <- ggplot(df1,aes(x=forcats::fct_relevel(Network, "Potter Cove","Weddell Sea"),y=Freq,fill=Rol)) + geom_bar(stat="identity") + 
+  scale_fill_brewer(palette = "Paired",name="") + 
+  xlab("") + ylab("") + theme_bw() + theme(legend.position="bottom") + coord_flip()
+#ggsave("Figures/TopoRolesProportionByNetwork.png",width=6,height=6,units="in",dpi=600)
+
+
+# Plot motif frequency 
+# 
+#
+pFM<- all_motif_freq  %>% filter(grepl("Ant_", Network)) %>% group_by(Network) %>% dplyr::select(X4:X6,X9) %>% rename(EC=X4,AC=X5,TT=X6,OM=X9) %>% mutate(Tot=sum(EC,AC,TT,OM)) %>% ungroup()
+require(tidyr)
+pFM1 <- pFM %>% mutate(EC=EC/Tot,AC=AC/Tot,TT=TT/Tot, OM=OM/Tot) %>% dplyr::select(Network:OM) %>%gather(motif,count,EC:OM)
+pFM1$Network <- factor(pFM1$Network)
+levels(pFM1$Network) <- c("Metaweb","Potter Cove","Weddell Sea")
+require(ggplot2)
+gP1 <- ggplot(pFM1,aes(x=forcats::fct_relevel(Network, "Potter Cove","Weddell Sea"),y=count,fill=motif)) + geom_bar(stat="identity") + 
+  scale_fill_brewer(palette = "Paired", breaks=c("EC","AC","TT","OM"), name="", labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivo-\nry")) + 
+  xlab("") + ylab("") + theme_bw() + theme(legend.position="bottom") + coord_flip()
+
+
+
+gP1 <- gP1 +  theme(legend.key.width = unit(.5, "cm"))
+gP2 <- gP2 +  theme(legend.key.width = unit(.5, "cm"))
+
+require(cowplot)
+gP3 <- plot_grid(gP1,gP2,labels = c("A","B"),align = "h")
+save_plot("Figures/Ant_PropMotif_Roles.png",gP3,base_width=8,base_height=5,dpi=600)
+
+```
+
+# Islands Plots Topological Roles proportions test and plot
+
+```{r IsltopologicalRolesTestPlot, eval=FALSE,echo=F,message=T,warning=T}
+
+#
+#
+unique(hub_conn$Network)
+tbl <- hub_conn %>% filter(grepl("Isl_", Network))
+tbl <- table(tbl$Network,tbl$type)
+
+tbl1 <- tbl[c(1,3,2),] 
+
+chisq.test(tbl,simulate.p.value = TRUE, B=10000)
+
+
+require(ggplot2)
+require(scales)
+df1 <- data.frame(tbl)
+names(df1) <- c("Network","Rol","count")
+df1 <- filter(df1,count!=0)
+df1 <- df1 %>% group_by(Network) %>% mutate(total=sum(count),Freq=count/total)
+levels(df1$Network) <- gsub('^(.{7})(.{6})(.*)$', '\\1\\ \\2 \\3', str_sub(levels(df1$Network),5))
+df1$Network <- fct_recode(df1$Network, Metaweb="Meta")
+levels(df1$Network) <- str_replace_all( levels(df1$Network), "Florida", "")
+
+#
+# Create a new variable to plot in order of hubcon+modhub+modcon 
+require(tidyverse)
+df2 <- df1 %>% pivot_wider(-c(count,total),names_from=Rol,values_from = Freq,values_fill = list(Freq=0)) %>% 
+  mutate(orden = hubcon+modhub+modcon)
+df1 <- df1 %>% full_join(df2 %>% select(Network,orden)) %>% ungroup() %>% mutate(Network=fct_reorder(Network,orden))
+
+gP5 <- ggplot(df1,aes(x=Network,y=Freq,fill=Rol)) + geom_bar(stat="identity") + 
+  scale_fill_brewer(palette = "Paired",name="") + 
+  xlab("") + ylab("") + theme_bw() + theme(legend.position="bottom") + coord_flip()
+#ggsave("Figures/TopoRolesProportionByNetwork.png",width=6,height=6,units="in",dpi=600)
+
+# Plot motif frequency 
+# 
+#
+pFM<- all_motif_freq %>% filter(grepl("Isl_", Network)) %>% group_by(Network) %>% dplyr::select(X4:X6,X9) %>% rename(EC=X4,AC=X5,TT=X6,OM=X9) %>% mutate(Tot=sum(EC,AC,TT,OM)) %>% ungroup() %>% mutate(Network=factor(Network))
+levels(pFM$Network) <-gsub('^(.{7})(.{6})(.*)$', '\\1\\ \\2 \\3', str_sub(levels(pFM$Network),5))
+pFM$Network <- fct_recode(pFM$Network, Metaweb="Meta")
+levels(pFM$Network) <- str_replace_all( levels(pFM$Network), "Florida", "")
+ 
+pFM <- full_join(pFM, df2 %>% select(Network,orden))
+
+pFM1 <- pFM %>% mutate(Network=fct_reorder(Network, orden),EC=EC/Tot,AC=AC/Tot,TT=TT/Tot, OM=OM/Tot) %>% dplyr::select(Network:OM) %>%gather(motif,count,EC:OM)
+
+require(ggplot2)
+gP4 <- ggplot(pFM1,aes(x=Network,y=count,fill=motif)) + geom_bar(stat="identity") + 
+  scale_fill_brewer(palette = "Paired", breaks=c("EC","AC","TT","OM"), name="", labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivo-\nry")) + 
+  xlab("") + ylab("") + theme_bw() + theme(legend.position="bottom") + coord_flip()
+
+gP4 <- gP4 +  theme(legend.key.width = unit(.5, "cm"))
+gP5 <- gP5 +  theme(legend.key.width = unit(.5, "cm"))
+
+require(cowplot)
+gP6 <- plot_grid(gP4,gP5,labels = c("A","B"),align = "h")
+save_plot("Figures/Isl_PropMotif_Roles.png",gP6,base_width=8,base_height=5,dpi=600)
+```
+
+# Lakes Plots Topological Roles proportions test and plot
+
+```{r IsltopologicalRolesTestPlot, eval=FALSE,echo=F,message=T,warning=T}
+require(ggplot2)
+#
+#
+unique(hub_conn$Network)
+tbl <- hub_conn %>% filter(grepl("Lak_", Network))
+tbl <- table(tbl$Network,tbl$type)
+
+tbl1 <- tbl[c(1,3,2),] 
+
+chisq.test(tbl,simulate.p.value = TRUE, B=10000)
+
+# 	Pearson's Chi-squared test with simulated p-value (based on 10000 replicates)
+# 
+# data:  tbl
+# X-squared = 1414.1, df = NA, p-value = 9.999e-05
+
+require(ggplot2)
+require(scales)
+df1 <- data.frame(tbl)
+names(df1) <- c("Network","Rol","count")
+df1 <- filter(df1,count!=0)
+df1 <- df1 %>% group_by(Network) %>% mutate(total=sum(count),Freq=count/total)
+levels(df1$Network) <- str_replace_all( str_sub(levels(df1$Network),5), "_", " ")
+df1$Network <- fct_recode(df1$Network, Metaweb="Meta")
+
+#
+# Create a new variable to plot the lakes in order of hubcon 
+require(tidyverse)
+df2 <- df1 %>% pivot_wider(-c(count,total),names_from=Rol,values_from = Freq,values_fill = list(Freq=0)) %>% 
+  mutate(orden = hubcon+modhub+modcon)
+df1 <- df1 %>% full_join(df2 %>% select(Network,orden)) %>% ungroup() %>% mutate(Network=fct_reorder(Network,orden))
+#forcats::fct_relevel(Network, "Meta", after = Inf)
+
+(gP8 <- ggplot(df1,aes(x=Network  ,y=Freq,fill=Rol)) + 
+    geom_bar(stat="identity") + 
+  scale_fill_brewer(palette = "Paired",name="") + 
+  xlab("") + ylab("") + theme_bw() + theme(legend.position="bottom") + coord_flip())
+#ggsave("Figures/Lak_TopoRolesProportionByNetwork.png",width=8,height=6,units="in",dpi=600)
+
+# Plot motif frequency 
+# 
+#
+pFM<- all_motif_freq %>% filter(grepl("Lak_", Network)) %>% group_by(Network) %>% dplyr::select(X4:X6,X9) %>% rename(EC=X4,AC=X5,TT=X6,OM=X9) %>% mutate(Tot=sum(EC,AC,TT,OM)) %>% ungroup() %>% mutate(Network=factor(Network))
+levels(pFM$Network) <- str_replace_all( str_sub(levels(pFM$Network),5), "_", " ")
+pFM$Network <- fct_recode(pFM$Network, Metaweb="Meta")
+
+pFM <- full_join(pFM, df2 %>% select(Network,orden))
+pFM1 <- pFM %>% mutate(Network=fct_reorder(Network, orden), EC=EC/Tot,AC=AC/Tot,TT=TT/Tot, OM=OM/Tot) %>% dplyr::select(Network:OM) %>%gather(motif,count,EC:OM)
+
+gP7 <- ggplot(pFM1,aes(x=Network,y=count,fill=motif)) + geom_bar(stat="identity") + 
+  scale_fill_brewer(palette = "Paired", breaks=c("EC","AC","TT","OM"), name="", labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivo-\nry")) + 
+  xlab("") + ylab("") + theme_bw() + theme(legend.position="bottom") + coord_flip()
+
+gP7 <- gP7 +  theme(legend.key.width = unit(.5, "cm"))
+gP8 <- gP8 +  theme(legend.key.width = unit(.5, "cm"))
+
+require(cowplot)
+gP9 <- plot_grid(gP7,gP8,labels = c("A","B"),align = "h")
+save_plot("Figures/Lak_PropMotif_Roles.png",gP9,base_width=8,base_height=5,dpi=600)
+
+# !!! FALTA ELMINAR LAS LEYENDAS DEL EJE Y EN LOS PLTS DE LA DERECHA
+
+gP10 <- plot_grid(gP1 + theme(legend.position="none",),
+                  gP2 + theme(legend.position="none",axis.text.y=element_blank()),
+                  gP4 + theme(legend.position="none"),
+                  gP5 + theme(legend.position="none",axis.text.y=element_blank()),
+                  gP7 + theme(legend.text=element_text(size=7)),
+                  gP8 + theme(axis.text.y=element_blank(),legend.text=element_text(size=7)), 
+                  align = "v",
+                  ncol = 2,
+                  labels = c("A","B"),
+                  rel_heights = c(1,1.3,6),
+                  rel_widths = c(1,1))
+
+gP10
+save_plot("Figures/Total_PropMotif_Roles.png",gP10,base_width=8,base_height=6,dpi=600)
+
+
+#
+# Plots of metrics 
+#
+websTbl <- websTbl %>% select(Network, everything()) %>% mutate(Metaweb=str_sub(Network,1,3), ismeta = grepl("Meta",Network)) 
+
+require(ggrepel)
+gP1 <- ggplot(websTbl, aes(x=Size,y=MEing,color=ismeta)) + geom_point() +scale_color_brewer(palette = "Paired", ,guide=NULL) + facet_wrap( ~Metaweb, scale="free_x") + theme_bw() + xlab(NULL)
+gP2 <-ggplot(websTbl, aes(x=Size,y=Modularity,color=ismeta)) + geom_point() +scale_color_brewer(palette = "Paired", ,guide=NULL) + facet_wrap( ~Metaweb, scale="free_x") + theme_bw() + xlab(NULL)
+gP3 <- ggplot(websTbl, aes(x=Size,y=SWness,color=ismeta)) + geom_point() +scale_color_brewer(palette = "Paired", ,guide=NULL) + facet_wrap( ~Metaweb, scale="free_x") + theme_bw() + xlab(NULL)
+gP4 <- ggplot(websTbl, aes(x=Size,y=TLmean,color=ismeta)) + geom_point() +scale_color_brewer(palette = "Paired", ,guide=NULL) + facet_wrap( ~Metaweb, scale="free_x") + theme_bw()
+gP6 <- ggplot(websTbl, aes(x=Size,y=Q,color=ismeta)) + geom_point() +scale_color_brewer(palette = "Paired", ,guide=NULL) + facet_wrap( ~Metaweb, scale="free_x") + theme_bw()
+gP7 <- ggplot(websTbl, aes(x=Size,y=LD,color=ismeta)) + geom_point() +scale_color_brewer(palette = "Paired", ,guide=NULL) + facet_wrap( ~Metaweb, scale="free_x") + theme_bw()
+
+gP5 <- plot_grid(gP1 + theme(axis.text.x=element_blank()),
+                  gP2 + theme(axis.text.x=element_blank()),
+                  gP3 + theme(axis.text.x=element_blank()),
+                  gP4 , 
+                  align = "v",
+                  ncol = 1)
+
+save_plot("Figures/Total_Metrics_byMeta.png",gP5,base_width=6,base_height=7,dpi=600)
+
+
+gP1 <- ggplot(websTbl, aes(x=Size,y=MEing,color=ismeta)) + geom_point() +scale_color_brewer(palette = "Paired", ,guide=NULL) + facet_wrap( ~Metaweb, scale="free_x") + theme_bw() + xlab(NULL) + ylab("Asymmetric MEing")
+gP2 <- ggplot(websTbl, aes(x=Size,y=MEing1,color=ismeta)) + geom_point() +scale_color_brewer(palette = "Paired", ,guide=NULL) + facet_wrap( ~Metaweb, scale="free_x") + theme_bw() + xlab("Size") + ylab("Symmetric MEing")
+gP3 <- ggplot(websTbl, aes(x=Size,y=Q,color=ismeta)) + geom_point() +scale_color_brewer(palette = "Paired", ,guide=NULL) + facet_wrap( ~Metaweb, scale="free_x") + theme_bw() + xlab(NULL)
+
+gP5 <- plot_grid(gP3 + theme(axis.text.x=element_blank()),
+  gP1 + theme(axis.text.x=element_blank()),
+                  gP2 , 
+                  align = "v",
+                  ncol = 1)
+
+save_plot("Figures/MEing_Metrics_byMeta.png",gP5,base_width=6,base_height=7,dpi=600)
 
 ```
