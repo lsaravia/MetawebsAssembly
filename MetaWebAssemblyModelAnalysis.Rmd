@@ -14,7 +14,7 @@ editor_options:
 
 
 ```{r setup, echo=FALSE }
-load(".RData")
+if(file.exists(".RData")) load(".RData")
 
 needed_packages <- c(
     "ggplot2"
@@ -36,9 +36,10 @@ source("R/network_fun.r")
 
 ```
 
-# Check the steady state of the model    
+# Read Antarctic Networks
 
-```{r checkSteadyState, eval=F,echo=F,message=T,warning=T}
+```{r checkSteadyState, eval=TRUE,echo=F,message=T,warning=T}
+#
 # Read the Antarctic Metawebs files with New Weddell from @Brose2019 (GATEWAy database)
 #
 dn <- list.files("Data",pattern = "^[MWP].*\\.dat$")
@@ -52,6 +53,12 @@ sum(degree(redl,mode="in")==0) == websTbl %>% filter(Network=="Ant_Meta") %>% se
 
 A <- get.adjacency(redl,sparse=F)
 dimA <- dim(A)[1]
+```
+
+# Check the steady state of the model    
+
+```{r checkSteadyState, eval=F,echo=F,message=T,warning=T}
+
 
 set.seed(2312)
 #
@@ -151,7 +158,8 @@ kde.test(AAdf3[,1:2],AAdf1[,1:2])$pvalue
 # 0.3481172
 kde.test(AAdf3[,1:2],AAdf2[,1:2])$pvalue
 # [1] 0.1103454
-
+#
+# There are differences p<0.05 due to the ciclic dynamics
 
 AAdf <- bind_rows(AAdf , AAdf1, AAdf2, AAdf3,AAdf4) %>% mutate(model_type="Continuous",e=0.005)
 AAdfTot <- bind_rows(AAdfTot,AAdf)
@@ -180,8 +188,7 @@ save_plot("Figures/Metaweb_steady_state_Weddell.png",gP5,base_width=6,base_heigh
 
 ```
 
-# Checking differences with m/a, to know if we can use m/a as a unique parameter
-
+# Checking differences with m and a parameters, to know if we can use lambda=m/a as a unique parameter
 
 ```{r checklambda, eval=F,echo=F,message=T,warning=T}
 
@@ -196,45 +203,43 @@ save_plot("Figures/Metaweb_steady_state_Weddell.png",gP5,base_width=6,base_heigh
 AAdf <- tibble()
 set.seed(2312)
 
-tf <- 500
+tf <- 1000
 m <- rep(0.015,times=dimA)
 e <- rep(0.005, times=dimA)
 se <- rep(0.25, times=dimA)
 AA <- metaWebNetAssembly(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),Sim="500",e=0.005) )
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e=0.005,se=0.25,model_type="Discrete") )
 
 
-tf <- 500
 m <- rep(0.15,times=dimA)
 e <- rep(0.05, times=dimA)
 se <- rep(0.25, times=dimA)
 AA <- metaWebNetAssembly(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),Sim="500",e=0.05) ) %>% mutate(model_type="Discrete")
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),se=0.25,e=0.05,model_type="Discrete") )
 
-ggplot(AAdf %>% filter(Sim=="500"), aes(S,C,color=factor(e)))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC)) + facet_wrap( ~ model_type)
+ggplot(AAdf, aes(S,C,color=factor(e)))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC)) + facet_wrap( ~ model_type)
 
 
 # 
 # Continous time 0.0263 0.106   92.1  324. 0.0383 0.691
 #
-tf <- 500
+tf <- 1000
 m <- rep(0.015,times=dimA)
 e <- rep(0.005, times=dimA)
 se <- rep(0.25, times=dimA)
 AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),Sim="500",e=0.005,model_type="Continuous"))
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),se=0.25,e=0.005,model_type="Continuous"))
 
 
-tf <- 500
 m <- rep(0.15,times=dimA)
 e <- rep(0.05, times=dimA)
 se <- rep(0.25, times=dimA)
 AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),Sim="500",e=0.05,model_type="Continuous"))
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),se=0.25,e=0.05,model_type="Continuous"))
 
 ggplot(AAdf, aes(S,C,color=factor(e)))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC)) + facet_wrap( ~model_type)
 
@@ -242,92 +247,84 @@ ggplot(AAdf, aes(S,C,color=factor(e)))+ geom_point() + theme_bw() + stat_ellipse
 #
 # se = 1 
 #
-tf <- 500
 m <- rep(0.015,times=dimA)
 e <- rep(0.005, times=dimA)
 se <- rep(1, times=dimA)
 AA <- metaWebNetAssembly(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),Sim="500",e=0.005,se=1,model_type="Discrete")) 
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e=0.005,se=1,model_type="Discrete")) 
 
 
-tf <- 500
 m <- rep(0.15,times=dimA)
 e <- rep(0.05, times=dimA)
 se <- rep(1, times=dimA)
 AA <- metaWebNetAssembly(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),Sim="500",e=0.05,se=1,model_type="Discrete"))
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e=0.05,se=1,model_type="Discrete"))
 
-ggplot(AAdf %>% filter(Sim=="500"), aes(S,C,color=factor(e)))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC)) + facet_wrap( se ~ model_type)
+ggplot(AAdf, aes(S,C,color=factor(e)))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC)) + facet_wrap( se ~ model_type)
 
 
 # 
 # Continous time 0.0263 0.106   92.1  324. 0.0383 0.691
 #
-tf <- 500
 m <- rep(0.015,times=dimA)
 e <- rep(0.005, times=dimA)
 se <- rep(1, times=dimA)
 AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),Sim="500",e=0.005,se=1,model_type="Continuous"))
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e=0.005,se=1,model_type="Continuous"))
 
 
-tf <- 500
 m <- rep(0.15,times=dimA)
 e <- rep(0.05, times=dimA)
 se <- rep(1, times=dimA)
 AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),Sim="500",e=0.05,se=1,model_type="Continuous"))
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e=0.05,se=1,model_type="Continuous"))
 
-AAdf <- AAdf %>% mutate(se=ifelse(is.na(se),0.25,se))
 ggplot(AAdf, aes(S,C,color=factor(e)))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC)) +
   facet_grid( se ~ model_type)
 
 #
 # se = 0 
 #
-tf <- 500
+tf <- 1000
 m <- rep(0.015,times=dimA)
 e <- rep(0.005, times=dimA)
 se <- rep(0, times=dimA)
 AA <- metaWebNetAssembly(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),Sim="500",e=0.005,se=0,model_type="Discrete")) 
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e=0.005,se=0,model_type="Discrete")) 
 
 
-tf <- 500
 m <- rep(0.15,times=dimA)
 e <- rep(0.05, times=dimA)
 se <- rep(0, times=dimA)
 AA <- metaWebNetAssembly(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),Sim="500",e=0.05,se=0,model_type="Discrete"))
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e=0.05,se=0,model_type="Discrete"))
 
-ggplot(AAdf %>% filter(Sim=="500"), aes(S,C,color=factor(e)))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC)) + facet_wrap( se ~ model_type)
+ggplot(AAdf, aes(S,C,color=factor(e)))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC)) + facet_wrap( se ~ model_type)
 
 
 # 
 # Continous time 0.0263 0.106   92.1  324. 0.0383 0.691
 #
-tf <- 500
 m <- rep(0.015,times=dimA)
 e <- rep(0.005, times=dimA)
 se <- rep(0, times=dimA)
 AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),Sim="500",e=0.005,se=0,model_type="Continuous"))
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e=0.005,se=0,model_type="Continuous"))
 
 
-tf <- 500
 m <- rep(0.15,times=dimA)
 e <- rep(0.05, times=dimA)
 se <- rep(0, times=dimA)
 AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),Sim="500",e=0.05,se=0,model_type="Continuous"))
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e=0.05,se=0,model_type="Continuous"))
 
 ggplot(AAdf, aes(S,C,color=factor(e)))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC)) +
   facet_grid( se ~ model_type)
@@ -337,7 +334,7 @@ ggsave("Figures/Metaweb_SecExtc_byModel.png",width=8,height=5,units="in",dpi=600
 
 ```
 
-
+* there are differences when secondary extinctions are >0 and mainly in the temporal SD so we keep using the 2 parameters
 
 
 # Antarctic Metaweb Simulate a grid of parameters to select the best options
@@ -346,8 +343,10 @@ ggsave("Figures/Metaweb_SecExtc_byModel.png",width=8,height=5,units="in",dpi=600
 ```{r makeSimulations150000, eval=TRUE,echo=F,message=T,warning=T}
 
 
-redl <- meta 
-sum(degree(redl,mode="in")==0) == websTbl$Basal[3]
+# Check redl is the metaweb
+# 
+stopifnot(  sum(degree(redl,mode="in")==0) == websTbl %>% filter(Network=="Ant_Meta") %>% select(Basal) )
+
 
 A <- get.adjacency(redl,sparse=F)
 dimA <- nrow(A)
@@ -369,7 +368,7 @@ simMetaWebAssembly <- tibble()
 #
 # Discrete time
 par_ranges <- matrix(c(0.01, 0.3,0.001, 0.5, 1, 1),nrow=3,byrow = TRUE)
-sim <- sim_metaWebAssembly_lhs(2, 150000, par_ranges,A )
+sim <- sim_metaWebAssembly_lhs(2, 150000, par_ranges,A, 1 ) %>% mutate(model_type="Continuous",Metaweb="Ant")
 
 simMetaWebAssembly <- bind_rows(simMetaWebAssembly,sim)
 saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
@@ -378,44 +377,33 @@ saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
 #
 # Discrete time
 par_ranges <- matrix(c(0.01, 0.3,0.001, 0.5, 0.1, 0.9),nrow=3,byrow = TRUE)
-sim <- sim_metaWebAssembly_lhs(3, 150000, par_ranges,A) %>% mutate(model_type="Discrete") 
+sim <- sim_metaWebAssembly_lhs(3, 150000, par_ranges,A, 1) %>% mutate(model_type="Continuous",Metaweb="Ant")
 
 simMetaWebAssembly <- bind_rows(simMetaWebAssembly,sim)
 saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
 
-
-# simulations with probability of secondary extinction != 1
-#
-# Continuous time
-par_ranges <- matrix(c(0.01, 0.3,0.001, 0.5, 0.1, 0.9),nrow=3,byrow = TRUE)
-sim <- sim_metaWebAssembly_lhs(3, 150000, par_ranges,A, 1 ) %>% mutate(model_type="Continuous") 
-
-simMetaWebAssembly <- bind_rows(simMetaWebAssembly,sim)
-saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
 
 # simulations with probability of secondary extinction == 0
 #
 # Discrete time
 par_ranges <- matrix(c(0.01, 0.3,0.001, 0.5, 0, 0),nrow=3,byrow = TRUE)
-sim <- sim_metaWebAssembly_lhs(2,  150000, par_ranges,A )
+sim <- sim_metaWebAssembly_lhs(2,  150000, par_ranges,A,1 ) %>% mutate(model_type="Continuous",Metaweb="Ant")
 
 simMetaWebAssembly <- bind_rows(simMetaWebAssembly,sim)
 saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
 
-# Set the type of models according to probability of secoondary extinction
+# Set the type of models according to probability of secondary extinction
 #
 #simMetaWebAssembly <- readRDS("Data/simulations_metaWebAssembly.rds")
-simMetaWebAssembly <- simMetaWebAssembly %>% mutate(model = ifelse(se==1, "Fixed", ifelse(se>0, "Prob", "No SecExt") ), model_type=ifelse(is.na(model_type), "Discrete", "Continuous"))
+simMetaWebAssembly <- simMetaWebAssembly %>% mutate(model = ifelse(se==1, "Fixed", ifelse(se>0, "Prob", "No SecExt") ))
 knitr::kable(simMetaWebAssembly %>% group_by(model,model_type) %>% summarise(n=n()))
 
-ggplot(simMetaWebAssembly, aes(S,C))+ geom_point(size=0.1,alpha=0.5) + theme_bw() + geom_point(data=websTbl, aes(Size,Connectance,color=Network),size=0.3) + coord_cartesian(ylim=c(0,0.1)) + facet_wrap(model_type ~ model)
+ggplot(simMetaWebAssembly, aes(S,C))+ geom_point(size=0.1,alpha=0.5) + theme_bw() + geom_point(data=websTbl, aes(Size,Connectance,color=Network),size=0.3) + coord_cartesian(ylim=c(0,0.1)) + facet_wrap(~ model)
 
 ggplot(simMetaWebAssembly, aes(S,L))+ geom_point(size=0.1,alpha=0.5) + theme_bw() + geom_point(data=websTbl, aes(Size,Links,color=Network),size=0.3) + coord_cartesian(ylim=c(0,3000)) + facet_wrap(~model)
 
-ggplot(simMetaWebAssembly %>% filter(model_type=="Discrete"), aes(S,C,color=model))+ geom_point(size=.1,alpha=0.5) + theme_bw() + geom_point(data=websTbl, aes(Size,Connectance,color=Network),size=0.4) + coord_cartesian(ylim=c(0,0.1)) + scale_color_brewer(palette= "Dark2",name="")#, labels=c("Fixed Sec.Ext.", "Potter","Meta", "No Sec.Ext.", "Prob. Sec.Ext.","Weddell" ))  
-
-ggplot(simMetaWebAssembly %>% filter(model=="Prob"), aes(S,C,color=model_type))+ geom_point(size=.1,alpha=0.5) + theme_bw() + coord_cartesian(ylim=c(0,0.1)) + scale_color_brewer(palette= "Dark2",name="")#, labels=c("Fixed Sec.Ext.", "Potter","Meta", "No Sec.Ext.", "Prob. Sec.Ext.","Weddell" ))  
-ggsave("Figures/Metaweb_Continuous_Discrete.pdf",width=8,height=5,units="in",dpi=600)
+# ggplot(simMetaWebAssembly %>% filter(model=="Prob"), aes(S,C,color=model_type))+ geom_point(size=.1,alpha=0.5) + theme_bw() + coord_cartesian(ylim=c(0,0.1)) + scale_color_brewer(palette= "Dark2",name="")#, labels=c("Fixed Sec.Ext.", "Potter","Meta", "No Sec.Ext.", "Prob. Sec.Ext.","Weddell" ))  
+# ggsave("Figures/Metaweb_Continuous_Discrete.pdf",width=8,height=5,units="in",dpi=600)
 
 
 ggplot(simMetaWebAssembly %>% filter(model=="Prob"), aes(S,C,color=model_type))+ geom_point(size=.1,alpha=0.5) + theme_bw() + geom_point(data=websTbl, aes(Size,Connectance,color=Network),size=0.4) + coord_cartesian(ylim=c(0,0.1)) + scale_color_brewer(palette= "Dark2",name="")#, labels=c("Fixed Sec.Ext.", "Potter","Meta", "No Sec.Ext.", "Prob. Sec.Ext.","Weddell" ))  
