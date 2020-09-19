@@ -1170,7 +1170,7 @@ sim_metaWebAssembly_lhs <- function(no_parms,no_sims,par_ranges,A,model_type=0){
   
   # simMetaWebAssembly <- data.frame()
   
-  tf <- 500
+  tf <- 1000
   sim <- data.frame()
   require(doParallel)
   cn <-detectCores()
@@ -1272,3 +1272,46 @@ calc_modularity_unconnected <- function(g)
   return(m)
 }
 
+#' Fit metaweb assembly model from simulations 
+#'
+#' @param webs data frame with info about the web we are fitting
+#' @param web_name name of the web we are fitting
+#' @param sims data frame with simulations
+#' @param tol  tolerance of the fitting for the plot
+#' @param plot logical if true make and save a plot of the fitting
+#'
+#' @return
+#' @export
+#'
+#' @examples
+fit_metaWebAssembly_model <- function(webs, web_name, sims, tol=0.1, plot=TRUE){
+
+  # Use this tolerance = tol to display a more detailed plot 
+  web <- webs %>% filter(Network==web_name)
+  metaweb_name <-  str_sub(web_name,1,3)
+  sims <- sims %>% filter(Metaweb == metaweb_name)
+  while (TRUE) {
+    
+    sel <- sims %>% group_by(model) %>% mutate(alpha=m/a) %>% filter(S>web$Size*(1-tol),S<web$Size*(1+tol)) %>% arrange(S)
+    if(nrow(sel)> 0) break
+    tol <- tol * 2
+  }
+  #
+  # Fit using the distance to S and C
+  #
+  sel <- sel %>% group_by(model,model_type) %>% mutate(distance = sqrt(((web$Size - S)/web$Size)^2 +  ((web$Connectance - C )/web$Connectance)^2), min_dist = (distance == min(distance))) %>% arrange(distance)
+  #sel %>% group_by(model,model_type) %>% filter(min_dist)
+  
+  fittedmw <- sel %>% filter(min_dist) %>% mutate(Network=web_name,fit_type="S-C")
+  
+  if(plot) {
+    print(
+      ggplot(sel, aes(S,C, color=min_dist)) + geom_point(alpha=0.5) + theme_bw() + 
+        geom_point(data=web, aes(Size,Connectance,color=Network)) + facet_wrap(~model)  + 
+        scale_color_viridis_d(name="",labels=c("Simulations", "Empirical","Fit" ))
+      )
+  
+    ggsave(paste0("Figures/Metaweb_fit_",web_name,"_byModel.png"),width=8,height=5,units="in",dpi=600)
+  }
+  return(fittedmw)
+}
