@@ -1315,3 +1315,9 @@ fit_metaWebAssembly_model <- function(webs, web_name, sims, tol=0.1, plot=TRUE){
   }
   return(fittedmw)
 }
+
+
+list_obj_sizes <- function(list_obj=ls(envir=.GlobalEnv)){ 	
+  sizes <- sapply(list_obj, function(n) object.size(get(n)), simplify = FALSE) 	
+  print(sapply(sizes[order(-as.integer(sizes))], function(s) format(s, unit = 'auto'))) 
+} 

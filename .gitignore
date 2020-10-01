@@ -6,3 +6,5 @@
 .dropbox
 .httr-oauth
 *.sublime-*
+*.pdf
+*.doc*

@@ -8,7 +8,9 @@ editor_options:
 
 ## Setup
 
-- I run the analysis setting `eval=True` or `eval=False` to run a particular chunk, not the whole Rmd, e.g. to fit the model first I read the dataset then I run the fitting procedure.  
+- I run the analysis setting `eval=True` or `eval=False` to run a particular chunk, not the whole Rmd. 
+
+- To run the simulations for each metaweb fit, I first read the dataset, turning on the corresponding chhunk, then I run the fitting procedure turning on that chunk.  
 
 ```{r setup, echo=FALSE }
 if(file.exists(".RData")) load(".RData")
@@ -45,17 +47,21 @@ dn <- dn[c(2,3,1)]
 ig_list <- readNetwork(dn,edgeListFormat=2)
 names(ig_list) <- c("Ant_Potter","Ant_Weddell","Ant_Meta")
 
-redl <- ig_list[["Ant_Meta"]] 
+redl <- ig_list[["Ant_Meta"]]
 sum(degree(redl,mode="in")==0) == websTbl %>% filter(Network=="Ant_Meta") %>% select(Basal)
 
 A <- get.adjacency(redl,sparse=F)
 dimA <- dim(A)[1]
+#
+# Add Meta web variable to use in simulations
+#
+Ant_Meta <- redl
 ```
 
 
 ## Read the Islands data set 
 
-```{r readIslands, eval=TRUE,echo=TRUE,message=FALSE }
+```{r readIslands, eval=FALSE,echo=TRUE,message=FALSE }
 
 #
 # Extract Weddell Sea from GATEWAy database
@@ -82,9 +88,52 @@ stopifnot(sum(degree(redl,mode="in")==0) == websTbl %>% filter(Network=="Isl_Met
 
 A <- get.adjacency(redl,sparse=F)
 dimA <- dim(A)[1]
+#
+# Add Meta web variable to use in simulations
+#
+Isl_Meta <- redl
+
 
 ```
 
+# Read the Lakes dataset 
+
+```{r readLakes, eval=TRUE,echo=TRUE,message=FALSE }
+
+require(tidyverse)
+
+#
+# Extract Weddell Sea from GATEWAy database
+#
+ga <- readr::read_csv("~/Dropbox/Projects/MetaWebsAssembly/Data/283_2_FoodWebDataBase_2018_12_10.csv",col_types = "icccccccccccccddddddccccccccddddddcddccddciicc")
+
+fw_name <- ga %>% filter(grepl("Havens",link.citation )) %>% distinct(foodweb.name)                
+Have_df <- ga %>% filter(grepl("Havens",link.citation )) %>% dplyr::select(con.taxonomy,con.taxonomy.level,res.taxonomy,res.taxonomy,foodweb.name)
+require(igraph)
+dtot1 <- as.matrix(Have_df %>% dplyr::select(res.taxonomy,con.taxonomy))
+have1  <- graph_from_edgelist(dtot1, directed  = T)
+
+df_list <- Have_df %>% group_split(foodweb.name)
+ig_list <- lapply(df_list, function(fw) {
+  d1 <- as.matrix(fw %>% dplyr::select(res.taxonomy,con.taxonomy))
+  graph_from_edgelist(d1, directed  = T)
+})
+
+names(ig_list) <- paste0("Lak_",str_replace_all(fw_name$foodweb.name," ","_"))
+ig_list <- c(ig_list, list(Lak_Meta=have1))
+
+redl <- ig_list[["Lak_Meta"]] 
+
+stopifnot(sum(degree(redl,mode="in")==0) == websTbl %>% filter(Network=="Lak_Meta") %>% select(Basal))
+
+A <- get.adjacency(redl,sparse=F)
+dimA <- dim(A)[1]
+#
+# Add Meta web variable to use in simulations
+#
+Lak_Meta <- redl
+
+```
 
 # Check the steady state of the model    
 
@@ -219,7 +268,7 @@ save_plot("Figures/Metaweb_steady_state_Weddell.png",gP5,base_width=6,base_heigh
 
 ```
 
-* The discrete time and continuous time models give the same results, this is a verification that the models are well implemented and that the timmings of events have no influence on the results. So we keep using the discrete time model.  
+* The discrete time and continuous time models give the same results, this is a verification that the models are well implemented and that the timmings of events have no influence on the results. So we use the continuous model (randomized order of events).  
 
 
 # Checking differences with m and a parameters, to know if we can use lambda=m/a as a unique parameter
@@ -378,7 +427,7 @@ ggsave("Figures/Metaweb_SecExtc_byModel.png",width=8,height=5,units="in",dpi=600
 
 metaweb_name <-  "Ant_Meta"
 
-# Check redl is the metaweb
+# Check redl is the metaweb 
 # 
 stopifnot(  sum(degree(redl,mode="in")==0) == websTbl %>% filter(Network==metaweb_name) %>% select(Basal) )
 
@@ -490,7 +539,7 @@ save.image()
 # Islands Metaweb Simulate a grid of parameters to select the best options
 
 
-```{r IslandSimulations150000tf1000, eval=TRUE,echo=F,message=T,warning=T}
+```{r IslandSimulations150000tf1000, eval=FALSE,echo=F,message=T,warning=T}
 
 metaweb_name <-  "Isl_Meta"
 
@@ -565,7 +614,7 @@ ggplot(simMetaWebAssembly %>% filter(Metaweb == metaweb_name), aes(S,L))+ geom_p
 
 ## Make the fit Islands
 
-```{r fitMetaWebPC50002, eval=FALSE,echo=F,message=T,warning=T}
+```{r fitMetaWebIslands, eval=FALSE,echo=F,message=T,warning=T}
 #
 #
 # Use this tolerance = tol to display a more detailed plot 
@@ -581,20 +630,141 @@ fmw <-  lapply(netnames, function(n){
 fittedMetaWeb <- bind_rows(fittedMetaWeb, fmw)
 
 
-knitr::kable(fittedMetaWeb %>% dplyr::select( Network,  everything(), -min_dist) %>% arrange(Network))
+knitr::kable(fittedMetaWeb %>% dplyr::select( Metaweb,Network,  everything(), -min_dist, -model_type) %>% arrange(Network), digits = 4)
 
 rm(netnames,fmw,X,dfA,AAdf,AAdf1,AAdf2,AAdf3,arguments,sim,sel,g3,gg,ravg,sel,redl,ig_list,web)
 save.image()
 
 ```
 
-FALTA HACER LAKES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+# Lakes Metaweb Simulate a grid of parameters to select the best options
+
+
+```{r LakesSimulations150000tf1000, eval=TRUE,echo=F,message=T,warning=T}
+
+metaweb_name <-  "Lak_Meta"
+
+# Check redl is the metaweb
+# 
+stopifnot(  sum(degree(redl,mode="in")==0) == websTbl %>% filter(Network==metaweb_name) %>% select(Basal) )
+
+metaweb_name <- str_sub(metaweb_name,1,3)
+
+A <- get.adjacency(redl,sparse=F)
+dimA <- nrow(A)
+
+# Simulate a grid of parameters to select the best options using latin hypercubic sampling
+#
+#
+# Use require(lhs)
+# https://cran.r-project.org/web/packages/lhs/vignettes/lhs_basics.html
+#
+# Combine parameters
+
+#    min(m)    max(m)      min(a)    max(a)
+#   0.100000     0.3         0.001     0.5
+
+require(lhs)
+
+# simulations with probability of secondary extinction == 1
+#
+# Discrete time
+par_ranges <- matrix(c(0.01, 0.3,0.001, 0.5, 1, 1),nrow=3,byrow = TRUE)
+sim <- sim_metaWebAssembly_lhs(2, 150000, par_ranges,A, 1 ) %>% mutate(model_type="Continuous",Metaweb=metaweb_name)
+
+simMetaWebAssembly <- bind_rows(simMetaWebAssembly,sim)
+saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
+
+# simulations with probability of secondary extinction != 1
+#
+# Discrete time
+par_ranges <- matrix(c(0.01, 0.3,0.001, 0.5, 0.1, 0.9),nrow=3,byrow = TRUE)
+sim <- sim_metaWebAssembly_lhs(3, 150000, par_ranges,A, 1) %>% mutate(model_type="Continuous",Metaweb=metaweb_name)
+
+simMetaWebAssembly <- bind_rows(simMetaWebAssembly,sim)
+saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
+
+
+# simulations with probability of secondary extinction == 0
+#
+# Discrete time
+par_ranges <- matrix(c(0.01, 0.3,0.001, 0.5, 0, 0),nrow=3,byrow = TRUE)
+sim <- sim_metaWebAssembly_lhs(2,  150000, par_ranges,A,1 ) %>% mutate(model_type="Continuous",Metaweb=metaweb_name)
+
+simMetaWebAssembly <- bind_rows(simMetaWebAssembly,sim)
+saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
+
+# Set the type of models according to probability of secondary extinction
+#
+#simMetaWebAssembly <- readRDS("Data/simulations_metaWebAssembly.rds")
+simMetaWebAssembly <- simMetaWebAssembly %>% mutate(model = ifelse(se==1, "Fixed", ifelse(se>0, "Prob", "No SecExt") ))
+knitr::kable(simMetaWebAssembly %>% group_by(Metaweb,model,model_type) %>% summarise(n=n()))
+
+# Save the updated dataset with all simulations and models: 3 metawebs, 3 models, 150000*9=1350000 records  
+#
+saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
+
+(p2 <- ggplot(simMetaWebAssembly %>% filter(Metaweb == metaweb_name), aes(S,C))+ geom_point(size=0.1,alpha=0.5) + theme_bw() + 
+  geom_point(data=websTbl %>% filter(grepl(metaweb_name,Network)), aes(Size,Connectance,color=Network),size=0.5) + 
+  coord_cartesian(ylim=c(0.05,.5)) + 
+  facet_wrap(~ model) + scale_color_brewer(palette= "Paired",guide=FALSE))
+
+ggplot(simMetaWebAssembly %>% filter(Metaweb == metaweb_name), aes(S,L))+ geom_point(size=0.1,alpha=0.5) + theme_bw() + 
+  geom_point(data=websTbl %>% filter(grepl(metaweb_name,Network)), aes(Size,Links,color=Network),size=0.3) + 
+  coord_cartesian(ylim=c(0,3000)) + 
+  facet_wrap(~model)  + scale_color_brewer(palette= "Dark2")
+
+# ggsave("Figures/Metaweb_Continuous_Discrete.pdf",width=8,height=5,units="in",dpi=600)
+
+rm(p1,p2,ga,have1,Have_df,dtot1,df_list,redl,simMetaWebAssembly)
+save.image()
+```
+
+## Make the fit Lakes
+
+```{r fitMetaWebLakes, eval=FALSE,echo=F,message=T,warning=T}
+#
+#
+# Use this tolerance = tol to display a more detailed plot 
+
+netnames <- names(ig_list)
+netnames <- netnames[ netnames != "Lak_Meta" ] 
+fmw <-  lapply(netnames, function(n){
+
+  fit_metaWebAssembly_model(websTbl, n, simMetaWebAssembly)
+  
+})
+# Correct inclusion of Lak_Meta
+# fmw[[51]] <- NULL
+fittedMetaWeb <- bind_rows(fittedMetaWeb, fmw)
+
+
+knitr::kable(fittedMetaWeb %>% ungroup() %>% dplyr::select( Metaweb,Network,  everything() )%>% select(-min_dist, -model_type,-fit_type) %>% arrange(Network), digits = 4)
+
+rm(netnames,fmw,X,dfA,AAdf,AAdf1,AAdf2,AAdf3,arguments,sim,sel,g3,gg,ga,ravg,sel,redl,ig_list,web,have1,Have_df)
+save.image()
+
+```
 
 # Make simulations with fitted parameters with S-C method
 
 * As connectivity is determines most of other network properties we fit by connectivity and number of species
 
+|model     |  n|      freq|
+|:---------|--:|---------:|
+|Fixed     | 14| 0.2456140|
+|No SecExt | 18| 0.3157895|
+|Prob      | 25| 0.4385965|
+
 ```{r fitMetaWebSims, eval=FALSE,echo=F,message=T,warning=T}
+
+knitr::kable( fittedMetaWeb %>% group_by(Metaweb,Network) %>% top_n(-1,distance) %>% ungroup() %>% group_by(model) %>% summarise(n=n()) %>% mutate(freq = n / sum(n)))
+
+Ant_Meta
+Lak_Meta
+Isl_Meta
+
 
 # Model with probability of secundary extinction se>0 & se<1
 #
@@ -607,8 +777,6 @@ mm <- rep(f$m[1],nrow(A))
 aa <- rep(f$a[1],nrow(A))
 se <- rep(f$se[1],nrow(A))
 AA <- metaWebNetAssembly(A,mm,aa,se,tf)
-dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))
-c(mean(dfA$S),mean(dfA$L),mean(dfA$L)/(mean(dfA$S)*mean(dfA$S)))
 
 # Running averages
 ravg <- tibble()
