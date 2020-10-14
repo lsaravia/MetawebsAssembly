@@ -217,7 +217,7 @@ calc_incoherence_z <- function(g,ti=NULL,nsim=1000) {
     require(future.apply)
     plan(multiprocess)
     
-    ind <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE,.packages='igraph',.export = 'calc_incoherence') %do% 
+    ind <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE,.packages='igraph',.export = 'calc_incoherence') %dopar% 
     {
       m<-calc_incoherence(redes.r[[i]])
       data.frame(Q=m$Q,mTI=m$mTI)
@@ -768,47 +768,56 @@ plot_NetAssemblyModel_eqw <- function(AA,timeW,fname=NULL,emp=NULL){
 
 #' Estimation of z-scores using Meta-Web assembly model as a null 
 #'
-#' @param red This is the reference network as an igraph object
+#' @param webs table with the parameters of the reference network
+#' @param web_name name of the reference network
 #' @param Adj Adyacency matrix for the meta-web
 #' @param mig Migration parameter of the meta-Web assembly model
 #' @param ext Exctinction parameter of the meta-Web assembly model
-#' @param ti  trophic level vector 
+#' @param sec Secondary exctinctions parameter of the meta-Web assembly model
 #' @param nsim number of simulations
+#' @param final_time number of steps of the simulations 
 #'
 #' @return
 #' @export
 #'
 #' @examples
-calc_modularity_metaWebAssembly<- function(red, Adj, mig,ext,nsim=1000,ti=NULL){
+calc_modularity_metaWebAssembly<- function(webs, web_name, Adj, mig,ext,sec,nsim=1000,final_time=1000){
   
-  t <- calc_topological_indices(red)
-  final_time <- 500  # Final time used in simulations of the meta-web assembly
+  t <- webs %>% filter(Network==web_name)
+
   mig <- rep(mig,nrow(Adj))
   ext <- rep(ext,nrow(Adj))
+  sec <- rep(sec,nrow(Adj))
   ind <- data.frame()
-  require(doParallel)
-  cn <-detectCores()
-  #  cl <- makeCluster(cn,outfile="foreach.log") # Logfile to debug 
-  cl <- makeCluster(cn)
-  registerDoParallel(cl)
-  ind <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE,.packages=c('MetaWebAssemblyModels','igraph'), 
-                 .export = c('Adj','ext','mig','final_time','calc_incoherence')) %dopar% 
+  require(doFuture)
+  registerDoFuture()
+  plan(multiprocess)
+  
+  ind <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE,.packages=c('meweasmo','igraph'), 
+                 .export = c('Adj','ext','mig','final_time')) %dopar% 
   {
-    AA <- metaWebNetAssembly(Adj,mig,ext,final_time)
+    AA <- metaWebNetAssemblyCT(Adj,mig,ext,sec,final_time)
     g <- graph_from_adjacency_matrix( AA$A, mode  = "directed")
     # Select only a connected subgraph graph 
     dg <- components(g)
     g <- induced_subgraph(g, which(dg$membership == which.max(dg$csize)))
-    mmm<-cluster_spinglass(g)
+    mmm <- calc_modularity_unconnected(g)
     modl <- mmm$modularity
     ngrp <- length(mmm$csize)
     clus.coef <- transitivity(g, type="Global")
     cha.path  <- average.path.length(g)
-    mmm<-calc_incoherence(g)
+    size <- vcount(g)
+    links <- ecount(g)
+    
+    mmm <- calc_incoherence(g)
+    qss <- calc_QSS(g,10000)
 
-    data.frame(modularity=modl,ngroups=ngrp,clus.coef=clus.coef,cha.path=cha.path,Q=mmm$Q,mTI=mmm$mTI)
+
+    bind_cols(data.frame(Size=size,Links=links,modularity=modl,ngroups=ngrp,clus.coef=clus.coef,cha.path=cha.path,Q=mmm$Q,mTI=mmm$mTI),qss)
   }
-  stopCluster(cl)
+  # stopCluster(cl)
+  plan(sequential)
+  
   ind <- ind %>% mutate(gamma=t$Clustering/clus.coef,lambda=t$PathLength/cha.path,SWness=gamma/lambda)
   # 99% confidence interval
   #
@@ -826,15 +835,28 @@ calc_modularity_metaWebAssembly<- function(red, Adj, mig,ext,nsim=1000,ti=NULL){
   qTI <- quantile(ind$mTI,c(0.005,0.995))
   mdlQ <- mean(ind$Q)
   mdlTI <- mean(ind$mTI)
+  # m <-calc_incoherence(red,ti)
   
-  m <- calc_incoherence(red,ti)
+  zQ <-  (t$Q- mdlQ)/sd(ind$Q)
+  zTI <- (t$mTI - mdlTI)/sd(ind$mTI) # the same as sd(ind$mTI)
+
+  zMO <- (t$Modularity- mmo)/sd(ind$modularity)
+  # 99% confidence interval
+  #
+  q_qss <- quantile(ind$QSS,c(0.005,0.995),na.rm = TRUE)
+  m_qss <- mean(ind$QSS)
+  q_meing <- quantile(ind$MEing,c(0.005,0.995),na.rm = TRUE)
+  m_meing <- mean(ind$MEing)
   
-  zQ <-  (m$Q- mdlQ)/sd(ind$Q)
-  zTI <- (m$mTI - mdlTI)/sd(ind$mTI) # the same as sd(ind$mTI)
-  
+  zQSS <- (t$QSS - m_qss)/sd(ind$QSS) 
+  zMEing <- (t$MEing - m_meing)/sd(ind$MEing)
+
   return(list(su=tibble(mdlCC=mcc,mdlCP=mcp,mdlMO=mmo,mdlGR=mgr,SWness=mSW,SWnessCI=mCI,MOlow=qmo[1],MOhigh=qmo[2],
                     GRlow=qgr[1],GRhigh=qgr[2], mdlQ=mdlQ,mdlTI=mdlTI,Qlow=qQ[1],Qhigh=qQ[2],
-                                                 TIlow=qTI[1],TIhigh=qTI[2],zQ=zQ,zTI=zTI,MOsd=sd(ind$modularity)),sim=ind))         
+                    TIlow=qTI[1],TIhigh=qTI[2],zQ=zQ,zTI=zTI,zMO=zMO,
+                    mdlQSS=m_qss,QSSlow=q_qss[1],QSShigh=q_qss[2],
+                    zQSS=zQSS,mdlMEing=m_meing,MEingLow=q_meing[1],MEingHigh=q_meing[2],zMEing=zMEing)
+              ,sim=ind))         
 }
 
 
@@ -1240,8 +1262,9 @@ calc_compare_motif <- function(redl, network_name,nsims=1000,rnd_seed=123){
 
 
 
-#' Calc modularity for taking into account possible unconected networks, and for the connected components using [igrap::cluster_spinglass]
-#' the same could be done using [igrap::cluster_infomap] that is much faster.
+#' Calculates modularity taking into account possible unconected networks,  
+#' using [igraph::cluster_spinglass] for the connected components. 
+#' The same could be done using [igraph::cluster_infomap] that is much faster.
 #'  
 #' @param g igraph Network
 #'
@@ -1284,7 +1307,7 @@ calc_modularity_unconnected <- function(g)
 #' @export
 #'
 #' @examples
-fit_metaWebAssembly_model <- function(webs, web_name, sims, tol=0.1, plot=TRUE){
+fit_metaWebAssembly_model <- function(webs, web_name, sims, tol=0.1, plot=FALSE){
 
   # Use this tolerance = tol to display a more detailed plot 
   web <- webs %>% filter(Network==web_name)
@@ -1317,7 +1340,95 @@ fit_metaWebAssembly_model <- function(webs, web_name, sims, tol=0.1, plot=TRUE){
 }
 
 
+#' Fit metaweb assembly model from simulations using abc and perform a gof test
+#'
+#' @param webs data frame with info about the web we are fitting
+#' @param web_name name of the web we are fitting
+#' @param sims data frame with simulations
+#' @param tol  tolerance of the fitting for the plot
+#' @param plot logical if true make and save a plot of the fitting
+#'
+#' @return
+#' @export
+#'
+#' @examples
+CI_metaWebAssembly_model <- function(webs, web_name, sims, tol=0.1, plot=TRUE){
+  
+  # Use this tolerance = tol to display a more detailed plot 
+  web <- webs %>% filter(Network==web_name)
+  metaweb_name <-  str_sub(web_name,1,3)
+  sims <- sims %>% filter(Metaweb == metaweb_name)
+  while (TRUE) {
+    
+    sel <- sims %>% group_by(model) %>% mutate(alpha=m/a) %>% filter(S>web$Size*(1-tol),S<web$Size*(1+tol)) %>% arrange(S)
+    if(nrow(sel)> 0) break
+    tol <- tol * 2
+  }
+  #
+  # Fit using the distance to S and C
+  #
+  sel <- sel %>% group_by(model,model_type) %>% mutate(distance = sqrt(((web$Size - S)/web$Size)^2 +  ((web$Connectance - C )/web$Connectance)^2), min_dist = (distance == min(distance)),type="Simulations") %>% arrange(distance) 
+  #sel %>% group_by(model,model_type) %>% filter(min_dist)
+  sel1 <- tibble(S=web$Size,C=web$Connectance,type="Empirical")
+  gof <- sel %>% group_modify(  ~ { 
+    gg <- summary(abc::gfit(target=sel1[1, 1:2], sumstat=.x[,c("S", "C")],nb.replicate=1000))
+    tibble(gof_pvalue= gg$pvalue)}) %>% mutate(Network=web_name,fit_type="S-C")
+  rej <- sel %>% group_modify(  ~ { 
+    a <- summary(abc::abc(target=sel1[1, 1:2], param = .x[,c("m","a","se")], sumstat=.x[,c("S", "C")], tol=0.05,method = "rejection"))
+    bind_rows(a[3,])})
+  rej <- inner_join(gof,rej)
+  if(plot) {
+    print(
+      
+      ggplot(sel , aes(S,C,color=type)) + geom_point(alpha=0.1) +  theme_bw() + stat_ellipse() +
+        facet_wrap(~model)  + geom_point(data=sel1, aes(S,C,color=type)) +
+        scale_color_viridis_d(name="",labels=c("Empirical","Simulations" ))
+    )
+    
+    ggsave(paste0("Figures/Metaweb_fit_",web_name,"_byModel.png"),width=8,height=5,units="in",dpi=600)
+  }
+  return(rej)
+}
+
 list_obj_sizes <- function(list_obj=ls(envir=.GlobalEnv)){ 	
   sizes <- sapply(list_obj, function(n) object.size(get(n)), simplify = FALSE) 	
   print(sapply(sizes[order(-as.integer(sizes))], function(s) format(s, unit = 'auto'))) 
 } 
+
+
+#' Simulate and Plot meta web assembly model
+#'
+#' @param meta igraph metaweb 
+#' @param fitted Data frame with the fitted parameters if more than one record select the first
+#' @param webst Data frame with the information about networks
+#' @param netname Name of the network
+#' 
+#' @return
+#' @export
+#'
+#' @examples
+simulate_plot_metaweb_assembly <- function(meta,fitted,webst,netname){
+  # Model with probability of secundary extinction se>0 & se<1
+  #
+  # Potter
+  #
+  A <- get.adjacency(meta,sparse=F)
+
+  tf <- 1000
+  set.seed(1110) 
+  f <- fitted %>% filter(Network==netname) 
+  mm <- rep(f$m[1],nrow(A))
+  aa <- rep(f$a[1],nrow(A))
+  se <- rep(f$se[1],nrow(A))
+  AA <- metaWebNetAssemblyCT(A,mm,aa,se,tf)
+  
+  figname <- paste0("Figures/",netname,"_metawebSim_avg.png")
+  # Running averages
+  plot_NetAssemblyModel_eqw(AA,50,figname,webst %>% filter(Network==netname))
+  
+  # Time series plot
+  figname <- paste0("Figures/",netname,"_metawebSim_ts.png")
+  plot_NetAssemblyModel(AA,300,figname,webst %>% filter(Network==netname))
+  
+  return(f[1,])
+}

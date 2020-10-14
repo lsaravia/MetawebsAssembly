@@ -30,9 +30,9 @@ if( require(multiweb) == FALSE)
 require(tidyverse)
 ```
 
-# Read the Antarctic Metawebs files with New Weddell from @Brose2019 (GATEWAy database)
+# Read the Antarctic Metawebs files with New Weddell without False Basal species 2020/10/08 
 
-```{r readAnt, eval=FALSE,echo=FALSE,message=FALSE }
+```{r readAnt, eval=TRUE,echo=FALSE,message=FALSE }
 #
 dn <- list.files("Data",pattern = "^[MWP].*\\.dat$")
 dn <- paste0("Data/", dn)
@@ -45,37 +45,19 @@ names(ig_list) <- c("Ant_Potter","Ant_Weddell","Ant_Meta")
 
 # QSS -  Modularity - SW - Analysis - Antarctic metaweb  
 
-```{r ModularityAnalysisAnt, eval=FALSE,echo=F,message=FALSE,warning=TRUE}
-#
-# Select local food web - Potter Cove
-#
-# dtot1 <- dtot %>% dplyr::select(Prey_name,Predator_name,Network) %>% group_by(Network)
-# ig_list <- lapply(group_split(dtot1), function(fw) {
-#   d1 <- as.matrix(fw %>% dplyr::select(Prey_name,Predator_name))
-#   g1 <- graph_from_edgelist(d1 , directed  = T)
-#   simplify(g1)
-# })
-# names(ig_list) <- group_keys(dtot1)$Network
+```{r ModularityAnalysisAnt08, eval=FALSE,echo=F,message=FALSE,warning=TRUE}
 
-simulations_ER <- tibble()
-websTbl <- tibble()
+# simulations_ER <- tibble()
+# websTbl <- tibble()
+
+simulations_ER <- simulations_ER %>% filter(!grepl("Ant",Network))
+websTbl <- websTbl %>% filter(!grepl("Ant",Network))
 lapply(names(ig_list), function(fw){
     res <- compare_with_ER(ig_list[[fw]], fw,1000)
-    simulations_ER <<- bind_rows(simulations_ErRen, res$sim)
+    simulations_ER <<- bind_rows(simulations_ER, res$sim)
     websTbl <<- bind_rows(websTbl, res$su)
 })
 
-#
-# Run modularity 
-#
-# set.seed(123)
-# modulos<-cluster_spinglass(redl)
-
-#
-# Add the modulos object to a vector  
-#
-# mod_by_red <- vector(mode="list", length=3)
-# mod_by_red[[1]] <- modulos
 rm(sim,dtot,dtot1,f)
 
 save.image()
@@ -84,9 +66,9 @@ require(pander)
 panderOptions('table.split.table',Inf)
 panderOptions('table.style', 'multiline')
 
-pandoc.table(t(websTbl %>% dplyr::select(Network,Size,Links,Connectance,PathLength,Clustering,SWness,SWnessCI,Q,zQ,Qlow,Qhigh,mTI,zTI,TIlow,TIhigh,Modularity,zMO,MOlow,MOhigh) %>% mutate_if(is.numeric, round, digits=4)))
+pandoc.table((websTbl %>% dplyr::select(Network,Size,Links,Connectance,PathLength,Clustering,SWness,SWnessCI,Q,zQ,Qlow,Qhigh,mTI,zTI,TIlow,TIhigh,Modularity,zMO,MOlow,MOhigh) %>% mutate_if(is.numeric, round, digits=4)))
 
-
+knitr::kable(websTbl %>% dplyr::select(Network,Size,Links,Connectance,PathLength,Clustering,SWness,SWnessCI,Q,zQ,Qlow,Qhigh,mTI,zTI,TIlow,TIhigh,Modularity,zMO,MOlow,MOhigh) %>% mutate_if(is.numeric, round, digits=4))
 
 ```
 
@@ -97,12 +79,15 @@ pandoc.table(t(websTbl %>% dplyr::select(Network,Size,Links,Connectance,PathLeng
 #
 # Motif
 #
-motif_ErRen <- tibble()
-all_motif_freq <- tibble()
+# motif_ER <- tibble()
+# all_motif_freq <- tibble()
+
+motif_ER <- motif_ER %>% filter(!grepl("Ant",Network))
+all_motif_freq <- all_motif_freq %>% filter(!grepl("Ant",Network))
 
 lapply(names(ig_list), function(fw){
     res <- calc_compare_motif(ig_list[[fw]], fw,1000)
-    motif_ER <<- bind_rows(motif_ErRen, res$moter)
+    motif_ER <<- bind_rows(motif_ER, res$moter)
     all_motif_freq <<- bind_rows(all_motif_freq, res$fallm)
 })
 
@@ -115,7 +100,7 @@ panderOptions('table.style', 'multiline')
 motif_ER <- motif_ER %>% dplyr::select(Network, everything())
 
 pandoc.table(t(motif_ER %>% mutate_if(is.numeric, round, digits=4)))
-
+knitr::kable(motif_ER %>% mutate_if(is.numeric, round, digits=4))
 ```
 
 # Analisis of motif frequency change across networks
@@ -127,7 +112,7 @@ require(dplyr)
 #
 # Build a dataframe with the relevant motifs
 # 
-pFM<- all_motif_freq %>% group_by(Network) %>% dplyr::select(X4:X6,X9) %>% rename(EC=X4,AC=X5,TT=X6,OM=X9) %>% mutate(Tot=sum(EC,AC,TT,OM)) %>% ungroup()
+pFM<- all_motif_freq %>% filter(grepl("Ant",Network)) %>% group_by(Network) %>% dplyr::select(X4:X6,X9) %>% rename(EC=X4,AC=X5,TT=X6,OM=X9) %>% mutate(Tot=sum(EC,AC,TT,OM)) %>% ungroup()
 
 require(tidyr)
 
@@ -147,6 +132,7 @@ pFM1 <- pFM %>%  dplyr::select(Network:OM) %>%gather(motif,count,EC:OM)
 model1 <- glm(count~Network*motif,poisson, data=pFM1)
 summary(model1)
 model2 <- glm(count~Network+motif,poisson, data=pFM1)
+summary(model2)
 
 anova(model1,model2,test="Chi")
 
@@ -154,16 +140,16 @@ anova(model1,model2,test="Chi")
 # Pearson Chi-squared independence 
 #
 
-x <- all_motif_freq %>% dplyr::select(X4:X6,X9) %>% rename(EC=X4,AC=X5,TT=X6,OM=X9)
+x <- all_motif_freq %>% filter(grepl("Ant",Network))%>% dplyr::select(X4:X6,X9) %>% rename(EC=X4,AC=X5,TT=X6,OM=X9)
 x <- as.matrix(x)
 rownames(x) <- c("Potter Cove","Weddell Sea","Meta-web")
 require(RColorBrewer)
-colnet <- brewer.pal(11,"RdYlGn")[c(1,11)]
-#png("Figures/NetworkByMotifFreq.png",width=6,height=6,units="in",res=600)
+colnet <- brewer.pal(4,"Paired")[c(1,4)]
+png("Figures/Ant_NetworkByMotifFreq.png",width=7,height=6,units="in",res=600)
 par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(2, 2, 0, 2))
 colnames(x) <- c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")
 assocplot(t(x),col=colnet)
-#dev.off()
+dev.off()
 #require(vcd)
 #assoc(x, main = "Relation Network and motif", shade = TRUE)
 
@@ -187,7 +173,7 @@ The role is described by two parameters: (i) the standardized within-module degr
 connectivity participation coefficient PC. The z-score reflects how well a species is connected to other species inside the module relative to other species within its own module. The PC parameter estimates the distribution of a species’ connections across the modules.
 
 
-```{r topologicalRoles, eval=FALSE,echo=F,message=FALSE,warning=T}
+```{r topologicalRoles, eval=TRUE,echo=F,message=FALSE,warning=T}
 
 source("R/network_fun.r")
 
@@ -209,8 +195,10 @@ future_lapply( seq_len(length(ig_list)), function(i){
 plan(sequential)
 
 
-topo_roles <- tibble()
-hub_conn <- tibble()
+# topo_roles <- tibble()
+# hub_conn <- tibble()
+topo_roles <- topo_roles %>% filter(!grepl("Ant",Network))
+hub_conn <- hub_conn %>% filter(!grepl("Ant",Network))
 
 lapply(names(ig_list), function(fw){
     topo_roles <<- bind_rows(topo_roles,incremental_topoRoles(ig_list[[fw]], fw))
@@ -321,7 +309,6 @@ tRD <- tibble()
 lapply(names(ig_list), function(fw){
     tRD <<-  bind_rows(tRD, getTopoRolesTLdegree(ig_list[[fw]], fw, hub_conn))
 })
-
 topoRolesDegree <- tRD
 
 topoRolesDegree %>% group_by(Network,type) %>% summarise(n=n())
@@ -333,11 +320,11 @@ panderOptions('table.split.table',Inf)
 panderOptions('table.style', 'multiline')
 
 # Change names of networks
-topoRolesDegree$Network <- factor(topoRolesDegree$Network, levels=c("Ant_Potter", "Ant_Weddell","Ant_Meta"))
-levels(topoRolesDegree$Network) <- c("Potter","Weddell","Meta-web")
+# topoRolesDegree$Network <- factor(topoRolesDegree$Network, levels=c("Ant_Potter", "Ant_Weddell","Ant_Meta"))
+# levels(topoRolesDegree$Network) <- c("Potter","Weddell","Meta-web")
 
 pandoc.table(topoRolesDegree %>% filter(type=="hubcon" | type=="modhub" ) %>% arrange(type,Network,trophLevel) %>%  dplyr::select(type,Network,name,preys,predators,trophLevel) %>% mutate_if(is.numeric, round, digits=2))
-
+write_csv(topoRolesDegree,"Data/Ant_topoRoles_degree.csv")
 # 
 #
 
@@ -689,7 +676,7 @@ chisq.test(x,simulate.p.value = T, B=10000)
 
 # Lakes Topological Roles
 
-```{r LakesTopologicalRoles, eval=TRUE,echo=F,message=FALSE,warning=T}
+```{r LakesTopologicalRoles, eval=FALSE,echo=F,message=FALSE,warning=T}
 
 
 #
@@ -839,7 +826,7 @@ save_plot("Figures/Isl_PropMotif_Roles.png",gP6,base_width=8,base_height=5,dpi=6
 
 # Lakes Plots Topological Roles proportions test and plot
 
-```{r IsltopologicalRolesTestPlot, eval=FALSE,echo=F,message=T,warning=T}
+```{r LaktopologicalRolesTestPlot, eval=FALSE,echo=F,message=T,warning=T}
 require(ggplot2)
 #
 #

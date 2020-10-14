@@ -37,7 +37,7 @@ source("R/network_fun.r")
 
 # Read Antarctic Networks
 
-```{r readAntarctic, eval=FALSE,echo=F,message=T,warning=T}
+```{r readAntarctic, eval=TRUE,echo=F,message=T,warning=T}
 #
 # Read the Antarctic Metawebs files with New Weddell from @Brose2019 (GATEWAy database)
 #
@@ -48,7 +48,7 @@ ig_list <- readNetwork(dn,edgeListFormat=2)
 names(ig_list) <- c("Ant_Potter","Ant_Weddell","Ant_Meta")
 
 redl <- ig_list[["Ant_Meta"]]
-sum(degree(redl,mode="in")==0) == websTbl %>% filter(Network=="Ant_Meta") %>% select(Basal)
+sum(degree(redl,mode="in")==0) == websTbl %>% filter(Network=="Ant_Meta") %>% dplyr::select(Basal)
 
 A <- get.adjacency(redl,sparse=F)
 dimA <- dim(A)[1]
@@ -84,7 +84,7 @@ ig_list <- c(ig_list, list(Isl_Meta=have1))
 
 redl <- ig_list[["Isl_Meta"]] 
 
-stopifnot(sum(degree(redl,mode="in")==0) == websTbl %>% filter(Network=="Isl_Meta") %>% select(Basal))
+stopifnot(sum(degree(redl,mode="in")==0) == websTbl %>% filter(Network=="Isl_Meta") %>% dplyr::select(Basal))
 
 A <- get.adjacency(redl,sparse=F)
 dimA <- dim(A)[1]
@@ -98,7 +98,7 @@ Isl_Meta <- redl
 
 # Read the Lakes dataset 
 
-```{r readLakes, eval=TRUE,echo=TRUE,message=FALSE }
+```{r readLakes, eval=FALSE,echo=TRUE,message=FALSE }
 
 require(tidyverse)
 
@@ -124,7 +124,7 @@ ig_list <- c(ig_list, list(Lak_Meta=have1))
 
 redl <- ig_list[["Lak_Meta"]] 
 
-stopifnot(sum(degree(redl,mode="in")==0) == websTbl %>% filter(Network=="Lak_Meta") %>% select(Basal))
+stopifnot(sum(degree(redl,mode="in")==0) == websTbl %>% filter(Network=="Lak_Meta") %>% dplyr::select(Basal))
 
 A <- get.adjacency(redl,sparse=F)
 dimA <- dim(A)[1]
@@ -423,21 +423,15 @@ ggsave("Figures/Metaweb_SecExtc_byModel.png",width=8,height=5,units="in",dpi=600
 # Antarctic Metaweb Simulate a grid of parameters to select the best options
 
 
-```{r makeSimulations150000tf1000, eval=FALSE,echo=F,message=T,warning=T}
+```{r makeSimulations150000tf1000, eval=TRUE,echo=F,message=T,warning=T}
 
-metaweb_name <-  "Ant_Meta"
+# simMetaWebAssembly <- tibble()
 
-# Check redl is the metaweb 
-# 
-stopifnot(  sum(degree(redl,mode="in")==0) == websTbl %>% filter(Network==metaweb_name) %>% select(Basal) )
-
-metaweb_name <- str_sub(metaweb_name,1,3)
+# simMetaWebAssembly <- readRDS("Data/simulations_metaWebAssembly.rds")
+# simMetaWebAssembly <- simMetaWebAssembly %>% filter(Metaweb!="Ant") 
+# simMetaWebAssembly %>% count(Metaweb,model_type,model)
 
 
-A <- get.adjacency(redl,sparse=F)
-dimA <- nrow(A)
-
-# Simulate a grid of parameters to select the best options using latin hypercubic sampling
 #
 #
 # Use require(lhs)
@@ -449,7 +443,7 @@ dimA <- nrow(A)
 #   0.100000     0.3         0.001     0.5
 
 require(lhs)
-simMetaWebAssembly <- tibble()
+
 # simulations with probability of secondary extinction == 1
 #
 # Discrete time
@@ -480,7 +474,7 @@ saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
 
 # Set the type of models according to probability of secondary extinction
 #
-simMetaWebAssembly <- readRDS("Data/simulations_metaWebAssembly.rds")
+# simMetaWebAssembly <- readRDS("Data/simulations_metaWebAssembly.rds")
 simMetaWebAssembly <- simMetaWebAssembly %>% mutate(model = ifelse(se==1, "Fixed", ifelse(se>0, "Prob", "No SecExt") ))
 knitr::kable(simMetaWebAssembly %>% group_by(model,model_type) %>% summarise(n=n()))
 
@@ -514,6 +508,16 @@ save.image()
 fittedMetaWeb <- fit_metaWebAssembly_model(websTbl, "Ant_Potter", simMetaWebAssembly)
 fittedMetaWeb <- bind_rows(fittedMetaWeb, fit_metaWebAssembly_model(websTbl, "Ant_Weddell", simMetaWebAssembly))
 
+## Perform ABC and GOF
+#
+netnames <- names(ig_list)
+netnames <- netnames[ netnames != "Ant_Meta" ] 
+
+fmw <-  lapply(netnames, function(n){
+
+  CI_metaWebAssembly_model(websTbl, n, simMetaWebAssembly)
+})
+fittedMetaWeb_gof <- bind_rows(fittedMetaWeb_gof,fmw)
 
 knitr::kable(fittedMetaWeb %>% dplyr::select( Network,  everything(), -min_dist) %>% arrange(Network))
 
@@ -624,11 +628,17 @@ netnames <- netnames[ netnames != "Isl_Meta" ]
 fmw <-  lapply(netnames, function(n){
 
   fit_metaWebAssembly_model(websTbl, n, simMetaWebAssembly)
-  
 })
 
 fittedMetaWeb <- bind_rows(fittedMetaWeb, fmw)
 
+## Perform ABC and GOF
+#
+fmw <-  lapply(netnames, function(n){
+
+  CI_metaWebAssembly_model(websTbl, n, simMetaWebAssembly)
+})
+fittedMetaWeb_gof <- bind_rows(fittedMetaWeb_gof,fmw)
 
 knitr::kable(fittedMetaWeb %>% dplyr::select( Metaweb,Network,  everything(), -min_dist, -model_type) %>% arrange(Network), digits = 4)
 
@@ -641,7 +651,7 @@ save.image()
 # Lakes Metaweb Simulate a grid of parameters to select the best options
 
 
-```{r LakesSimulations150000tf1000, eval=TRUE,echo=F,message=T,warning=T}
+```{r LakesSimulations150000tf1000, eval=FALSE,echo=F,message=T,warning=T}
 
 metaweb_name <-  "Lak_Meta"
 
@@ -735,10 +745,19 @@ fmw <-  lapply(netnames, function(n){
   fit_metaWebAssembly_model(websTbl, n, simMetaWebAssembly)
   
 })
-# Correct inclusion of Lak_Meta
-# fmw[[51]] <- NULL
+
 fittedMetaWeb <- bind_rows(fittedMetaWeb, fmw)
 
+## Perform ABC and GOF
+#
+fmw <-  lapply(netnames, function(n){
+
+  CI_metaWebAssembly_model(websTbl, n, simMetaWebAssembly)
+})
+fittedMetaWeb_gof <- bind_rows(fittedMetaWeb_gof,fmw)
+
+# 
+fittedMetaWeb_gof %>% filter(gof_pvalue>0.1) %>% count(model)
 
 knitr::kable(fittedMetaWeb %>% ungroup() %>% dplyr::select( Metaweb,Network,  everything() )%>% select(-min_dist, -model_type,-fit_type) %>% arrange(Network), digits = 4)
 
@@ -761,140 +780,75 @@ save.image()
 
 knitr::kable( fittedMetaWeb %>% group_by(Metaweb,Network) %>% top_n(-1,distance) %>% ungroup() %>% group_by(model) %>% summarise(n=n()) %>% mutate(freq = n / sum(n)))
 
-Ant_Meta
-Lak_Meta
-Isl_Meta
+# Ant_Meta
+# Lak_Meta
+# Isl_Meta
 
-
-# Model with probability of secundary extinction se>0 & se<1
-#
-# Potter
-#
-tf <- 500
-set.seed(1110) 
-f <- fittedMetaWeb %>% filter(Network=="Potter")
-mm <- rep(f$m[1],nrow(A))
-aa <- rep(f$a[1],nrow(A))
-se <- rep(f$se[1],nrow(A))
-AA <- metaWebNetAssembly(A,mm,aa,se,tf)
-
-# Running averages
-ravg <- tibble()
-ravg <- bind_rows( ravg, plot_NetAssemblyModel_eqw(AA,50,"Figures/PotterCove_Meta-webSim_avg_Prob.pdf",websTbl[1,]) %>% mutate(Network = "Potter"))
-
-# Time series plot
-plot_NetAssemblyModel(AA,300,"Figures/PotterCove_Meta-webSim_ts_Prob.pdf",websTbl[1,])
 
 #
-# Weddell 
+# Potter - No SecExt (best fit)
 #
+simulate_plot_metaweb_assembly(Ant_Meta,fittedMetaWeb,websTbl,"Ant_Potter")
 
-f <- fittedMetaWeb %>% filter(Network=="Weddell")
-
-# Modelo Prob
-# 
-tf <- 500
-set.seed(1110)
-mm <- rep(f$m[3],nrow(A))
-aa <- rep(f$a[3],nrow(A))
-se <- rep(f$se[3],nrow(A))
-AA <- metaWebNetAssembly(A,mm,aa,se,tf)
-dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))
-c(mean(dfA$S),mean(dfA$L),mean(dfA$L)/(mean(dfA$S)*mean(dfA$S)))
-ravg <- bind_rows( ravg, plot_NetAssemblyModel_eqw(AA,50,"Figures/Weddell_Meta-webSim_avg_Prob.pdf",websTbl[2,]) %>% mutate(Network = "Weddell"))
-plot_NetAssemblyModel(AA,300,"Figures/Weddell_Meta-webSim_ts_Prob.pdf",websTbl[2,])
-
-
-
-
-rm(X,dfA,AAdf,AAdf1,AAdf2,AAdf3,arguments,sim,ravg,dfA,dtot,dtot1,cl,sel,redl,e,ee,ext,aa,m,mig,mm,se,colTL,cn,colnet)
-save.image()
-
-  # Plot of five simulations 
 #
-gg <- plot_NetAssemblyModel(AA,100)
-
-# Plot of S and C for Weddell 
+# Weddell - Prob
 #
-require(cowplot)
-g3 <- plot_grid(gg[[1]],gg[[3]],labels = c("A","B"),align = "h")
-save_plot("Figures/Weddell_Meta-webSim_SC.png",g3,base_width=8,base_height=5,dpi=300)
+simulate_plot_metaweb_assembly(Ant_Meta,fittedMetaWeb,websTbl,"Ant_Weddell")
 
+#
+# Isl_FloridaIslandE3 - Prob
+#
+simulate_plot_metaweb_assembly(Isl_Meta,fittedMetaWeb,websTbl,"Isl_FloridaIslandE3")
+
+#
+# Isl_FloridaIslandE9 - Fixed
+#
+simulate_plot_metaweb_assembly(Isl_Meta,fittedMetaWeb,websTbl,"Isl_FloridaIslandE9")
+
+#
+# Lak_Hoel_lake - Fixed
+#
+simulate_plot_metaweb_assembly(Lak_Meta,fittedMetaWeb,websTbl,"Lak_Hoel_lake")
+
+
+#
+# Lak_Federation_lake - Fixed
+#
+simulate_plot_metaweb_assembly(Lak_Meta,fittedMetaWeb,websTbl,"Lak_Federation_lake")
 
 ```
 
 
 
-# Local web (Potter Cove) compared to  metaWeb assembly model
+# Local web (Potter Cove) compared to  metaWeb assembly model (TEST)
 
-* Ideas to compare is to select the simulations with the same C or Same S ?????
 
-```{r PotterGlobalMetaWebAssembly, eval=F,echo=F,message=T,warning=T}
+```{r PotterGlobalMetaWebAssembly, eval=FALSE,echo=F,message=T,warning=T}
 
-#
-# Read data and trim species names to avoid duplicates 
-#
-# dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
-# dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
-# 
-# #
-# # Select meta web 
-# #
-# dtot1 <- as.matrix(dtot %>% filter(Network=="Meta") %>% dplyr::select(Prey_name,Predator_name))
-# redl <- graph_from_edgelist(dtot1, directed  = T)
-# # Delete cannibalistic 
-# redl <- simplify(redl)
-# sum(degree(redl,mode="in")==0)
-# 
-redl <- meta 
-sum(degree(redl,mode="in")==0) == websTbl$Basal[3]
-
-A <- get.adjacency(redl,sparse=F)
-dim(A)                             
+A <- get.adjacency(Ant_Meta,sparse=F)
+      
 
 #
 # Select Local food web 
 # 
-redl <- pott 
-sum(degree(redl,mode="in")==0) == websTbl$Basal[1]
-
-# dtot1 <- as.matrix(dtot %>% filter(Network=="Local") %>% dplyr::select(Prey_name,Predator_name))
-# redl <- graph_from_edgelist(dtot1, directed  = T)
-
-#
-# Calculate Trophic Position
-#
-require(NetIndices)
-TL <-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Fresh detritus","Aged detritus","Necromass"))
-
-#
-# Compare modularity 
-#
-require(tictoc)
-fittedMetaWeb$m[1]
-fittedMetaWeb$a[1]
-
-tic()
-tbl <- calc_modularity_metaWebAssembly(redl, A, fittedMetaWeb$m[1],fittedMetaWeb$a[1],1000,TL)
-toc()
+net_name <- pull( websTbl %>% filter(!ismeta) %>% dplyr::select(Network) )
+f <- fittedMetaWeb %>% filter(Network == net_name[1])
+tictoc::tic()
+tbl <- calc_modularity_metaWebAssembly(websTbl, net_name[1], A, f$m[1], f$a[1], f$se[1],1000)
+tictoc::toc()
 sim <- tbl$sim
-tblMdlWeb <- tbl$su %>% mutate(Network="Potter") %>% inner_join(dplyr::select(websTbl,Size:Modularity), by="Network")
 
-#
-# Calculate z-score of modularity
-#
-tblMdlWeb <- tblMdlWeb %>% mutate(zMO= (Modularity- mdlMO)/MOsd, zGR=(Groups-mdlGR)/(GRhigh-GRlow)*2)
-
-websAssemblyModel <- dplyr::select(tblMdlWeb,Network:Modularity,mdlCC:zTI,zMO:zGR)
+tblMdlWeb <- tbl$su %>% mutate(Network=net_name[1],model=f$model[1]) %>% inner_join(dplyr::select(websTbl,Network:Modularity)) %>%
+  dplyr::select(Network:Modularity,mdlCC:zMEing)
 
 #
 # Correct the calculation of z-score
 #
-websAssemblyModel$mdlMO[2] <- with(tblMdlWeb,mdlMO)
-websAssemblyModel$zMO[2] <- with(tblMdlWeb, (Modularity- mdlMO)/MOsd)
-rm(tbl)
-
-websAssemblyModelSim <-websAssemblyModelSim %>% bind_rows(sim %>% mutate(Network="Potter"))  
+if(!exists("websAssemblyModel")) websAssemblyModel <- tibble()
+websAssemblyModel <- websAssemblyModel %>% bind_rows(tblMdlWeb) 
+if( !exists("websAssemblyModelSim")) websAssemblyModelSim <- tibble()
+websAssemblyModelSim <-websAssemblyModelSim %>% bind_rows(sim %>% mutate(Network=net_name[1],model=f$model[1]))  
+rm(sim,tblMdlWeb,tbl,f)
 save.image()
 
 
@@ -903,48 +857,34 @@ save.image()
 
 
 
-# Regional web (Weddell) compared to  metaWeb assembly model 
+# Antarctic Metaweb assembly model 
+
+```{r AntarcticMetaWebAssembly, eval=FALSE,echo=F,message=T,warning=T}
+if(!exists("websAssemblyModel")) websAssemblyModel <- tibble()
+if(!exists("websAssemblyModelSim")) websAssemblyModelSim <- tibble()
+
+A <- get.adjacency(Ant_Meta,sparse=F)
+net_name <- pull( websTbl %>% filter(!ismeta,Metaweb=="Ant") %>% dplyr::select(Network) )
+model_name <- "Prob"
+
+lapply(net_name, function(fw){ 
+    f <- fittedMetaWeb %>% filter(Network == fw, model==model_name)
+    tbl <- calc_modularity_metaWebAssembly(websTbl, fw, A, f$m[1], f$a[1], f$se[1],1000)
+    sim <- tbl$sim
+
+    tblMdlWeb <- tbl$su %>% mutate(Network=fw,model=model_name) %>% inner_join(dplyr::select(websTbl,Network:Modularity)) %>%
+                            dplyr::select(Network:Modularity,mdlCC:zMEing)
+
+    websAssemblyModel <<- websAssemblyModel %>% bind_rows(tblMdlWeb) 
+    websAssemblyModelSim <<-websAssemblyModelSim %>% bind_rows(sim %>% mutate(Network=fw,model=model_name))  
+})
+save.image()
+
+```
+
+## Plots of the distribution of simulated indices
 
 ```{r WeddellGlobalMetaWebAssembly, eval=F,echo=F,message=T,warning=T}
-
-#
-# Select "Regional" food web 
-#
-dtot1 <- as.matrix(dtot %>% filter(Network=="Regional") %>% dplyr::select(Prey_name,Predator_name))
-redl <- graph_from_edgelist(dtot1, directed  = T)
-redl <- simplify(redl)
-
-
-require(NetIndices)
-TL<-TrophInd(get.adjacency(redl,sparse=F),Dead=c("Detritus","Necromass"))
-
-#
-# Compare modularity 
-#
-require(tictoc)
-m <- 0.084 
-a <- 0.076
-tic()
-tbl <- calc_modularity_metaWebAssembly(redl, A, m,a,1000,TL)
-toc()
-sim <- tbl$sim
-
-tblMdlWeb <- tbl$su %>% mutate(Network="Weddell") %>% inner_join(dplyr::select(websTbl,Size:Modularity), by="Network")
-
-#
-# Calculate z-score of modularity
-#
-tblMdlWeb <- tblMdlWeb %>% mutate(zMO= (Modularity- mdlMO)/MOsd, zGR=(Groups-mdlGR)/(GRhigh-GRlow)*2)
-
-websAssemblyModel <- bind_rows(websAssemblyModel, dplyr::select(tblMdlWeb,Network:Modularity,mdlCC:zTI,zMO:zGR))
-
-#
-# Correct the calculation of z-score
-#
-# websAssemblyModel$mdlMO[1] <- with(tblMdlWeb,mdlMO)
-# websAssemblyModel$zMO[1] <- with(tblMdlWeb, (Modularity- mdlMO)/MOsd)
-websAssemblyModelSim <-  sim %>% mutate(Network="Weddell")
-
 
 #
 # Plots of the distribution of simulated indices
