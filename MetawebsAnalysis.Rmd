@@ -160,7 +160,7 @@ chisq.test(x,simulate.p.value = T, B=10000)
 #         replicates)
 # 
 # data:  x
-# X-squared = 8449.1, df = NA, p-value = 9.999e-05
+# X-squared = 8730.5, df = NA, p-value = 9.999e-05
 
 ```
  
@@ -429,7 +429,7 @@ require(ggplot2)
 gP1 <- ggplot(pFM1,aes(x=Network,y=count,fill=motif)) + geom_bar(stat="identity") + 
   scale_fill_brewer(palette = "RdYlGn", breaks=c("EC","AC","TT","OM"), name="", labels=c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")) + 
   xlab("") + ylab("Proportion") + theme_bw() + theme(legend.position="bottom")
-#ggsave("Figures/MotifProportionByNetwork.png",width=6,height=6,units="in",dpi=600)
+#ggsave("Figures/Isl_MotifProportionByNetwork.png",width=6,height=8,units="in",dpi=600)
 
 
 #
@@ -437,16 +437,17 @@ gP1 <- ggplot(pFM1,aes(x=Network,y=count,fill=motif)) + geom_bar(stat="identity"
 #
 
 x <- all_motif_freq %>% filter(grepl("Isl_", Network)) %>% dplyr::select(Network,X4:X6,X9) %>% rename(EC=X4,AC=X5,TT=X6,OM=X9)
-rnames <- x$Network
+rnames <- x$Network 
+rnames <- c("E1","E2","E3","E7","E9","Islands\nMeta")
 x <- as.matrix(x[,2:5])
 rownames(x) <- rnames
 require(RColorBrewer)
-colnet <- brewer.pal(11,"RdYlGn")[c(1,11)]
-#png("Figures/NetworkByMotifFreq.png",width=6,height=6,units="in",res=600)
+colnet <- brewer.pal(4,"Paired")[c(1,4)]
+png("Figures/Isl_NetworkByMotifFreq.png",width=6,height=6,units="in",res=600)
 par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(2, 2, 0, 2))
 colnames(x) <- c("Exploitative\ncompetition", "Apparent\ncompetition", "Tri-trophic\nchain","Omnivory")
 assocplot(t(x),col=colnet)
-#dev.off()
+dev.off()
 
 chisq.test(x,simulate.p.value = T, B=10000)
 
@@ -721,7 +722,10 @@ tbl <- table(tbl$Network,tbl$type)
 tbl1 <- tbl[c(1,3,2),] 
 
 chisq.test(tbl,simulate.p.value = TRUE, B=10000)
-
+# 	Pearson's Chi-squared test with simulated p-value (based on 10000 replicates)
+# 
+# data:  tbl
+# X-squared = 65.148, df = NA, p-value = 9.999e-05
 
 require(ggplot2)
 require(scales)
@@ -775,7 +779,10 @@ tbl <- table(tbl$Network,tbl$type)
 tbl1 <- tbl[c(1,3,2),] 
 
 chisq.test(tbl,simulate.p.value = TRUE, B=10000)
-
+# 	Pearson's Chi-squared test with simulated p-value (based on 10000 replicates)
+# 
+# data:  tbl
+# X-squared = 516.15, df = NA, p-value = 9.999e-05
 
 require(ggplot2)
 require(scales)
@@ -884,7 +891,9 @@ gP7 <- gP7 +  theme(legend.key.width = unit(.5, "cm"))
 gP8 <- gP8 +  theme(legend.key.width = unit(.5, "cm"))
 
 require(cowplot)
-gP9 <- plot_grid(gP7,gP8,labels = c("A","B"),align = "h")
+gP9 <- plot_grid(gP7 + theme(legend.text=element_text(size=7)),
+                 gP8 + theme(axis.text.y=element_blank(),legend.text=element_text(size=7)),
+                 labels = c("A","B"),align = "h",rel_widths = c(1.3,1))
 save_plot("Figures/Lak_PropMotif_Roles.png",gP9,base_width=8,base_height=5,dpi=600)
 
 # !!! FALTA ELMINAR LAS LEYENDAS DEL EJE Y EN LOS PLTS DE LA DERECHA

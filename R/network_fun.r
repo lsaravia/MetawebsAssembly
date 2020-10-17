@@ -810,31 +810,29 @@ calc_modularity_metaWebAssembly<- function(webs, web_name, Adj, mig,ext,sec,nsim
     links <- ecount(g)
     
     mmm <- calc_incoherence(g)
-    qss <- calc_QSS(g,10000)
+    #qss <- calc_QSS(g,10000,ncores=4)
 
-
-    bind_cols(data.frame(Size=size,Links=links,modularity=modl,ngroups=ngrp,clus.coef=clus.coef,cha.path=cha.path,Q=mmm$Q,mTI=mmm$mTI),qss)
+    bind_cols(data.frame(Size=size,Links=links,modularity=modl,ngroups=ngrp,clus.coef=clus.coef,cha.path=cha.path,Q=mmm$Q,mTI=mmm$mTI))#,qss)
   }
-  # stopCluster(cl)
   plan(sequential)
   
   ind <- ind %>% mutate(gamma=t$Clustering/clus.coef,lambda=t$PathLength/cha.path,SWness=gamma/lambda)
   # 99% confidence interval
   #
-  qSW <- quantile(ind$SWness,c(0.005,0.995))
-  qmo <- quantile(ind$modularity,c(0.005,0.995))
-  qgr <- quantile(ind$ngroups,c(0.005,0.995))
-  mcc <- mean(ind$clus.coef)
-  mcp <- mean(ind$cha.path)
-  mmo <- mean(ind$modularity)
-  mgr <- mean(ind$ngroups)
-  mSW <- mean(t$Clustering/mcc*mcp/t$PathLength)
+  qSW <- quantile(ind$SWness,c(0.005,0.995), na.rm = TRUE)
+  qmo <- quantile(ind$modularity,c(0.005,0.995), na.rm = TRUE)
+  qgr <- quantile(ind$ngroups,c(0.005,0.995), na.rm = TRUE)
+  mcc <- mean(ind$clus.coef, na.rm = TRUE)
+  mcp <- mean(ind$cha.path, na.rm = TRUE)
+  mmo <- mean(ind$modularity, na.rm = TRUE)
+  mgr <- mean(ind$ngroups, na.rm = TRUE)
+  mSW <- mean(t$Clustering/mcc*mcp/t$PathLength, na.rm = TRUE)
   mCI <- 1+(qSW[2]-qSW[1])/2  
 
-  qQ <- quantile(ind$Q,c(0.005,0.995))
-  qTI <- quantile(ind$mTI,c(0.005,0.995))
-  mdlQ <- mean(ind$Q)
-  mdlTI <- mean(ind$mTI)
+  qQ <- quantile(ind$Q,c(0.005,0.995), na.rm = TRUE)
+  qTI <- quantile(ind$mTI,c(0.005,0.995), na.rm = TRUE)
+  mdlQ <- mean(ind$Q, na.rm = TRUE)
+  mdlTI <- mean(ind$mTI, na.rm = TRUE)
   # m <-calc_incoherence(red,ti)
   
   zQ <-  (t$Q- mdlQ)/sd(ind$Q)
@@ -843,19 +841,20 @@ calc_modularity_metaWebAssembly<- function(webs, web_name, Adj, mig,ext,sec,nsim
   zMO <- (t$Modularity- mmo)/sd(ind$modularity)
   # 99% confidence interval
   #
-  q_qss <- quantile(ind$QSS,c(0.005,0.995),na.rm = TRUE)
-  m_qss <- mean(ind$QSS)
-  q_meing <- quantile(ind$MEing,c(0.005,0.995),na.rm = TRUE)
-  m_meing <- mean(ind$MEing)
+  # q_qss <- quantile(ind$QSS,c(0.005,0.995),na.rm = TRUE)
+  # m_qss <- mean(ind$QSS)
+  # q_meing <- quantile(ind$MEing,c(0.005,0.995),na.rm = TRUE)
+  # m_meing <- mean(ind$MEing)
   
-  zQSS <- (t$QSS - m_qss)/sd(ind$QSS) 
-  zMEing <- (t$MEing - m_meing)/sd(ind$MEing)
+  # zQSS <- (t$QSS - m_qss)/sd(ind$QSS) 
+  # zMEing <- (t$MEing - m_meing)/sd(ind$MEing)
 
   return(list(su=tibble(mdlCC=mcc,mdlCP=mcp,mdlMO=mmo,mdlGR=mgr,SWness=mSW,SWnessCI=mCI,MOlow=qmo[1],MOhigh=qmo[2],
                     GRlow=qgr[1],GRhigh=qgr[2], mdlQ=mdlQ,mdlTI=mdlTI,Qlow=qQ[1],Qhigh=qQ[2],
-                    TIlow=qTI[1],TIhigh=qTI[2],zQ=zQ,zTI=zTI,zMO=zMO,
-                    mdlQSS=m_qss,QSSlow=q_qss[1],QSShigh=q_qss[2],
-                    zQSS=zQSS,mdlMEing=m_meing,MEingLow=q_meing[1],MEingHigh=q_meing[2],zMEing=zMEing)
+                    TIlow=qTI[1],TIhigh=qTI[2],zQ=zQ,zTI=zTI,zMO=zMO
+                    #mdlQSS=m_qss,QSSlow=q_qss[1],QSShigh=q_qss[2],
+                    #zQSS=zQSS,mdlMEing=m_meing,MEingLow=q_meing[1],MEingHigh=q_meing[2],zMEing=zMEing
+                    )
               ,sim=ind))         
 }
 
@@ -873,43 +872,35 @@ calc_modularity_metaWebAssembly<- function(webs, web_name, Adj, mig,ext,sec,nsim
 #' @export
 #'
 #' @examples
-calc_qss_metaWebAssembly<- function(red, Adj, mig,ext,nsim=1000,ncores=0){
+calc_qss_metaWebAssembly<- function(webs, web_name, Adj, mig,ext,sec,nsim=1000,final_time=1000,ncores=0){
   
-  t <- calc_QSS(red,10000,ncores)
-  final_time <- 500  # Final time used in simulations of the meta-web assembly
+  t <- webs %>% filter(Network==web_name)
   mig <- rep(mig,nrow(Adj))
   ext <- rep(ext,nrow(Adj))
+  sec <- rep(sec,nrow(Adj))
+  
   ind <- data.frame()
 
   require(doFuture)
   registerDoFuture()
-  if(ncores) {
-    cn <- future::availableCores()
-    if(ncores>cn)
-      ncores <- cn
-    plan(multiprocess, workers=ncores)
-    # cl <- makeCluster(cn,outfile="foreach.log") # Logfile to debug
-    # cl <- parallel::makeCluster(ncores)
-    # doParallel::registerDoParallel(cl)
-    # on.exit(parallel::stopCluster(cl))
-  } else {
-    plan(sequential)
+  plan(multiprocess)
+  
+  ind <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE) %dopar% 
+  {
+    AA <- metaWebNetAssemblyCT(Adj,mig,ext,sec,final_time)
+    g <- graph_from_adjacency_matrix( AA$A, mode  = "directed")
+    dg <- components(g)
+    g <- induced_subgraph(g, which(dg$membership == which.max(dg$csize)))
+    
+    size <- vcount(g)
+    links <- ecount(g)
+    
+    # Select only a connected subgraph graph 
+    # print(paste("Sim:",i, "Size:", size))
+    bind_cols(data.frame(Size=size,Links=links),calc_QSS(g,10000))
   }
-
-  ind <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE) %do% 
-    {
-      AA <- metaWebNetAssembly(Adj,mig,ext,final_time)
-      g <- graph_from_adjacency_matrix( AA$A, mode  = "directed")
-      dg <- components(g)
-      g <- induced_subgraph(g, which(dg$membership == which.max(dg$csize)))
-      
-      size <- vcount(g)
-      links <- ecount(g)
-      
-      # Select only a connected subgraph graph 
-      print(paste("Sim:",i, "Size:", size))
-      bind_cols(data.frame(Size=size,Links=links),calc_QSS(g,10000,ncores))
-    }
+  plan(sequential)
+  
   # 99% confidence interval
   #
   q_qss <- quantile(ind$QSS,c(0.005,0.995),na.rm = TRUE)
@@ -917,7 +908,7 @@ calc_qss_metaWebAssembly<- function(red, Adj, mig,ext,nsim=1000,ncores=0){
   q_meing <- quantile(ind$MEing,c(0.005,0.995),na.rm = TRUE)
   m_meing <- mean(ind$MEing)
   
-  zQSS <- (t$QSS - m_qss)/sd(ind$QSS) # the same as sd(ind$mTI)
+  zQSS <- (t$QSS - m_qss)/sd(ind$QSS) 
   zMEing <- (t$MEing - m_meing)/sd(ind$MEing)
   return(list(su=tibble(QSS=t$QSS,mdlQSS=m_qss,QSSlow=q_qss[1],QSShigh=q_qss[2],
                 zQSS=zQSS,MEing=t$MEing,mdlMEing=m_meing,MEingLow=q_meing[1],MEingHigh=q_meing[2],zMEing=zMEing),sim=ind))         
@@ -1307,7 +1298,7 @@ calc_modularity_unconnected <- function(g)
 #' @export
 #'
 #' @examples
-fit_metaWebAssembly_model <- function(webs, web_name, sims, tol=0.1, plot=FALSE){
+fit_metaWebAssembly_model <- function(webs, web_name, sims, tol=0.1, plot=TRUE){
 
   # Use this tolerance = tol to display a more detailed plot 
   web <- webs %>% filter(Network==web_name)
