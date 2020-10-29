@@ -897,7 +897,7 @@ calc_qss_metaWebAssembly<- function(webs, web_name, Adj, mig,ext,sec,nsim=1000,f
     
     # Select only a connected subgraph graph 
     # print(paste("Sim:",i, "Size:", size))
-    bind_cols(data.frame(Size=size,Links=links),calc_QSS(g,10000))
+    bind_cols(data.frame(Size=size,Links=links),calc_QSS(g,1000))
   }
   plan(sequential)
   
@@ -927,29 +927,22 @@ calc_qss_metaWebAssembly<- function(webs, web_name, Adj, mig,ext,sec,nsim=1000,f
 #' @export
 #'
 #' @examples
-calc_motif_metaWebAssembly<- function(red, Adj, mig, ext, nsim=1000)
+calc_motif_metaWebAssembly<- function(motdf,fw_name, Adj, mig,ext,sec, nsim=1000,final_time=1000)
 {
-  require(doParallel)
-  cn <-detectCores()
-  #  cl <- makeCluster(cn,outfile="foreach.log") # Logfile to debug 
-  cl <- makeCluster(cn)
-  registerDoParallel(cl)
-  
-  final_time <- 500  # Final time used in simulations of the meta-web assembly
   mig <- rep(mig,nrow(Adj))
   ext <- rep(ext,nrow(Adj))
-
+  sec <- rep(sec,nrow(Adj))
+  
+  require(doFuture)
+  registerDoFuture()
+  plan(multiprocess)
+  
   ind <- data.frame()
-  require(doParallel)
-  cn <-detectCores()
-  #  cl <- makeCluster(cn,outfile="foreach.log") # Logfile to debug 
-  cl <- makeCluster(cn)
-  registerDoParallel(cl)
 
-  ind <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE,.packages=c('MetaWebAssemblyModels','igraph'), 
+  ind <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE,.packages=c('meweasmo','igraph'), 
                  .export = c('Adj','ext','mig','final_time')) %dopar% 
   {
-    AA <- metaWebNetAssembly(Adj,mig,ext,final_time)
+    AA <- metaWebNetAssemblyCT(Adj,mig,ext,sec,final_time)
     g <- graph_from_adjacency_matrix( AA$A, mode  = "directed")
     # Select only a connected subgraph graph 
     dg <- components(g)
@@ -963,7 +956,8 @@ calc_motif_metaWebAssembly<- function(red, Adj, mig, ext, nsim=1000)
     
     data.frame(explComp=mot[4],apprComp=mot[5],triTroph=mot[6],omnivory=mot[9])
   }
-  stopCluster(cl)
+  plan(sequential)
+  
   # 99% confidence interval
   #
   
@@ -973,14 +967,14 @@ calc_motif_metaWebAssembly<- function(red, Adj, mig, ext, nsim=1000)
   qOM <- quantile(ind$omnivory,c(0.005,0.995))
   
   # Calculate motif for the original network
-  obs <- triad_census(red)
+  obs <- motdf %>% filter(Network==fw_name)
   
-  zEC <- (obs[4] - mean(ind$explComp))/sd(ind$explComp)
-  zAC <- (obs[5] - mean(ind$apprComp))/sd(ind$apprComp)
-  zTT <- (obs[6] - mean(ind$triTroph))/sd(ind$triTroph)
-  zOM <- (obs[9] - mean(ind$omnivory))/sd(ind$omnivory)
+  zEC <- (obs$explComp - mean(ind$explComp))/sd(ind$explComp)
+  zAC <- (obs$apprComp - mean(ind$apprComp))/sd(ind$apprComp)
+  zTT <- (obs$triTroph - mean(ind$triTroph))/sd(ind$triTroph)
+  zOM <- (obs$omnivory - mean(ind$omnivory))/sd(ind$omnivory)
   
-  return(tibble(explComp=obs[4],apprComp=obs[5],triTroph=obs[6],omnivory=obs[9],zEC=zEC,zAC=zAC,zTT=zTT,zOM=zOM,EClow=qEC[1],EChigh=qEC[2],AClow=qAC[1],AChigh=qAC[2],TTlow=qTT[1],TThigh=qTT[2],OMlow=qOM[1],OMhigh=qOM[2]))         
+  return(tibble(explComp=obs$explComp,apprComp=obs$apprComp,triTroph=obs$triTroph,omnivory=obs$omnivory,zEC=zEC,zAC=zAC,zTT=zTT,zOM=zOM,EClow=qEC[1],EChigh=qEC[2],AClow=qAC[1],AChigh=qAC[2],TTlow=qTT[1],TThigh=qTT[2],OMlow=qOM[1],OMhigh=qOM[2]))         
 }    
 
 

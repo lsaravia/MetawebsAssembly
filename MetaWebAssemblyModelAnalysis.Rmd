@@ -1098,12 +1098,44 @@ sign <- websAssemblyModel %>% rename(modularity=Modularity,C=Connectance) %>% in
 
 # Antarctic Metaweb assembly model QSS
 
-```{r AntQSSMetaWebAssembly, eval=TRUE,echo=F,message=FALSE,warning=T}
-if(!exists("websAssemblyModelQSS")) websAssemblyModelQSS <- tibble()
-if(!exists("websAssemblyModelSimQSS")) websAssemblyModelSimQSS <- tibble()
+```{r AntQSSMetaWebAssembly, eval=FALSE,echo=F,message=FALSE,warning=T}
+#if(!exists("websAssemblyModelQSS")) 
+websAssemblyModelQSS <- tibble()
+#if(!exists("websAssemblyModelSimQSS")) 
+websAssemblyModelSimQSS <- tibble()
 
 A <- get.adjacency(Ant_Meta,sparse=F)
 net_name <- pull( websTbl %>% filter(!ismeta,Metaweb=="Ant") %>% dplyr::select(Network) )
+model_name <- "Prob"
+
+lapply(net_name, function(fw){ 
+  
+    message(paste("\ncalc_qss_metaWebAssembly", fw, model_name))
+
+  
+    f <- fittedMetaWeb %>% filter(Network == fw, model==model_name) %>% inner_join(websTbl %>% dplyr::select(Network,QSS,MEing))
+    tictoc::tic("calc_qss_metaWebAssembly")
+    tbl <- calc_qss_metaWebAssembly(f, fw, A, f$m[1], f$a[1], f$se[1],1000,ncores=48)
+    tictoc::toc()
+    sim <- tbl$sim
+    
+    tblMdlWeb <- tbl$su %>% mutate(Network=fw,model=model_name) %>% inner_join(dplyr::select(websTbl,Network,QSS,MEing)) 
+
+    websAssemblyModelQSS <<- websAssemblyModelQSS %>% bind_rows(tblMdlWeb) 
+    websAssemblyModelSimQSS <<-websAssemblyModelSimQSS %>% bind_rows(sim %>% mutate(Network=fw,model=model_name))  
+})
+save.image()
+
+```
+
+# Islands Metaweb assembly model QSS
+
+```{r IslQSSMetaWebAssembly, eval=FALSE,echo=F,message=FALSE,warning=T}
+if(!exists("websAssemblyModelQSS")) websAssemblyModelQSS <- tibble()
+if(!exists("websAssemblyModelSimQSS")) websAssemblyModelSimQSS <- tibble()
+
+A <- get.adjacency(Isl_Meta,sparse=F)
+net_name <- pull( websTbl %>% filter(!ismeta,Metaweb=="Isl") %>% dplyr::select(Network) )
 model_name <- "Prob"
 
 lapply(net_name, function(fw){ 
@@ -1120,121 +1152,238 @@ lapply(net_name, function(fw){
     
     tblMdlWeb <- tbl$su %>% mutate(Network=fw,model=model_name) %>% inner_join(dplyr::select(websTbl,Network,QSS,MEing)) 
 
-    websAssemblyModelQSS <<- websAssemblyModel %>% bind_rows(tblMdlWeb) 
-    websAssemblyModelSimQSS <<-websAssemblyModelSim %>% bind_rows(sim %>% mutate(Network=fw,model=model_name))  
+    websAssemblyModelQSS <<- websAssemblyModelQSS %>% bind_rows(tblMdlWeb) 
+    websAssemblyModelSimQSS <<-websAssemblyModelSimQSS %>% bind_rows(sim %>% mutate(Network=fw,model=model_name))  
 })
 save.image()
 
+
 ```
 
+#  Lakes Metaweb assembly model QSS
 
+```{r LakQSSMetaWebAssembly, eval=FALSE,echo=F,message=FALSE,warning=T}
+if(!exists("websAssemblyModelQSS")) websAssemblyModelQSS <- tibble()
+if(!exists("websAssemblyModelSimQSS")) websAssemblyModelSimQSS <- tibble()
 
-# Motif Potter Cove compared to  metaWeb assembly model 
+A <- get.adjacency(Lak_Meta,sparse=F)
+net_name <- pull( websTbl %>% filter(!ismeta,Metaweb=="Lak") %>% dplyr::select(Network) )
+model_name <- "Prob"
+
+lapply(net_name, function(fw){ 
+  
+    message(paste("\ncalc_qss_metaWebAssembly", fw, model_name))
+
+  
+    f <- fittedMetaWeb %>% filter(Network == fw, model==model_name) %>% inner_join(websTbl %>% dplyr::select(Network,QSS,MEing))
+    tictoc::tic("calc_qss_metaWebAssembly")
+    tbl <- calc_qss_metaWebAssembly(f, fw, A, f$m[1], f$a[1], f$se[1],1000,ncores=48)
+    tictoc::toc()
+    sim <- tbl$sim
+    
+    tblMdlWeb <- tbl$su %>% mutate(Network=fw,model=model_name) %>% inner_join(dplyr::select(websTbl,Network,QSS,MEing)) 
+
+    websAssemblyModelQSS <<- websAssemblyModelQSS %>% bind_rows(tblMdlWeb) 
+    websAssemblyModelSimQSS <<-websAssemblyModelSimQSS %>% bind_rows(sim %>% mutate(Network=fw,model=model_name))  
+})
+save.image()
+```
+
+# All Metrics - S and C and MEing - results Plots & tables  
 
 ```{r PotterMotifMetaWebAssembly, eval=F,echo=F,message=T,warning=T}
 
+#
+# Table with Significance: empirical value is outside CI = TRUE 
+#
+websAssemblyModel <-  websAssemblyModel %>% select(model:zMO) %>% inner_join(websAssemblyModelQSS)
+sign <- websAssemblyModel %>% rename(modularity=Modularity,C=Connectance) %>% inner_join(websTbl %>% dplyr::select(Network,Q)) %>% transmute( C_sign = C > Chigh  | C < Clow, S_sign= Size> Shigh | Size< Slow, MO_sign = modularity > MOhigh | modularity < MOlow,TI_sign = TLmean > TIhigh | TLmean < TIlow, Q_sign = Q > Qhigh | Q < Qlow, SWness_sign = SWness > SWnessCI , MEing_gt = MEing > MEingHigh  , MEing_lw = MEing < MEingLow )
 
-#sourceCpp("src/NetAssemblyFromMetaWeb.cpp")
+knitr::kable(sign)
+
+knitr::kable(websAssemblyModel %>% inner_join(websTbl %>% dplyr::select(Network,Q)) %>% select(Size, Slow,Shigh,Connectance,Clow,Chigh,TLmean,TIlow,TIhigh,Q,Qlow,Qhigh,MEing,MEingLow,MEingHigh))
+
+names(websAssemblyModel)
+names(websAssemblyModelQSS)
+websAssemblyModelQSS  %>% mutate( MEing_gt = MEing > MEingHigh  , MEing_lw = MEing < MEingLow) %>% filter(MEing_gt | MEing_lw)
+
+
+names(websAssemblyModelSimQSS)
+metaweb_name <- "Ant"
+
+websAssemblyModelSimQSS %>% filter((grepl(metaweb_name,Network))) %>% mutate(C=Links/(Size^2)) %>%
+ggplot( aes(C,MEing))+ geom_point(size=1,alpha=0.5) + stat_ellipse(aes(color=Network)) + theme_bw() +
+  geom_point(data=websTbl %>% filter(grepl(metaweb_name,Network),!ismeta), aes(Connectance,MEing,color=Network),size=0.5) + 
+  # coord_cartesian(ylim=c(0.01,0.1)) +  
+  facet_wrap(~ Network) + scale_color_brewer(palette= "Paired", guide=FALSE) 
+
+
+websAssemblyModelSimQSS %>% filter((grepl(metaweb_name,Network))) %>% mutate(C=Links/(Size^2)) %>%
+ggplot( aes(Size,MEing))+ geom_point(size=1,alpha=0.5) + stat_ellipse(aes(color=Network)) + theme_bw() +
+  geom_point(data=websTbl %>% filter(grepl(metaweb_name,Network),!ismeta), aes(Size,MEing,color=Network),size=0.5) + 
+  # coord_cartesian(ylim=c(0.01,0.1)) +  
+  facet_wrap(~ Network) + scale_color_brewer(palette= "Paired", guide=FALSE) 
+
+nets <- c("Lak_Bridge_brook_lake","Lak_Chub_pond", "Lak_Hoel_lake","Lak_Long_Lake")
+websAssemblyModelSimQSS %>% filter(Network %in% nets) %>% mutate(C=Links/(Size^2)) %>%
+ggplot( aes(Size,MEing))+ geom_point(size=1,alpha=0.5) + stat_ellipse(aes(color=Network)) + theme_bw() +
+  geom_point(data=websTbl %>% filter(Network %in% nets), aes(Size,MEing,color=Network),size=1,alpha=1) + 
+  # coord_cartesian(ylim=c(0.01,0.1)) +  
+  facet_wrap(~ Network) + scale_color_brewer(palette= "Paired", guide=FALSE) 
 
 #
-# Read data and trim species names to avoid duplicates 
-#
-dtot <- read.delim("Data/Foodwebs.dat", quote="",stringsAsFactors = F)
-dtot <- dtot %>% mutate(Predator_name=str_trim(Predator_name), Prey_name=str_trim(Prey_name))
-
-#
-# Select meta web 
-#
-dtot1 <- as.matrix(dtot %>% filter(Network=="Meta") %>% dplyr::select(Prey_name,Predator_name))
-redl <- graph_from_edgelist(dtot1, directed  = T)
-# Delete cannibalistic 
-redl <- simplify(redl)
-sum(degree(redl,mode="in")==0)
-
-A <- get.adjacency(redl,sparse=F)
-dim(A)                             
-
-#
-# Select Local food web 
 # 
-
-dtot1 <- as.matrix(dtot %>% filter(Network=="Local") %>% dplyr::select(Prey_name,Predator_name))
-redl <- graph_from_edgelist(dtot1, directed  = T)
-
 #
-# Motif
-#
-mot <- triad_census(redl)
-
-mot[4] # Exploitative competition
-mot[5] # Apparent competition
-mot[6] # Tri-trophic chain
-mot[9] # Omnivory
-
-#FreqMotif <- data.frame(Network="Local",t(mot))
-
-set.seed(123)
-m <- 0.023
-a <- 0.094
-motif_metaWeb <- calc_motif_metaWebAssembly(redl, A, m,a,1000)
-
-motif_metaWeb <- motif_metaWeb %>% mutate(Network="Local")
+websAssemblyModelQSS <- websAssemblyModelQSS %>% select(Network,model, everything()) %>%  mutate(Metaweb=str_sub(Network,1,3))
+require(tidyverse)
+ggplot(websAssemblyModelQSS, aes(x=fct_reorder(Network,-MEing),y=MEing,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ theme_bw() + ylab("MEing")  + xlab(NULL) + geom_errorbar(aes(ymin=MEingLow, ymax=MEingHigh), width=.10) +   theme(axis.text.x=element_blank())
+ggsave("Figures/MEing_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
 
 
-save.image()
+names( websAssemblyModel)
+
+websAssemblyModel %>% inner_join(websTbl %>% dplyr::select(Network,Q))  %>% 
+  ggplot( aes(x=fct_reorder(Network,-Q),y=Q,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
+  theme_bw() + ylab("Q")  + xlab(NULL) + 
+  geom_errorbar(aes(ymin=Qlow, ymax=Qhigh), width=.10) +   
+  theme(axis.text.x=element_blank())
+ggsave("Figures/Q_Assembly_byMeta.png",width=6,height=6,units="in",dpi=600)
+
+
+websAssemblyModel %>% 
+  ggplot( aes(x=fct_reorder(Network,-Modularity),y=Modularity,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
+  theme_bw() + ylab("Modularity")  + xlab(NULL) + 
+  geom_errorbar(aes(ymin=MOlow, ymax=MOhigh), width=.10) +   
+  theme(axis.text.x=element_blank())
+ggsave("Figures/Modularity_Assembly_byMeta.png",width=6,height=6,units="in",dpi=600)
+
+
+websAssemblyModel %>% 
+  ggplot( aes(x=fct_reorder(Network,-TLmean),y=TLmean,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
+  theme_bw() + ylab("Mean Trophic Level")  + xlab(NULL) + 
+  geom_errorbar(aes(ymin=TIlow, ymax=TIhigh), width=.10) +   
+  theme(axis.text.x=element_blank())
+ggsave("Figures/TL_Assembly_byMeta.png",width=6,height=6,units="in",dpi=600)
+
+
+websAssemblyModel %>% 
+  ggplot( aes(x=fct_reorder(Network,-Connectance),y=Connectance,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
+  theme_bw() + ylab("Connectance")  + xlab(NULL) + 
+  geom_errorbar(aes(ymin=Clow, ymax=Chigh), width=.10) +   
+  theme(axis.text.x=element_blank())
+ggsave("Figures/Connectance_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
+
+
+websAssemblyModel %>% 
+  ggplot( aes(x=fct_reorder(Network,-Size),y=Size,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
+  theme_bw() + ylab("Size")  + xlab(NULL) + 
+  geom_errorbar(aes(ymin=Slow, ymax=Shigh), width=.10) +   
+  theme(axis.text.x=element_blank())
+ggsave("Figures/Size_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
+
+
+# + theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
+
+
 
 ```
 
 
-# Motif Weddell compared to  metaWeb assembly model 
+# Motif Antarctic compared to  metaWeb assembly model 
 
-```{r WeddellMotifMetaWebAssembly, eval=FALSE,echo=F,message=T,warning=T}
+```{r AntMotifMetaWebAssembly, eval=FALSE,echo=F,message=FALSE,warning=T}
 
+#if(!exists("websAssemblyModelQSS")) 
+motif_AssemblyModel <- tibble()
 
-#
-# Select "Regional" food web 
-#
-dtot1 <- as.matrix(dtot %>% filter(Network=="Regional") %>% dplyr::select(Prey_name,Predator_name))
-redl <- graph_from_edgelist(dtot1, directed  = T)
-redl <- simplify(redl)
+A <- get.adjacency(Ant_Meta,sparse=F)
+net_name <- pull( websTbl %>% filter(!ismeta,Metaweb=="Ant") %>% dplyr::select(Network) )
+model_name <- "Prob"
 
+lapply(net_name, function(fw){ 
+  
+    message(paste("\ncalc_motif_metaWebAssembly", fw, model_name))
 
-#
-# Motif
-#
-set.seed(123)
+  
+    f <- fittedMetaWeb %>% filter(Network == fw, model==model_name)  %>% inner_join(motif_ER %>% dplyr::select(Network,explComp:omnivory))
+    tictoc::tic("calc_motif_metaWebAssembly")
+    tbl <- calc_motif_metaWebAssembly(f, fw, A, f$m[1], f$a[1], f$se[1],1000)
+    tictoc::toc()
 
-m <- 0.084 
-a <- 0.076
-m_metaWeb <- calc_motif_metaWebAssembly(redl, A, m,a,1000)
+    tblMdlWeb <- tbl %>% mutate(Network=fw,model=model_name) %>% select(Network, model, everything())
 
-motif_metaWeb <- bind_rows(motif_metaWeb, m_metaWeb %>% mutate(Network="Regional"))
-
-rm(m_metaWeb)
+    motif_AssemblyModel <<- motif_AssemblyModel %>% bind_rows(tblMdlWeb) 
+})
 save.image()
+```
 
 
-select(motif_metaWeb, explComp,EClow,EChigh)
-select(motif_metaWeb, apprComp,AClow,AChigh,zAC)
-select(motif_metaWeb, triTroph,TTlow,TThigh,zTT)
-select(motif_metaWeb, omnivory,OMlow,OMhigh,zOM)
+# Motif Islands compared to  metaWeb assembly model 
 
-# Generate tables for the manuscript
+```{r IslMotifMetaWebAssembly, eval=TRUE,echo=F,message=FALSE,warning=T}
+
+#if(!exists("websAssemblyModelQSS")) 
+#motif_AssemblyModel <- tibble()
+
+A <- get.adjacency(Isl_Meta,sparse=F)
+net_name <- pull( websTbl %>% filter(!ismeta,Metaweb=="Isl") %>% dplyr::select(Network) )
+model_name <- "Prob"
+
+lapply(net_name, function(fw){ 
+  
+    message(paste("\ncalc_motif_metaWebAssembly", fw, model_name))
+
+  
+    f <- fittedMetaWeb %>% filter(Network == fw, model==model_name)  %>% inner_join(motif_ER %>% dplyr::select(Network,explComp:omnivory))
+    tictoc::tic("calc_motif_metaWebAssembly")
+    tbl <- calc_motif_metaWebAssembly(f, fw, A, f$m[1], f$a[1], f$se[1],1000)
+    tictoc::toc()
+
+    tblMdlWeb <- tbl %>% mutate(Network=fw,model=model_name) %>% select(Network, model, everything())
+
+    motif_AssemblyModel <<- motif_AssemblyModel %>% bind_rows(tblMdlWeb) 
+})
+save.image()
+```
+
+# Motif Lakes compared to  metaWeb assembly model 
+
+```{r LakMotifMetaWebAssembly, eval=TRUE,echo=F,message=FALSE,warning=T}
+
+#if(!exists("websAssemblyModelQSS")) 
+#motif_AssemblyModel <- tibble()
+
+A <- get.adjacency(Lak_Meta,sparse=F)
+net_name <- pull( websTbl %>% filter(!ismeta,Metaweb=="Lak") %>% dplyr::select(Network) )
+model_name <- "Prob"
+
+lapply(net_name, function(fw){ 
+  
+    message(paste("\ncalc_motif_metaWebAssembly", fw, model_name))
+
+  
+    f <- fittedMetaWeb %>% filter(Network == fw, model==model_name)  %>% inner_join(motif_ER %>% dplyr::select(Network,explComp:omnivory))
+    tictoc::tic("calc_motif_metaWebAssembly")
+    tbl <- calc_motif_metaWebAssembly(f, fw, A, f$m[1], f$a[1], f$se[1],1000)
+    tictoc::toc()
+
+    tblMdlWeb <- tbl %>% mutate(Network=fw,model=model_name) %>% select(Network, model, everything())
+
+    motif_AssemblyModel <<- motif_AssemblyModel %>% bind_rows(tblMdlWeb) 
+})
+save.image()
+```
+
+
+
+# Tables Motif compared to  metaWeb assembly model 
+
+```{r TablesMotifMetaWebAssembly, eval=FALSE,echo=F,message=T,warning=T}
+
 #
+# Table with Significance: empirical value is outside CI = TRUE 
 #
-require(pander)
-panderOptions('table.split.table',Inf)
-panderOptions('table.style', 'multiline')
-
-webs_tmp <- inner_join(websAssemblyModel,dplyr::select(websTbl,Q,mTI,Network), by="Network")
-
-pandoc.table(t(webs_tmp %>% dplyr::select(Network,SWness,SWnessCI,zQ,zTI,zMO,zGR,mTI) %>% mutate_if(is.numeric, round, digits=4)))
-
-
-pandoc.table(t(webs_tmp %>% dplyr::select(Network,Q,Qlow,Qhigh,mTI,TIlow,TIhigh,Modularity, MOlow,MOhigh) %>% mutate_if(is.numeric, round, digits=4)))
-
-pandoc.table(t(motif_metaWeb %>% rename(EC=explComp,AC=apprComp,TT=triTroph,OM=omnivory) %>%
-                 dplyr::select(Network,EC,EClow,EChigh,zEC,AC,AClow,AChigh,zAC,TT,TTlow,TThigh,zTT,OM,OMlow,OMhigh,zOM) %>% mutate_if(is.numeric, round, digits=2)))
+sign <- motif_AssemblyModel %>% transmute( Network=Network, zEC = explComp > EChigh  | explComp < EClow, zAC= apprComp> AChigh | apprComp< AClow, zTT = triTroph > TThigh | triTroph < TTlow, zOM = omnivory > OMhigh | omnivory < OMlow)
 
 
 # Plot of random z-score motif normalized
@@ -1242,53 +1391,35 @@ pandoc.table(t(motif_metaWeb %>% rename(EC=explComp,AC=apprComp,TT=triTroph,OM=o
 #
 
 require(tidyr)
-names(motif)
-pFM1 <- motif %>% dplyr::select(Network,zEC:zOM) %>%gather(motif,value,zEC:zOM) %>% mutate(type="Random z-score")
+names(motif_AssemblyModel)
+pFM1 <- motif_AssemblyModel %>% dplyr::select(Network,zEC:zOM) %>%gather(motif,Zscore,zEC:zOM) %>% mutate(type="Random z-score")
 pFM1$Network <- factor(pFM1$Network)
-levels(pFM1$Network) <- c("Potter Cove","Meta-web","Weddell Sea")
+#levels(pFM1$Network) <- c("Potter Cove","Meta-web","Weddell Sea")
 
 # Normalize z-scores
 #
-pFM1 <- pFM1 %>% group_by(Network) %>% mutate(normZ=value/sum(sqrt(value^2)))
-g1 <- ggplot(pFM1,aes(x=Network,y=normZ,fill=motif)) + geom_bar(stat="identity",position=position_dodge()) +
-   scale_fill_brewer(palette = "Paired",breaks=c("zAC","zEC","zOM","zTT"),name="Motif\nZ-score",   labels=c("Apparent\ncompetition","Exploitative\ncompetition","Omnivory", "Tri-trophic\nchain")) + guides(fill=FALSE) +
-   xlab("") + ylab("") + theme_bw() + scale_x_discrete(limits=c("Potter Cove","Weddell Sea","Meta-web")) + expand_limits(y=c(0.8,-0.35)) #+ theme(legend.position="bottom")
+pFM1 <- pFM1 %>% group_by(Network) %>% mutate(normZ=Zscore/sum(sqrt(Zscore^2)), Metaweb=str_sub(Network,1,3)) 
+ 
 
 # Add asteriscs to significative motifs
-
-sig_lbl <- pFM1 %>% mutate(normZ=ifelse(motif=="zTT", normZ-0.05,normZ+0.05) )
-g1 <- g1 + geom_text(data = sig_lbl, label = "*",position=position_dodge(width=0.9))
-
-# Plot of assembly motifs normalized 
 #
-names(motif_metaWeb)
-pFM2 <- motif_metaWeb %>% dplyr::select(Network,zEC:zOM) %>%gather(motif,value,zEC:zOM) %>% mutate(type="Assembly z-score", Network=factor(Network))
 
-levels(pFM2$Network) <- c("Potter Cove","Weddell Sea")
+sign_lbl <- sign %>% pivot_longer(!Network,values_to = "sign",names_to = "motif") %>% mutate(label=ifelse(sign, "*", "")) %>% inner_join(pFM1) %>% mutate( Network = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' ))
 
-pFM2 <- pFM2 %>% group_by(Network) %>% mutate(normZ=value/sum(sqrt(value^2)))
-
-g2 <- ggplot(pFM2,aes(x=Network,y=normZ,fill=motif)) + geom_bar(stat="identity",position=position_dodge()) +
-     scale_fill_brewer(palette = "Paired",breaks=c("zAC","zEC","zOM","zTT"),name="Motif\nZ-score",   labels=c("Apparent\ncompetition","Exploitative\ncompetition","Omnivory", "Tri-trophic\nchain")) + 
-   xlab("") + ylab("") + theme_bw() + scale_x_discrete(limits=c("Potter Cove","Weddell Sea","Meta-web")) + expand_limits(y=c(0.8,-0.35)) #+ theme(legend.position="bottom")
-
-# Add asteriscs to significative motifs
-sig_lbl <- pFM2 %>% mutate(normZ=ifelse(Network=="Potter Cove" & motif=="zAC",normZ+0.05,
-                                        ifelse(Network=="Weddell Sea" & (motif=="zTT" | motif=="zOM"),normZ-0.05,NA)))  
-
-g2 <- g2 + geom_text(data = sig_lbl, label = "*",position=position_dodge(width=0.9)) 
-
-g2
-require(cowplot)
-g3 <- plot_grid(g1,g2,labels = c("A","B"),align = "h",rel_widths=c(.9,1.2))
-g3
-save_plot("Figures/Motif_Zs_ByNetwork.png",g3,base_width=8,base_height=5,dpi=600)
+g1 <- ggplot(sign_lbl,
+        aes(x=fct_inorder(Network),y=Zscore,fill=motif,label=label)) + geom_bar(stat="identity",position=position_dodge()) +
+   scale_fill_brewer(palette = "Paired",breaks=c("zAC","zEC","zOM","zTT"),name="Motif\nZ-score",   labels=c("Apparent\ncompetition","Exploitative\ncompetition","Omnivory", "Tri-trophic\nchain")) + #guides(fill=FALSE) +
+   xlab("") + ylab("") + theme_bw() +  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7)) + 
+  #facet_wrap(~Metaweb, ncol = 1, scale="free") + 
+  geom_text(position=position_dodge(width=0.9))
+g1
+ggsave("Figures/Motif_Zscores_Assembly.png",width=8,height=6,units="in",dpi=600)
 
 
 
 ```
 
-# Topologcal roles with meta-web assembly model 
+# Topological roles with meta-web assembly model 
 
 ```{r MetaWebTopologicalRoles, eval=FALSE,echo=F,message=T,warning=T}
 
