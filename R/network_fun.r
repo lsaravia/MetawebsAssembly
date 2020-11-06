@@ -333,7 +333,7 @@ calc_topological_roles <- function(g,nsim=1000)
 #' @export
 #'
 #' @examples
-plot_topological_roles <- function(tRoles,g,spingB=NULL){
+plot_topological_roles <- function(tRoles,g,spingB=NULL,plt=FALSE){
   
   if( is.null(spingB) )
     spingB <- calc_modularity_unconnected(g)
@@ -343,24 +343,25 @@ plot_topological_roles <- function(tRoles,g,spingB=NULL){
   l <- tRoles$within_module_degree
   r <- tRoles$among_module_conn
   # Plot
-  require(RColorBrewer)
-  colbar.FG <- brewer.pal(length(spingB$csize),"Dark2")
-  groups.B<- spingB.mem # 1=phytopl, 2=zoopl, 3=benthos, 4=fish, 5=birds, 6=mammals
-  
-  par(mfrow=c(1,1))
-  par(oma=c(2.7,1.3,0.7,1)) # change outer figure margins
-  par(mai=c(1,1,0.7,0.7)) # size of figure margins
-  yran <- range(l)
-  xran <- range(r)
-  plot(l~r, type="n", axes=T ,tck=F, lwd=2, ann=F, cex.axis=1.2, xlim=xran, ylim=yran)
-  lines(c(0.625,0.625), yran, col="grey")
-  lines(xran, c(2.5, 2.5), col="grey")
-  points(r, l, col=colbar.FG[groups.B], pch=20, cex=2)
-  mtext(2, text="Within module degree", line=4,font=2, cex=1.2)
-  mtext(1, text="Among module connectivity",line=4, font=2, cex=1.2)
-  axis(1, tck=0.02, lwd=1,las=2,lty=1, labels=F, xlim=c(0,1))
-  axis(2,tck=0.02, labels=FALSE)
-  
+  if(plt){
+    require(RColorBrewer)
+    colbar.FG <- brewer.pal(length(spingB$csize),"Dark2")
+    groups.B<- spingB.mem # 1=phytopl, 2=zoopl, 3=benthos, 4=fish, 5=birds, 6=mammals
+    
+    par(mfrow=c(1,1))
+    par(oma=c(2.7,1.3,0.7,1)) # change outer figure margins
+    par(mai=c(1,1,0.7,0.7)) # size of figure margins
+    yran <- range(l)
+    xran <- range(r)
+    plot(l~r, type="n", axes=T ,tck=F, lwd=2, ann=F, cex.axis=1.2, xlim=xran, ylim=yran)
+    lines(c(0.625,0.625), yran, col="grey")
+    lines(xran, c(2.5, 2.5), col="grey")
+    points(r, l, col=colbar.FG[groups.B], pch=20, cex=2)
+    mtext(2, text="Within module degree", line=4,font=2, cex=1.2)
+    mtext(1, text="Among module connectivity",line=4, font=2, cex=1.2)
+    axis(1, tck=0.02, lwd=1,las=2,lty=1, labels=F, xlim=c(0,1))
+    axis(2,tck=0.02, labels=FALSE)
+  }
   # Which are the module hubs: many links within its own module.
   #
   modhub <- which(l>2.5)
@@ -371,11 +372,11 @@ plot_topological_roles <- function(tRoles,g,spingB=NULL){
   hub_conn <- data.frame()
   
   if(length(modhub)) {
-    text(r[modhub],l[modhub],labels = modlbl,cex=0.7,pos=3)
+    if(plt) text(r[modhub],l[modhub],labels = modlbl,cex=0.7,pos=3)
     hub_conn <- data.frame(type="modhub",node=modhub,name=modlbl)  
   }
   
-  points(r[modhub], l[modhub], cex=4, col="blue", pch=20)
+  if(plt) points(r[modhub], l[modhub], cex=4, col="blue", pch=20)
   
   # Which are the hub connectors: high within and between-module connectivity
   #                              and are classified super-generalists
@@ -386,7 +387,7 @@ plot_topological_roles <- function(tRoles,g,spingB=NULL){
   if(is.null(modlbl))
     modlbl <- modhub
   if(length(modhub)) {
-    text(r[modhub],l[modhub],labels = modlbl,cex=0.7,pos=3)
+    if(plt) text(r[modhub],l[modhub],labels = modlbl,cex=0.7,pos=3)
     hub_conn <- rbind(hub_conn, data.frame(type="hubcon",node=modhub,name=modlbl))  
   }
   
@@ -1416,4 +1417,28 @@ simulate_plot_metaweb_assembly <- function(meta,fitted,webst,netname){
   plot_NetAssemblyModel(AA,300,figname,webst %>% filter(Network==netname))
   
   return(f[1,])
+}
+
+
+calc_topoRoles_metaWebAssembly <- function(web_name,meanS, Adj, mig,ext,sec,final_time=1000){
+  
+  mig <- rep(mig,nrow(Adj))
+  ext <- rep(ext,nrow(Adj))
+  sec <- rep(sec,nrow(Adj))
+  while(TRUE){
+    AA <- metaWebNetAssemblyCT(Adj,mig,ext,sec,final_time)
+    g <- graph_from_adjacency_matrix( AA$A, mode  = "directed")
+    dg <- components(g)
+    g <- induced_subgraph(g, which(dg$membership == which.max(dg$csize)))
+    #
+    # Added this Loop and condition to prevent very small networks when exist a posibility 
+    #
+    if( vcount(g) > meanS*.8) break  
+  }
+  modulos<-cluster_spinglass(g)
+  
+  topo_roles <- incremental_topoRoles(g, web_name)
+  hub_conn <- plot_topological_roles(topo_roles,g,modulos) %>% mutate(Network=web_name)
+
+  return(list(tr=topo_roles,hc=hub_conn))
 }

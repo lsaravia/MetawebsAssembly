@@ -1234,51 +1234,60 @@ ggplot( aes(Size,MEing))+ geom_point(size=1,alpha=0.5) + stat_ellipse(aes(color=
 #
 # 
 #
-websAssemblyModelQSS <- websAssemblyModelQSS %>% select(Network,model, everything()) %>%  mutate(Metaweb=str_sub(Network,1,3))
+websAssemblyModelQSS <- websAssemblyModelQSS %>% select(Network,model, everything()) %>%  mutate(Metaweb=str_sub(Network,1,3),   Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' ))
+
 require(tidyverse)
-ggplot(websAssemblyModelQSS, aes(x=fct_reorder(Network,-MEing),y=MEing,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ theme_bw() + ylab("MEing")  + xlab(NULL) + geom_errorbar(aes(ymin=MEingLow, ymax=MEingHigh), width=.10) +   theme(axis.text.x=element_blank())
+ggplot(websAssemblyModelQSS, aes(x=fct_reorder(Net_name,Metaweb),y=MEing,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ theme_bw() + ylab("MEing")  + xlab(NULL) + geom_errorbar(aes(ymin=MEingLow, ymax=MEingHigh), width=.10) +
+  #theme(axis.text.x=element_blank()) + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))  
 ggsave("Figures/MEing_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
 
 
 names( websAssemblyModel)
 
-websAssemblyModel %>% inner_join(websTbl %>% dplyr::select(Network,Q))  %>% 
-  ggplot( aes(x=fct_reorder(Network,-Q),y=Q,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
+websAssemblyModel %>% inner_join(websTbl %>% dplyr::select(Network,Q))  %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>% 
+  ggplot( aes(x=fct_reorder(Net_name,Metaweb),y=Q,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
   theme_bw() + ylab("Q")  + xlab(NULL) + 
-  geom_errorbar(aes(ymin=Qlow, ymax=Qhigh), width=.10) +   
-  theme(axis.text.x=element_blank())
-ggsave("Figures/Q_Assembly_byMeta.png",width=6,height=6,units="in",dpi=600)
+  geom_errorbar(aes(ymin=Qlow, ymax=Qhigh), width=.10) +
+  #theme(axis.text.x=element_blank())
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))  
+ggsave("Figures/Q_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
 
 
-websAssemblyModel %>% 
-  ggplot( aes(x=fct_reorder(Network,-Modularity),y=Modularity,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
+websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>% 
+  ggplot( aes(x=fct_reorder(Net_name,Metaweb),y=Modularity,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
   theme_bw() + ylab("Modularity")  + xlab(NULL) + 
   geom_errorbar(aes(ymin=MOlow, ymax=MOhigh), width=.10) +   
-  theme(axis.text.x=element_blank())
-ggsave("Figures/Modularity_Assembly_byMeta.png",width=6,height=6,units="in",dpi=600)
+  #theme(axis.text.x=element_blank())
+theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))  
+ggsave("Figures/Modularity_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
 
 
-websAssemblyModel %>% 
-  ggplot( aes(x=fct_reorder(Network,-TLmean),y=TLmean,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
+websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>% 
+  ggplot( aes(x=fct_reorder(Net_name,Metaweb),y=TLmean,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
   theme_bw() + ylab("Mean Trophic Level")  + xlab(NULL) + 
   geom_errorbar(aes(ymin=TIlow, ymax=TIhigh), width=.10) +   
-  theme(axis.text.x=element_blank())
-ggsave("Figures/TL_Assembly_byMeta.png",width=6,height=6,units="in",dpi=600)
+  #theme(axis.text.x=element_blank())
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))
+ggsave("Figures/TL_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
 
 
-websAssemblyModel %>% 
-  ggplot( aes(x=fct_reorder(Network,-Connectance),y=Connectance,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
+websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>%
+  ggplot( aes(x=fct_reorder(Net_name,Metaweb),y=Connectance,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
   theme_bw() + ylab("Connectance")  + xlab(NULL) + 
   geom_errorbar(aes(ymin=Clow, ymax=Chigh), width=.10) +   
-  theme(axis.text.x=element_blank())
+  #theme(axis.text.x=element_blank())
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))
 ggsave("Figures/Connectance_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
 
 
-websAssemblyModel %>% 
-  ggplot( aes(x=fct_reorder(Network,-Size),y=Size,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
+websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>%
+  ggplot( aes(x=fct_reorder(Net_name,Metaweb),y=Size,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
   theme_bw() + ylab("Size")  + xlab(NULL) + 
   geom_errorbar(aes(ymin=Slow, ymax=Shigh), width=.10) +   
-  theme(axis.text.x=element_blank())
+  #theme(axis.text.x=element_blank())
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))
+
 ggsave("Figures/Size_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
 
 
@@ -1320,7 +1329,7 @@ save.image()
 
 # Motif Islands compared to  metaWeb assembly model 
 
-```{r IslMotifMetaWebAssembly, eval=TRUE,echo=F,message=FALSE,warning=T}
+```{r IslMotifMetaWebAssembly, eval=FALSE,echo=F,message=FALSE,warning=T}
 
 #if(!exists("websAssemblyModelQSS")) 
 #motif_AssemblyModel <- tibble()
@@ -1348,7 +1357,7 @@ save.image()
 
 # Motif Lakes compared to  metaWeb assembly model 
 
-```{r LakMotifMetaWebAssembly, eval=TRUE,echo=F,message=FALSE,warning=T}
+```{r LakMotifMetaWebAssembly, eval=FALSE,echo=F,message=FALSE,warning=T}
 
 #if(!exists("websAssemblyModelQSS")) 
 #motif_AssemblyModel <- tibble()
@@ -1384,12 +1393,11 @@ save.image()
 # Table with Significance: empirical value is outside CI = TRUE 
 #
 sign <- motif_AssemblyModel %>% transmute( Network=Network, zEC = explComp > EChigh  | explComp < EClow, zAC= apprComp> AChigh | apprComp< AClow, zTT = triTroph > TThigh | triTroph < TTlow, zOM = omnivory > OMhigh | omnivory < OMlow)
+knitr::kable(sign)
 
-
-# Plot of random z-score motif normalized
+# Format motif z-score tibble
 #
 #
-
 require(tidyr)
 names(motif_AssemblyModel)
 pFM1 <- motif_AssemblyModel %>% dplyr::select(Network,zEC:zOM) %>%gather(motif,Zscore,zEC:zOM) %>% mutate(type="Random z-score")
@@ -1421,110 +1429,89 @@ ggsave("Figures/Motif_Zscores_Assembly.png",width=8,height=6,units="in",dpi=600)
 
 # Topological roles with meta-web assembly model 
 
-```{r MetaWebTopologicalRoles, eval=FALSE,echo=F,message=T,warning=T}
-
-# Check the correct meta-web adjacency matrix is loaded
-
-dim(A)==c(859,859)
-
-#
-# 500 time steps 
-#
-tf <- 500
+```{r MetaWebTopologicalRoles, eval=TRUE,echo=F,message=F,warning=T}
+topoRoles_metaWebAssembly <- tibble()
+hub_conn_Assembly <- tibble()
 set.seed(1234)
 
-# Weddell Sea 
+# Antarctic 
 #
-#
-m <- 0.084 
-a <- 0.076
-tf <- 531
-AA <- metaWebNetAssembly(A,m,1,a,tf)
-dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))
-c(mean(dfA$S),mean(dfA$L),mean(dfA$L)/(mean(dfA$S)*mean(dfA$S)))
-dfA$S[tf-200]
-plot_NetAssemblyModel_eqw(AA,100)
-plot_NetAssemblyModel(AA,300)
+A <- get.adjacency(Ant_Meta,sparse=F)
+net_name <- pull( websTbl %>% filter(!ismeta,Metaweb=="Ant") %>% dplyr::select(Network) )
+model_name <- "Prob"
 
-g <- graph_from_adjacency_matrix( AA$A, mode  = "directed")
+lapply(net_name, function(fw){
 
-# Select only a connected subgraph graph 
-#
-dg <- components(g)
-g <- induced_subgraph(g, which(dg$membership == which.max(dg$csize)))
-vcount(g)
-modulos<-cluster_spinglass(g)
-
-topoRoles_metaWebAssembly <- calc_avg_topological_roles(g,"Weddell",10)   # 30 simulations are enough to obtain stable topological roles
-
-# Initialize hub_conn
-hub_conn_Assembly <- data.frame()
-
-# Plot and clasify topological roles
-hub_conn_Assembly <- bind_rows(hub_conn_Assembly, 
-                               plot_topological_roles(topoRoles_metaWebAssembly,g,modulos) %>% mutate(Network="Weddell"))
-
-plotTopoRolesByTLByMod("","Weddell","",modulos,hub_conn_Assembly,"",g)
+    message(paste("\ncalc_topoRoles_metaWebAssembly", fw, model_name))
 
 
-# Potter Cove Simulations
-#
-#
-
-set.seed(123)
-m <- 0.023
-a <- 0.094
-tf <- 546
-
-AA <- metaWebNetAssembly(A,m,1,a,tf)
-dfA <- data.frame(S=AA$S[200:tf],L=as.numeric(AA$L[200:tf]),T=c(200:tf))
-c(mean(dfA$S),mean(dfA$L),mean(dfA$L)/(mean(dfA$S)*mean(dfA$S)))
-
-plot_NetAssemblyModel_eqw(AA,100)
-plot_NetAssemblyModel(AA,300)
-
-AA$S[tf]
-
-g <- graph_from_adjacency_matrix( AA$A*1, mode  = "directed")
-# Add Names
-#V(g)$label <- rownames(A)
-
-# Select only a connected subgraph graph 
-#
-dg <- components(g)
-g <- induced_subgraph(g, which(dg$membership == which.max(dg$csize)))
-#plot(g,edge.arrow.size=.4,edge.color="orange", vertex.color="gray50",vertex.size=3,layout=layout_with_fr)
-vcount(g)
-sum(degree(g,mode="in")==0)
-V(g)[degree(g,mode="in")==0]$label
-
-modulos<-cluster_spinglass(g)
-
-tR <- calc_avg_topological_roles(g,"Potter",10)
-topoRoles_metaWebAssembly <- bind_rows(topoRoles_metaWebAssembly,tR )
-
-
-# Plot and clasify topological roles
-#
-hub_conn_Assembly <- bind_rows(hub_conn_Assembly, 
-                               plot_topological_roles(tR,g,modulos) %>% mutate(Network="Potter"))
-
-plotTopoRolesByTLByMod("","Potter","",modulos,hub_conn_Assembly,"",g)
+    f <- fittedMetaWeb %>% filter(Network == fw, model==model_name)
+    tictoc::tic("calc_topoRoles_metaWebAssembly")
+    tbl <- calc_topoRoles_metaWebAssembly(fw,f$S, A, f$m[1], f$a[1], f$se[1],1000)
+    tictoc::toc()
+    topoRoles_metaWebAssembly <<- topoRoles_metaWebAssembly %>% bind_rows(tbl$tr %>% mutate(model=model_name))
+    hub_conn_Assembly <<-hub_conn_Assembly %>% bind_rows(tbl$hc %>% mutate(model=model_name))
+})
 
 save.image()
 
+# Islands
+#
+
+A <- get.adjacency(Isl_Meta,sparse=F)
+net_name <- pull( websTbl %>% filter(!ismeta,Metaweb=="Isl") %>% dplyr::select(Network) )
+model_name <- "Prob"
+
+lapply(net_name, function(fw){
+
+    message(paste("\ncalc_topoRoles_metaWebAssembly", fw, model_name))
+
+
+    f <- fittedMetaWeb %>% filter(Network == fw, model==model_name)
+    tictoc::tic("calc_topoRoles_metaWebAssembly")
+    tbl <- calc_topoRoles_metaWebAssembly(fw,f$S, A, f$m[1], f$a[1], f$se[1],1000)
+    tictoc::toc()
+    topoRoles_metaWebAssembly <<- topoRoles_metaWebAssembly %>% bind_rows(tbl$tr %>% mutate(model=model_name))
+    hub_conn_Assembly <<-hub_conn_Assembly %>% bind_rows(tbl$hc %>% mutate(model=model_name))
+})
+
+save.image()
+
+# Lakes I added the check than the modeled web is no lower than the 80% of mean Species size
+# This is important for the smaller webs where the varibility could be large
+#
+A <- get.adjacency(Lak_Meta,sparse=F)
+net_name <- pull( websTbl %>% filter(!ismeta,Metaweb=="Lak") %>% dplyr::select(Network) )
+model_name <- "Prob"
+
+lapply(net_name, function(fw){ 
+  
+    message(paste("\ncalc_topoRoles_metaWebAssembly", fw, model_name))
+
+  
+    f <- fittedMetaWeb %>% filter(Network == fw, model==model_name) 
+    tictoc::tic("calc_topoRoles_metaWebAssembly")
+    tbl <- calc_topoRoles_metaWebAssembly(fw,f$S, A, f$m[1], f$a[1], f$se[1],1000)
+    tictoc::toc()
+    topoRoles_metaWebAssembly <<- topoRoles_metaWebAssembly %>% bind_rows(tbl$tr %>% mutate(model=model_name)) 
+    hub_conn_Assembly <<-hub_conn_Assembly %>% bind_rows(tbl$hc %>% mutate(model=model_name))  
+})
+
+save.image()
+```
+
+# Plots/tests of Topological roles with meta-web assembly model 
+
+```{r plotsMetaWebTopologicalRoles, eval=FALSE,echo=F,message=T,warning=T}
+
+# Antarctica
 # Topological Roles proportions test and plot
 #
 #
-names(hub_conn)
+names(hub_conn_Assembly)
 
-
-tbl <- table(hub_conn$Network,hub_conn$type)
-
-tbl1 <- table(hub_conn_Assembly$Network,hub_conn_Assembly$type)
-tbl1 <- rbind(tbl,tbl1) 
-tbl1 <- tbl1[c(2,4,5),]
-class(tbl1) <- "table"
+hc <- hub_conn %>% filter(Network=="Ant_Meta") %>% bind_rows(hub_conn_Assembly %>% filter(grepl("Ant",Network)) %>% select(type,node,Network) )
+tbl1 <- table(hc$Network,hc$type)
 
 chisq.test(tbl1,simulate.p.value = TRUE, B=10000)
 
@@ -1534,9 +1521,9 @@ df1 <- data.frame(tbl1)
 names(df1) <- c("Network","Rol","count")
 df1 <- filter(df1,count!=0)
 df1 <- df1 %>% group_by(Network) %>% mutate(total=sum(count),Freq=count/total)
-df1$Network <- factor(df1$Network, levels=c("Potter","Weddell","Meta")) 
-
-levels(df1$Network) <- c("Potter Cove\nModel","Weddell Sea\nModel","Meta-web")
+# df1$Network <- factor(df1$Network, levels=c("Potter","Weddell","Meta")) 
+# 
+levels(df1$Network) <- c("Metaweb","Potter Cove\nModel","Weddell Sea\nModel")
 
 
 gP1 <- ggplot(df1,aes(x=Network,y=Freq,fill=Rol)) + geom_bar(stat="identity", position=position_dodge()) + 
@@ -1546,12 +1533,15 @@ gP1 <- ggplot(df1,aes(x=Network,y=Freq,fill=Rol)) + geom_bar(stat="identity", po
 
 # Proportion of topo roles of the real networks
 #
+hc <- hub_conn %>% filter(grepl("Ant",Network))
+tbl <- table(hc$Network,hc$type)
+
 df2 <- data.frame(tbl,stringsAsFactors = FALSE)
 names(df2) <- c("Network","Rol","count")
 df2 <- filter(df2,count!=0)
 df2 <- df2 %>% group_by(Network) %>% mutate(total=sum(count),Freq=count/total)
-df2$Network <- factor(df2$Network, levels=c("Local","Regional","Meta")) 
-levels(df2$Network) <- c("Potter Cove","Weddell Sea","Meta-web")
+#df2$Network <- factor(df2$Network, levels=c("Local","Regional","Meta")) 
+levels(df2$Network) <- c("Metaweb","Potter Cove","Weddell Sea")
 
 gP2 <- ggplot(df2,aes(x=Network,y=Freq,fill=Rol)) + geom_bar(stat="identity", position=position_dodge()) + 
   scale_fill_brewer(palette = "Paired",name="") + 
@@ -1562,9 +1552,119 @@ legend_b <- get_legend(gP2 + theme(legend.position="bottom"))
 require(cowplot)
 gP3 <- plot_grid(gP2,gP1,labels = c("A","B"),align = "h")
 gP3 <- plot_grid( gP3, legend_b, ncol = 1, rel_heights = c(1, .05))
-save_plot("Figures/PropRoles_ByNetwork_Model.png",gP3,base_width=8,base_height=5,dpi=600)
+save_plot("Figures/Ant_TopoRoles_ByNetwork_Model.png",gP3,base_width=8,base_height=5,dpi=600)
 #ggsave("Figures/PropMotif_Roles_ByNetwork.png",width=8,height=5,units="in",dpi=600)
 
-save.image()
+# Antarctic
+#
+
+# Comparison of model with empirical  
+# 
+hc <- hub_conn %>% filter(grepl("Ant",Network)) %>% bind_rows(
+  hub_conn_Assembly %>% filter(grepl("Ant",Network)) %>% select(type,node,Network) %>% mutate(model="Assembly")) %>% 
+  mutate(model=ifelse(is.na(model),"Empirical",model)) %>% group_by(Network,model,type) %>% summarise(count=n()) %>% mutate(total=sum(count),Freq=count/total) %>% inner_join(websTbl %>% select(Network,Size))
+str_length(hc$Network)
+hc <-  hc %>% ungroup() %>% mutate(Network = ifelse(str_length(Network) > 8, str_sub(Network,5), paste0(str_sub(Network,5),"web"))) %>% mutate(Network = fct_reorder(Network, -Size))
+ 
+(gP2 <- ggplot(hc,aes(x=model,y=Freq,fill=type)) + 
+  geom_bar(stat="identity", position=position_dodge()) + 
+  scale_fill_brewer(palette = "Paired",name="") + 
+  xlab("") + ylab("") + theme_bw() + 
+    theme(legend.position="bottom", legend.direction="horizontal",   strip.background = element_blank(), strip.placement = "outside") +
+    facet_wrap(vars(Network)))
+ggsave("Figures/Ant_TopoRoles_ByNetwork_Model.png",width=8,height=5,units="in",dpi=600)
+
+tt1 <- hc %>% group_by(Network) %>% group_modify( ~{ 
+  ct <- .x %>% pivot_wider(model:count,names_from="type",values_from = "count",values_fill = list(count = 0)) 
+  cc <- chisq.test(ct[,-1],simulate.p.value = TRUE, B=10000)
+  #ct <- 
+  #print(ct)
+  tibble(Size=unique(.x$Size),chi2=cc$statistic,pvalue = cc$p.value,method=cc$method)
+  }) %>% arrange(desc(Size)) %>% mutate(meta="Ant")
+
+tt1
+
+
+
+
 ```
 
+# Islands - Plots/tests of Topological roles with meta-web assembly model 
+
+```{r Isl_plotsMetaWebTopologicalRoles, eval=FALSE,echo=F,message=T,warning=T}
+
+# islands
+#
+
+# Comparison of model with empirical  
+# 
+hc <- hub_conn %>% filter(grepl("Isl",Network)) %>% bind_rows(
+  hub_conn_Assembly %>% filter(grepl("Isl",Network)) %>% select(type,node,Network) %>% mutate(model="Assembly")) %>% 
+  mutate(model=ifelse(is.na(model),"Empirical",model)) %>% group_by(Network,model,type) %>% summarise(count=n()) %>% mutate(total=sum(count),Freq=count/total) %>% inner_join(websTbl %>% select(Network,Size))
+
+hc <-  hc %>% ungroup() %>% mutate(Network = ifelse(str_length(Network) > 8, str_sub(Network,18), paste0(str_sub(Network,5),"web"))) %>% mutate(Network = fct_reorder2(Network, -Size, Network))
+ 
+(gP2 <- ggplot(hc,aes(x=model,y=Freq,fill=type)) + 
+  geom_bar(stat="identity", position=position_dodge()) + 
+  scale_fill_brewer(palette = "Paired",name="") + 
+  xlab("") + ylab("") + theme_bw() + 
+    theme(legend.position="bottom", legend.direction="horizontal",   strip.background = element_blank(), strip.placement = "outside") + 
+    facet_wrap(vars(Network)))
+ggsave("Figures/Isl_TopoRoles_ByNetwork_Model.png",width=8,height=5,units="in",dpi=600)
+
+tt0 <- hc %>% group_by(Network) %>% group_modify( ~{ 
+  ct <- .x %>% pivot_wider(model:count,names_from="type",values_from = "count",values_fill = list(count = 0)) 
+  cc <- chisq.test(ct[,-1],simulate.p.value = TRUE, B=10000)
+  #ct <- 
+  #print(ct)
+  tibble(Size=unique(.x$Size),chi2=cc$statistic,pvalue = cc$p.value,method=cc$method)
+  }) %>% arrange(desc(Size)) %>% mutate(meta="Isl")
+
+tt0 %>% summarize(sign = pvalue<0.05) %>% filter(sign) 
+topoRoles_metaWebAssembly_chi2 <- bind_rows(tt1,tt0)
+```
+
+* There is total correspondence with model
+
+# Lakes - Plots/tests of Topological roles with meta-web assembly model 
+
+```{r Isl_plotsMetaWebTopologicalRoles, eval=FALSE,echo=F,message=T,warning=T}
+require(tidyverse)
+# Lakes
+
+#
+# Comparison of model with empirical  
+# 
+hc <- hub_conn %>% filter(grepl("Lak",Network)) %>% bind_rows(
+  hub_conn_Assembly %>% filter(grepl("Lak",Network)) %>% select(type,node,Network) %>% mutate(model="Assembly")) %>% 
+  mutate(model=ifelse(is.na(model),"Empirical",model)) %>% group_by(Network,model,type) %>% summarise(count=n()) %>% mutate(total=sum(count),Freq=count/total) %>% inner_join(websTbl %>% select(Network,Size))
+
+hc <- hc %>% ungroup() %>% mutate( Network = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>% mutate(Network=ifelse(Network=="Meta","Metaweb",Network)) %>%  mutate(Network = fct_reorder(Network, -Size))
+
+(gP2 <- ggplot(hc,aes(x=model,y=Freq,fill=type)) + 
+  geom_bar(stat="identity", position=position_dodge()) + 
+  scale_fill_brewer(palette = "Paired",name="") + 
+  xlab("") + ylab("") + theme_bw() + 
+    theme(legend.position=c(1,0), legend.justification=c(1,0), legend.direction="horizontal",   strip.background = element_blank(), strip.placement = "outside", axis.text.x = element_text(size=7)) + 
+    facet_wrap(vars(Network)))
+ggsave("Figures/Lak_TopoRoles_ByNetwork_Model.png",width=9,height=6,units="in",dpi=600)
+
+tt <- hc %>% group_by(Network) %>% group_modify( ~{ 
+  ct <- .x %>% pivot_wider(model:count,names_from="type",values_from = "count",values_fill = list(count = 0)) 
+  cc <- chisq.test(ct[,-1],simulate.p.value = TRUE, B=10000)
+  #ct <- 
+  #print(ct)
+  tibble(Size=unique(.x$Size),chi2=cc$statistic,pvalue = cc$p.value,method=cc$method)
+  }) %>% arrange(desc(Size))  %>% mutate(meta="Lak")
+
+tt %>% summarize(sign = pvalue<0.05) %>% filter(sign) 
+topoRoles_metaWebAssembly_chi2 <- bind_rows(tt1,tt0,tt)
+rm(tt,tt1,tt0,p)
+save.image()
+knitr::kable(topoRoles_metaWebAssembly_chi2%>% select( Network,meta,Size, chi2,pvalue),digits = 4)
+#
+#
+#
+```
+
+* Most are not different from metaweb assembly model. Only 5 are significative at 5%
