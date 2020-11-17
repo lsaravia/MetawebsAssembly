@@ -1,6 +1,6 @@
 OPTS= -H margins.sty --bibliography MetawebsAssembly.bib --csl=journal-of-animal-ecology.csl --pdf-engine=xelatex 
 
-all: Appendices.pdf MetawebsAssembly.pdf CoverLetter.pdf MetawebsAssembly.docx
+all: FiguresTables.pdf 
 
 
 %.pdf:%.md
@@ -24,3 +24,4 @@ MetawebsAssembly.docx: MetawebsAssembly.md makefile
 			
 MetawebsAssembly_bioRxiv.pdf: MetawebsAssembly.md nolineno.sty 
 	pandoc $< -o $@ -H nolineno.sty --bibliography MetawebsAssembly.bib --pdf-engine=xelatex --csl=ecography.csl 		
+

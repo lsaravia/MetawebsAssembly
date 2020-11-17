@@ -1508,52 +1508,6 @@ save.image()
 # Topological Roles proportions test and plot
 #
 #
-names(hub_conn_Assembly)
-
-hc <- hub_conn %>% filter(Network=="Ant_Meta") %>% bind_rows(hub_conn_Assembly %>% filter(grepl("Ant",Network)) %>% select(type,node,Network) )
-tbl1 <- table(hc$Network,hc$type)
-
-chisq.test(tbl1,simulate.p.value = TRUE, B=10000)
-
-require(ggplot2)
-require(scales)
-df1 <- data.frame(tbl1) 
-names(df1) <- c("Network","Rol","count")
-df1 <- filter(df1,count!=0)
-df1 <- df1 %>% group_by(Network) %>% mutate(total=sum(count),Freq=count/total)
-# df1$Network <- factor(df1$Network, levels=c("Potter","Weddell","Meta")) 
-# 
-levels(df1$Network) <- c("Metaweb","Potter Cove\nModel","Weddell Sea\nModel")
-
-
-gP1 <- ggplot(df1,aes(x=Network,y=Freq,fill=Rol)) + geom_bar(stat="identity", position=position_dodge()) + 
-  scale_fill_brewer(palette = "Paired",name="") + 
-  xlab("") + ylab("") + theme_bw() + theme(legend.position="none")
-
-
-# Proportion of topo roles of the real networks
-#
-hc <- hub_conn %>% filter(grepl("Ant",Network))
-tbl <- table(hc$Network,hc$type)
-
-df2 <- data.frame(tbl,stringsAsFactors = FALSE)
-names(df2) <- c("Network","Rol","count")
-df2 <- filter(df2,count!=0)
-df2 <- df2 %>% group_by(Network) %>% mutate(total=sum(count),Freq=count/total)
-#df2$Network <- factor(df2$Network, levels=c("Local","Regional","Meta")) 
-levels(df2$Network) <- c("Metaweb","Potter Cove","Weddell Sea")
-
-gP2 <- ggplot(df2,aes(x=Network,y=Freq,fill=Rol)) + geom_bar(stat="identity", position=position_dodge()) + 
-  scale_fill_brewer(palette = "Paired",name="") + 
-  xlab("") + ylab("") + theme_bw() + theme(legend.position="none")
-
-legend_b <- get_legend(gP2 + theme(legend.position="bottom"))
-
-require(cowplot)
-gP3 <- plot_grid(gP2,gP1,labels = c("A","B"),align = "h")
-gP3 <- plot_grid( gP3, legend_b, ncol = 1, rel_heights = c(1, .05))
-save_plot("Figures/Ant_TopoRoles_ByNetwork_Model.png",gP3,base_width=8,base_height=5,dpi=600)
-#ggsave("Figures/PropMotif_Roles_ByNetwork.png",width=8,height=5,units="in",dpi=600)
 
 # Antarctic
 #
@@ -1566,13 +1520,6 @@ hc <- hub_conn %>% filter(grepl("Ant",Network)) %>% bind_rows(
 str_length(hc$Network)
 hc <-  hc %>% ungroup() %>% mutate(Network = ifelse(str_length(Network) > 8, str_sub(Network,5), paste0(str_sub(Network,5),"web"))) %>% mutate(Network = fct_reorder(Network, -Size))
  
-(gP2 <- ggplot(hc,aes(x=model,y=Freq,fill=type)) + 
-  geom_bar(stat="identity", position=position_dodge()) + 
-  scale_fill_brewer(palette = "Paired",name="") + 
-  xlab("") + ylab("") + theme_bw() + 
-    theme(legend.position="bottom", legend.direction="horizontal",   strip.background = element_blank(), strip.placement = "outside") +
-    facet_wrap(vars(Network)))
-ggsave("Figures/Ant_TopoRoles_ByNetwork_Model.png",width=8,height=5,units="in",dpi=600)
 
 tt1 <- hc %>% group_by(Network) %>% group_modify( ~{ 
   ct <- .x %>% pivot_wider(model:count,names_from="type",values_from = "count",values_fill = list(count = 0)) 
@@ -1582,8 +1529,18 @@ tt1 <- hc %>% group_by(Network) %>% group_modify( ~{
   tibble(Size=unique(.x$Size),chi2=cc$statistic,pvalue = cc$p.value,method=cc$method)
   }) %>% arrange(desc(Size)) %>% mutate(meta="Ant")
 
-tt1
+names(tt1)
+names(hc)
 
+hc <- inner_join(hc, tt1 %>% select(Network,pvalue)) %>% mutate(net_name=if_else(pvalue<0.05, if_else(!grepl("Meta",Network), paste0(Network, ' *'),as.character(Network)),as.character(Network)))
+
+(gP2 <- ggplot(hc,aes(x=model,y=Freq,fill=type)) + 
+  geom_bar(stat="identity", position=position_dodge()) + 
+  scale_fill_brewer(palette = "Paired",name="") + 
+  xlab("") + ylab("") + theme_bw() + 
+    theme(legend.position="bottom", legend.direction="horizontal",   strip.background = element_blank(), strip.placement = "outside") +
+    facet_wrap(vars(net_name)))
+ggsave("Figures/Ant_TopoRoles_ByNetwork_Model.png",width=8,height=5,units="in",dpi=600)
 
 
 
@@ -1602,15 +1559,8 @@ hc <- hub_conn %>% filter(grepl("Isl",Network)) %>% bind_rows(
   hub_conn_Assembly %>% filter(grepl("Isl",Network)) %>% select(type,node,Network) %>% mutate(model="Assembly")) %>% 
   mutate(model=ifelse(is.na(model),"Empirical",model)) %>% group_by(Network,model,type) %>% summarise(count=n()) %>% mutate(total=sum(count),Freq=count/total) %>% inner_join(websTbl %>% select(Network,Size))
 
-hc <-  hc %>% ungroup() %>% mutate(Network = ifelse(str_length(Network) > 8, str_sub(Network,18), paste0(str_sub(Network,5),"web"))) %>% mutate(Network = fct_reorder2(Network, -Size, Network))
+hc <-  hc %>% ungroup() %>% mutate(Network = ifelse(str_length(Network) > 8, str_sub(Network,18), paste0(str_sub(Network,5),"web"))) #%>% mutate(Network = fct_reorder2(Network, -Size, Network))
  
-(gP2 <- ggplot(hc,aes(x=model,y=Freq,fill=type)) + 
-  geom_bar(stat="identity", position=position_dodge()) + 
-  scale_fill_brewer(palette = "Paired",name="") + 
-  xlab("") + ylab("") + theme_bw() + 
-    theme(legend.position="bottom", legend.direction="horizontal",   strip.background = element_blank(), strip.placement = "outside") + 
-    facet_wrap(vars(Network)))
-ggsave("Figures/Isl_TopoRoles_ByNetwork_Model.png",width=8,height=5,units="in",dpi=600)
 
 tt0 <- hc %>% group_by(Network) %>% group_modify( ~{ 
   ct <- .x %>% pivot_wider(model:count,names_from="type",values_from = "count",values_fill = list(count = 0)) 
@@ -1619,6 +1569,18 @@ tt0 <- hc %>% group_by(Network) %>% group_modify( ~{
   #print(ct)
   tibble(Size=unique(.x$Size),chi2=cc$statistic,pvalue = cc$p.value,method=cc$method)
   }) %>% arrange(desc(Size)) %>% mutate(meta="Isl")
+
+hc <- inner_join(hc, tt0 %>% select(Network,pvalue)) %>% mutate(net_name=if_else(pvalue<0.05, if_else(!grepl("Meta",Network), paste0(Network, ' *'),as.character(Network)),as.character(Network)))
+
+
+(gP2 <- ggplot(hc,aes(x=model,y=Freq,fill=type)) + 
+  geom_bar(stat="identity", position=position_dodge()) + 
+  scale_fill_brewer(palette = "Paired",name="") + 
+  xlab("") + ylab("") + theme_bw() + 
+    theme(legend.position="bottom", legend.direction="horizontal",   strip.background = element_blank(), strip.placement = "outside") + 
+    facet_wrap(vars(fct_reorder2(net_name, -Size, Network ))))
+
+ggsave("Figures/Isl_TopoRoles_ByNetwork_Model.png",width=8,height=5,units="in",dpi=600)
 
 tt0 %>% summarize(sign = pvalue<0.05) %>% filter(sign) 
 topoRoles_metaWebAssembly_chi2 <- bind_rows(tt1,tt0)
@@ -1639,15 +1601,7 @@ hc <- hub_conn %>% filter(grepl("Lak",Network)) %>% bind_rows(
   hub_conn_Assembly %>% filter(grepl("Lak",Network)) %>% select(type,node,Network) %>% mutate(model="Assembly")) %>% 
   mutate(model=ifelse(is.na(model),"Empirical",model)) %>% group_by(Network,model,type) %>% summarise(count=n()) %>% mutate(total=sum(count),Freq=count/total) %>% inner_join(websTbl %>% select(Network,Size))
 
-hc <- hc %>% ungroup() %>% mutate( Network = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>% mutate(Network=ifelse(Network=="Meta","Metaweb",Network)) %>%  mutate(Network = fct_reorder(Network, -Size))
-
-(gP2 <- ggplot(hc,aes(x=model,y=Freq,fill=type)) + 
-  geom_bar(stat="identity", position=position_dodge()) + 
-  scale_fill_brewer(palette = "Paired",name="") + 
-  xlab("") + ylab("") + theme_bw() + 
-    theme(legend.position=c(1,0), legend.justification=c(1,0), legend.direction="horizontal",   strip.background = element_blank(), strip.placement = "outside", axis.text.x = element_text(size=7)) + 
-    facet_wrap(vars(Network)))
-ggsave("Figures/Lak_TopoRoles_ByNetwork_Model.png",width=9,height=6,units="in",dpi=600)
+hc <- hc %>% ungroup() %>% mutate( Network = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>% mutate(Network=ifelse(Network=="Meta","Metaweb",Network)) #%>%  mutate(Network = fct_reorder(Network, -Size))
 
 tt <- hc %>% group_by(Network) %>% group_modify( ~{ 
   ct <- .x %>% pivot_wider(model:count,names_from="type",values_from = "count",values_fill = list(count = 0)) 
@@ -1657,14 +1611,32 @@ tt <- hc %>% group_by(Network) %>% group_modify( ~{
   tibble(Size=unique(.x$Size),chi2=cc$statistic,pvalue = cc$p.value,method=cc$method)
   }) %>% arrange(desc(Size))  %>% mutate(meta="Lak")
 
-tt %>% summarize(sign = pvalue<0.05) %>% filter(sign) 
+
+# Add an asterisk to the significant ones
+#
+hc <- inner_join(hc, tt %>% select(Network,pvalue)) %>% mutate(net_name=if_else(pvalue<0.05, if_else(!grepl("Meta",Network), paste0(Network, ' *'),Network),Network))
+
+
+(gP2 <- ggplot(hc,aes(x=model,y=Freq,fill=type)) + 
+  geom_bar(stat="identity", position=position_dodge()) + 
+  scale_fill_brewer(palette = "Paired",name="") + 
+  xlab("") + ylab("") + theme_bw() + 
+    theme(legend.position=c(1,0), legend.justification=c(1,0), legend.direction="horizontal",   strip.background = element_blank(), strip.placement = "outside", axis.text.x = element_text(size=7)) + 
+    facet_wrap(vars(fct_reorder(net_name, -Size))))
+ggsave("Figures/Lak_TopoRoles_ByNetwork_Model.png",width=9,height=6,units="in",dpi=600)
+
+
 topoRoles_metaWebAssembly_chi2 <- bind_rows(tt1,tt0,tt)
 rm(tt,tt1,tt0,p)
 save.image()
+
+#
+# Make a table
+#
+
 knitr::kable(topoRoles_metaWebAssembly_chi2%>% select( Network,meta,Size, chi2,pvalue),digits = 4)
-#
-#
-#
+topoRoles_metaWebAssembly_chi2 %>% summarize(sign = pvalue<0.05) %>% filter(sign, !grepl("Meta",Network)) 
+
 ```
 
-* Most are not different from metaweb assembly model. Only 5 are significative at 5%
+* Most are not different from metaweb assembly model. Only 8 are significative at 5%
