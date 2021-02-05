@@ -1614,7 +1614,7 @@ tt <- hc %>% group_by(Network) %>% group_modify( ~{
 
 # Add an asterisk to the significant ones
 #
-hc <- inner_join(hc, tt %>% select(Network,pvalue)) %>% mutate(net_name=if_else(pvalue<0.05, if_else(!grepl("Meta",Network), paste0(Network, ' *'),Network),Network))
+hc <- inner_join(hc, tt %>% select(Network,pvalue)) %>% mutate(net_name=if_else(pvalue<0.05, if_else(!grepl("Meta",Network), paste0(Network, ' *'),Network),Network)) %>% mutate(net_name=if_else(str_length(net_name)>18,str_sub(net_name,1,-6),net_name))
 
 
 (gP2 <- ggplot(hc,aes(x=model,y=Freq,fill=type)) + 

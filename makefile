@@ -4,7 +4,7 @@ all: FiguresTables.pdf
 
 
 %.pdf:%.md
-	pandoc $< -o $@ -H Appendices.sty
+	pandoc $< -o $@ 
 	evince $@		
 
 MetawebsAssembly.pdf: MetawebsAssembly.md margins.sty makefile
@@ -12,7 +12,7 @@ MetawebsAssembly.pdf: MetawebsAssembly.md margins.sty makefile
 	evince $@		
 
 FiguresTables.pdf: FiguresTables.md MetawebsAssembly.md margins.sty 
-	pandoc $< -o $@ $(OPTS)
+	pandoc $< -o $@ 
 	evince $@		
 
 Appendices.pdf: Appendices.md 
