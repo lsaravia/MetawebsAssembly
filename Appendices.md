@@ -3,9 +3,25 @@
 
 ## Meta-web assembly model simulations and fitting
 
-This model has two parameters: $c$ the probability of a species to colonize the local network from the meta-web,  and  $e$ the probability to become locally extinct. When a species arrives to the local web there are two options: 1. Basal species do not need predators to survive then they persist until an extinction event. 2. Predators only survive if there are at least one of its preys. Whenever an extinction occurs we check for secondary extinctions i.e. to enforce case 2. 
+This model has 3 parameters: $c$ the probability of a species to colonize the local network from the meta-web, $e$ the probability to become locally extinct, and the probability of secondary extinction $se$ that is the probability of extinction when the species is a predators and there is no prey locally present. Then there are three possible events, colonization, extinction, and secondary extinction. After a colonization event with probability $c$ the species is present in the local community and other two events are possible: 
+  1. if it is a basal species it does not need predators to survive then it persist until an extinction event with probability $e$. 
+  2. If it is a non-basal species it could become extinct with probability $e$ but if it has no prey it could also become extinct with probability $se$.
+These events could happen at a random if the nesesary conditions are fullfilled, we use the @Gillespie1976a algorithm to simulate the model.
 
-To fit the model to different number of species (S) and links (L) we made simulations using all combinations of $c$ and $e$ in the range of 0.01 to 0.1 with a step of 0.001. For each combination we run 500 time steps and take the last 200 to calculate the average number of links and species. We made 10 repetitions for each combination which make a total of 82810 simulations, finally we take the average of these repetitions. To select the parameter that result in the closest number of links and species to the target we restrict the set of simulations a maximum tolerance of 20%. The figures S1-S4 show the dynamics of the model fitted to each local food web.    
+To fit the model to each metaweb we performed 150000 simulations with a wide range of parameters using lating hypercubic sampling [@Fang2005], we simulated the model for 1000 time steps and use the last 100 time steps to calculate average the number of species $S_m$, and the average connectance $C_m = E_m/S_m^2$ where $E_m$ is the average number of links. Then we calculated a weigthed distance with the number of species $S_e$  and the connectance $C_e$ of the empirical food webs:  
+
+$$distance = \sqrt{ ((S_e - S_m) / S_e )^2 + ((C_e - C_m)/ C_e)^2 }$$
+
+
+The range of parameters was 
+
+| Parameter   |      |    |
+|:------------|-----:|---:|
+|$c$          | 0.010| 0.3|
+|$e$          | 0.001| 0.5|
+|$se$         | 0.100| 0.9|
+|Time steps   |  1000|    |
+
 
 ![Running averages of a simulation of the Meta-web assembly model fitted to Potter Cove food web. Where $mS$ and $mL$ are running averages of the number of species and the links, error bars are the standard deviation using a window of 100 time steps and the dashed is line the overall mean. The parameters were $c$=0.023, $e$=0.094, $\alpha=0.24$](Figures/PotterCove_Meta-webSim_avg.png)
 

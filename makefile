@@ -1,6 +1,6 @@
-OPTS= -H margins.sty --bibliography MetawebsAssembly.bib --csl=journal-of-animal-ecology.csl --pdf-engine=xelatex 
+OPTS= -H margins.sty --bibliography MetawebsAssembly.bib --citeproc --csl=journal-of-animal-ecology.csl --pdf-engine=xelatex 
 
-all: FiguresTables.pdf 
+all: MetawebsAssembly.pdf Appendices.pdf
 
 
 %.pdf:%.md

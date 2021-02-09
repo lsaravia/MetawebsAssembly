@@ -268,7 +268,7 @@ save_plot("Figures/Metaweb_steady_state_Weddell.png",gP5,base_width=6,base_heigh
 
 ```
 
-* The discrete time and continuous time models give the same results, this is a verification that the models are well implemented and that the timmings of events have no influence on the results. So we use the continuous model (randomized order of events).  
+* The discrete time and continuous time models give the same results, this is a verification that the models are well implemented and that the timings of events have no influence on the results. So we use the continuous model (randomized order of events).  
 
 
 # Checking differences with m and a parameters, to know if we can use lambda=m/a as a unique parameter
@@ -417,8 +417,6 @@ ggsave("Figures/Metaweb_SecExtc_byModel.png",width=8,height=5,units="in",dpi=600
 
 ```
 
-* there are differences when secondary extinctions are >0 and mainly in the temporal SD so we keep using the 2 parameters
-
 
 # Antarctic Metaweb Simulate a grid of parameters to select the best options
 
@@ -446,7 +444,7 @@ require(lhs)
 
 # simulations with probability of secondary extinction == 1
 #
-# Discrete time
+# Continuous time
 par_ranges <- matrix(c(0.01, 0.3,0.001, 0.5, 1, 1),nrow=3,byrow = TRUE)
 sim <- sim_metaWebAssembly_lhs(2, 150000, par_ranges,A, 1 ) %>% mutate(model_type="Continuous",Metaweb="Ant")
 
@@ -455,7 +453,7 @@ saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
 
 # simulations with probability of secondary extinction != 1
 #
-# Discrete time
+# Continuous time
 par_ranges <- matrix(c(0.01, 0.3,0.001, 0.5, 0.1, 0.9),nrow=3,byrow = TRUE)
 sim <- sim_metaWebAssembly_lhs(3, 150000, par_ranges,A, 1) %>% mutate(model_type="Continuous",Metaweb="Ant")
 
@@ -465,7 +463,7 @@ saveRDS(simMetaWebAssembly,"Data/simulations_metaWebAssembly.rds")
 
 # simulations with probability of secondary extinction == 0
 #
-# Discrete time
+# Continuous time
 par_ranges <- matrix(c(0.01, 0.3,0.001, 0.5, 0, 0),nrow=3,byrow = TRUE)
 sim <- sim_metaWebAssembly_lhs(2,  150000, par_ranges,A,1 ) %>% mutate(model_type="Continuous",Metaweb=metaweb_name)
 
@@ -486,10 +484,6 @@ p1 <- ggplot(simMetaWebAssembly %>% filter(Metaweb == metaweb_name), aes(S,C))+ 
 ggplot(simMetaWebAssembly, aes(S,L))+ geom_point(size=0.1,alpha=0.5) + theme_bw() + 
   geom_point(data=websTbl, aes(Size,Links,color=Network),size=0.3) + coord_cartesian(ylim=c(0,3000)) + facet_wrap(~model)
 
-# ggplot(simMetaWebAssembly %>% filter(model=="Prob"), aes(S,C,color=model_type))+ geom_point(size=.1,alpha=0.5) + theme_bw() + coord_cartesian(ylim=c(0,0.1)) + scale_color_brewer(palette= "Dark2",name="")#, labels=c("Fixed Sec.Ext.", "Potter","Meta", "No Sec.Ext.", "Prob. Sec.Ext.","Weddell" ))  
-# ggsave("Figures/Metaweb_Continuous_Discrete.pdf",width=8,height=5,units="in",dpi=600)
-
-
 ggplot(simMetaWebAssembly %>% filter(model=="Prob"), aes(S,C,color=model_type))+ geom_point(size=.1,alpha=0.5) + theme_bw() + geom_point(data=websTbl, aes(Size,Connectance,color=Network),size=0.4) + coord_cartesian(ylim=c(0,0.1)) + scale_color_brewer(palette= "Dark2",name="")#, labels=c("Fixed Sec.Ext.", "Potter","Meta", "No Sec.Ext.", "Prob. Sec.Ext.","Weddell" ))  
 rm(sim,par_ranges,AAdf,AAdf1,AAdf2,AAdf3,AAdf4,AAdfTot,f)
 save.image()
@@ -504,21 +498,9 @@ save.image()
 #
 # Potter Cove
 #
-# Use this tolerance = tol to display a more detailed plot 
 fittedMetaWeb <- bind_rows(fittedMetaWeb, fit_metaWebAssembly_model(websTbl, "Ant_Potter", simMetaWebAssembly))
 fittedMetaWeb <- bind_rows(fittedMetaWeb, fit_metaWebAssembly_model(websTbl, "Ant_Weddell", simMetaWebAssembly))
 
-## Perform ABC and GOF
-#
-# fittedMetaWeb_gof <- tibble()
-# netnames <- names(ig_list)
-# netnames <- netnames[ netnames != "Ant_Meta" ] 
-# 
-# fmw <-  lapply(netnames, function(n){
-# 
-#   CI_metaWebAssembly_model(websTbl, n, simMetaWebAssembly,plot=FALSE)
-# })
-# fittedMetaWeb_gof <- bind_rows(fittedMetaWeb_gof,fmw)
 
 knitr::kable(fittedMetaWeb %>% dplyr::select( Network,  everything(), -min_dist) %>% arrange(Network))
 
@@ -528,16 +510,17 @@ save.image()
 ```
 
 
-* Fit of Metaweb model by variant usin C and S
+* Fit of Metaweb model by variant using C and S
 
-|Network     |         m|         a|        se|         S|         L|         C|model_type |Metaweb |model     |     alpha|  distance|fit_type |
-|:-----------|---------:|---------:|---------:|---------:|---------:|---------:|:----------|:-------|:---------|---------:|---------:|:--------|
-|Ant_Potter  | 0.0185036| 0.1269833| 0.0000000|  92.35644|  325.1782| 0.0381230|Continuous |Ant     |No SecExt | 0.1457165| 0.0081407|S-C      |
-|Ant_Potter  | 0.0409665| 0.2375224| 0.2219146|  94.87129|  367.0495| 0.0407807|Continuous |Ant     |Prob      | 0.1724744| 0.0694620|S-C      |
-|Ant_Potter  | 0.0144288| 0.0864320| 1.0000000|  87.28713|  331.4554| 0.0435036|Continuous |Ant     |Fixed     | 0.1669378| 0.1424930|S-C      |
-|Ant_Weddell | 0.0207792| 0.0131341| 0.4088838| 446.70297| 7646.4554| 0.0383197|Continuous |Ant     |Prob      | 1.5820785| 0.4354927|S-C      |
-|Ant_Weddell | 0.0139139| 0.0096195| 1.0000000| 441.68317| 7272.8218| 0.0372805|Continuous |Ant     |Fixed     | 1.4464271| 0.4528557|S-C      |
-|Ant_Weddell | 0.0298641| 0.0259663| 0.0000000| 444.68317| 6772.1485| 0.0342472|Continuous |Ant     |No SecExt | 1.1501116| 0.4960883|S-C      |
+|Network                 |         m|         a|        se|         S|          L|         C|model_type |Metaweb |model     |       alpha|  distance|fit_type |
+|:-----------------------|---------:|---------:|---------:|---------:|----------:|---------:|:----------|:-------|:---------|-----------:|---------:|:--------|
+|Ant_Potter              | 0.0188385| 0.0552144| 0.7648036|  93.50495|  346.07921| 0.0395828|Continuous |Ant     |Prob      |   0.3411878| 0.0349252|S-C      |
+|Ant_Potter              | 0.0115512| 0.0413126| 1.0000000|  89.15842|  292.05941| 0.0367406|Continuous |Ant     |Fixed     |   0.2796050| 0.0530743|S-C      |
+|Ant_Potter              | 0.0174001| 0.0781544| 0.0000000|  91.92079|  266.68317| 0.0315623|Continuous |Ant     |No SecExt |   0.2226382| 0.1780237|S-C      |
+|Ant_Weddell             | 0.0330033| 0.0255973| 0.0000000| 432.94059| 2043.72277| 0.0109035|Continuous |Ant     |No SecExt |   1.2893274| 0.0433393|S-C      |
+|Ant_Weddell             | 0.0285914| 0.0200492| 1.0000000| 420.59406| 1962.40594| 0.0110933|Continuous |Ant     |Fixed     |   1.4260594| 0.0696235|S-C      |
+|Ant_Weddell             | 0.0270526| 0.0163861| 0.1015863| 450.36634| 2312.54455| 0.0114014|Continuous |Ant     |Prob      |   1.6509488| 0.0973483|S-C      |
+|
 
 
 
