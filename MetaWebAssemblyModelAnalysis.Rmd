@@ -10,7 +10,7 @@ editor_options:
 
 - I run the analysis setting `eval=True` or `eval=False` to run a particular chunk, not the whole Rmd. 
 
-- To run the simulations for each metaweb fit, I first read the dataset, turning on the corresponding chhunk, then I run the fitting procedure turning on that chunk.  
+- To run the simulations for each metaweb fit, I first read the dataset, turning on the corresponding chunk, and I run the fitting procedure turning on that chunk.  
 
 ```{r setup, echo=FALSE }
 if(file.exists(".RData")) load(".RData")
@@ -20,7 +20,8 @@ needed_packages <- c(
   , "igraph"
   , "dplyr"
   , "stringr"
-  , "devtools")
+  , "devtools"
+  , "ks")
 
 lapply(needed_packages, function(x) { if(!require(x,character.only = TRUE)){ install.packages(x) }} )
 
@@ -148,9 +149,9 @@ set.seed(2312)
 # Testing for the CT model
 #
 tf <- 3000
-m <- rep(0.1,times=dimA)
-e <- rep(0.3, times=dimA)
-se <- rep(0.3, times=dimA)
+m <- rep(0.2,times=dimA)
+e <- rep(0.5, times=dimA)
+se <- rep(0.7, times=dimA)
 AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
 gP <- plot_NetAssemblyModel_eqw(AA,50)
 AAdf <- tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S)) 
@@ -165,27 +166,43 @@ tf <- 500
 AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,50)
 AAdf3 <- tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S)) 
+#
+# First 100 time steps
+#
 AAdf4 <- tibble(C=AA$L[2:100]/ (AA$S[2:100])^2 ,S=AA$S[2:100]) %>% mutate(mC = mean(C), mS=mean(S)) 
 
+
+#
+# Kernel density based global two-sample comparison test 2d 
+# to determine if the last 100 time steps have the same distribution of C and S 
+# and therefore there is steady state
+#
+
 require(ks)
-kde.test(AAdf3[,1:2],AAdf[,1:2])$pvalue
-# [1] 0.2421669
-kde.test(AAdf3[,1:2],AAdf1[,1:2])$pvalue
-# [1] 0.5166524
-kde.test(AAdf3[,1:2],AAdf2[,1:2])$pvalue
-# [1] 0.2582594
-##
+kde.test(AAdf3[,1:2],AAdf[,1:2])$pvalue # 500 vs 3000
+# [1] 0.2279634
+kde.test(AAdf3[,1:2],AAdf1[,1:2])$pvalue # 500 vs 1500
+# [1] 0.2766678
+kde.test(AAdf3[,1:2],AAdf2[,1:2])$pvalue # 500 vs 1000
+# [1] 0.215098
+
 # Testing the first 100 time steps against the last 100 of the '500' simulation
 kde.test(AAdf4[,1:2],AAdf3[,1:2])$pvalue
-# [1] 0.05814453
+# [1] 0.0708442
 
+# Lakes Islands & Antarctic Metawebs
+# There are no differences between 500 and 1000, 500-1500, 500-3000, so we use 1000 time steps
+# There are also no differences between the first 100 time steps and the last 100 for the 500 simulation
+
+
+AAdfTot <- tibble()
 AAdfTot <- bind_rows(AAdfTot, 
-                     bind_rows(AAdf %>% mutate(Sim="2000"), AAdf1 %>% mutate(Sim="1500"), AAdf2 %>% mutate(Sim="1000"), AAdf3 %>% mutate(Sim="500")) %>% mutate(model_type="Continuous")
+                     bind_rows(AAdf %>% mutate(Sim="2000"), AAdf1 %>% mutate(Sim="1500"), AAdf2 %>% mutate(Sim="1000"), AAdf3 %>% mutate(Sim="500")) %>% mutate(model_type="Potter", )
                      )
 ggplot(AAdfTot, aes(S,C,color=Sim))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC)) + facet_wrap( ~ model_type)
 
 #
-# Changing parameters
+# Changing parameters (Near Weddell)
 #
 #
 # Testing if 500 time steps is enough to find equilibrium point
@@ -194,9 +211,9 @@ set.seed(2312)
 
 t_window <-  100
 tf <- 3000
-m <- rep(0.015,times=dimA)
-e <- rep(0.005, times=dimA)
-se <- rep(0.25, times=dimA)
+m <- rep(0.03,times=dimA)
+e <- rep(0.016, times=dimA)
+se <- rep(0.10, times=dimA)
 AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
 gP2 <- plot_NetAssemblyModel_eqw(AA,50)
 AAdf <- tibble(C=AA$L[(tf-t_window):tf]/ (AA$S[(tf-t_window):tf])^2 ,S=AA$S[(tf-t_window):tf]) %>% mutate(mC = mean(C), mS=mean(S), Sim=tf) 
@@ -224,6 +241,7 @@ t_window <- 100
 AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,50)
 AAdf3 <- tibble(C=AA$L[(tf-t_window):tf]/ (AA$S[(tf-t_window):tf])^2 ,S=AA$S[(tf-t_window):tf]) %>% mutate(mC = mean(C), mS=mean(S), Sim=tf) 
+AAdf5 <- tibble(C=AA$L[2:100]/ (AA$S[2:100])^2 ,S=AA$S[2:100]) %>% mutate(mC = mean(C), mS=mean(S)) 
 
 
 #
@@ -232,26 +250,33 @@ AAdf3 <- tibble(C=AA$L[(tf-t_window):tf]/ (AA$S[(tf-t_window):tf])^2 ,S=AA$S[(tf
 # and therefore there is steady state
 #
 require(ks)
-kde.test(AAdf3[,1:2],AAdf[,1:2])$pvalue
-# [1] 0.5316762
-kde.test(AAdf3[,1:2],AAdf1[,1:2])$pvalue
-# 0.3481172
-kde.test(AAdf3[,1:2],AAdf2[,1:2])$pvalue
-# [1] 0.1103454
-#
-# There are differences p<0.05 due to the ciclic dynamics
+kde.test(AAdf3[,1:2],AAdf[,1:2])$pvalue # 500 vs 3000
+# 3.756337e-09
 
-AAdf <- bind_rows(AAdf , AAdf1, AAdf2, AAdf3,AAdf4) %>% mutate(model_type="Continuous",e=0.005)
+kde.test(AAdf3[,1:2],AAdf1[,1:2])$pvalue # 500 vs 1500
+# 2.434068e-05
+kde.test(AAdf3[,1:2],AAdf2[,1:2])$pvalue # 500 vs 1000
+# 2.890921e-21
+#
+kde.test(AAdf3[,1:2],AAdf5[,1:2])$pvalue # last 500 vs first 500
+# 3.390605e-05
+
+# Lakes, Islands & Antarctic Metaweb
+#
+# In All cases there are differences p<0.05 due to the quasi-cyclic dynamics
+
+AAdf <- bind_rows(AAdf , AAdf1, AAdf2, AAdf3,AAdf4) %>% mutate(model_type="Weddell",Sim=as.character(Sim))
 AAdfTot <- bind_rows(AAdfTot,AAdf)
-ggplot(AAdf , aes(S,C,color=factor(Sim)))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC)) + facet_wrap( ~ model_type)
+ggplot(AAdfTot , aes(S,C,color=factor(Sim)))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC)) + facet_wrap( ~ model_type)
 
 #  + theme(axis.text.x=element_blank(),axis.title.x=element_blank())
+require(cowplot)
 gP5 <- plot_grid(gP$g1,
                  gP$g2,
                  gP1$g1 ,
                  gP1$g2 ,
                  align = "hv",
-                  ncol = 2)
+                  ncol = 2, labels = c('A', '','B'))
 save_plot("Figures/Metaweb_steady_state_Potter.png",gP5,base_width=6,base_height=6,dpi=600)
 
 gP5 <- plot_grid(gP2$g1 ,
@@ -259,7 +284,7 @@ gP5 <- plot_grid(gP2$g1 ,
                  gP3$g1 ,
                  gP3$g2 ,
                  align = "hv",
-                  ncol = 2)
+                  ncol = 2, labels = c('A', '','B'))
 
 save_plot("Figures/Metaweb_steady_state_Weddell.png",gP5,base_width=6,base_height=6,dpi=600)
 
@@ -268,10 +293,8 @@ save_plot("Figures/Metaweb_steady_state_Weddell.png",gP5,base_width=6,base_heigh
 
 ```
 
-* The discrete time and continuous time models give the same results, this is a verification that the models are well implemented and that the timings of events have no influence on the results. So we use the continuous model (randomized order of events).  
 
-
-# Checking differences with m and a parameters, to know if we can use lambda=m/a as a unique parameter
+# Checking differences with m and a parameters, to know if we can use lambda=m/a as a unique parameter (not include in the paper)
 
 ```{r checklambda, eval=F,echo=F,message=T,warning=T}
 
@@ -417,6 +440,9 @@ ggsave("Figures/Metaweb_SecExtc_byModel.png",width=8,height=5,units="in",dpi=600
 
 ```
 
+* There are differences if we keep  lambda=m/e fixed and vary e and m, so we use e and m instead of alpha 
+
+* The discrete time and continuous time models give the similar results, this is a verification that the models are well implemented and that the timings of events have no influence on the results. So we use the continuous model (randomized order of events).  
 
 # Antarctic Metaweb Simulate a grid of parameters to select the best options
 
@@ -510,17 +536,12 @@ save.image()
 ```
 
 
-* Fit of Metaweb model by variant using C and S
+* Fit of Antarctic Metaweb model using C and S
 
 |Network                 |         m|         a|        se|         S|          L|         C|model_type |Metaweb |model     |       alpha|  distance|fit_type |
 |:-----------------------|---------:|---------:|---------:|---------:|----------:|---------:|:----------|:-------|:---------|-----------:|---------:|:--------|
 |Ant_Potter              | 0.0188385| 0.0552144| 0.7648036|  93.50495|  346.07921| 0.0395828|Continuous |Ant     |Prob      |   0.3411878| 0.0349252|S-C      |
-|Ant_Potter              | 0.0115512| 0.0413126| 1.0000000|  89.15842|  292.05941| 0.0367406|Continuous |Ant     |Fixed     |   0.2796050| 0.0530743|S-C      |
-|Ant_Potter              | 0.0174001| 0.0781544| 0.0000000|  91.92079|  266.68317| 0.0315623|Continuous |Ant     |No SecExt |   0.2226382| 0.1780237|S-C      |
-|Ant_Weddell             | 0.0330033| 0.0255973| 0.0000000| 432.94059| 2043.72277| 0.0109035|Continuous |Ant     |No SecExt |   1.2893274| 0.0433393|S-C      |
-|Ant_Weddell             | 0.0285914| 0.0200492| 1.0000000| 420.59406| 1962.40594| 0.0110933|Continuous |Ant     |Fixed     |   1.4260594| 0.0696235|S-C      |
 |Ant_Weddell             | 0.0270526| 0.0163861| 0.1015863| 450.36634| 2312.54455| 0.0114014|Continuous |Ant     |Prob      |   1.6509488| 0.0973483|S-C      |
-|
 
 
 
@@ -624,7 +645,7 @@ fittedMetaWeb <- bind_rows(fittedMetaWeb, fmw)
 # })
 # fittedMetaWeb_gof <- bind_rows(fittedMetaWeb_gof,fmw)
 
-knitr::kable(fittedMetaWeb %>% dplyr::select( Metaweb,Network,  everything(), -min_dist, -model_type,-fit_type) %>% arrange(Network), digits = 4)
+knitr::kable(fittedMetaWeb %>% filter(model=="Prob") %>% dplyr::select( Metaweb,Network,  everything(), -min_dist, -model_type,-fit_type,-model) %>% arrange(Network), digits = 4)
 
 rm(netnames,fmw,X,dfA,AAdf,AAdf1,AAdf2,AAdf3,arguments,sim,sel,g3,gg,ravg,sel,redl,ig_list,web)
 save.image()
@@ -756,11 +777,6 @@ save.image()
 
 * As connectivity is determines most of other network properties we fit by connectivity and number of species
 
-|model     |  n|      freq|
-|:---------|--:|---------:|
-|Fixed     | 14| 0.2456140|
-|No SecExt | 18| 0.3157895|
-|Prob      | 25| 0.4385965|
 
 ```{r fitMetaWebSims, eval=FALSE,echo=F,message=T,warning=T}
 

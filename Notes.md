@@ -264,6 +264,9 @@ are higher than expected (hsi/s̃ > 1)
 @Grilli2016
 
 
+Therefore, we contrast the value for the real part of the ‘rightmost’ eigenvalue of M, Re(l M,1 ), with
+e a matrix with exactly the same Reðl M;1~ Þ, the value found for M, coefficients, but re-arranged according to a random network structure (Q 1⁄4 0). Re(l M,1 ), is a measure of stability, as it expresses the amount of self-regulation we would need to stabilize the equilibrium
+
 Food-web structure. Clearly, ecological systems do not follow a random graph structure, for example, displaying a directionality in the flow of energy from producers to consumers. This directionality proved important in our previous study 36 , where we showed that when the mean of the negative effects dominates that of the positive effects, systems built according to the cascade 37 model (in which ‘larger’ species consume ‘smaller’ ones) are more likely to be stable than their random counterparts. We therefore analysed matrices constructed using a variation of the cascade model, where we assign a ‘size’ to each species and each species can only consume smaller species, and has a preference for those in the same subsystem (Q40), or for those in the other subsystem (Qo0).
 
 The picture emerging from both simulations and mathematical analysis is much more complex than previously hypothesized. Block structure can have an effect on the local asymptotic stability of the underlying system. However, unless we are in particular areas of the parameter space, the effect tends to be destabilizing. Our results stress the fact that, when discussing the relationship between network structure and local stability, we need to qualify our statements, as a given structure is not stabilizing or destabilizing per se, but is only so under certain specific conditions.

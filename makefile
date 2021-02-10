@@ -16,7 +16,7 @@ FiguresTables.pdf: FiguresTables.md MetawebsAssembly.md margins.sty
 	evince $@		
 
 Appendices.pdf: Appendices.md 
-	pandoc -H Appendices.sty $^ -o $@
+	pandoc -H Appendices.sty --bibliography MetawebsAssembly.bib --citeproc --csl=journal-of-animal-ecology.csl $^ -o $@
 	evince $@		
 
 MetawebsAssembly.docx: MetawebsAssembly.md makefile
