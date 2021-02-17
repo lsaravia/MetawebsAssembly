@@ -70,6 +70,12 @@ pandoc.table((websTbl %>% dplyr::select(Network,Size,Links,Connectance,PathLengt
 
 knitr::kable(websTbl %>% dplyr::select(Network,Size,Links,Connectance,PathLength,Clustering,SWness,SWnessCI,Q,zQ,Qlow,Qhigh,mTI,zTI,TIlow,TIhigh,Modularity,zMO,MOlow,MOhigh) %>% mutate_if(is.numeric, round, digits=4))
 
+
+knitr::kable(websTbl %>% dplyr::select(Metaweb,Network,Size,Links,Connectance,Q,mTI,Modularity,MEing) %>% mutate_if(is.numeric, round, digits=4) %>% arrange(Metaweb,Links))
+
+knitr::kable(websTbl %>% dplyr::select(Metaweb,Network,Size,Links,Connectance,Q,mTI,Modularity,MEing) %>% mutate_if(is.numeric, round, digits=4) %>% arrange(Metaweb,Connectance))
+
+
 ```
 
 
@@ -164,7 +170,7 @@ chisq.test(x,simulate.p.value = T, B=10000)
 
 ```
  
-# Topological Roles
+# Topological Roles of empirical Networks
 
 
 @Kortsch2015
@@ -215,7 +221,7 @@ save.image()
 
 ```
 
-# Antarctic Plot of topological roles with confidence interval
+# Antarctic Plot of topological roles with confidence interval 
 
 ```{r Ant_topologicalRolesCI, eval=FALSE,echo=F,message=T,warning=T}
 
@@ -245,7 +251,7 @@ websTbl$Area <- c(6.8,3.5e6,34.8e6)
 
 ```
 
-# Integrated plot of topological roles, trophic level and modularity
+# Integrated plot of topological roles, trophic level and modularity (Not used in the paper)
 
 ```{r plotTopoRolesTLmod, eval=FALSE,echo=F,message=T,warning=T}
 

@@ -45,7 +45,7 @@ The second metaweb was collected from pelagic organisms of 50 lakes of the Adiro
 The third metaweb comes from the classic defaunation experiment performed in the Florida Keys [@Simberloff1969; @Piechnik2008], six islands of 11–25 meters in diameter were defaunated with insecticide. The arthropods were censused before the experiment and after it approximately once every 3 weeks during the first year and again 2 years after defaunation. For the metaweb and local webs we used only the first census that represent a complete community, @Piechnik2008 determined the trophic interactions among 211 species using published information and expert opinions. These last two dataset were obtained directly from the GATEWAy database [@Brose2019].
 
 
-### Model
+### Metaweb Assembly Model
 
 
 To consider network assembly mechanisms we used a metaweb assembly model (Figure 1), similar to the trophic theory of island biogeography [@Gravel2011]. In this model species migrate from the metaweb to a local web with a probability $c$, and become extinct from the local web with probability $e$; a reminiscence of the theory of island biogeography [@MacArthur1967], but with the addition of network structure. Species migrate with their potential network links from the metaweb, then in the local web, species have a probaility of secondary extinction $se$ if none of its preys is present, this only applies to non-basal species. When a species goes extinct locally it may produce secondary extinctions modulated by $se$ (Figure 1). We simulated this model in time and it eventually reaches an equilibrium that depends on the migration and extinction probabilities but also on the structure of the metaweb. The ratio of immigration vs. extinction $\alpha= c/e$ is hypothesized to be inversely related to the distance to the mainland [@MacArthur1967], and as extinction should be inversely proportional to population size [@Hanski1999], the ratio $\alpha$ is also hypothesized to be related to the local area. For details of the fitting and simulations see Appendix. 
@@ -58,31 +58,7 @@ This model only considers colonization-extinction, and secondary extinctions eve
 
 To describe food webs as networks each species is represented as a node or vertex and the trophic interactions are represented as edges or links between nodes. These links are directed, from the prey to the predator, as the flow of energy and matter. Two nodes are neighbours if they are connected by an edge and the degree $k_i$ of node $i$ is the number of neighbours it has. The food web can be represented by an adjacency matrix $A=(a_{ij})$ where $a_{ij}=1$ if species $j$ predates on species $i$, else is 0. Then $k_i^{in}=\sum_j{a_{ji}}$ is the number of preys of species $i$ or its in-degree, and $k_i^{out}=\sum_j{a_{ij}}$ is the number of predators of $i$ or its out-degree. The total number of edges is $E=\sum_{ij}a_{ij}$. 
 
-
-The first property we analysed is the small-world pattern, which examines the average of the shortest distance between nodes and the clustering coefficient of the network [@Watts1998]. This property is associated with increased resilience and resistance to secondary extinctions [@Sole2001; @Bornatowski2017]. We first calculated the characteristic path length that is the shortest path between any two nodes. Then $L$ is the mean value of the shortest path length across all pairs of nodes. 
-The clustering coefficient of node $i$ was defined as 
-
-$$cc_i =\frac{2 E_i}{k_i (k_i -1)}$$ 
-
-where $E_i$ is the number of edges between the neighbours of $i$. The clustering coefficient of the network $CC$ is the average of $cc_i$ over all nodes. The original definition of small-world networks is conceptual [@Watts1998], a network $G$ is small-world when it has a similar mean shortest path length but greater clustering than an Erdös-Rényi random network with the same number of nodes $n$ and edges $m$. For the quantitative version of the small-world pattern, we followed @Humphries2008; we need to define:
-
-$$\gamma_g = \frac{CC_g}{CC_{null}}$$
-
-and
-
-$$\lambda_g = \frac{L_g}{L_{null}}$$
-
-where $CC_g$ and $L_g$ are the clustering coefficient and the mean shortest path length of the network of interest $G$; $CC_{null}$ and $L_{null}$ are the same quantities for the null model. Thus, quantitative small-world-ness is defined as:
-
-$$S = \frac{\gamma_g}{\lambda_g}$$
-
-and to determine if $S$ is statistically significant Monte Carlo methods were used [@Crowley1992]. We built 1000 null model networks using the metaweb assembly model fitted to the empirical network; then we calculated $S$ for each random network and the lower and higher 99% quantiles of the $S$ distribution are called $ql,qh$:
-
-$$CI = \frac{qh - ql}{2}$$
- 
-the upper 99% confidence limit is then $CL^{0.01}= 1 + CI$. Thus, if a network has $S > CL^{0.01}$ it is considered a small-world network [@Humphries2008]. We also calculated the small-world-ness and the CI using the metaweb assembly model as a null model.
-
-The second property is trophic coherence [@Johnson2014], that is related to stability in the sense that small perturbations could get amplified or vanished, which is called local linear stability [@May1972;@Rohr2014]. We first needed to estimate the trophic level of a node $i$, defined as the average trophic level of its preys plus 1. That is:
+We first calculated a property called trophic coherence [@Johnson2014], that is related to stability in the sense that small perturbations could get amplified or vanished, which is called local linear stability [@May1972;@Rohr2014]. We first needed to estimate the trophic level of a node $i$, defined as the average trophic level of its preys plus 1. That is:
 
 $$tp_i= 1 + \frac{1}{k_i^{in}}\sum_{j}{a_{ij} tp_j}$$ 
 
@@ -91,11 +67,12 @@ where $k_i^{in}=\sum_{j}a_{ji}$ is the number of preys of species $i$, basal spe
 $$q = \sqrt{\frac{1}{E} \sum_{ij}a_{ij}x_{ij}^2 - 1}$$
 
 
-that is the standard deviation of the distribution of all trophic distances. A food web is more coherent when $q$ is closer to zero, thus the maximal coherence is achieved when $q = 0$, and corresponds to a layered network in which every node has an integer trophic level [@Johnson2014; @Johnson2017]. To compare coherence and trophic level we generated 1000 null model networks with at least one basal species and the same number of species and links---or approximately the same---than the network of interest. Then we calculated the 99% confidence interval using the 0.5% and 99.5% quantiles of the distribution of $q$; we also calculated the confidence interval for the mean trophic level $tp$. We calculated the z-scores as:
+that is the standard deviation of the distribution of all trophic distances. A food web is more coherent when $q$ is closer to zero, thus the maximal coherence is achieved when $q = 0$, and corresponds to a layered network in which every node has an integer trophic level [@Johnson2014; @Johnson2017]. To compare coherence and trophic level we generated 1000 null model networks with the fitted parameters of the metaweb assembly model. Then we calculated the 99% confidence interval using the 0.5% and 99.5% quantiles of the distribution of $q$. We calculated the z-scores as:
 
 $$z_i=\frac{q_{obs} - q_{null}}{\sigma_{qnull}}$$
 
-where $q_{obs}$ is the observed coherence, $q_{null}$ is the mean coherence from the null model networks and $\sigma_{qnull}$ is the standard deviation. The same formula is used for $tp$. The z -score thus measures the significance of deviations of the empirical network from the null hypothesis. If the distribution of the quantity ($q$, $tp$) under the null model is normal, a z-score greater than 2 is evidence that the observed quantity is significantly greater than its random counterpart, and a z-score less than -2 means that the quantity is significantly lower. If the distribution under the null model is skewed this is not necessarily true and thus we must rely on confidence intervals. 
+where $q_{obs}$ is the observed coherence, $q_{null}$ is the mean coherence from the null model networks and $\sigma_{qnull}$ is the standard deviation. The same formula is used for $tp$. The z -score thus measures the significance of deviations of the empirical network from the null hypothesis. If the distribution of the quantity ($q$, $tp$) under the null model is normal, a z-score greater than 2 is evidence that the observed quantity is significantly greater than its random counterpart, and a z-score less than -2 means that the quantity is significantly lower. If the distribution under the null model is skewed this is not necessarily true and thus we must rely on confidence intervals. We also calculated the CI and z-scores for mean trophic level as it was historically used as an ecosystem health indicator [@Pauly1998], and is hypothesized that food webs with higher trophic levels are less stable [@Borrelli2014].
+
 
 Another property related to stability is modularity, since the impacts of a perturbation are retained within modules minimizing impacts on the food web [@Fortuna2010; @Grilli2016]. It measures how strongly sub-groups of species interact between them compared with the strength of interaction with other sub-groups [@Newman2004]. These sub-groups are called compartments. To find the best partition, we used a stochastic algorithm based on simulated annealing [@Reichardt2006]. Simulated annealing allows maximizing modularity without getting trapped in local maxima configurations [@Guimera2005]. The index of modularity was defined as: 
 
@@ -110,7 +87,6 @@ Finally, we calculate the average of the maximal real part of the eigenvalues of
 
 We considered four of the thirteen possible three-species sub-networks: apparent competition, exploitative competition, tri-trophic chain and omnivory (Figure S5). These are the most common motifs present in food webs [@Monteiro2017; @Borrelli2015a]. We compared the frequency of these motifs to 1000 null model networks using the 99% confidence interval and the z-scores as previously described. To determine if the proportions of motifs change compared with the metaweb we use the Pearson's Chi-squared test with simulated p-value based on 10000 Monte Carlo replicates.
 
-![Network motifs z-scores across local food webs. Motifs are three-node sub-networks counted on each of the networks.: the *Metaweb* represents the regional pool of species with predator-prey relationships. Z-scores estimated with the metaweb assembly model, bars marked with '*' are significant at 1% level.](Figures/Motif_Zscores_Assembly.png){ width=100% }
 
 
 ### Topological roles
@@ -126,12 +102,29 @@ $$PC_i =  1 - \sum_s \frac{k_{is}}{k_i}$$
 
 where $k_i$ is the degree of species $i$ (i.e. the number of links), $k_{is}$ is the number of links of species $i$ to species in module $s$. Due to the stochastic nature of the module detection algorithm, we made repeated runs of the algorithm until there were no statistical differences between the distributions of $PC_i$ and $dz_i$ in successive repetitions; to test such statistical difference we used the k-sample Anderson-Darling test [@Scholz1987]. Then we calculated the mean and 95% confidence interval of $dz$ and $PC$.
 
-To determine each species' role the $dz-PC$ parameter space was divided into four areas, modified from @Guimera2005, using the same scheme as @Kortsch2015. Two thresholds were used to define the species’ roles: $PC=0.625$ and $dz=2.5$. If a species had at least 60% of links within its module then $PC<0.625$, and if it also had $dz\ge 2.5$, thus it was classified as a module hub. This parameter space defines species with a relatively high number of links, the majority within its module. If a species had $PC<0.625$ and $dz<2.5$, then it was called a peripheral or specialist; this refers to a species with relatively few links, mostly within its module. Species that had $PC\ge0.625$ and $dz<2.5$ were considered module connectors, since they have relatively few links, mostly between modules. Finally, if a species had $PC\ge0.625$ and $dz\ge 2.5$, then it was classified as a super-generalist or hub-connector because it has high between- and within-module connectivity. To test if the proportion of species’ roles changed between networks we performed a Pearson's Chi-squared test with simulated p-value based on 10000 Monte Carlo replicates. Also, we tested if these proportions changed for one realization of the metaweb assembly model fitted for each local network.
+To determine each species' role the $dz-PC$ parameter space was divided into four areas, modified from @Guimera2005, using the same scheme as @Kortsch2015. Two thresholds were used to define the species’ roles: $PC=0.625$ and $dz=2.5$. If a species had at least 60% of links within its module then $PC<0.625$, and if it also had $dz\ge 2.5$, thus it was classified as a module hub. This parameter space defines species with a relatively high number of links, the majority within its module. If a species had $PC<0.625$ and $dz<2.5$, then it was called a peripheral or specialist; this refers to a species with relatively few links, mostly within its module. Species that had $PC\ge0.625$ and $dz<2.5$ were considered module connectors, since they have relatively few links, mostly between modules. Finally, if a species had $PC\ge0.625$ and $dz\ge 2.5$, then it was classified as a super-generalist or hub-connector because it has high between- and within-module connectivity. 
+
+We estimated the roles for empirical networks and for one realization of the fitted assembly model networks, to test if the proportion of species’ roles changed between them we performed a Pearson's Chi-squared test with simulated p-value based on 10000 Monte Carlo replicates. 
 
 All analyses and simulations were made in R version 4.0.3 [@RCoreTeam2017], using the igraph package version 1.2.6 [@Csardi2006] for motifs, the package multiweb for topological roles, Q and other network metrics [@Saravia2019c], and the package meweasmo for the metaweb assembly model [@Saravia2020]. Source code and data are available at zenodo <https://doi.org/10.5281/zenodo.3370022> and Github <https://github.com/lsaravia/MetawebsAssembly/>.  
 
+## Results
+
+A general description of all networks using the structural properties of all networks including metawebs is presented in table S3, we estimated all the properties also for the metawebs. For the Antarctic metaweb the differences in the number of species (size) between local food webs and the metaweb is greater and also they are the biggest in size, but the connectance of the metaweb is lower. The metawebs of Florida Islands and Adirondacks' Lakes have similar size and links but for the later many of the local food webs have a small size, and the connectance of the metaweb is higher. Thus we have a wide range of local food web sizes (13 to 435), number of links (17 to 3560), and connectance (0.01 to 0.15) in our dataset. We cannot directly compare the metaweb properties with the local webs properties as them are dependent on size, links and/or connectance [@Dunne2002a; @Poisot2014]. The comparison of the local networks with the networks generated by the fitted assembly model takes into account this problem.
 
 
+
+![Mean Trophic Level comparison for local empirical networks (dots) and assembly model networks. We ran 1000 simulations of the model fitted to local networks to build the 99% confidence intervals of the metric (vertical lines). Where Ant is the Antarctic metaweb, Isl is the Islands, and Lak the lakes metaweb.](Figures/TL_Assembly_byMeta.png){ width=100% }
+
+![Mean of maximal eingenvalue (MEIng) comparison for local empirical networks (dots) and assembly model networks. We ran 1000 simulations of the model fitted to local networks to build the 99% confidence intervals of the metric (vertical lines). The different metawebs where Ant, the Antarctic metaweb, Isl, the Islands, and Lak the lakes metaweb.](Figures/MEing_Assembly_byMeta.png)
+
+![Modularity comparison for local empirical networks (dots) and assembly model networks. We ran 1000 simulations of the model fitted to local networks to build the 99% confidence intervals of the metric (vertical lines). Where Ant is the Antarctic metaweb, Isl is the Islands, and Lak the lakes metaweb.](Figures/Modularity_Assembly_byMeta.png)
+
+
+![Network motifs z-scores across local food webs. Motifs are three-node sub-networks counted on each of the networks.: the *Metaweb* represents the regional pool of species with predator-prey relationships. Z-scores estimated with the metaweb assembly model, bars marked with '*' are significant at 1% level.](Figures/Motif_Zscores_Assembly.png){ width=100% }
+
+
+![Topological roles comparison for local empirical networks (dots) and assembly model networks for the Lakes metaweb. The topological roles are: *Hub connectors* have a high number of between module links, *Module connectors* have a low number of links mostly between modules,  *Module hubs* have a high number of links inside its module. *Module specialists* have a low number of links inside its module. Lakes marked with '*' are significant at 1% level](Figures/Lak_TopoRoles_ByNetwork_Model.png)
 
 
 ## Acknowledgements
