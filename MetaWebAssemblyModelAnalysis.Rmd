@@ -1198,9 +1198,14 @@ save.image()
 websAssemblyModel <-  websAssemblyModel %>% select(model:zMO) %>% inner_join(websAssemblyModelQSS)
 sign <- websAssemblyModel %>% rename(modularity=Modularity,C=Connectance) %>% inner_join(websTbl %>% dplyr::select(Network,Q)) %>% transmute( C_sign = C > Chigh  | C < Clow, S_sign= Size> Shigh | Size< Slow, MO_sign = modularity > MOhigh | modularity < MOlow,TI_sign = TLmean > TIhigh | TLmean < TIlow, Q_sign = Q > Qhigh | Q < Qlow, SWness_sign = SWness > SWnessCI , MEing_gt = MEing > MEingHigh  , MEing_lw = MEing < MEingLow )
 
+# Tables for Appendices
+#
 knitr::kable(sign)
 
-knitr::kable(websAssemblyModel %>% inner_join(websTbl %>% dplyr::select(Network,Q)) %>% select(Size, Slow,Shigh,Connectance,Clow,Chigh,TLmean,TIlow,TIhigh,Q,Qlow,Qhigh,MEing,MEingLow,MEingHigh))
+knitr::kable(websAssemblyModel %>% inner_join(websTbl %>% dplyr::select(Network,Q)) %>% select(Size, Slow,Shigh,Connectance,Clow,Chigh,TLmean,TIlow,TIhigh), digits = 4)
+
+knitr::kable(websAssemblyModel %>% inner_join(websTbl %>% dplyr::select(Network,Q)) %>% ungroup() %>% mutate(Metaweb=str_sub(Network,1,3),Network=str_sub(Network,5)) %>% select(Metaweb,Network,Q,Qlow,Qhigh,Modularity,MOlow,MOhigh,MEing,MEingLow,MEingHigh), digits = 4)
+
 
 names(websAssemblyModel)
 names(websAssemblyModelQSS)

@@ -33,6 +33,8 @@ Then we used the parameters with the minimal distance to simulate the model and 
 
 Table: Range of parameters used in latin hypercubic sampling to simulate the metaweb assembly model 
 
+As an adittional validation of the model we performed simulations using the fitted parameters and checked than the number of species $S$ and connectance $C$ of the empirical food webs where inside the 99% CI generated with 1000 simulations of the model (Table S4). Only in two cases (Bridge_brook_lake, Lak_Chub_pond) the connectance is higher than the CI. 
+
 
 
 \newpage
@@ -104,7 +106,7 @@ Table: Metaweb assembly model best fit of the local food webs for the 3 metawebs
 
 
 
-|Metaweb |Network             | Size| Links| Connectance|      Q|    mTL| Modularity|   MEing|
+|Metaweb |Network             | Size| Links| Connectance|      Q|     TL|         MO|   MEing|
 |:-------|:-------------------|----:|-----:|-----------:|------:|------:|----------:|-------:|
 |Ant     |Potter              |   92|   325|      0.0384| 0.5230| 2.1414|     0.3601|  2.1620|
 |Ant     |Weddell             |  435|  1978|      0.0105| 0.5829| 2.7908|     0.4586|  3.6264|
@@ -167,40 +169,137 @@ Table: Metaweb assembly model best fit of the local food webs for the 3 metawebs
 |Lak     |Hoel_lake           |   72|   571|      0.1101| 0.4130| 1.8399|     0.3086|  3.4722|
 |Lak     |Meta                |  211|  8426|      0.1893| 3.3100| 1.6677|     0.1549|  4.7178|
 
-Table: Topological metrics of all empirical food webs including metawebs. Where Ant is The Antarctic, Lak the Lakes, Isl the islands metaweb, Size is the number of species, Links is the number of trophic links; Connectance, mTL (mean trophic level), Modularity, and MEing, (mean maximal eingenvalue) are network metrics explained in the main text. 
+Table: Topological metrics of all empirical food webs including metawebs. Where Ant is The Antarctic, Lak the Lakes, Isl the islands metaweb, Size is the number of species $S$, Links is the number of trophic links $L$; Connectance $C$, mean trophic level $TL$, Modularity $MO$, and mean maximal eingenvalue $MEing$ are network metrics explained in the main text. 
 
 
 
 
-----------------------------------------------------
-**Network**            Potter    Weddell    Meta-web
------------------ ----------- ---------- -----------
-**SWness**             2.75*       4.69*      10.87*
+|Metaweb |Network             | $S$ |$S_{low}$|$S_{high}$| $C$  | $C_{low}$|$C_{high}$|$TL$|$TL_{low}$|$TL_{high}$|
+|:------:|:-------------------|----:|-------:|-------:|--------:|------:|------:|------:|------:|------:|
+|Ant     |Potter              |   92|  53.000| 168.005|   0.0383| 0.0157| 0.0714| 2.1414| 1.6182| 2.4766|
+|Ant     |Weddell             |  435| 339.975| 511.005|   0.0104| 0.0099| 0.0184| 2.7908| 1.8504| 2.3804|
+|Isl     |FloridaIslandE1     |  210| 154.000| 211.000|   0.0807| 0.0787| 0.0943| 2.7142| 2.5695| 2.9814|
+|Isl     |FloridaIslandE2     |   59|  42.000|  77.005|   0.0856| 0.0545| 0.1332| 2.6150| 1.3998| 2.7726|
+|Isl     |FloridaIslandE3     |  211| 193.995| 211.000|   0.0824| 0.0792| 0.0862| 2.7203| 2.3401| 2.7678|
+|Isl     |FloridaIslandE7     |   54|  32.990|  76.000|   0.1032| 0.0573| 0.1678| 2.7613| 1.4793| 3.2593|
+|Isl     |FloridaIslandE9     |   56|  34.000|  85.005|   0.1151| 0.0633| 0.1756| 2.6898| 1.5922| 3.4873|
+|Lak     |Alford_lake         |   56|  26.990|  81.005|   0.0701| 0.0354| 0.1289| 1.6861| 1.3312| 2.0473|
+|Lak     |Balsam_lake         |   50|  25.985|  78.000|   0.1044| 0.0337| 0.1376| 1.5782| 1.2930| 2.0869|
+|Lak     |Beaver_lake         |   56|  20.990|  75.005|   0.0851| 0.0329| 0.1355| 1.6498| 1.2753| 2.0905|
+|Lak     |Big_hope_lake       |   61|  16.980|  74.005|   0.0881| 0.0349| 0.1479| 1.7390| 1.2488| 2.1694|
+|Lak     |Brandy_lake         |   30|   7.995|  53.015|   0.1344| 0.0377| 0.2200| 1.9132| 1.1576| 2.2326|
+|Lak     |Bridge_brook_lake   |   75|  48.995| 103.000|   0.0983| 0.0339| 0.0825| 1.6388| 1.3173| 1.9404|
+|Lak     |Brook_trout_lake    |   15|   2.000|  33.000|   0.0844| 0.0452| 0.4286| 1.5111| 1.0908| 2.2593|
+|Lak     |Buck_pond           |   41|  13.995|  63.000|   0.0910| 0.0372| 0.1824| 1.5300| 1.1973| 2.1673|
+|Lak     |Burntbridge_lake    |   53|  19.000|  71.000|   0.0651| 0.0346| 0.1496| 1.4920| 1.2457| 2.2135|
+|Lak     |Cascade_lake        |   35|  12.995|  63.000|   0.0963| 0.0366| 0.1937| 1.6399| 1.2352| 2.2246|
+|Lak     |Chub_lake           |   36|  10.995|  56.005|   0.0640| 0.0363| 0.1625| 1.4614| 1.1763| 2.1540|
+|Lak     |Chub_pond           |   54|  25.000|  78.005|   0.1426| 0.0330| 0.1193| 1.9247| 1.2801| 2.0316|
+|Lak     |Connera_lake        |   65|  29.995|  85.010|   0.0989| 0.0343| 0.1095| 1.6924| 1.3284| 2.0172|
+|Lak     |Constable_lake      |   32|   9.000|  55.000|   0.0595| 0.0382| 0.2200| 1.4107| 1.1499| 2.2153|
+|Lak     |Deep_lake           |   19|   2.000|  38.000|   0.0775| 0.0411| 0.5000| 1.3976| 1.0908| 2.4574|
+|Lak     |Emerald_lake        |   22|   2.000|  39.005|   0.1198| 0.0362| 0.3601| 1.6363| 1.0587| 2.4061|
+|Lak     |Falls_lake          |   39|  13.995|  62.005|   0.0999| 0.0350| 0.1856| 1.6161| 1.2083| 2.1627|
+|Lak     |Fawn_lake           |   32|   7.995|  56.000|   0.1191| 0.0356| 0.2000| 1.7077| 1.1666| 2.2092|
+|Lak     |Federation_lake     |   22|   1.000|  40.005|   0.1177| 0.0000| 0.3333| 1.7339| 1.0000| 2.4278|
+|Lak     |Goose_lake          |   40|  15.000|  61.000|   0.0612| 0.0340| 0.1543| 1.4657| 1.1814| 2.0956|
+|Lak     |Grass_lake          |   44|  17.995|  70.005|   0.0852| 0.0365| 0.1412| 1.6422| 1.2996| 2.1481|
+|Lak     |Gull_lake           |   45|  23.000|  71.005|   0.1046| 0.0353| 0.1403| 1.7135| 1.2528| 2.1865|
+|Lak     |Gull_lake_north     |   16|   2.000|  34.000|   0.0976| 0.0454| 0.5000| 1.4732| 1.0869| 2.3125|
+|Lak     |Helldiver_pond      |   41|  12.990|  63.000|   0.1005| 0.0353| 0.1701| 1.5881| 1.2209| 2.1819|
+|Lak     |High_pond           |   24|   3.000|  42.005|   0.1510| 0.0404| 0.3333| 1.8835| 1.0999| 2.5004|
+|Lak     |Hoel_lake           |   72|  34.980|  87.000|   0.1101| 0.0352| 0.1158| 1.8399| 1.3094| 2.0960|
+|Lak     |Horseshoe_Lake      |   49|  23.000|  78.010|   0.1062| 0.0315| 0.1296| 1.8224| 1.2894| 2.1229|
+|Lak     |Indian_Lake         |   35|   8.995|  51.000|   0.0832| 0.0366| 0.2133| 1.4590| 1.1817| 2.2074|
+|Lak     |Little_Rainbow_Lake |   52|  26.000|  80.000|   0.0913| 0.0356| 0.1332| 1.6843| 1.2939| 2.0364|
+|Lak     |Long_Lake           |   65|  31.995|  86.005|   0.0986| 0.0345| 0.1045| 1.7713| 1.3364| 2.0960|
+|Lak     |Loon_Lake           |   35|  11.995|  62.000|   0.0963| 0.0347| 0.1944| 1.6612| 1.1578| 2.3640|
+|Lak     |Lost_Lake           |   31|   7.990|  54.005|   0.1540| 0.0386| 0.2400| 1.8109| 1.1630| 2.3057|
+|Lak     |Lost_Lake_East      |   41|  10.990|  57.025|   0.0814| 0.0366| 0.1769| 1.5691| 1.1904| 2.2217|
+|Lak     |Lower_Sister_Lake   |   37|  13.995|  63.005|   0.1176| 0.0334| 0.1901| 1.7332| 1.1773| 2.2070|
+|Lak     |Oswego_Lake         |   33|   8.995|  54.005|   0.1267| 0.0381| 0.2100| 1.6789| 1.1175| 2.2125|
+|Lak     |Owl_Lake            |   30|   6.000|  48.000|   0.0788| 0.0394| 0.2500| 1.4212| 1.1666| 2.3150|
+|Lak     |Rat_Lake            |   50|  26.985|  80.000|   0.1092| 0.0335| 0.1234| 1.7767| 1.3029| 2.0791|
+|Lak     |Razorback_Lake      |   42|  11.995|  61.005|   0.1014| 0.0335| 0.1611| 1.6875| 1.1874| 2.1844|
+|Lak     |Rock_Lake           |   22|   3.995|  43.005|   0.0888| 0.0425| 0.3125| 1.6201| 1.0833| 2.4286|
+|Lak     |Russian_Lake        |   24|   6.990|  48.000|   0.1059| 0.0400| 0.2231| 1.6815| 1.0909| 2.2801|
+|Lak     |Safford_Lake        |   44|  20.000|  73.005|   0.1162| 0.0344| 0.1384| 1.7549| 1.2662| 2.1500|
+|Lak     |Sand_Lake           |   29|   6.000|  46.015|   0.0975| 0.0384| 0.2422| 1.6248| 1.1110| 2.2941|
+|Lak     |South_Lake          |   22|   2.000|  37.000|   0.0743| 0.0399| 0.4075| 1.4090| 1.0833| 2.2795|
+|Lak     |Squaw_Lake          |   41|  12.000|  63.005|   0.1005| 0.0367| 0.1737| 1.4869| 1.1814| 2.2544|
+|Lak     |Stink_Lake          |   53|  26.000|  79.000|   0.1000| 0.0365| 0.1291| 1.7028| 1.2808| 2.1233|
+|Lak     |Twelfth_Tee_Lake    |   31|   6.000|  50.005|   0.0863| 0.0375| 0.2500| 1.5079| 1.1325| 2.2212|
+|Lak     |Twin_Lake_East      |   13|   1.000|  25.005|   0.1005| 0.0000| 0.5628| 1.4871| 1.0000| 2.3750|
+|Lak     |Twin_Lake_West      |   26|   7.995|  55.005|   0.0887| 0.0367| 0.2231| 1.4846| 1.1537| 2.2325|
+|Lak     |Whipple_Lake        |   32|   8.000|  55.000|   0.1328| 0.0378| 0.2187| 1.9117| 1.1332| 2.2327|
+|Lak     |Wolf_Lake           |   27|   4.990|  45.000|   0.0576| 0.0399| 0.3087| 1.2798| 1.1248| 2.3540|
 
-SWness 99%CI           2.07       2.27       1.71
-
-     **Q**          0.5319*      0.4508*     0.7037*   
-
-Q low  CI            2.9321      5.5191     18.8128  
-
-Q high CI         113.5195    36.8783     67.2631  
-
-**Mean Trophic      2.1289*     1.9831*    1.9119*   
-Level**
-
- T.L. low CI        5.4838     29.3569    387.5446  
-
- T.L  high CI      2010.8165   915.9291   4364.5925 
+Table: Empirical local foodweb values and 99% Confidence intervals for network properties: Number of species ($S$), connectance ($C$),  mean trophic level ($TL$), with 99% confidence intervals based on 1000 networks generated by the assembly model. 
 
 
- **Modularity**    0.3720      0.4784*    0.4456*   
 
- MO Low CI         0.3389      0.3491     0.2207   
+|Metaweb |Network             |     $Q$| $Q_{low}$|$Q_{high}$| $MO$ |    $MO_{low}$| $MO_{high}$|    $MEing$| $MEing_{low}$| $MEing_{high}$|
+|:-------|:-------------------|------:|------:|------:|----------:|-------:|------:|-------:|--------:|---------:|
+|Ant     |Potter              | 0.5230| 0.3019| 0.8918|     0.3601|  0.3118| 0.6339|  2.1620|   0.4407|    3.8803|
+|Ant     |Weddell             | 0.5829| 0.5670| 0.8380|     0.4586|  0.4204| 0.5507|  3.6264|   3.6833|    5.9177|
+|Isl     |FloridaIslandE1     | 0.7503| 0.7287| 1.0208|     0.2442|  0.2252| 0.2528|  7.3367|   7.1689|    7.6900|
+|Isl     |FloridaIslandE2     | 0.7435| 0.4119| 1.2333|     0.3033|  0.1672| 0.4084|  4.1721|   1.6091|    5.1386|
+|Isl     |FloridaIslandE3     | 0.7559| 0.7309| 0.9831|     0.2407|  0.2294| 0.2499|  7.6195|   7.2561|    7.7030|
+|Isl     |FloridaIslandE7     | 0.6624| 0.4734| 2.1619|     0.2907|  0.1527| 0.4097|  3.2048|   1.5568|    5.2295|
+|Isl     |FloridaIslandE9     | 0.6234| 0.4885| 2.4118|     0.2639|  0.1534| 0.3843|  3.5945|   1.9771|    5.4136|
+|Lak     |Alford_lake         | 0.3601| 0.2169| 0.6585|     0.2918|  0.1708| 0.4529|  2.4132|   0.0830|    3.0660|
+|Lak     |Balsam_lake         | 0.4118| 0.1981| 0.6184|     0.3186|  0.1897| 0.4592|  2.4367|   0.2034|    2.8791|
+|Lak     |Beaver_lake         | 0.4260| 0.2306| 0.6756|     0.3591|  0.1859| 0.4806|  2.4421|  -0.0085|    3.0042|
+|Lak     |Big_hope_lake       | 0.3900| 0.1709| 0.6692|     0.3733|  0.1671| 0.4846|  2.1956|  -0.0462|    2.7280|
+|Lak     |Brandy_lake         | 0.4179| 0.0000| 0.7280|     0.1216|  0.0740| 0.4849|  1.7252|  -0.1697|    2.3065|
+|Lak     |Bridge_brook_lake   | 0.3748| 0.2518| 0.5836|     0.3702|  0.2257| 0.4395|  3.6464|   0.6357|    3.4227|
+|Lak     |Brook_trout_lake    | 0.3244| 0.0000| 0.8165|     0.2909| -0.0050| 0.4765| -0.1133|  -0.4792|    1.7764|
+|Lak     |Buck_pond           | 0.1974| 0.0000| 0.6726|     0.3843|  0.1583| 0.4802|  0.8899|  -0.0782|    2.6142|
+|Lak     |Burntbridge_lake    | 0.3144| 0.1834| 0.6802|     0.4176|  0.1730| 0.4844|  1.5863|  -0.0255|    2.8088|
+|Lak     |Cascade_lake        | 0.3983| 0.1549| 0.7180|     0.3800|  0.1419| 0.4956|  1.3142|  -0.0666|    2.5310|
+|Lak     |Chub_lake           | 0.4514| 0.0000| 0.6884|     0.3048|  0.1222| 0.4884|  1.1629|  -0.1297|    2.4811|
+|Lak     |Chub_pond           | 0.4217| 0.2057| 0.6419|     0.1665|  0.1770| 0.4777|  3.4521|   0.2089|    2.8156|
+|Lak     |Connera_lake        | 0.4005| 0.2380| 0.6080|     0.3871|  0.1974| 0.4590|  2.9254|   0.2675|    3.2941|
+|Lak     |Constable_lake      | 0.4090| 0.0000| 0.7213|     0.3671|  0.1232| 0.4813|  0.9281|  -0.1881|    2.1424|
+|Lak     |Deep_lake           | 0.3164| 0.0000| 0.8930|     0.3680|  0.0000| 0.4752| -0.0682|  -0.3889|    1.8846|
+|Lak     |Emerald_lake        | 0.4828| 0.0000| 0.8734|     0.2519| -0.0041| 0.4731|  0.9974|  -0.4673|    1.9050|
+|Lak     |Falls_lake          | 0.2954| 0.0981| 0.7092|     0.3476|  0.1632| 0.4890|  1.2022|  -0.1054|    2.7316|
+|Lak     |Fawn_lake           | 0.3640| 0.0000| 0.7416|     0.2741|  0.1482| 0.4759|  1.4517|  -0.1457|    2.2932|
+|Lak     |Federation_lake     | 0.3508| 0.0000| 0.8242|     0.3201| -0.0035| 0.4810|  0.5067|  -0.4801|    1.8439|
+|Lak     |Goose_lake          | 0.4375| 0.0000| 0.6619|     0.3362|  0.1449| 0.4964|  1.5594|  -0.0882|    2.6237|
+|Lak     |Grass_lake          | 0.3979| 0.2392| 0.6756|     0.2957|  0.1769| 0.4764|  1.6909|  -0.0387|    2.8513|
+|Lak     |Gull_lake           | 0.3556| 0.1808| 0.6638|     0.2466|  0.1611| 0.4669|  1.9865|  -0.0269|    2.8248|
+|Lak     |Gull_lake_north     | 0.4121| 0.0000| 0.8650|     0.2960| -0.0035| 0.4663| -0.0735|  -0.4803|    1.5415|
+|Lak     |Helldiver_pond      | 0.3787| 0.1706| 0.6709|     0.2446|  0.1612| 0.4786|  1.3853|  -0.0715|    2.6919|
+|Lak     |High_pond           | 0.4843| 0.0000| 0.8759|     0.1904| -0.0038| 0.4694|  1.3283|  -0.4614|    1.9935|
+|Lak     |Hoel_lake           | 0.4130| 0.2068| 0.6052|     0.3086|  0.1961| 0.4592|  3.4722|   0.1834|    3.2154|
+|Lak     |Horseshoe_Lake      | 0.4321| 0.1598| 0.6179|     0.3715|  0.1811| 0.4731|  2.4551|   0.0926|    2.9783|
+|Lak     |Indian_Lake         | 0.2173| 0.0000| 0.7252|     0.3919|  0.1352| 0.4834|  0.2044|  -0.2328|    2.2488|
+|Lak     |Little_Rainbow_Lake | 0.2850| 0.2234| 0.6190|     0.2011|  0.1713| 0.4671|  1.8721|   0.0201|    3.1177|
+|Lak     |Long_Lake           | 0.4685| 0.2331| 0.6079|     0.2763|  0.2127| 0.4581|  3.5007|   0.1407|    3.0996|
+|Lak     |Loon_Lake           | 0.4436| 0.0951| 0.7511|     0.1782|  0.1423| 0.4850|  1.4555|  -0.0803|    2.7344|
+|Lak     |Lost_Lake           | 0.3244| 0.0000| 0.7396|     0.2510|  0.0800| 0.4723|  1.1592|  -0.1395|    2.3895|
+|Lak     |Lost_Lake_East      | 0.2734| 0.0000| 0.7111|     0.4095|  0.1414| 0.4805|  1.2536|  -0.1084|    2.4022|
+|Lak     |Lower_Sister_Lake   | 0.4090| 0.0000| 0.7106|     0.2442|  0.1270| 0.4834|  1.9143|  -0.1059|    2.5285|
+|Lak     |Oswego_Lake         | 0.3659| 0.0000| 0.7158|     0.3235|  0.0000| 0.4680|  1.2401|  -0.1959|    2.2655|
+|Lak     |Owl_Lake            | 0.2010| 0.0000| 0.7701|     0.3929|  0.0559| 0.4905|  0.1351|  -0.1884|    2.1956|
+|Lak     |Rat_Lake            | 0.4439| 0.2235| 0.6210|     0.2902|  0.1901| 0.4766|  2.4133|   0.1787|    3.0122|
+|Lak     |Razorback_Lake      | 0.3945| 0.0000| 0.6731|     0.3233|  0.1672| 0.4751|  1.9132|  -0.0774|    2.6185|
+|Lak     |Rock_Lake           | 0.2859| 0.0000| 0.8102|     0.2750| -0.0026| 0.4872|  0.0069|  -0.4660|    1.8356|
+|Lak     |Russian_Lake        | 0.3269| 0.0000| 0.7800|     0.1983|  0.0000| 0.4887|  0.8123|  -0.1916|    2.0958|
+|Lak     |Safford_Lake        | 0.4022| 0.2154| 0.6741|     0.2759|  0.1943| 0.4788|  2.0719|  -0.0208|    2.7132|
+|Lak     |Sand_Lake           | 0.4567| 0.0000| 0.8001|     0.3412|  0.0000| 0.4892|  1.0770|  -0.2446|    2.0258|
+|Lak     |South_Lake          | 0.0000| 0.0000| 0.8465|     0.3492| -0.0038| 0.4764|  0.0417|  -0.4737|    1.6940|
+|Lak     |Squaw_Lake          | 0.4095| 0.0000| 0.7299|     0.3289|  0.1156| 0.4767|  1.9185|  -0.0731|    2.5158|
+|Lak     |Stink_Lake          | 0.3520| 0.2177| 0.6415|     0.3394|  0.1763| 0.4729|  2.5287|   0.0424|    2.9646|
+|Lak     |Twelfth_Tee_Lake    | 0.4122| 0.0000| 0.7861|     0.3736|  0.1088| 0.4893|  0.8816|  -0.2537|    2.1222|
+|Lak     |Twin_Lake_East      | 0.3333| 0.0000| 0.9099|     0.3962| -0.0062| 0.4505| -0.1111|  -0.5097|    1.3361|
+|Lak     |Twin_Lake_West      | 0.1653| 0.0000| 0.7467|     0.3664|  0.0948| 0.4761|  0.0968|  -0.1750|    2.2301|
+|Lak     |Whipple_Lake        | 0.4370| 0.0000| 0.7145|     0.2001|  0.1272| 0.4814|  1.9576|  -0.1787|    2.3403|
+|Lak     |Wolf_Lake           | 0.2583| 0.0000| 0.8266|     0.3759|  0.0000| 0.4641|  0.0100|  -0.2819|    1.9356|
 
- MO high CI        0.3755      0.3620     0.2259   
+Table: Empirical local foodweb values and 99% Confidence intervals for network properties: Coherence ($Q$), modularity ($MO$), and Mean maximal eingenvalue ($MEing$), with 99% confidence intervals based on 1000 networks generated by the assembly model. 
 
-----------------------------------------------------
-Table: Empirical Small-world-ness (SWness), coherence (Q), mean trophic level and modularity, with 99% confidence intervals based on 1000 random networks. Quantities marked with '*' are significant at 1% level.
 
 -----------------------------------
 **Network**        Potter   Weddell  
@@ -391,6 +490,9 @@ Table: Topological roles and trophic level of tropho-species with high number of
 ![Connectance comparison for local empirical networks (dots) and assembly model networks. We ran 1000 simulations of the model fitted to local networks to build the 99% confidence intervals of the metric (vertical lines). Where Ant is the Antarctic metaweb, Isl is the Islands, and Lak the lakes metaweb.](Figures/Connectance_Assembly_byMeta.png){ width=100% }
 
 ![Number of species (Size) comparison for local empirical networks (dots) and assembly model networks. We ran 1000 simulations of the model fitted to local networks to build the 99% confidence intervals of the metric (vertical lines). Where Ant is the Antarctic metaweb, Isl is the Islands, and Lak the lakes metaweb](Figures/Size_Assembly_byMeta.png) 
+
+![Trohpic Coherence (Q) comparison for local empirical networks (dots) and assembly model networks. We ran 1000 simulations of the model fitted to local networks to build the 99% confidence intervals of the metric (vertical lines). Where Ant is the Antarctic metaweb, Isl is the Islands, and Lak the lakes metaweb](Figures/Q_Assembly_byMeta.png) 
+
 
 ## Bibliography
 
