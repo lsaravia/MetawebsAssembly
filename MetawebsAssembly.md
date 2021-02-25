@@ -114,22 +114,34 @@ A general description of all networks using the structural properties of all net
 
 We found no-differences between assembly model an local food webs for trophic coherence (Q) (Figure S6, Table S5) and only one (Weddell Sea, Antarctic metaweb) was different for mean trophic level (TL) (Figure 2, Table S4), being higher than the confidence interval, this would be contrary to the expected result if dynamical stability constraints where acting (Figure 2). For modularity we found only one local food web that is less modular than the model (Chub Pond, Lakes metaweb) (Figura 3, Table S5). The mean maximal eingenvalue (MEing) were also not-different except for Weddell Sea, which have a lower mean resulting in an increased local stability and 4 local webs from Lakes metawebs (Briddge Brook Lake, Chub Pond, Hoel Lake, Long Lake) which have a higher MEing and less stability than the model (Figure 4, Table S5). 
 
-
-Comparing the motifs generated from the metaweb assembly model, few of them (8 from 47) were different to the empirical local food webs (Figure 5, Table S6). The Omnivory motif seems to be related to local stability, e.g. Weddell Sea food have a significant omnivory under-representation, and a low MEing value, and three Lake food webs (Chub Pond, Hoel Lake, Long Lake) have over-representation which matches with their high MEing value.
-
-
 ![Mean Trophic Level comparison for local empirical networks (dots) and assembly model networks. We ran 1000 simulations of the metaweb assembly model fitted to local networks to build the 99% confidence intervals of the metric (vertical lines). Where *Ant* is the Antarctic metaweb, *Isl* is the Islands, and *Lak* the lakes metaweb.](Figures/TL_Assembly_byMeta.png){ width=100% }
 
 ![Modularity comparison for local empirical networks (dots) and assembly model networks. We ran 1000 simulations of the metaweb assembly model fitted to local networks to build the 99% confidence intervals of the metric (vertical lines). Where *Ant* is the Antarctic metaweb, *Isl* is the Islands, and *Lak* the lakes metaweb.](Figures/Modularity_Assembly_byMeta.png)
 
 ![Mean of maximal eingenvalue (MEIng) comparison for local empirical networks (dots) and assembly model networks. We ran 1000 simulations of the metaweb assembly model fitted to local networks to build the 99% confidence intervals of the metric (vertical lines). Where *Ant* is the Antarctic metaweb, *Isl* is the Islands, and *Lak* the lakes metaweb.](Figures/MEing_Assembly_byMeta.png)
 
+
+Comparing the motifs generated from the metaweb assembly model, only 8 from 57 (14%) have some motif different from the empirical food webs (Figure 5, Table S6). We can relate the omnivory motif with local stability, e.g. Weddell Sea food have a significant omnivory under-representation, and a low MEing value, and three Lake food webs (Chub Pond, Hoel Lake, Long Lake) have over-representation which matches with their high MEing value.
+
+The proportion of topological roles mostly similar to the metaweb assembly model, only 5 from 57 (9%) are different at 1% significance level (Table S7). We show in figure 6 the proportions for the Antarctic and Islands metawebs. We added the topological role proportions for the corresponding metaweb in each case to visually compare with the both empirical and model food webs. The module specialist is the most common role observed in local food webs but for the Island metaweb the module connector is the most abundant, this change from the metaweb to the local food web is also observed in the Lakes metaweb (Figure S7).
+
+
 ![Network motifs z-scores across local food webs. Motifs are three-node sub-networks counted on each of the networks.: the *Metaweb* represents the regional pool of species with predator-prey relationships. Z-scores estimated with the metaweb assembly model, bars marked with '*' are significant at 1% level.](Figures/Motif_Zscores_Assembly.png){ width=100% }
 
 
-![Topological roles comparison for local empirical networks (dots) and assembly model networks for the Lakes metaweb. The topological roles are: *Hub connectors* have a high number of between module links, *Module connectors* have a low number of links mostly between modules,  *Module hubs* have a high number of links inside its module. *Module specialists* have a low number of links inside its module. Lakes marked with '*' are significant at 1% level](Figures/Lak_TopoRoles_ByNetwork_Model.png)
+![Topological roles comparison for local empirical networks (dots) and assembly model networks for the Antarctic (A) and Islands metawebs (B). The topological roles are: *Hub connectors* have a high number of between module links, *Module connectors* have a low number of links mostly between modules,  *Module hubs* have a high number of links inside its module. *Module specialists* have a low number of links inside its module. Plots marked with '*' are significant at 1% level](Figures/Ant_Isl_TopoRoles_ByNetwork_Model.png)
+
+## Discussion
+
+By definition, the metaweb structure should reflect the evolutionary constraints of the species interactions, and the local networks should be influenced and determined by the assembly processes and the local environment. Our results showed that the structure of the local food webs does not differ from metawebs in most properties. We did not find that the properties expected to change due to local stability constraints did so in consistently (Mean trophic level, modularity, MEing, motifs), though we found differences for some local food webs this was not a general pattern. The same happened for topological roles that were expected to change probably due to habitat filtering and dispersal limitation. These suggest that food webs would be mainly shaped by metaweb structure and less influenced by local stability, environment drivers or assembly processes.  
+
+Is expected that local food webs have a relatively few trophic levels [@Williams2002;@Borrelli2014]. Different hypotheses have been posed to explain this pattern: the low efficiency of energy transfer between trophic levels, predator size, predator behaviour, and consumer diversity [@Young2013]. Recently, it has been proposed that maximum trophic level could be related to productivity and ecosystem size depending on the context but related to energy fluxes that promote omnivory [@Ward2017]. We found that the mean trophic level of the local food webs was not different from the assembly model in most cases. The only exception was the Weddell Sea food web, we will mention the exceptions and latter will analyse them in more detail. 
+
+The existence of a modular structure could be related to habitat heterogeneity [@Krause2003;@Rezende2009]. Recent studies suggest that modularity enhances local stability and this effect is stronger the more complex the network is [@Stouffer2011], even though the effect on stability strongly depends on the interaction strength configuration [@Grilli2016] and the existence of external perturbations [@Gilarranz2017]. This suggests that modularity should by  maximized by local stability constraints and also could be different from the model because of the presence of habitat heterogeneity but we found that modularity is not different from the assembly model in most cases except one: the Chub Pond from Lakes metaweb. 
 
 
+
+	
 ## Acknowledgements
 
 We are grateful to the National University of General Sarmiento for financial support (Proyect 30/1139). LAS would like to thank Susanne Kortsch that shared with us her source code for topological analysis and figures. This work was partially supported by a grant from CONICET (PIO 144-20140100035-CO). 

@@ -1513,14 +1513,10 @@ save.image()
 
 ```{r plotsMetaWebTopologicalRoles, eval=FALSE,echo=F,message=T,warning=T}
 
-# Antarctica
-# Topological Roles proportions test and plot
-#
-#
-
 # Antarctic
 #
-
+# Topological Roles proportions test and plot
+#
 # Comparison of model with empirical  
 # 
 hc <- hub_conn %>% filter(grepl("Ant",Network)) %>% bind_rows(
@@ -1541,7 +1537,7 @@ tt1 <- hc %>% group_by(Network) %>% group_modify( ~{
 names(tt1)
 names(hc)
 
-hc <- inner_join(hc, tt1 %>% select(Network,pvalue)) %>% mutate(net_name=if_else(pvalue<0.05, if_else(!grepl("Meta",Network), paste0(Network, ' *'),as.character(Network)),as.character(Network)))
+hc <- inner_join(hc, tt1 %>% select(Network,pvalue)) %>% mutate(net_name=if_else(pvalue<0.01, if_else(!grepl("Meta",Network), paste0(Network, ' *'),as.character(Network)),as.character(Network)))
 
 (gP2 <- ggplot(hc,aes(x=model,y=Freq,fill=type)) + 
   geom_bar(stat="identity", position=position_dodge()) + 
@@ -1579,10 +1575,10 @@ tt0 <- hc %>% group_by(Network) %>% group_modify( ~{
   tibble(Size=unique(.x$Size),chi2=cc$statistic,pvalue = cc$p.value,method=cc$method)
   }) %>% arrange(desc(Size)) %>% mutate(meta="Isl")
 
-hc <- inner_join(hc, tt0 %>% select(Network,pvalue)) %>% mutate(net_name=if_else(pvalue<0.05, if_else(!grepl("Meta",Network), paste0(Network, ' *'),as.character(Network)),as.character(Network)))
+hc <- inner_join(hc, tt0 %>% select(Network,pvalue)) %>% mutate(net_name=if_else(pvalue<0.01, if_else(!grepl("Meta",Network), paste0(Network, ' *'),as.character(Network)),as.character(Network)))
 
 
-(gP2 <- ggplot(hc,aes(x=model,y=Freq,fill=type)) + 
+(gP3 <- ggplot(hc,aes(x=model,y=Freq,fill=type)) + 
   geom_bar(stat="identity", position=position_dodge()) + 
   scale_fill_brewer(palette = "Paired",name="") + 
   xlab("") + ylab("") + theme_bw() + 
@@ -1591,7 +1587,7 @@ hc <- inner_join(hc, tt0 %>% select(Network,pvalue)) %>% mutate(net_name=if_else
 
 ggsave("Figures/Isl_TopoRoles_ByNetwork_Model.png",width=8,height=5,units="in",dpi=600)
 
-tt0 %>% summarize(sign = pvalue<0.05) %>% filter(sign) 
+tt0 %>% summarize(sign = pvalue<0.01) %>% filter(sign) 
 topoRoles_metaWebAssembly_chi2 <- bind_rows(tt1,tt0)
 ```
 
@@ -1623,10 +1619,10 @@ tt <- hc %>% group_by(Network) %>% group_modify( ~{
 
 # Add an asterisk to the significant ones
 #
-hc <- inner_join(hc, tt %>% select(Network,pvalue)) %>% mutate(net_name=if_else(pvalue<0.05, if_else(!grepl("Meta",Network), paste0(Network, ' *'),Network),Network)) %>% mutate(net_name=if_else(str_length(net_name)>18,str_sub(net_name,1,-6),net_name))
+hc <- inner_join(hc, tt %>% select(Network,pvalue)) %>% mutate(net_name=if_else(pvalue<0.01, if_else(!grepl("Meta",Network), paste0(Network, ' *'),Network),Network)) %>% mutate(net_name=if_else(str_length(net_name)>18,str_sub(net_name,1,-6),net_name))
 
 
-(gP2 <- ggplot(hc,aes(x=model,y=Freq,fill=type)) + 
+(gP4 <- ggplot(hc,aes(x=model,y=Freq,fill=type)) + 
   geom_bar(stat="identity", position=position_dodge()) + 
   scale_fill_brewer(palette = "Paired",name="") + 
   xlab("") + ylab("") + theme_bw() + 
@@ -1646,6 +1642,33 @@ save.image()
 knitr::kable(topoRoles_metaWebAssembly_chi2%>% select( Network,meta,Size, chi2,pvalue),digits = 4)
 topoRoles_metaWebAssembly_chi2 %>% summarize(sign = pvalue<0.05) %>% filter(sign, !grepl("Meta",Network)) 
 
+
+#
+# Combined Antarctic Island Plot
+#
+require(cowplot)
+gP5 <- plot_grid(gP2 +  theme(legend.position="none"),
+                 gP3 +  theme(legend.position="none"),
+                 align = "vh",
+                  hjust = -1,
+                  nrow = 1, labels = c("A","B"))
+
+# extract a legend that is laid out horizontally
+legend_b <- get_legend(
+  gP2 + 
+    guides(color = guide_legend(nrow = 1)) +
+    theme(legend.position = "bottom")
+)
+
+# add the legend underneath the row we made earlier. Give it 10%
+# of the height of one plot (via rel_heights).
+plot_grid(gP5, legend_b, ncol = 1, rel_heights = c(1, .1))
+
+ggsave("Figures/Ant_Isl_TopoRoles_ByNetwork_Model.png",width=9,height=6,dpi=600)
+
+
 ```
 
-* Most are not different from metaweb assembly model. Only 8 are significative at 5%
+* Most are not different from metaweb assembly model. Only 5 are significative at 1%
+
+

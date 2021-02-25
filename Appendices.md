@@ -363,11 +363,72 @@ Table: Empirical local foodweb values and 99% Confidence intervals for network p
 
 Table: Motif counts for the empirical networks and 99% confidence intervals based on 1000 assembly model networks. Where EC is exploitative competition, AC apparent competition, TT tri-trophic chain and OM is omnivory. Quantities marked with '*' are significant at 1% level.
 
+|Metaweb |Network             | Size|      chi2| pvalue|
+|:----|:-------------------|----:|---------:|------:|
+|Ant  |Weddell             |  435|   23.3577| 0.0003*|
+|Ant  |Potter              |   92|   21.3429| 0.0001*|
+|Isl  |E3                  |  211|    3.0768| 0.4339|
+|Isl  |E1                  |  210|    0.3572| 0.9850|
+|Isl  |E2                  |   59|    3.5984| 0.3026|
+|Isl  |E9                  |   56|    6.7691| 0.0148|
+|Isl  |E7                  |   54|    1.5924| 0.4295|
+|Lak  |Bridge brook lake   |   75|    3.3781| 0.2529|
+|Lak  |Hoel lake           |   72|    3.8121| 0.0847|
+|Lak  |Connera lake        |   65|    1.6687| 0.5011|
+|Lak  |Long Lake           |   65|   16.0644| 0.0001*|
+|Lak  |Big hope lake       |   61|   13.4552| 0.0007*|
+|Lak  |Alford lake         |   56|    3.3363| 0.3304|
+|Lak  |Beaver lake         |   56|    2.2095| 0.5351|
+|Lak  |Chub pond           |   54|    1.1128| 0.4668|
+|Lak  |Burntbridge lake    |   53|    0.8862| 0.8029|
+|Lak  |Stink Lake          |   53|    2.0000| 1.0000|
+|Lak  |Little Rainbow Lake |   52|    2.0065| 0.7288|
+|Lak  |Balsam lake         |   50|    3.2709| 0.3198|
+|Lak  |Rat Lake            |   50|    7.0667| 0.0184|
+|Lak  |Horseshoe Lake      |   49|    0.8528| 1.0000|
+|Lak  |Gull lake           |   45|    0.8916| 1.0000|
+|Lak  |Grass lake          |   44|    4.6074| 0.2103|
+|Lak  |Safford Lake        |   44|    3.6056| 0.0897|
+|Lak  |Razorback Lake      |   42|    1.5594| 0.5021|
+|Lak  |Buck pond           |   41|    1.9042| 1.0000|
+|Lak  |Helldiver pond      |   41|    1.5808| 0.5128|
+|Lak  |Lost Lake East      |   41|    2.1565| 0.2310|
+|Lak  |Squaw Lake          |   41|    0.7267| 1.0000|
+|Lak  |Goose lake          |   40|    1.0630| 0.4851|
+|Lak  |Falls lake          |   39|    0.8771| 1.0000|
+|Lak  |Lower Sister Lake   |   37|    2.8668| 0.2599|
+|Lak  |Chub lake           |   36|    3.7050| 0.1606|
+|Lak  |Cascade lake        |   35|   18.8867| 0.0001*|
+|Lak  |Indian Lake         |   35|    1.8944| 0.7453|
+|Lak  |Loon Lake           |   35|    1.3402| 0.8283|
+|Lak  |Oswego Lake         |   33|    1.1566| 0.4657|
+|Lak  |Constable lake      |   32|    0.0506| 1.0000|
+|Lak  |Fawn lake           |   32|    0.1304| 1.0000|
+|Lak  |Whipple Lake        |   32|    2.8355| 0.3149|
+|Lak  |Lost Lake           |   31|    0.1525| 0.7855|
+|Lak  |Twelfth Tee Lake    |   31|    1.1683| 0.4744|
+|Lak  |Brandy lake         |   30|    2.0703| 0.6864|
+|Lak  |Owl Lake            |   30|    2.0048| 0.7394|
+|Lak  |Sand Lake           |   29|    2.3968| 0.5064|
+|Lak  |Wolf Lake           |   27|    0.6926| 0.6199|
+|Lak  |Twin Lake West      |   26|    4.7582| 0.0537|
+|Lak  |High pond           |   24|    0.7980| 1.0000|
+|Lak  |Russian Lake        |   24|    1.9385| 0.2839|
+|Lak  |Emerald lake        |   22|    0.0000| 1.0000|
+|Lak  |Federation lake     |   22|    0.9783| 1.0000|
+|Lak  |Rock Lake           |   22|    0.1431| 1.0000|
+|Lak  |South Lake          |   22|    0.2337| 1.0000|
+|Lak  |Deep lake           |   19|    5.0592| 0.0360|
+|Lak  |Gull lake north     |   16|    0.0000| 1.0000|
+|Lak  |Brook trout lake    |   15|    1.0000| 0.4123|
+|Lak  |Twin Lake East      |   13|    1.0400| 1.0000|
+
+Table: Comparison of empirical proportions of Topological Roles with one assembly model realization.  Only Potter, Weddell,Long Lake, Big hope lake, Cascade lake, 9% (5/57) are different from the metaweb assembly model. 
 
 \newpage
 
 
-![The four three-species sub-networks analysed: apparent competition, exploitative competition, tri-trophic chain, and omnivory. These four sub-networks have been explored both theoretically and empirically in ecological networks and are the most common sub-networks found in food webs](Figures/Fig1Motifs.png)
+![The four three-species sub-networks analysed: apparent competition, exploitative competition, tri-trophic chain, and omnivory. These four sub-networks have been explored both theoreticall and empirically in ecological networks and are the most common sub-networks found in food webs](Figures/Fig1Motifs.png)
 
 
 ![Connectance comparison for local empirical networks (dots) and assembly model networks. We ran 1000 simulations of the model fitted to local networks to build the 99% confidence intervals of the metric (vertical lines). Where Ant is the Antarctic metaweb, Isl is the Islands, and Lak the lakes metaweb.](Figures/Connectance_Assembly_byMeta.png){ width=100% }
@@ -376,6 +437,8 @@ Table: Motif counts for the empirical networks and 99% confidence intervals base
 
 ![Trohpic Coherence (Q) comparison for local empirical networks (dots) and assembly model networks. We ran 1000 simulations of the model fitted to local networks to build the 99% confidence intervals of the metric (vertical lines). Where Ant is the Antarctic metaweb, Isl is the Islands, and Lak the lakes metaweb](Figures/Q_Assembly_byMeta.png) 
 
+
+![Topological roles comparison for local empirical networks (dots) and assembly model networks for the Lakes metaweb. Only 3 local food webs have proportions different from the metaweb assembly model.  The topological roles are: *Hub connectors* have a high number of between module links, *Module connectors* have a low number of links mostly between modules,  *Module hubs* have a high number of links inside its module. *Module specialists* have a low number of links inside its module. Lakes marked with '*' are significant at 1% level](Figures/Lak_TopoRoles_ByNetwork_Model.png)
 
 ## Bibliography
 
