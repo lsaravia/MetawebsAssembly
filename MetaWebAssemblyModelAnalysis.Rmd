@@ -1399,10 +1399,15 @@ save.image()
 sign <- motif_AssemblyModel %>% transmute( Network=Network, zEC = explComp > EChigh  | explComp < EClow, zAC= apprComp> AChigh | apprComp< AClow, zTT = triTroph > TThigh | triTroph < TTlow, zOM = omnivory > OMhigh | omnivory < OMlow)
 knitr::kable(sign)
 
+# Motif 99% CI table
+
+
+knitr::kable(motif_AssemblyModel %>%  mutate(Metaweb=str_sub(Network,1,3),Network=str_sub(Network,5)) %>% select(Metaweb,Network,explComp:omnivory,EClow:OMhigh),digits=0)
+  
 # Format motif z-score tibble
 #
 #
-require(tidyr)
+require(tidyverse)
 names(motif_AssemblyModel)
 pFM1 <- motif_AssemblyModel %>% dplyr::select(Network,zEC:zOM) %>%gather(motif,Zscore,zEC:zOM) %>% mutate(type="Random z-score")
 pFM1$Network <- factor(pFM1$Network)
