@@ -23,5 +23,5 @@ MetawebsAssembly.docx: MetawebsAssembly.md makefile
 	pandoc $< -o $@ $(OPTS)
 			
 MetawebsAssembly_bioRxiv.pdf: MetawebsAssembly.md nolineno.sty 
-	pandoc $< -o $@ -H nolineno.sty --bibliography MetawebsAssembly.bib --pdf-engine=xelatex --csl=ecography.csl 		
+	pandoc $< -o $@ -H nolineno.sty --bibliography MetawebsAssembly.bib --pdf-engine=xelatex --csl=ecography.csl -citeproc 		
 
