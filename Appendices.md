@@ -169,7 +169,7 @@ Table: Metaweb assembly model best fit of the local food webs for the 3 metawebs
 |Lak     |Hoel_lake           |   72|   571|      0.1101| 0.4130| 1.8399|     0.3086|  3.4722|
 |Lak     |Meta                |  211|  8426|      0.1893| 3.3100| 1.6677|     0.1549|  4.7178|
 
-Table: Topological metrics of all empirical food webs including metawebs. Where **Ant** is The Antarctic, **Lak** the Lakes, **Isl** the islands metaweb, Size is the number of species $S$, Links is the number of trophic links $L$; Connectance $C$, mean trophic level $TL$, Modularity $MO$, and mean maximal eingenvalue $MEing$ are network metrics explained in the main text. 
+Table: Topological metrics of all empirical food webs including metawebs. Where **Ant** is The Antarctic, **Lak** the Lakes, **Isl** the islands metaweb, Size is the number of species $S$, Links is the number of trophic links $L$; Connectance $C$, trophic coherence $Q$, mean trophic level $TL$, Modularity $MO$, and mean maximal eingenvalue $MEing$ are network metrics explained in the main text. 
 
 
 

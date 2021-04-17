@@ -1235,67 +1235,156 @@ ggplot( aes(Size,MEing))+ geom_point(size=1,alpha=0.5) + stat_ellipse(aes(color=
   # coord_cartesian(ylim=c(0.01,0.1)) +  
   facet_wrap(~ Network) + scale_color_brewer(palette= "Paired", guide=FALSE) 
 
-#
+# Paper PLOTS 
 # 
+# MEing
 #
 websAssemblyModelQSS <- websAssemblyModelQSS %>% select(Network,model, everything()) %>%  mutate(Metaweb=str_sub(Network,1,3),   Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' ))
 
 require(tidyverse)
-ggplot(websAssemblyModelQSS, aes(x=fct_reorder(Net_name,Metaweb),y=MEing,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ theme_bw() + ylab("MEing")  + xlab(NULL) + geom_errorbar(aes(ymin=MEingLow, ymax=MEingHigh), width=.10) +
-  #theme(axis.text.x=element_blank()) + 
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))  
-ggsave("Figures/MEing_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
+# ggplot(websAssemblyModelQSS, aes(x=fct_reorder(Net_name,Metaweb),y=MEing,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ theme_bw() + ylab("MEing")  + xlab(NULL) + geom_errorbar(aes(ymin=MEingLow, ymax=MEingHigh), width=.10) +
+#   #theme(axis.text.x=element_blank()) + 
+#   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))  + coord_flip()
+# ggsave("Figures/MEing_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
+
+websAssemblyModelQSS %>% mutate(his=MEingHigh,los=MEingLow,vs=MEing,
+                                widths = his-los, 
+                                mids = los + (his-los)/2,
+                                vxs = (vs - mids) / widths) %>% 
+  ggplot( aes(x=fct_reorder(Net_name,vxs),y=vxs,color=Metaweb)) + geom_point(size=2) + 
+  scale_color_brewer(palette = "Paired")+ theme_bw() + ylab("MEing")  + xlab(NULL) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.justification=c(1,0), legend.position=c(.99,.01) ) + coord_flip() + 
+  geom_hline(yintercept = 0,size=.3) + geom_hline(yintercept = 0.5,linetype=3) + geom_hline(yintercept = -0.5,linetype=3) + 
+  scale_y_continuous(breaks = c(-.75,-.5,0,.5,.75)) +ylim(-.8,.8) 
+
+ggsave("Figures/MEing_Assembly_byMeta.pdf",width=5,height=8,units="in",dpi=600)
 
 
-names( websAssemblyModel)
 
-websAssemblyModel %>% inner_join(websTbl %>% dplyr::select(Network,Q))  %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>% 
-  ggplot( aes(x=fct_reorder(Net_name,Metaweb),y=Q,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
-  theme_bw() + ylab("Q")  + xlab(NULL) + 
-  geom_errorbar(aes(ymin=Qlow, ymax=Qhigh), width=.10) +
-  #theme(axis.text.x=element_blank())
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))  
-ggsave("Figures/Q_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
+names( websAssemblyModelQSS)
 
+# 
+# websAssemblyModel %>% inner_join(websTbl %>% dplyr::select(Network,Q))  %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>%  
+#   ggplot( aes(x=fct_reorder(Net_name,Metaweb),y=Q,color=Metaweb)) + geom_point(size=2) +scale_color_brewer(palette = "Paired")+ 
+#   theme_bw() + ylab("Q")  + xlab(NULL) + 
+#   geom_errorbar(aes(ymin=Qlow, ymax=Qhigh), width=.10) +
+#   #theme(axis.text.x=element_blank())
+#   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))  
+# ggsave("Figures/Q_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
 
-websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>% 
-  ggplot( aes(x=fct_reorder(Net_name,Metaweb),y=Modularity,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
-  theme_bw() + ylab("Modularity")  + xlab(NULL) + 
-  geom_errorbar(aes(ymin=MOlow, ymax=MOhigh), width=.10) +   
-  #theme(axis.text.x=element_blank())
-theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))  
-ggsave("Figures/Modularity_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
-
-
-websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>% 
-  ggplot( aes(x=fct_reorder(Net_name,Metaweb),y=TLmean,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
-  theme_bw() + ylab("Mean Trophic Level")  + xlab(NULL) + 
-  geom_errorbar(aes(ymin=TIlow, ymax=TIhigh), width=.10) +   
-  #theme(axis.text.x=element_blank())
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))
-ggsave("Figures/TL_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
+#
+# Trophic Coherence 
+#
+websAssemblyModel %>% inner_join(websTbl %>% dplyr::select(Network,Q))  %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>% mutate(his=Qhigh,los=Qlow,vs=Q,
+                                widths = his-los, 
+                                mids = los + (his-los)/2,
+                                vxs = (vs - mids) / widths) %>% 
+  ggplot( aes(x=fct_reorder(Net_name,vxs),y=vxs,color=Metaweb)) + geom_point(size=2) + 
+  scale_color_brewer(palette = "Paired")+ theme_bw() + ylab("Q")  + xlab(NULL) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.justification=c(1,0), legend.position=c(.99,.01) ) + coord_flip() + 
+  geom_hline(yintercept = 0,size=.3) + geom_hline(yintercept = 0.5,linetype=3) + geom_hline(yintercept = -0.5,linetype=3) + 
+  scale_y_continuous(breaks = c(-.75,-.5,0,.5,.75)) +ylim(-.8,.8) 
+ggsave("Figures/Q_Assembly_byMeta.pdf",width=5,height=8,units="in",dpi=600)
 
 
-websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>%
-  ggplot( aes(x=fct_reorder(Net_name,Metaweb),y=Connectance,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
-  theme_bw() + ylab("Connectance")  + xlab(NULL) + 
-  geom_errorbar(aes(ymin=Clow, ymax=Chigh), width=.10) +   
-  #theme(axis.text.x=element_blank())
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))
-ggsave("Figures/Connectance_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
+#
+# Modularity
+#
+
+# 
+# websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>% 
+#   ggplot( aes(x=fct_reorder(Net_name,Metaweb),y=Modularity,color=Metaweb)) + geom_point(size=2) +scale_color_brewer(palette = "Paired")+ 
+#   theme_bw() + ylab("Modularity")  + xlab(NULL) + 
+#   geom_errorbar(aes(ymin=MOlow, ymax=MOhigh), width=.10) +   
+#   #theme(axis.text.x=element_blank())
+# theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))  
+# ggsave("Figures/Modularity_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
 
 
-websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>%
-  ggplot( aes(x=fct_reorder(Net_name,Metaweb),y=Size,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
-  theme_bw() + ylab("Size")  + xlab(NULL) + 
-  geom_errorbar(aes(ymin=Slow, ymax=Shigh), width=.10) +   
-  #theme(axis.text.x=element_blank())
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))
+websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% 
+                               str_replace_all('_',' ' )) %>% mutate(his=MOhigh,los=MOlow,vs=Modularity,
+                                widths = his-los, 
+                                mids = los + (his-los)/2,
+                                vxs = (vs - mids) / widths) %>% 
+  ggplot( aes(x=fct_reorder(Net_name,vxs),y=vxs,color=Metaweb)) + geom_point(size=2) + 
+  scale_color_brewer(palette = "Paired")+ theme_bw() + ylab("Modularity")  + xlab(NULL) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.justification=c(1,0), legend.position=c(.99,.01) ) + coord_flip() + 
+  geom_hline(yintercept = 0,size=.3) + geom_hline(yintercept = 0.5,linetype=3) + geom_hline(yintercept = -0.5,linetype=3) + 
+  scale_y_continuous(breaks = c(-.75,-.5,0,.5,.75)) +ylim(-.8,.8) 
+ggsave("Figures/Modularity_Assembly_byMeta.pdf",width=5,height=8,units="in",dpi=600)
 
-ggsave("Figures/Size_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
+
+#
+# Trophic Level
+#
+# 
+# websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>% 
+#   ggplot( aes(x=fct_reorder(Net_name,Metaweb),y=TLmean,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
+#   theme_bw() + ylab("Mean Trophic Level")  + xlab(NULL) + 
+#   geom_errorbar(aes(ymin=TIlow, ymax=TIhigh), width=.10) +   
+#   #theme(axis.text.x=element_blank())
+#   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))
+# ggsave("Figures/TL_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
+
+websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% 
+                               str_replace_all('_',' ' )) %>% mutate(his=TIhigh,los=TIlow,vs=TLmean,
+                                widths = his-los, 
+                                mids = los + (his-los)/2,
+                                vxs = (vs - mids) / widths) %>% 
+  ggplot( aes(x=fct_reorder(Net_name,vxs),y=vxs,color=Metaweb)) + geom_point(size=2) + 
+  scale_color_brewer(palette = "Paired")+ theme_bw() + ylab("Mean Trophic Level")  + xlab(NULL) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.justification=c(1,0), legend.position=c(.99,.01) ) + coord_flip() + 
+  geom_hline(yintercept = 0,size=.3) + geom_hline(yintercept = 0.5,linetype=3) + geom_hline(yintercept = -0.5,linetype=3) + 
+  scale_y_continuous(breaks = c(-1,-.5,0,.5,1)) #+ylim(-.8,.8) 
+ggsave("Figures/TL_Assembly_byMeta.pdf",width=5,height=8,units="in",dpi=600)
 
 
-# + theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
+#
+# Connectance
+#
+
+# websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>%
+#   ggplot( aes(x=fct_reorder(Net_name,Metaweb),y=Connectance,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
+#   theme_bw() + ylab("Connectance")  + xlab(NULL) + 
+#   geom_errorbar(aes(ymin=Clow, ymax=Chigh), width=.10) +   
+#   #theme(axis.text.x=element_blank())
+#   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))
+# ggsave("Figures/Connectance_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
+
+websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>% mutate(his=Chigh,los=Clow,vs=Connectance,
+                                widths = his-los, 
+                                mids = los + (his-los)/2,
+                                vxs = (vs - mids) / widths) %>% 
+  ggplot( aes(x=fct_reorder(Net_name,vxs),y=vxs,color=Metaweb)) + geom_point(size=2) + 
+  scale_color_brewer(palette = "Paired")+ theme_bw() + ylab("Connectance")  + xlab(NULL) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.justification=c(1,0), legend.position=c(.99,.01) ) + coord_flip() + 
+  geom_hline(yintercept = 0,size=.3) + geom_hline(yintercept = 0.5,linetype=3) + geom_hline(yintercept = -0.5,linetype=3) + 
+  scale_y_continuous(breaks = c(-.75,-.5,0,.5,.75)) #+ylim(-.8,.8) 
+ggsave("Figures/Connectance_Assembly_byMeta.pdf",width=5,height=8,units="in",dpi=600)
+
+
+#
+# Size
+#
+
+# websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>%
+#   ggplot( aes(x=fct_reorder(Net_name,Metaweb),y=Size,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
+#   theme_bw() + ylab("Size")  + xlab(NULL) + 
+#   geom_errorbar(aes(ymin=Slow, ymax=Shigh), width=.10) +   
+#   #theme(axis.text.x=element_blank())
+#   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))
+
+websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>% mutate(his=Shigh,los=Slow,vs=Size,
+                                widths = his-los, 
+                                mids = los + (his-los)/2,
+                                vxs = (vs - mids) / widths) %>% 
+  ggplot( aes(x=fct_reorder(Net_name,vxs),y=vxs,color=Metaweb)) + geom_point(size=2) + 
+  scale_color_brewer(palette = "Paired")+ theme_bw() + ylab("Size")  + xlab(NULL) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.justification=c(1,0), legend.position=c(.99,.01) ) + coord_flip() + 
+  geom_hline(yintercept = 0,size=.3) + geom_hline(yintercept = 0.5,linetype=3) + geom_hline(yintercept = -0.5,linetype=3) + 
+  scale_y_continuous(breaks = c(-.75,-.5,0,.5,.75)) #+ylim(-.8,.8) 
+
+ggsave("Figures/Size_Assembly_byMeta.pdf",width=5,height=8,units="in",dpi=600)
 
 
 

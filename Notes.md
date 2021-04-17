@@ -582,3 +582,28 @@ ondary sympatry, and the feedback between local and
 regional processes is needed to fully understand com-
 munity assembly and the importance of dynamic species
 pools.
+
+
+---------------------
+@Nilsson2016
+
+This has been exemplified in cannibalistic
+fish populations where the cannibals either gain a lot of energy
+from feeding on juveniles or exert a strong top down control
+but not both at the same time (Persson et al. 2004).
+
+---------------------
+
+@Allesina2015
+
+We took 15 large published food webs, removed any self-loop (cannibalism) and, in the rare cases of double-arrows (i.e., a eats b, and b eats a), we removed one of the two links at random. 
+
+---------------------
+@Pillai2011
+
+For example, at large spatial and temporal scales feeding loops like cannibalism and mutual predation can be simply considered as forms of recycling within and between species, and can thus be ignored in order to simply focus on the net, or overall flow of energy and resources between interacting species. This is justifiable as most forms of mutual predation involve species feeding on each other at different ontogenetic life-history stages.
+
+--------------------
+@Cohen1990b
+
+A cycle of length 1 describes cannibalism, in which a species eats itself. Cannibalism is common in nature. But ecologists report cannibalism so unreliably that we have suppressed it from all the data even where it is reported. A cycle of length 2 means that A eats Band Beats A. In this example, as in most webs, there are no cycles of length 2 or more.
