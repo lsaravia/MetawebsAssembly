@@ -5,8 +5,10 @@
 
 
 The model, conceptually explained in figure 1, has 3 parameters: $c$ the probability of a species to colonize the local network from the meta-web, $e$ the probability to become locally extinct, and the probability of secondary extinction $se$ that is the probability of extinction when the species is a predator and there is no prey locally present. Then there are three possible events, colonization, extinction, and secondary extinction. After a colonization event with probability $c$ the species is present in the local community and other two events are possible: 
+
   1. if it is a basal species it does not need predators to survive then it persists until an extinction event with probability $e$. 
   2. If it is a non-basal species it could become extinct with probability $e$ but if it has no prey it could also become extinct with probability $se$.
+
 These events could happen at a random if the necessary conditions are fulfilled, we use the @Gillespie1976a algorithm to simulate the model.
 
 We performed exploratory simulations to determine if the last 100 time steps of 1000 simulated were enough to avoid the transient period and sample the attractor of the model. Figures S1, S2 show that there are no differences in the dynamics after 1000 or 3000 time steps and that the transient is well over after 1000 time steps. We repeated these exploratory simulations with the three metawebs with similar results.  
@@ -18,11 +20,11 @@ We performed exploratory simulations to determine if the last 100 time steps of 
 ![Windowed averages of a simulation of the Meta-web assembly model  with the Antarctic metaweb and parameters near the fitted to Weddell Sea food web. Where $mS$ and $mL$ are windowed averages of the number of species and the links, error bars the are standard deviation, the dashed is line the overall mean, using a window of 50 time steps. The parameters were $c$=0.03, $e$=0.016, $se$=0.10](Figures/Metaweb_steady_state_Weddell.png)
 
 
-To fit the model to each metaweb we performed 150000 simulations with a wide range of parameters (table S1) using lating hypercubic sampling [@Fang2005], we simulated the model for 1000 time steps and use the last 100 time steps to calculate average the number of species $S_m$, the average number of links $E_m$ and the average connectance $C_m = E_m/S_m^2$ where. Then we calculated a relative distance to the number of species $S_e$  and connectance $C_e$ of the empirical food webs:  
+For the very similar model used in @Gravel2011 simulations with the same ratio $\alpha= c/e$ should give the same results, but as we have $se$ as an additional parameter this should not be the case with our model. We checked this performing simulations with different combinations of $c$, $e$, $se$ keeping $\alpha$ constant and for different metawebs, we found differences for some of the combinations (Figure S6), thus we performed the fitting using the 3 parameters. To fit the model to each metaweb we performed 150000 simulations with a wide range of parameters (table S1) using lating hypercubic sampling [@Fang2005], we simulated the model for 1000 time steps and use the last 100 time steps to calculate average the number of species $S_m$, the average number of links $E_m$ and the average connectance $C_m = E_m/S_m^2$ where. Then we calculated a relative distance to the number of species $S_e$  and connectance $C_e$ of the empirical food webs:  
 
 $$distance = \sqrt{ ((S_e - S_m) / S_e )^2 + ((C_e - C_m)/ C_e)^2 }$$
 
-Then we used the parameters with the minimal distance to simulate the model and compare with the network metrics explained in the main text. The results with the fitted models is presented in the table S2. 
+Then we used the parameters with the minimal distance to simulate the model and compare with the network metrics explained in the main text. The fitted parameters for all local food webs are presented in the table S2. 
 
 
 | Parameter   |      |    |
@@ -33,8 +35,14 @@ Then we used the parameters with the minimal distance to simulate the model and 
 
 Table: Range of parameters used in latin hypercubic sampling to simulate the metaweb assembly model 
 
-As an adittional validation of the model we performed simulations using the fitted parameters and checked than the number of species $S$ and connectance $C$ of the empirical food webs where inside the 99% CI generated with 1000 simulations of the model (Table S4). Only in two cases (Bridge_brook_lake, Lak_Chub_pond) the connectance is higher than the CI. 
+As an adittional validation of the model we performed simulations using the fitted parameters and checked than the number of species $S$ and connectance $C$ of the empirical food webs where inside the 99% CI generated with 1000 simulations of the model (Table S4, Figures S3 & S4). Only in two cases (Bridge_brook_lake, Lak_Chub_pond) the connectance is higher than the CI. 
 
+
+::: {#refs}
+
+## Bibliography
+
+:::
 
 
 \newpage
@@ -428,17 +436,15 @@ Table: Comparison of empirical proportions of Topological Roles with one assembl
 \newpage
 
 
-![The four three-species sub-networks analysed: apparent competition, exploitative competition, tri-trophic chain, and omnivory. These four sub-networks have been explored both theoreticall and empirically in ecological networks and are the most common sub-networks found in food webs](Figures/Fig1Motifs.png)
 
 
 ![Connectance comparison for local empirical networks (dots) and assembly model networks. We ran 1000 simulations of the model fitted to local networks to build the 99% confidence intervals of the metric (vertical lines). Where Ant is the Antarctic metaweb, Isl is the Islands, and Lak the lakes metaweb.](Figures/Connectance_Assembly_byMeta.png){ width=100% }
 
 ![Number of species (Size) comparison for local empirical networks (dots) and assembly model networks. We ran 1000 simulations of the model fitted to local networks to build the 99% confidence intervals of the metric (vertical lines). Where Ant is the Antarctic metaweb, Isl is the Islands, and Lak the lakes metaweb](Figures/Size_Assembly_byMeta.png) 
 
-![Trohpic Coherence (Q) comparison for local empirical networks (dots) and assembly model networks. We ran 1000 simulations of the model fitted to local networks to build the 99% confidence intervals of the metric (vertical lines). Where Ant is the Antarctic metaweb, Isl is the Islands, and Lak the lakes metaweb](Figures/Q_Assembly_byMeta.png) 
 
 
 ![Topological roles comparison for local empirical networks (dots) and assembly model networks for the Lakes metaweb. Only 3 local food webs have proportions different from the metaweb assembly model.  The topological roles are: *Hub connectors* have a high number of between module links, *Module connectors* have a low number of links mostly between modules,  *Module hubs* have a high number of links inside its module. *Module specialists* have a low number of links inside its module. Lakes marked with '*' are significant at 1% level](Figures/Lak_TopoRoles_ByNetwork_Model.png)
 
-## Bibliography
 
+![Simulation of the metaweb assembly model keeping  $\alpha= c/e$ constant for the Islands and Antarctic metawebs and different combinations of $c$, $e$ and $se$. The points are averages of number of species $S$ and connectance $C$ of the last 100 time steps of the model](Figures/Metaweb_SecExtc_byModel.pdf)

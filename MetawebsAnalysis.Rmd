@@ -6,6 +6,9 @@ editor_options:
   chunk_output_type: console
 ---
 
+* This is to determine the general structure of all empirical networks and comparison against a random null model Erdos-Renyi (ER), not included in the manuscript.
+* Topological roles for the empirical networks is calculated here
+
 ## Setup
 
 - **I run the analysis chunk by chunk, not the whole Rmd** 
@@ -251,60 +254,6 @@ websTbl$Area <- c(6.8,3.5e6,34.8e6)
 
 ```
 
-# Integrated plot of topological roles, trophic level and modularity (Not used in the paper)
-
-```{r plotTopoRolesTLmod, eval=FALSE,echo=F,message=T,warning=T}
-
-# Data frame hub_conn have the topological roles of species by network
-#
-
-# mod_by_red have the modules
-#
-# Correct hub_conn if it has more nodes
-if ( sum(websTbl$Size)!= nrow(hub_conn) ) {
-
-  hub_conn <- hub_conn %>% filter(!grepl("#",name)) 
-
-}
-
-# 
-# Local 
-#
-png("Figures/AllTopoRoles_TL_MOD.png",width=8,height=8,units="in",res=600)
-par(mfcol=c(2,2), mar=c(1,1.2,0.5,0.5), oma=c(2,2,2,0))
-
-#plotTopoRolesByTLByMod(dtot,"Potter", "",mod_by_red[[1]],hub_conn)
-
-plotTopoRolesByTLByMod("Ant_Potter",c("Detritus","Necromass"),mod_by_red[[1]],topoFrame=hub_conn,redl=ig_list[["Ant_Potter"]])
-mtext("A", side = 3, adj = 0.05, line=1 ,cex=1.2)
-
-#
-# Metaweb
-#
-plotTopoRolesByTLByMod(netName ="Ant_Meta",c("Detritus","Necromass"),mod_by_red[[3]],topoFrame= hub_conn,redl=ig_list[["Ant_Meta"]])
-mtext("C", side = 3, adj = 0.05, line = 0,cex=1.2)
-
-#
-# Regional 
-#
-plotTopoRolesByTLByMod(netName ="Ant_Weddell", "",mod_by_red[[2]],topoFrame= hub_conn,redl=ig_list[["Ant_Weddell"]])
-mtext("B", side = 3, adj = 0.05, line=1,cex=1.2)
-
-require(RColorBrewer)
-colnet <- brewer.pal(4,"Paired")
-
-plot(1, type = "n", axes=FALSE, xlab="", ylab="")
-legend(x = "center",
-        legend = c("Hub connectors", "Module Connectors", "Module Hubs", "Module Specialists"), 
-        col=colnet,pch=19, cex=1.2)
-mtext("Modules", side = 1, outer=T, line=0.1,cex=1.2,font=2)
-mtext("Trophic level", side = 2, outer=T, line=0.5,cex=1.2,font=2)
-
-
-dev.off()
-
-
-```
 
 # Generate dataframe with topological roles species names trophic level and degree 
 

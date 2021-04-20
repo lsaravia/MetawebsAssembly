@@ -302,28 +302,28 @@ save_plot("Figures/Metaweb_steady_state_Weddell.png",gP5,base_width=6,base_heigh
 
 #
 # Testing if there are difference with different m/e 
-#      m      a     S     L      C    se model     model_type alpha distance min_dist
-# 0.0263 0.106   92.1  324. 0.0383 0.691 Prob      Continuous 0.247  0.00339 TRUE    
-# 0.0145 0.0522  91.4  322. 0.0385 0.254 Prob      NA         0.278  0.00786 TRUE    
-
+#
+# Islands metaweb
+#
 AAdf <- tibble()
 set.seed(2312)
-
+A <- get.adjacency(Isl_Meta,sparse=F)
+dimA <- dim(A)[1]
 tf <- 1000
 m <- rep(0.015,times=dimA)
 e <- rep(0.005, times=dimA)
 se <- rep(0.25, times=dimA)
-AA <- metaWebNetAssembly(A,m,e,se,tf)
+AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e=0.005,se=0.25,model_type="Discrete") )
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e="0.015 - 0.005",se=0.25,model_type="Islands") )
 
 
 m <- rep(0.15,times=dimA)
 e <- rep(0.05, times=dimA)
 se <- rep(0.25, times=dimA)
-AA <- metaWebNetAssembly(A,m,e,se,tf)
+AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),se=0.25,e=0.05,model_type="Discrete") )
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),se=0.25,e="0.15 - 0.05",model_type="Islands") )
 
 ggplot(AAdf, aes(S,C,color=factor(e)))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC)) + facet_wrap( ~ model_type)
 
@@ -334,109 +334,105 @@ ggplot(AAdf, aes(S,C,color=factor(e)))+ geom_point() + theme_bw() + stat_ellipse
 tf <- 1000
 m <- rep(0.015,times=dimA)
 e <- rep(0.005, times=dimA)
-se <- rep(0.25, times=dimA)
+se <- rep(0.55, times=dimA)
 AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),se=0.25,e=0.005,model_type="Continuous"))
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),se=0.55,e="0.015 - 0.005",model_type="Islands"))
 
 
 m <- rep(0.15,times=dimA)
 e <- rep(0.05, times=dimA)
-se <- rep(0.25, times=dimA)
+se <- rep(0.55, times=dimA)
 AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),se=0.25,e=0.05,model_type="Continuous"))
-
-ggplot(AAdf, aes(S,C,color=factor(e)))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC)) + facet_wrap( ~model_type)
-
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),se=0.55,e="0.15 - 0.05",model_type="Islands"))
 
 #
-# se = 1 
+# se = 0.95 
 #
 m <- rep(0.015,times=dimA)
 e <- rep(0.005, times=dimA)
-se <- rep(1, times=dimA)
-AA <- metaWebNetAssembly(A,m,e,se,tf)
+se <- rep(0.95, times=dimA)
+AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e=0.005,se=1,model_type="Discrete")) 
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e="0.015 - 0.005",se=0.95,model_type="Islands")) 
 
 
 m <- rep(0.15,times=dimA)
 e <- rep(0.05, times=dimA)
-se <- rep(1, times=dimA)
-AA <- metaWebNetAssembly(A,m,e,se,tf)
+se <- rep(0.95, times=dimA)
+AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e=0.05,se=1,model_type="Discrete"))
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e="0.15 - 0.05",se=0.95,model_type="Islands"))
 
-ggplot(AAdf, aes(S,C,color=factor(e)))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC)) + facet_wrap( se ~ model_type)
+ggplot(AAdf, aes(S,C,color=factor(e)))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC)) + facet_wrap( model_type ~ se) + scale_color_viridis_d(name="m - e" )
+
+
+
+
+# Repeat for the Antarctic 
+#
+A <- get.adjacency(Ant_Meta,sparse=F)
+tf <- 1000
+dimA <- dim(A)[1]
+
+m <- rep(0.015,times=dimA)
+e <- rep(0.005, times=dimA)
+se <- rep(0.25, times=dimA)
+AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
+plot_NetAssemblyModel_eqw(AA,100)
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e="0.015 - 0.005",se=0.25,model_type="Antarctic") )
+
+
+m <- rep(0.15,times=dimA)
+e <- rep(0.05, times=dimA)
+se <- rep(0.25, times=dimA)
+AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
+plot_NetAssemblyModel_eqw(AA,100)
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),se=0.25,e="0.15 - 0.05",model_type="Antarctic") )
 
 
 # 
-# Continous time 0.0263 0.106   92.1  324. 0.0383 0.691
-#
-m <- rep(0.015,times=dimA)
-e <- rep(0.005, times=dimA)
-se <- rep(1, times=dimA)
-AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
-plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e=0.005,se=1,model_type="Continuous"))
-
-
-m <- rep(0.15,times=dimA)
-e <- rep(0.05, times=dimA)
-se <- rep(1, times=dimA)
-AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
-plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e=0.05,se=1,model_type="Continuous"))
-
-ggplot(AAdf, aes(S,C,color=factor(e)))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC)) +
-  facet_grid( se ~ model_type)
-
-#
-# se = 0 
+# se = 0.55
 #
 tf <- 1000
 m <- rep(0.015,times=dimA)
 e <- rep(0.005, times=dimA)
-se <- rep(0, times=dimA)
-AA <- metaWebNetAssembly(A,m,e,se,tf)
+se <- rep(0.55, times=dimA)
+AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e=0.005,se=0,model_type="Discrete")) 
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),se=0.55,e="0.015 - 0.005",model_type="Antarctic"))
 
 
 m <- rep(0.15,times=dimA)
 e <- rep(0.05, times=dimA)
-se <- rep(0, times=dimA)
-AA <- metaWebNetAssembly(A,m,e,se,tf)
+se <- rep(0.55, times=dimA)
+AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e=0.05,se=0,model_type="Discrete"))
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),se=0.55,e="0.15 - 0.05",model_type="Antarctic"))
 
-ggplot(AAdf, aes(S,C,color=factor(e)))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC)) + facet_wrap( se ~ model_type)
-
-
-# 
-# Continous time 0.0263 0.106   92.1  324. 0.0383 0.691
+#
+# se = 0.95 
 #
 m <- rep(0.015,times=dimA)
 e <- rep(0.005, times=dimA)
-se <- rep(0, times=dimA)
+se <- rep(0.95, times=dimA)
 AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e=0.005,se=0,model_type="Continuous"))
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e="0.015 - 0.005",se=0.95,model_type="Antarctic")) 
 
 
 m <- rep(0.15,times=dimA)
 e <- rep(0.05, times=dimA)
-se <- rep(0, times=dimA)
+se <- rep(0.95, times=dimA)
 AA <- metaWebNetAssemblyCT(A,m,e,se,tf)
 plot_NetAssemblyModel_eqw(AA,100)
-AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e=0.05,se=0,model_type="Continuous"))
+AAdf <- bind_rows( AAdf, tibble(C=AA$L[(tf-100):tf]/ (AA$S[(tf-100):tf])^2 ,S=AA$S[(tf-100):tf]) %>% mutate(mC = mean(C), mS=mean(S),e="0.15 - 0.05",se=0.95,model_type="Antarctic"))
 
-ggplot(AAdf, aes(S,C,color=factor(e)))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC)) +
-  facet_grid( se ~ model_type)
+ggplot(AAdf, aes(S,C,color=factor(e)))+ geom_point() + theme_bw() + stat_ellipse() + geom_point( aes(mS,mC)) + scale_color_viridis_d(name="c - e" ) +   facet_wrap( model_type ~ se , scales = "free" ) 
 
-
-ggsave("Figures/Metaweb_SecExtc_byModel.png",width=8,height=5,units="in",dpi=600)
+AAdf %>% group_by(model_type,e,se) %>% summarise(C = mean(mC),S=mean(mS))
+ggsave("Figures/Metaweb_SecExtc_byModel.pdf",width=8,height=5,units="in",dpi=600)
 
 ```
 
@@ -752,19 +748,6 @@ fmw <-  lapply(netnames, function(n){
 })
 
 fittedMetaWeb <- bind_rows(fittedMetaWeb, fmw)
-
-## Perform ABC and GOF
-#
-# fmw <-  lapply(netnames, function(n){
-# 
-#   CI_metaWebAssembly_model(websTbl, n, simMetaWebAssembly)
-# })
-# fittedMetaWeb_gof <- bind_rows(fittedMetaWeb_gof,fmw)
-# fittedMetaWeb_gof <- fittedMetaWeb_gof %>% mutate(Metaweb = str_sub(Network,1,3)) %>% dplyr::select( Metaweb,Network,  everything())
-# #  
-# fittedMetaWeb_gof %>% mutate(fit=gof_pvalue>0.1) %>% group_by(model,fit) %>% summarise(n=n()) %>% mutate(freq=n/sum(n))
-# knitr::kable(fittedMetaWeb_gof %>% ungroup() %>%  dplyr::select(-model_type,-fit_type) %>% arrange(Network), digits = 4)
-
 
 knitr::kable(fittedMetaWeb %>% ungroup() %>% dplyr::select( Metaweb,Network,  everything() )%>% dplyr::select(-min_dist, -model_type,-fit_type) %>% arrange(Network), digits = 4)
 
@@ -1250,12 +1233,12 @@ require(tidyverse)
 websAssemblyModelQSS %>% mutate(his=MEingHigh,los=MEingLow,vs=MEing,
                                 widths = his-los, 
                                 mids = los + (his-los)/2,
-                                vxs = (vs - mids) / widths) %>% 
+                                vxs = (vs - mids) / widths, metric="MEing") %>% 
   ggplot( aes(x=fct_reorder(Net_name,vxs),y=vxs,color=Metaweb)) + geom_point(size=2) + 
-  scale_color_brewer(palette = "Paired")+ theme_bw() + ylab("MEing")  + xlab(NULL) + 
+  scale_color_brewer(palette = "Paired")+ theme_bw() + ylab("Deviation")  + xlab(NULL) + 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.justification=c(1,0), legend.position=c(.99,.01) ) + coord_flip() + 
   geom_hline(yintercept = 0,size=.3) + geom_hline(yintercept = 0.5,linetype=3) + geom_hline(yintercept = -0.5,linetype=3) + 
-  scale_y_continuous(breaks = c(-.75,-.5,0,.5,.75)) +ylim(-.8,.8) 
+  scale_y_continuous(breaks = c(-.75,-.5,0,.5,.75)) +ylim(-.8,.8) + facet_wrap(~metric)
 
 ggsave("Figures/MEing_Assembly_byMeta.pdf",width=5,height=8,units="in",dpi=600)
 
@@ -1387,6 +1370,50 @@ websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z
 ggsave("Figures/Size_Assembly_byMeta.pdf",width=5,height=8,units="in",dpi=600)
 
 
+#
+# Combined Trophic Coherence and MEing  
+#
+
+pFM1 <- websAssemblyModel %>% inner_join(websTbl %>% dplyr::select(Network,Q))  %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>% mutate(his=Qhigh,los=Qlow,vs=Q,
+                                widths = his-los, 
+                                mids = los + (his-los)/2,
+                                vxs = (vs - mids) / widths,metric="Trophic Coherence")  %>% select(Metaweb,Net_name,metric,vxs)
+pFM2 <-websAssemblyModelQSS %>% mutate(his=MEingHigh,los=MEingLow,vs=MEing,
+                                widths = his-los, 
+                                mids = los + (his-los)/2,
+                                vxs = (vs - mids) / widths, metric="MEing") 
+
+bind_rows(pFM1,pFM2) %>% ungroup() %>% mutate(metric=fct_inorder(metric) ) %>% ggplot( aes(x=fct_reorder(Net_name,vxs),y=vxs,color=Metaweb)) + geom_point(size=2) + 
+  scale_color_brewer(palette = "Paired")+ theme_bw() + ylab("Deviation")  + xlab(NULL) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.justification=c(1,0), legend.position=c(.99,.01) ) + coord_flip() + 
+  geom_hline(yintercept = 0,size=.3) + geom_hline(yintercept = 0.5,linetype=3) + geom_hline(yintercept = -0.5,linetype=3) + 
+  scale_y_continuous(breaks = c(-.75,-.5,0,.5,.75))  + facet_wrap(~metric)
+
+ggsave("Figures/MEing_Q_Assembly_byMeta.pdf",width=5.5,height=7,units="in",dpi=600)
+
+
+
+#
+# Combined Trophic Level and Modularity 
+#
+pFM1 <- websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% 
+                               str_replace_all('_',' ' )) %>% mutate(his=MOhigh,los=MOlow,vs=Modularity,
+                                widths = his-los, 
+                                mids = los + (his-los)/2,
+                                vxs = (vs - mids) / widths, metric="Modularity") %>% select(Metaweb,Net_name,metric,vxs) 
+pFM2 <- websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% 
+                               str_replace_all('_',' ' )) %>% mutate(his=TIhigh,los=TIlow,vs=TLmean,
+                                widths = his-los, 
+                                mids = los + (his-los)/2,
+                                vxs = (vs - mids) / widths,metric="Trophic Level")  %>% select(Metaweb,Net_name,metric,vxs)
+
+bind_rows(pFM1,pFM2) %>% ungroup() %>% group_by(metric) %>% ggplot( aes(x=fct_reorder(Net_name,vxs),y=vxs,color=Metaweb)) + geom_point(size=2) + 
+  scale_color_brewer(palette = "Paired")+ theme_bw() + ylab("Deviation")  + xlab(NULL) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.justification=c(1,0), legend.position=c(.99,.01) ) + coord_flip() + 
+  geom_hline(yintercept = 0,size=.3) + geom_hline(yintercept = 0.5,linetype=3) + geom_hline(yintercept = -0.5,linetype=3) + 
+  scale_y_continuous(breaks = c(-1,-.5,0,.5,1))  + facet_wrap(~metric)
+
+ggsave("Figures/Modularity_TL_Assembly_byMeta.pdf",width=5.5,height=7,units="in",dpi=600)
 
 ```
 
@@ -1510,16 +1537,42 @@ pFM1 <- pFM1 %>% group_by(Network) %>% mutate(normZ=Zscore/sum(sqrt(Zscore^2)), 
 # Add asteriscs to significative motifs
 #
 
-sign_lbl <- sign %>% pivot_longer(!Network,values_to = "sign",names_to = "motif") %>% mutate(label=ifelse(sign, "*", "")) %>% inner_join(pFM1) %>% mutate( Network = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' ))
+# sign_lbl <- sign %>% pivot_longer(!Network,values_to = "sign",names_to = "motif") %>% mutate(label=ifelse(sign, "*", "")) %>% inner_join(pFM1) %>% mutate( Network = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' ))
+# 
+# g1 <- ggplot(sign_lbl,
+#         aes(x=fct_inorder(Network),y=Zscore,fill=motif,label=label)) + geom_bar(stat="identity",position=position_dodge()) +
+#    scale_fill_brewer(palette = "Paired",breaks=c("zAC","zEC","zOM","zTT"),name="Motif\nZ-score",   labels=c("Apparent\ncompetition","Exploitative\ncompetition","Omnivory", "Tri-trophic\nchain")) + #guides(fill=FALSE) +
+#    xlab("") + ylab("") + theme_bw() +  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7)) + 
+#   #facet_wrap(~Metaweb, ncol = 1, scale="free") + 
+#   geom_text(position=position_dodge(width=0.9)) 
+# g1
+# ggsave("Figures/Motif_Zscores_Assembly.png",width=8,height=6,units="in",dpi=600)
 
-g1 <- ggplot(sign_lbl,
-        aes(x=fct_inorder(Network),y=Zscore,fill=motif,label=label)) + geom_bar(stat="identity",position=position_dodge()) +
-   scale_fill_brewer(palette = "Paired",breaks=c("zAC","zEC","zOM","zTT"),name="Motif\nZ-score",   labels=c("Apparent\ncompetition","Exploitative\ncompetition","Omnivory", "Tri-trophic\nchain")) + #guides(fill=FALSE) +
-   xlab("") + ylab("") + theme_bw() +  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7)) + 
-  #facet_wrap(~Metaweb, ncol = 1, scale="free") + 
-  geom_text(position=position_dodge(width=0.9))
-g1
-ggsave("Figures/Motif_Zscores_Assembly.png",width=8,height=6,units="in",dpi=600)
+#
+# New plot with deviation
+#
+# normalise
+# widths = his-los
+# mids = los + (his-los)/2
+# vxs = (vs - mids) / widths
+require(tidyverse)
+names(motif_AssemblyModel)
+
+pFM1 <- motif_AssemblyModel %>% rename(ECemp=explComp,ACemp=apprComp,TTemp=triTroph,OMemp=omnivory) %>%  select(!c(model,zEC:zOM))%>% pivot_longer(cols = c(ECemp:OMhigh) ,names_to=c("motif",".value"),names_pattern = "(EC|AC|TT|OM)\\s*(\\w+)") 
+
+pFM1 <- pFM1 %>% mutate(motif=factor(motif),motif=fct_recode(motif, "exploitative competition" = "EC","apparent competition" = "AC", "tri-trophic chain" = "TT","omnivory"= "OM"))
+
+pFM1 %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>% 
+                                mutate(  widths = high-low, 
+                                mids = low + (high-low)/2,
+                                vxs = (emp - mids) / widths) %>% 
+  ggplot( aes(x=fct_reorder(Net_name,vxs),y=vxs,color=Metaweb)) + geom_point(size=2) + 
+  scale_color_brewer(palette = "Paired")+ theme_bw() + ylab("Deviation")  + xlab(NULL) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.justification=c(1,0), legend.position=c(.99,.01) ) + coord_flip() + 
+  geom_hline(yintercept = 0,size=.3) + geom_hline(yintercept = 0.5,linetype=3) + geom_hline(yintercept = -0.5,linetype=3) + 
+  scale_y_continuous(breaks = c(-1,-.5,0,.5,1)) + facet_wrap( ~motif, ncol=4 )#+ylim(-.8,.8) 
+  
+ggsave("Figures/Motif_Zscores_Assembly.pdf",width=8,height=7,units="in",dpi=600)
 
 
 
