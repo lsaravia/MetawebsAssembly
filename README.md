@@ -4,14 +4,15 @@
 
 ## Abstract
 
-The idea that ecological networks are built in a sequence of colonization events is not new but has been applied mostly to competitive interactions. Similar processes act in trophic networks (food webs): a regional pool of species is the source from which species colonize local areas, called the meta-web.  Local food webs are realizations of meta-webs that result from assembly processes influenced by migration, habitat filtering, stochastic factors, and dynamical constraints imposed by food web structure. We analyse how the structure of a meta-web influence local food-webs with different spatial scales, using an assembly model, a random model and properties at three levels: emergent global properties that take into account the whole network (like modularity), sub-structural properties that consider several nodes (like motifs), and properties related to one node (like topological roles). Three independent data-sets were included: the marine Antarctic meta-web (34.8 million Km^2^), the Weddell Sea (3.5 million Km^2^) and Potter Cove (6.8 Km^2^) food-webs. Looking at the global properties, the meta-web present a structure very different from the random model while the local food-webs follow the same pattern and are very similar to the assembly model. The assembly model only takes into account migration, local extinction and secondary extinctions. For sub-structural properties meta-web and the local food-webs also showed the same pattern against the random model, but we found differences compared to the assembly model that does not increase the local stability of food webs. Topological roles also showed differences between the meta-web and local food-webs that are not explained by the assembly model. We found that a great portion of the structure of the food webs is determined by evolutionary processes that act on large temporal and spatial scales. On the contrary, dynamical processes that favour stability have a small influence, but habitat filtering or dispersal limitations seem to be important factors that determine food web structure. 
+Local food webs can be studied as the realization of a sequence of colonizing and extinction events, where a regional pool of species ---called the metaweb--- acts as a source for new species, these are shaped by evolutionary and biogeographical processes at larger spatial and temporal scales than local webs. Food webs are thus the result of assembly processes that are influenced by migration, habitat filtering, stochastic factors, and dynamical constraints. We compared the structure of empirical local food webs to webs resulting from a probabilistic assembly null model. The assembly model had no population dynamics but colonization and extinction events with the restriction that consumer species have prey present. We use for comparison several network properties including trophic coherence, modularity, motifs, topological roles, and others. We hypothesized that the structure of empirical food webs should differ from model webs in a way that reflected dynamical stability and other local constraints. Three data sets were used: (1) the marine Antarctic metaweb, with 2 local food-webs (2) the 50 lakes of the Adirondacks; and (3) the arthropod community from Florida Keys' classic defaunation experiment. Contrary to our expectation, we found that there were almost no differences between empirical webs and those resulting from the assembly null model. Few empirical food webs showed significant differences with network properties, motif representations and topological roles, compared to the assembly null model. Our results suggest that there are not strong dynamical or habitat restrictions upon food web structure at local scales. Instead, the structure of local webs is inherited from the metaweb without modifications. Recently, it has been found in competitive and mutualistic networks that structures that are often attributed as causes or consequences of ecological stability are probably a by-product of the assembly processes (i.e. spandrels). We extended these results to trophic networks suggesting that this could be a more general phenomenon.
 
-**Leonardo A. Saravia**, **Tomás  I. Marina**, **Marleen De Troch**, **Fernando R. Momo** 
+**Leonardo A. Saravia**, **Tomás  I. Marina**, **Nadiah P. Kristensen**, **Marleen De Troch**, **Fernando R. Momo** 
 
+* [BioRxiv Preprint](https://doi.org/10.1101/340430)
 
 * [raw manuscript source in markdown](https://github.com/lsaravia/MetawebsAssembly/blob/master/MetawebsAssembly.md) (figures and citations not rendered in this version)
-* [Draft PDF](https://github.com/lsaravia/MetawebsAssembly/blob/master/MetawebsAssembly.pdf) (contains parsed citations and figures)
-* [Bibliography](https://github.com/lsaravia/MetawebsAssembly/blob/master/MetawebsAssembly.bib) blob/master/MetawebsAssembly.bib
+
+
 
 ## R Markdown files description
 
@@ -19,15 +20,14 @@ The idea that ecological networks are built in a sequence of colonization events
 
 * MetawebsAnalysis.Rmd :
 
-		Modularity and Small-world-ness with package igraph 
-		Plots of food-webs by modularity and trophic level, package NetIndices
-		Analysis of 3-node motif
+		Calculations for empirical food webs: Modularity, Trophic Coherence, MEing, Trophic Level,  
+		3-node motif and topological roles. 
 
 * MetaWebAssemblyModelAnalysis.Rmd: 
 		
 		Analysis of the meta-web assembly model.
-		The R Package MetaWebAssemblyModels is needed to simulate the model 
-		<https://github.com/lsaravia/MetaWebAssemblyModels>
+		The R Package meweasmo is needed to simulate the model 
+		<https://github.com/lsaravia/meweasmo>
 
 
 
