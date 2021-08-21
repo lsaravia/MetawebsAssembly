@@ -4,38 +4,38 @@
 ## Meta-web assembly model simulations and fitting
 
 
-The model, conceptually explained in figure 1, has 3 parameters: $c$ the probability of a species to colonize the local network from the meta-web, $e$ the probability to become locally extinct, and the probability of secondary extinction $se$ that is the probability of extinction when the species is a predator and there is no prey locally present. Then there are three possible events, colonization, extinction, and secondary extinction. After a colonization event with probability $c$ the species is present in the local community and other two events are possible: 
+The model, conceptually explained in figure 1, has 3 parameters: $c$ the probability of a species to colonize the local network from the meta-web, $e$ the probability to become locally extinct, and the probability of secondary extinction $se$ that is the probability of extinction when the species is a predator and there is no prey locally present. Then there are three possible events: colonization, extinction, and secondary extinction. After a colonization event with probability $c$, the species is present in the local community and two other events are possible: 
 
-  1. if it is a basal species it does not need predators to survive then it persists until an extinction event with probability $e$. 
-  2. If it is a non-basal species it could become extinct with probability $e$ but if it has no prey it could also become extinct with probability $se$.
+  1. if it is a basal species it does not need predators to survive, then it persists until an extinction event with probability $e$;
+  2. if it is a non-basal species it could become extinct with probability $e$ but if it has no prey it could also become extinct with probability $se$.
 
-These events could happen at a random if the necessary conditions are fulfilled, we use the @Gillespie1976a algorithm to simulate the model.
+These events could happen at random if the necessary conditions are fulfilled, we use the @Gillespie1976a algorithm to simulate the model.
 
-We performed exploratory simulations to determine if the last 100 time steps of 1000 simulated were enough to avoid the transient period and sample the attractor of the model. Figures S1, S2 show that there are no differences in the dynamics after 1000 or 3000 time steps and that the transient is well over after 1000 time steps. We repeated these exploratory simulations with the three metawebs with similar results.  
-
-
-![Windowed averages of a simulation of the Meta-web assembly model with the Antarctic metaweb and parameters near the fitted to Potter Cove food web. Where $mS$ and $mL$ are Windowed averages of the number of species and the links, error bars are the standard deviationd ,the dashed is line the overall mean, using a window of 50 time steps,. The parameters were $c$=0.02, $e$=0.05, $se$=0.70](Figures/Metaweb_steady_state_Potter.png)
+We performed exploratory simulations to determine if the last 100 time steps of 1000 simulated were enough to avoid the transient period and sample the attractor of the model. Figures S1 and S2 show that there are no differences in the dynamics after 1000 or 3000 time steps and that the transient is well over after 1000 time steps. We repeated these exploratory simulations with the three metawebs obtaining similar results.  
 
 
-![Windowed averages of a simulation of the Meta-web assembly model  with the Antarctic metaweb and parameters near the fitted to Weddell Sea food web. Where $mS$ and $mL$ are windowed averages of the number of species and the links, error bars the are standard deviation, the dashed is line the overall mean, using a window of 50 time steps. The parameters were $c$=0.03, $e$=0.016, $se$=0.10](Figures/Metaweb_steady_state_Weddell.png)
+![Windowed averages of a simulation of the Meta-web assembly model with the Antarctic metaweb and parameters near the fitted to Potter Cove food web, where $mS$ and $mC$ are windowed averages of the number of species and connectance, error bars are the standard deviation, and the dashed is line the overall mean using a window of 50 time steps. The parameters were $c$=0.02, $e$=0.05, $se$=0.70.](Figures/Metaweb_steady_state_Potter.png)
 
 
-For the very similar model used in @Gravel2011 simulations with the same ratio $\alpha= c/e$ should give the same results, but as we have $se$ as an additional parameter this should not be the case with our model. We checked this performing simulations with different combinations of $c$, $e$, $se$ keeping $\alpha$ constant and for different metawebs, we found differences for some of the combinations (Figure S6), thus we performed the fitting using the 3 parameters. To fit the model to each metaweb we performed 150000 simulations with a wide range of parameters (table S1) using lating hypercubic sampling [@Fang2005], we simulated the model for 1000 time steps and use the last 100 time steps to calculate average the number of species $S_m$, the average number of links $E_m$ and the average connectance $C_m = E_m/S_m^2$ where. Then we calculated a relative distance to the number of species $S_e$  and connectance $C_e$ of the empirical food webs:  
+![Windowed averages of a simulation of the Meta-web assembly model with the Antarctic metaweb and parameters near the fitted to Weddell Sea food web. Where $mS$ and $mC$ are windowed averages of the number of species and connectance, error bars are the standard deviation, and the dashed is line the overall mean using a window of 50 time steps. The parameters were $c$=0.03, $e$=0.016, $se$=0.10.](Figures/Metaweb_steady_state_Weddell.png)
+
+
+For the very similar model used in @Gravel2011 simulations with the same ratio $\alpha= c/e$ should give the same results, but as we have $se$ as an additional parameter this should not be the case with our model. We checked this performing simulations with different combinations of $c$, $e$, and $se$ keeping $\alpha$ constant and for different metawebs. We found differences for some of the combinations (Figure S6), thus we performed the fitting using the 3 parameters. To fit the model to each metaweb we performed 150000 simulations with a wide range of parameters (Table S1) using lating hypercubic sampling [@Fang2005]. We simulated the model for 1000 time steps and use the last 100 time steps to calculate averages for the number of species $S_m$, the number of links $E_m$ and the connectance $C_m = E_m/S_m^2$. Then we calculated a relative distance to the number of species $S_e$  and connectance $C_e$ of the empirical food webs:  
 
 $$distance = \sqrt{ ((S_e - S_m) / S_e )^2 + ((C_e - C_m)/ C_e)^2 }$$
 
-Then we used the parameters with the minimal distance to simulate the model and compare with the network metrics explained in the main text. The fitted parameters for all local food webs are presented in the table S2. 
+Then we used the parameters with the minimal distance to simulate the model and compare with the network metrics explained in the main text. The fitted parameters for all local food webs are presented in table S2.
 
 
-| Parameter   |      |    |
+| Parameter   | Low  |High|
 |:------------|-----:|---:|
 |$c$          | 0.010| 0.3|
 |$e$          | 0.001| 0.5|
 |$se$         | 0.100| 0.9|
 
-Table: Range of parameters used in latin hypercubic sampling to simulate the metaweb assembly model 
+Table: Range of parameters used in latin hypercubic sampling to simulate the metaweb assembly model.
 
-As an adittional validation of the model we performed simulations using the fitted parameters and checked than the number of species $S$ and connectance $C$ of the empirical food webs where inside the 99% CI generated with 1000 simulations of the model (Table S4, Figures S3 & S4). Only in two cases (Bridge_brook_lake, Lak_Chub_pond) the connectance is higher than the CI. 
+As an additional validation of the model we performed simulations using the fitted parameters and checked that the number of species $S_e$ and connectance $C_e$ were inside the 99% confidence interval (CI) generated with 1000 simulations of the model (Table S4, Figures S3 & S4). Only in two cases (Bridge_brook_lake, Lak_Chub_pond) the connectance was higher than the CI. 
 
 
 ::: {#refs}
@@ -110,7 +110,7 @@ As an adittional validation of the model we performed simulations using the fitt
 |Lak     |Whipple_Lake        | 0.0122| 0.0438| 0.2648|  32.5347|  106.0396| 0.1002|   0.2794|   0.2463|
 |Lak     |Wolf_Lake           | 0.0154| 0.0668| 0.5350|  26.7624|   41.0495| 0.0573|   0.2299|   0.0102|
 
-Table: Metaweb assembly model best fit of the local food webs for the 3 metawebs: Ant= Antarctic, Isl=Islands, Lak=Lakes.  Where $c$ is the colonization parameter, $e$ the extinction rate and $se$ the secondary extinction rate. S is the number of species, L the number of links, and C the connectance averaged over the last 100 time steps. $\alpha = c/e$ is the hypothesized distance to main land, and the *distance* the relative distance to the empirical values. 
+Table: Metaweb assembly model best fit of the local food webs for the 3 metawebs: Ant=Antarctic, Isl=Islands, Lak=Lakes; where $c$ is the colonization parameter, $e$ the extinction rate and $se$ the secondary extinction rate. S is the number of species, L the number of links, and C the connectance averaged over the last 100 time steps. $\alpha = c/e$ is the hypothesized distance to main land, and the *distance* the relative distance to the empirical values.
 
 
 
@@ -177,7 +177,7 @@ Table: Metaweb assembly model best fit of the local food webs for the 3 metawebs
 |Lak     |Hoel_lake           |   72|   571|      0.1101| 0.4130| 1.8399|     0.3086|  3.4722|
 |Lak     |Meta                |  211|  8426|      0.1893| 3.3100| 1.6677|     0.1549|  4.7178|
 
-Table: Topological metrics of all empirical food webs including metawebs. Where **Ant** is The Antarctic, **Lak** the Lakes, **Isl** the islands metaweb, Size is the number of species $S$, Links is the number of trophic links $L$; Connectance $C$, trophic coherence $Q$, mean trophic level $TL$, Modularity $MO$, and mean maximal eingenvalue $MEing$ are network metrics explained in the main text. 
+Table: Topological metrics of all empirical (local) food webs including metawebs, where **Ant** is the Antarctic, **Lak** the Lakes, **Isl** the islands metaweb. Size is the number of species $S$, Links is the number of trophic links $L$, Connectance $C$. Trophic coherence $Q$, mean trophic level $TL$, Modularity $MO$, and mean maximal eingenvalue $MEing$ are network metrics explained in the main text.
 
 
 
@@ -242,7 +242,7 @@ Table: Topological metrics of all empirical food webs including metawebs. Where 
 |Lak     |Whipple_Lake        |   32|   8.000|  55.000|   0.1328| 0.0378| 0.2187| 1.9117| 1.1332| 2.2327|
 |Lak     |Wolf_Lake           |   27|   4.990|  45.000|   0.0576| 0.0399| 0.3087| 1.2798| 1.1248| 2.3540|
 
-Table: Empirical local foodweb values and 99% Confidence intervals for network properties: Number of species ($S$), connectance ($C$),  mean trophic level ($TL$), with 99% confidence intervals based on 1000 networks generated by the assembly model. 
+Table: Empirical local food web values and 99% CIs for network properties: number of species $S$, connectance $C$, mean trophic level $TL$, where 99% CIs are based on 1000 networks generated by the assembly model.
 
 
 
@@ -306,7 +306,7 @@ Table: Empirical local foodweb values and 99% Confidence intervals for network p
 |Lak     |Whipple_Lake        | 0.4370| 0.0000| 0.7145|     0.2001|  0.1272| 0.4814|  1.9576|  -0.1787|    2.3403|
 |Lak     |Wolf_Lake           | 0.2583| 0.0000| 0.8266|     0.3759|  0.0000| 0.4641|  0.0100|  -0.2819|    1.9356|
 
-Table: Empirical local foodweb values and 99% Confidence intervals for network properties: Coherence ($Q$), modularity ($MO$), and Mean maximal eingenvalue ($MEing$), with 99% confidence intervals based on 1000 networks generated by the assembly model. 
+Table: Empirical local food web values and 99% CIs for network properties: trophic coherence $Q$, modularity $MO$, and mean maximal eingenvalue $MEing$, where 99% CIs are based on 1000 networks generated by the assembly model.
 
 
 | Metaweb  | Network              | EC        | $EC_{low}$ | $EC_{high}$ | AC        | $AC_{low}$ | $AC_{high}$ | TT        | $TT_{low}$ | $TT_{high}$ | OM        | $OM_{low}$ | $OM_{high}$ |
@@ -369,7 +369,7 @@ Table: Empirical local foodweb values and 99% Confidence intervals for network p
 | Lak      | Whipple_Lake         | 199       | 0          | 380         | 582       | 8          | 1262        | 200       | 0          | 579         | 154       | 0          | 167         |
 | Lak      | Wolf_Lake            | 45        | 0          | 241         | 182       | 0          | 806         | 33        | 0          | 368         | 0         | 0          | 76          |
 
-Table: Motif counts for the empirical networks and 99% confidence intervals based on 1000 assembly model networks. Where EC is exploitative competition, AC apparent competition, TT tri-trophic chain and OM is omnivory. Quantities marked with '*' are significant at 1% level. Only 1 network showed significant under-representation and 9 networks over-representation for at least one motif. 
+Table: Motif counts for the empirical food webs and 99% CIs based on 1000 assembly model networks, where EC is exploitative competition, AC apparent competition, TT tri-trophic chain and OM is omnivory. Quantities marked with '*' are significant at 1% level. Only 1 network showed significant under-representation and 9 networks over-representation for at least one motif. 
 
 |Metaweb |Network             | Size|      chi2| pvalue|
 |:----|:-------------------|----:|---------:|------:|
@@ -431,20 +431,87 @@ Table: Motif counts for the empirical networks and 99% confidence intervals base
 |Lak  |Brook trout lake    |   15|    1.0000| 0.4123|
 |Lak  |Twin Lake East      |   13|    1.0400| 1.0000|
 
-Table: Comparison of empirical proportions of Topological Roles with one assembly model realization.  Only Potter, Weddell,Long Lake, Big hope lake, Cascade lake, 9% (5/57) are different from the metaweb assembly model. 
+Table: Comparison of empirical proportions of topological roles with one assembly model realization. In this case only Potter, Weddell, Long Lake, Big hope lake, Cascade lake food webs, 9% of the total (5/57), are significantly different from the metaweb assembly model. 
+
+
+| run|  significant | total| Freq|
+|---:|--:|-----:|----:|
+|   0|  5|    57| 0.09|
+|   1|  4|    57| 0.07|
+|   2|  7|    57| 0.12|
+|   3|  6|    57| 0.11|
+|   4|  5|    57| 0.09|
+|   5|  2|    57| 0.04|
+|   6|  3|    57| 0.05|
+|   7|  5|    57| 0.09|
+|   8|  9|    57| 0.16|
+|   9|  3|    57| 0.05|
+|  10|  6|    57| 0.11|
+|  11|  5|    57| 0.09|
+|  12|  1|    57| 0.02|
+|  13|  3|    57| 0.05|
+|  14|  3|    57| 0.05|
+|  15|  4|    57| 0.07|
+|  16|  6|    57| 0.11|
+|  17|  6|    57| 0.11|
+|  18|  3|    57| 0.05|
+|  19|  4|    57| 0.07| 
+
+Table: Comparison of empirical proportions of topological roles with 20 different assembly model realizations at 0.01 significance level. The number of significant results varies between 1 and 7, which represents a maximun of 12% significant results.
+
+
+|meta |Network             | significant  | total| Freq|
+|:----|:-------------------|--:|-----:|----:|
+|Ant  |Potter              | 20|    20| 1.00|
+|Ant  |Weddell             | 10|    20| 0.50|
+|Isl  |E2                  |  6|    20| 0.30|
+|Isl  |E7                  |  4|    20| 0.20|
+|Isl  |E9                  |  6|    20| 0.30|
+|Lak  |Alford lake         |  1|    20| 0.05|
+|Lak  |Beaver lake         |  1|    20| 0.05|
+|Lak  |Big hope lake       |  4|    20| 0.20|
+|Lak  |Brandy lake         |  1|    20| 0.05|
+|Lak  |Bridge brook lake   |  3|    20| 0.15|
+|Lak  |Buck pond           |  1|    20| 0.05|
+|Lak  |Burntbridge lake    |  2|    20| 0.10|
+|Lak  |Cascade lake        |  1|    20| 0.05|
+|Lak  |Chub lake           |  2|    20| 0.10|
+|Lak  |Chub pond           |  1|    20| 0.05|
+|Lak  |Connera lake        |  1|    20| 0.05|
+|Lak  |Federation lake     |  1|    20| 0.05|
+|Lak  |Goose lake          |  1|    20| 0.05|
+|Lak  |Gull lake           |  3|    20| 0.15|
+|Lak  |Helldiver pond      |  1|    20| 0.05|
+|Lak  |Hoel lake           |  1|    20| 0.05|
+|Lak  |Horseshoe Lake      |  1|    20| 0.05|
+|Lak  |Little Rainbow Lake |  1|    20| 0.05|
+|Lak  |Long Lake           |  2|    20| 0.10|
+|Lak  |Loon Lake           |  1|    20| 0.05|
+|Lak  |Lost Lake           |  1|    20| 0.05|
+|Lak  |Lost Lake East      |  3|    20| 0.15|
+|Lak  |Oswego Lake         |  2|    20| 0.10|
+|Lak  |Razorback Lake      |  2|    20| 0.10|
+|Lak  |Sand Lake           |  1|    20| 0.05|
+|Lak  |Stink Lake          |  1|    20| 0.05|
+|Lak  |Twelfth Tee Lake    |  1|    20| 0.05|
+|Lak  |Twin Lake West      |  2|    20| 0.10|
+|Lak  |Wolf Lake           |  1|    20| 0.05|
+
+Table: Comparison of empirical proportions of topological roles with 20 different assembly model realizations at 0.01 significance level.  Only Potter Cove is different in 100% of the comparisons, Weddell is different 50% of the times, and the other food webs showed differences less often. 
+
 
 \newpage
 
 
 
 
-![Connectance comparison for local empirical networks (dots) and assembly null model networks. We ran 1000 simulations of the model fitted to local networks to build the 99% confidence intervals of the metric (vertical dotted lines). Colors represent metawebs to which local food webs belong, where *Ant* is the Antarctic, *Isl* is the Islands, and *Lak* the lakes metaweb.](Figures/Connectance_Assembly_byMeta.pdf){ width=100% }
+![Connectance comparison for local empirical networks (dots) and assembly null model networks. We ran 1000 simulations of the model fitted to local networks to build the 99% CIs of the network metric (vertical dotted lines). Colors represent metawebs to which local food webs belong, where *Ant* is the Antarctic, *Isl* the Islands, and *Lak* the lakes metawebs.](Figures/Connectance_Assembly_byMeta.pdf){ width=100% }
 
-![Number of species (Size) comparison for local empirical networks (dots) and assembly null model networks. We ran 1000 simulations of the model fitted to local networks to build the 99% confidence intervals of the metric (vertical dotted lines). Colors represent metawebs to which local food webs belong, where *Ant* is the Antarctic, *Isl* is the Islands, and *Lak* the lakes metaweb.](Figures/Size_Assembly_byMeta.pdf) 
-
-
-
-![Topological roles comparison for local empirical networks (dots) and assembly model networks for the Lakes metaweb. Only 3 local food webs have proportions different from the metaweb assembly model.  The topological roles are: *Hub connectors* have a high number of between module links, *Module connectors* have a low number of links mostly between modules,  *Module hubs* have a high number of links inside its module. *Module specialists* have a low number of links inside its module. Lakes marked with '*' are significant at 1% level](Figures/Lak_TopoRoles_ByNetwork_Model.png)
+![Number of species (Size) comparison for local empirical networks (dots) and assembly null model networks. We ran 1000 simulations of the model fitted to local networks to build the 99% CIs of the network metric (vertical dotted lines). Colors represent metawebs to which local food webs belong, where *Ant* is the Antarctic, *Isl* the Islands, and *Lak* the lakes metawebs.](Figures/Size_Assembly_byMeta.pdf) 
 
 
-![Simulation of the metaweb assembly model keeping  $\alpha= c/e$ constant for the Islands and Antarctic metawebs and different combinations of $c$, $e$ and $se$. The points are averages of number of species $S$ and connectance $C$ of the last 100 time steps of the model](Figures/Metaweb_SecExtc_byModel.pdf)
+
+![Topological roles comparison for local empirical networks (dots) and assembly model networks for the Lakes metaweb. Only 3 local food webs have proportions different from the metaweb assembly model. The topological roles are: *Hub connectors* (hubcon) have a high number of between module links, *Module connectors* (modcon) have a low number of links mostly between modules,  *Module hubs* (modhub) have a high number of links inside its module, *Module specialists* (modspe) have a low number of links inside its module. Lakes marked with '*' are significant at 1% level.](Figures/Lak_TopoRoles_ByNetwork_Model.png)
+
+
+![Simulation of the metaweb assembly model keeping  $\alpha= c/e$ constant for the Islands and Antarctic metawebs and different combinations of $c$, $e$ and $se$. The points are averages of number of species $S$ and connectance $C$ of the last 100 time steps of the model.](Figures/Metaweb_SecExtc_byModel.pdf)

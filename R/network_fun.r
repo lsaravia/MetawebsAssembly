@@ -116,7 +116,7 @@ calc_modularity_random<- function(red, nsim=1000){
   ind <- data.frame()
   require(doFuture)
   registerDoFuture()
-  plan(multiprocess)
+  plan(multisession)
   
 #   require(doParallel)
 #   cn <-detectCores()
@@ -215,7 +215,7 @@ calc_incoherence_z <- function(g,ti=NULL,nsim=1000) {
     # cl <- makeCluster(cn)
     # registerDoParallel(cl)
     require(future.apply)
-    plan(multiprocess)
+    plan(multisession)
     
     ind <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE,.packages='igraph',.export = 'calc_incoherence') %dopar% 
     {
@@ -257,7 +257,7 @@ calc_topological_roles <- function(g,nsim=1000)
   toRol <- data.frame()
   require(doFuture)
   registerDoFuture()
-  plan(multiprocess)
+  plan(multisession)
   # cn <-detectCores()
   # #  cl <- makeCluster(cn,outfile="foreach.log") # Logfile to debug 
   # cl <- makeCluster(cn)
@@ -792,7 +792,7 @@ calc_modularity_metaWebAssembly<- function(webs, web_name, Adj, mig,ext,sec,nsim
   ind <- data.frame()
   require(doFuture)
   registerDoFuture()
-  plan(multiprocess)
+  plan(multisession)
   
   ind <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE,.packages=c('meweasmo','igraph'), 
                  .export = c('Adj','ext','mig','final_time')) %dopar% 
@@ -884,7 +884,7 @@ calc_qss_metaWebAssembly<- function(webs, web_name, Adj, mig,ext,sec,nsim=1000,f
 
   require(doFuture)
   registerDoFuture()
-  plan(multiprocess)
+  plan(multisession)
   
   ind <- foreach(i=1:nsim,.combine='rbind',.inorder=FALSE) %dopar% 
   {
@@ -936,7 +936,7 @@ calc_motif_metaWebAssembly<- function(motdf,fw_name, Adj, mig,ext,sec, nsim=1000
   
   require(doFuture)
   registerDoFuture()
-  plan(multiprocess)
+  plan(multisession)
   
   ind <- data.frame()
 
@@ -1425,7 +1425,9 @@ calc_topoRoles_metaWebAssembly <- function(web_name,meanS, Adj, mig,ext,sec,fina
   mig <- rep(mig,nrow(Adj))
   ext <- rep(ext,nrow(Adj))
   sec <- rep(sec,nrow(Adj))
+  
   while(TRUE){
+    #message(paste("\nmetaWebNetAssemblyCT", dim(Adj),"trace", sum(diag(Adj)), mig,ext,sec))
     AA <- metaWebNetAssemblyCT(Adj,mig,ext,sec,final_time)
     g <- graph_from_adjacency_matrix( AA$A, mode  = "directed")
     dg <- components(g)
