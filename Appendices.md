@@ -431,7 +431,7 @@ Table: Motif counts for the empirical food webs and 99% CIs based on 1000 assemb
 |Lak  |Brook trout lake    |   15|    1.0000| 0.4123|
 |Lak  |Twin Lake East      |   13|    1.0400| 1.0000|
 
-Table: Comparison of empirical proportions of topological roles with one assembly model realization. In this case only Potter, Weddell, Long Lake, Big hope lake, Cascade lake food webs, 9% of the total (5/57), are significantly different from the metaweb assembly model. 
+Table: Comparison of empirical proportions of topological roles with one assembly model realization. This corresponds to the run 0 (See table S8). In this case only Potter, Weddell, Long Lake, Big hope lake, Cascade lake food webs, 9% of the total (5/57), are significantly different from the metaweb assembly model at p=0.01 level. 
 
 
 | run|  significant | total| Freq|

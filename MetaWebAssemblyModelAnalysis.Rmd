@@ -1768,6 +1768,12 @@ hc <- topoRoles_metaWebAssembly_chi2 %>% mutate(sign= if_else(pvalue<0.01, TRUE,
 
 knitr::kable(hc, digits=2)
 
+hc <- topoRoles_metaWebAssembly_chi2 %>% filter(Network!="Metaweb") %>% mutate(sign= if_else(pvalue<0.01, TRUE,FALSE)) %>%
+  group_by(rep,sign)  %>% summarise(n=n()) %>% mutate(total=sum(n),Freq=n/total) %>% filter(sign==TRUE)
+
+knitr::kable(hc, digits=2)
+
+
 #
 # Plot
 #
@@ -1785,7 +1791,7 @@ hc <- inner_join(hc, tt %>% select(Network,pvalue)) %>% mutate(net_name=if_else(
 ggsave("Figures/Lak_TopoRoles_ByNetwork_Model.png",width=9,height=6,units="in",dpi=600)
 
 
-topoRoles_metaWebAssembly_chi2 <- bind_rows(tt1,tt0,tt)
+#topoRoles_metaWebAssembly_chi2 <- bind_rows(tt1,tt0,tt)
 rm(tt,tt1,tt0,p)
 save.image()
 
