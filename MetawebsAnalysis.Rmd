@@ -78,6 +78,19 @@ knitr::kable(websTbl %>% dplyr::select(Metaweb,Network,Size,Links,Connectance,Q,
 
 knitr::kable(websTbl %>% dplyr::select(Metaweb,Network,Size,Links,Connectance,Q,mTI,Modularity,MEing) %>% mutate_if(is.numeric, round, digits=4) %>% arrange(Metaweb,Connectance))
 
+# 100 simulations for modularity
+
+loc_list <- ig_list[names(ig_list) %in% "Ant_Meta" == FALSE]
+names(loc_list)
+
+webs_modul <- tibble()
+w_modul <- lapply(1:100, function(x){
+  calc_modularity(loc_list,8)  %>% mutate(Network=names(loc_list))
+})
+webs_modul <- bind_rows(w_modul) %>% group_by(Network) %>% summarise(sdMod=sd(Modularity), Modularity=mean(Modularity) )
+
+rm(w_modul,loc_list)
+save.image()
 
 ```
 
@@ -299,7 +312,7 @@ save.image()
 require(readr)
 
 #
-# Extract Weddell Sea from GATEWAy database
+# Extract Islands from GATEWAy database
 #
 ga <- readr::read_csv("~/Dropbox/Projects/MetaWebsAssembly/Data/283_2_FoodWebDataBase_2018_12_10.csv",col_types = "icccccccccccccddddddccccccccddddddcddccddciicc")
 
@@ -341,6 +354,19 @@ panderOptions('table.style', 'multiline')
 pandoc.table(t(websTbl %>% filter(grepl("Isl_", Network)) %>%
                                   dplyr::select(Network,Size,Links,Connectance,PathLength,Clustering,SWness,SWnessCI,Q,zQ,Qlow,Qhigh,mTI,zTI,TIlow,TIhigh,Modularity,zMO,MOlow,MOhigh) %>% mutate_if(is.numeric, round, digits=4)))
 
+
+# 100 simulations for modularity
+
+loc_list <- ig_list[names(ig_list) %in% "Isl_Meta" == FALSE]
+names(loc_list)
+
+w_modul <- lapply(1:100, function(x){
+  calc_modularity(loc_list,8)  %>% mutate(Network=names(loc_list))
+})
+webs_modul <- bind_rows(w_modul) %>% group_by(Network) %>% summarise(sdMod=sd(Modularity), Modularity=mean(Modularity) ) %>% bind_rows(webs_modul)
+
+rm(w_modul,loc_list)
+save.image()
 
 
 ```
@@ -559,6 +585,28 @@ panderOptions('table.style', 'multiline')
 
 pandoc.table(t(websTbl %>% filter(grepl("Lak_", Network)) %>%
                                   dplyr::select(Network,Size,Links,Connectance,PathLength,Clustering,SWness,SWnessCI,Q,zQ,Qlow,Qhigh,mTI,zTI,TIlow,TIhigh,Modularity,zMO,MOlow,MOhigh) %>% mutate_if(is.numeric, round, digits=4)))
+
+# Modularity 
+
+loc_list <- ig_list[names(ig_list) %in% "Lak_Meta" == FALSE]
+names(loc_list)
+
+require(future.apply)
+plan(multisession)
+
+w_modul <- lapply(1:100, function(x){
+  mm <- future_lapply(loc_list, function(ln){
+    tibble(Modularity= calc_modularity_unconnected(ln)$modularity)
+  },future.seed=TRUE)
+  mm <- bind_rows(mm)  %>% mutate(Network=names(loc_list))
+})
+webs_modul <- bind_rows(w_modul) %>% group_by(Network) %>% summarise(sdMod=sd(Modularity), Modularity=mean(Modularity) ) %>% bind_rows(webs_modul)
+
+plan(sequential)
+rm(w_modul,loc_list)
+websTbl <- inner_join(websTbl %>% rename(Modularity_old=Modularity),webs_modul,by=c("Network"))
+
+save.image()
 
 ```
 
