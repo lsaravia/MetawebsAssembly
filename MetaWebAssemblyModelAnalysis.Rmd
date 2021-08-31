@@ -837,6 +837,11 @@ websAssemblyModelSim <-websAssemblyModelSim %>% bind_rows(sim %>% mutate(Network
 rm(sim,tblMdlWeb,tbl,f)
 save.image()
 
+#
+# Correct Modularity with 100 evaluations
+#
+# websAssemblyModel <- websAssemblyModel %>% inner_join(websTbl %>% select(Network, Modularity), by=c("Network") )
+# websAssemblyModel <- websAssemblyModel %>% relocate(Modularity, .after = SWnessCI)
 
 
 ```
@@ -1206,14 +1211,6 @@ ggsave("Figures/MEing_Assembly_byMeta.pdf",width=5,height=8,units="in",dpi=600)
 
 names( websAssemblyModelQSS)
 
-# 
-# websAssemblyModel %>% inner_join(websTbl %>% dplyr::select(Network,Q))  %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>%  
-#   ggplot( aes(x=fct_reorder(Net_name,Metaweb),y=Q,color=Metaweb)) + geom_point(size=2) +scale_color_brewer(palette = "Paired")+ 
-#   theme_bw() + ylab("Q")  + xlab(NULL) + 
-#   geom_errorbar(aes(ymin=Qlow, ymax=Qhigh), width=.10) +
-#   #theme(axis.text.x=element_blank())
-#   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))  
-# ggsave("Figures/Q_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
 
 #
 # Trophic Coherence 
@@ -1234,16 +1231,6 @@ ggsave("Figures/Q_Assembly_byMeta.pdf",width=5,height=8,units="in",dpi=600)
 # Modularity
 #
 
-# 
-# websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>% 
-#   ggplot( aes(x=fct_reorder(Net_name,Metaweb),y=Modularity,color=Metaweb)) + geom_point(size=2) +scale_color_brewer(palette = "Paired")+ 
-#   theme_bw() + ylab("Modularity")  + xlab(NULL) + 
-#   geom_errorbar(aes(ymin=MOlow, ymax=MOhigh), width=.10) +   
-#   #theme(axis.text.x=element_blank())
-# theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))  
-# ggsave("Figures/Modularity_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
-
-
 websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% 
                                str_replace_all('_',' ' )) %>% mutate(his=MOhigh,los=MOlow,vs=Modularity,
                                 widths = his-los, 
@@ -1260,14 +1247,6 @@ ggsave("Figures/Modularity_Assembly_byMeta.pdf",width=5,height=8,units="in",dpi=
 #
 # Trophic Level
 #
-# 
-# websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>% 
-#   ggplot( aes(x=fct_reorder(Net_name,Metaweb),y=TLmean,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
-#   theme_bw() + ylab("Mean Trophic Level")  + xlab(NULL) + 
-#   geom_errorbar(aes(ymin=TIlow, ymax=TIhigh), width=.10) +   
-#   #theme(axis.text.x=element_blank())
-#   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))
-# ggsave("Figures/TL_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
 
 websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% 
                                str_replace_all('_',' ' )) %>% mutate(his=TIhigh,los=TIlow,vs=TLmean,
@@ -1286,13 +1265,6 @@ ggsave("Figures/TL_Assembly_byMeta.pdf",width=5,height=8,units="in",dpi=600)
 # Connectance
 #
 
-# websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>%
-#   ggplot( aes(x=fct_reorder(Net_name,Metaweb),y=Connectance,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
-#   theme_bw() + ylab("Connectance")  + xlab(NULL) + 
-#   geom_errorbar(aes(ymin=Clow, ymax=Chigh), width=.10) +   
-#   #theme(axis.text.x=element_blank())
-#   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))
-# ggsave("Figures/Connectance_Assembly_byMeta.png",width=8,height=6,units="in",dpi=600)
 
 websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>% mutate(his=Chigh,los=Clow,vs=Connectance,
                                 widths = his-los, 
@@ -1310,12 +1282,6 @@ ggsave("Figures/Connectance_Assembly_byMeta.pdf",width=5,height=8,units="in",dpi
 # Size
 #
 
-# websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>%
-#   ggplot( aes(x=fct_reorder(Net_name,Metaweb),y=Size,color=Metaweb)) + geom_point() +scale_color_brewer(palette = "Paired")+ 
-#   theme_bw() + ylab("Size")  + xlab(NULL) + 
-#   geom_errorbar(aes(ymin=Slow, ymax=Shigh), width=.10) +   
-#   #theme(axis.text.x=element_blank())
-#   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=7))
 
 websAssemblyModel %>% mutate(Metaweb=str_sub(Network,1,3),Net_name = gsub('([a-z])([A-Z])', '\\1 \\2', str_sub(Network,5)) %>% str_replace_all('_',' ' )) %>% mutate(his=Shigh,los=Slow,vs=Size,
                                 widths = his-los, 

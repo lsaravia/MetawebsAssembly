@@ -1,30 +1,13 @@
 # Supplementary Information
 
 
-## Meta-web assembly model simulations and fitting
-
-
-The model, conceptually explained in figure 1, has 3 parameters: $c$ the probability of a species to colonize the local network from the meta-web, $e$ the probability to become locally extinct, and the probability of secondary extinction $se$ that is the probability of extinction when the species is a predator and there is no prey locally present. Then there are three possible events: colonization, extinction, and secondary extinction. After a colonization event with probability $c$, the species is present in the local community and two other events are possible: 
-
-  1. if it is a basal species it does not need predators to survive, then it persists until an extinction event with probability $e$;
-  2. if it is a non-basal species it could become extinct with probability $e$ but if it has no prey it could also become extinct with probability $se$.
-
-These events could happen at random if the necessary conditions are fulfilled, we use the @Gillespie1976a algorithm to simulate the model.
+## Meta-web assembly model, steady state and additional checks 
 
 We performed exploratory simulations to determine if the last 100 time steps of 1000 simulated were enough to avoid the transient period and sample the attractor of the model. Figures S1 and S2 show that there are no differences in the dynamics after 1000 or 3000 time steps and that the transient is well over after 1000 time steps. We repeated these exploratory simulations with the three metawebs obtaining similar results.  
 
-
 ![Windowed averages of a simulation of the Meta-web assembly model with the Antarctic metaweb and parameters near the fitted to Potter Cove food web, where $mS$ and $mC$ are windowed averages of the number of species and connectance, error bars are the standard deviation, and the dashed is line the overall mean using a window of 50 time steps. The parameters were $c$=0.02, $e$=0.05, $se$=0.70.](Figures/Metaweb_steady_state_Potter.png)
 
-
 ![Windowed averages of a simulation of the Meta-web assembly model with the Antarctic metaweb and parameters near the fitted to Weddell Sea food web. Where $mS$ and $mC$ are windowed averages of the number of species and connectance, error bars are the standard deviation, and the dashed is line the overall mean using a window of 50 time steps. The parameters were $c$=0.03, $e$=0.016, $se$=0.10.](Figures/Metaweb_steady_state_Weddell.png)
-
-
-For the very similar model used in @Gravel2011 simulations with the same ratio $\alpha= c/e$ should give the same results, but as we have $se$ as an additional parameter this should not be the case with our model. We checked this performing simulations with different combinations of $c$, $e$, and $se$ keeping $\alpha$ constant and for different metawebs. We found differences for some of the combinations (Figure S6), thus we performed the fitting using the 3 parameters. To fit the model to each metaweb we performed 150000 simulations with a wide range of parameters (Table S1) using lating hypercubic sampling [@Fang2005]. We simulated the model for 1000 time steps and use the last 100 time steps to calculate averages for the number of species $S_m$, the number of links $E_m$ and the connectance $C_m = E_m/S_m^2$. Then we calculated a relative distance to the number of species $S_e$  and connectance $C_e$ of the empirical food webs:  
-
-$$distance = \sqrt{ ((S_e - S_m) / S_e )^2 + ((C_e - C_m)/ C_e)^2 }$$
-
-Then we used the parameters with the minimal distance to simulate the model and compare with the network metrics explained in the main text. The fitted parameters for all local food webs are presented in table S2.
 
 
 | Parameter   | Low  |High|
@@ -35,14 +18,8 @@ Then we used the parameters with the minimal distance to simulate the model and 
 
 Table: Range of parameters used in latin hypercubic sampling to simulate the metaweb assembly model.
 
-As an additional validation of the model we performed simulations using the fitted parameters and checked that the number of species $S_e$ and connectance $C_e$ were inside the 99% confidence interval (CI) generated with 1000 simulations of the model (Table S4, Figures S3 & S4). Only in two cases (Bridge_brook_lake, Lak_Chub_pond) the connectance was higher than the CI. 
+After fitting the model as explained in the main text we performed an additional validation of the model by doing simulations with the fitted parameters and checked that the number of species $S_e$ and connectance $C_e$ were inside the 99% confidence interval (CI) generated with 1000 simulations of the model (Table S4, Figures S3 & S4). Only in two cases (Bridge_brook_lake, Lak_Chub_pond) the connectance was higher than the CI. 
 
-
-::: {#refs}
-
-## Bibliography
-
-:::
 
 
 \newpage
