@@ -607,3 +607,30 @@ For example, at large spatial and temporal scales feeding loops like cannibalism
 @Cohen1990b
 
 A cycle of length 1 describes cannibalism, in which a species eats itself. Cannibalism is common in nature. But ecologists report cannibalism so unreliably that we have suppressed it from all the data even where it is reported. A cycle of length 2 means that A eats Band Beats A. In this example, as in most webs, there are no cycles of length 2 or more.
+
+
+
+-------------------
+
+@Araujo2014 
+
+Consumer–resource interactions, such as predation, herbivory, parasitism, or disease (+/-) can also generate scale-independent patterns of coexistence providing that the dependency of the consumer on the resource is higher than the repulsion of the resource on the consumer; probably a common feature of consumer–resource interactions.
+
+Previous studies have suggested that consumer–resource interactions could modify the regional composition of species pools (Ricklefs 1987) and control for species range limits (Hochberg and Ives 1999) and diversity (Jabot and Bascompte 2012). Recent findings also highlighted the disproportionate effects of consumers in shaping local responses of resources to climate change (Post 2012). Our results generalize and extend these inferences. Specifically, we identify circumstances in which biotic interactions are likely to generate scale-invariant patterns of co-occurrence among species
+
+
+The good news is that only a subset of all conceivable biotic interactions would likely matter. Since, most interactions between species are likely to be weak and non-obligate (Bascompte 2007, Araújo et al. 2011), and species with strong positive interactions are a subset of a relatively small number of species with strong interactions, the critical question would then be to identify the species with properties that are capable of affecting distributions and coexistence across scales (see also Gilman et al. 2010)
+
+-------------------
+@Hacker2019
+
+Most of this research was carried out on local scales where studies showed that species interac- tions, set in the context of a variable environment, can play an important role in shaping community structure. More recently, in part because of the desire to better understand the effects of climate change and species invasions on local community patterns, ecologists have increasingly focused on the role of regional-scale pro- cesses, particularly the physical environment and dispersal
+
+
+
+We conclude that community structure in the low intertidal zone is driven primarily by
+external factors at the regional scale with local biotic interactions playing a secondary role.
+
+------------------
+
+Our results are not surprising if we assume that most interactions are weak and variable!!!  
