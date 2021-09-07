@@ -631,6 +631,31 @@ Most of this research was carried out on local scales where studies showed that 
 We conclude that community structure in the low intertidal zone is driven primarily by
 external factors at the regional scale with local biotic interactions playing a secondary role.
 
+
 ------------------
 
-Our results are not surprising if we assume that most interactions are weak and variable!!!  
+@Bellmore2015
+
+Here, we show that spatial complexity can
+reduce the strength of consumer–resource interactions in natural food webs. By sequentially
+aggregating food webs of individual aquatic habitat patches across a ﬂoodplain mosaic, we
+found that increasing spatial complexity resulted in decreases in the strength of interactions
+between predators and prey, owing to a greater proportion of weak interactions and a reduced
+proportion of strong interactions in the meta-food web.
+
+* -------------------------------------> Posible metacommunity data
+
+
+-----------------
+
+@Ohlsson2020
+
+* -------------------------------------> Kortsch Barents Sea Data ---> Posible metacommunity data
+
+
+-----------------
+
+@Kortsch2021
+
+
+
