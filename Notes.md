@@ -1,6 +1,9 @@
 # From Local to regional and continental food web structure  
 
 
+
+The probability of secondary extinction $se$ in fact incorporates the posibility that the species found new prey not registered in the metaweb, called rewiring [@Staniczenko2010]
+
 ### Migration/dispersal
 
 @RyserRemo2019
@@ -569,6 +572,9 @@ We present three examples showcasing the uses of our package: detectability esti
 
 The TTIB incorporates a trophic constraint not considered in the TIB: consumers must have a prey on the islands they colonize to be able to establish and persist. Therefore, the richness of the local assemblage and their biotic interactions are defined by the equilibrium between colonization and extinction processes, where species that are diet generalists and/or belong to lower trophic levels are preferentially selected given that they are less affected by the trophic constraint. Generalist species have been shown to be faster colonizers than specialists, ultimately shifting community structure through time 16,35 . We expect stronger impact of this trophic con- straint at smaller areas, where the number of species is smaller. As area increases, the number of species also increases, which in turn increases the opportunity for consumers to find a prey, and therefore not only generalist species will be able to colonize, but also specialists, ultimately promoting changes in network structure as area changes. We use the TTIB model 16 to generate islands of different sizes based on different colonization/extinction ratios, where colonization rate is fixed to analyse the network structure resulting from the assembly process for each island size (Fig 1; Supplementary Methods)
 
+
+
+Species interactions can experience spatial turnover by themselves, correlated or uncorrelated with species composition turnover 67 . Even if two species co-occur in space, they may not interact if the environment is not favourable enough 68 , if one of them is rare 69 , or if they experienced phenological mismatches 70 . Also, we have assumed dispersal constancy across trophic levels. Different scales of movement across trophic levels 13,17 may also promote variation in network structure across space. Incorporating such processes into theoretical frameworks such as the one presented here could increase the accuracy of our predictions.
 
 -------------------
 @Mittelbach2015
