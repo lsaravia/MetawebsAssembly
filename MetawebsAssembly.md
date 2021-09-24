@@ -73,7 +73,7 @@ Then there are three possible events: colonization, extinction, and secondary ex
   1. if it is a basal species it does not need predators to survive, then it persists until an extinction event with probability $e$;
   2. if it is a non-basal species it could become extinct with probability $e$ but if it has no prey it could also become extinct with probability $se$.
 
-These events could happen at random if the necessary conditions are fulfilled, we use the @Gillespie1976a algorithm to simulate the model.
+These events could happen at random if the necessary conditions are fulfilled, to simulate the model we use the @Gillespie1976a algorithm that produces an statistically exact trajectory of the stochastic process [@Black2012].
 
 We simulated this model in time and it eventually reached a steady state that depends on the migration and extinction probabilities but also on the structure of the metaweb. The ratio of immigration vs. extinction $\alpha= c/e$ is hypothesized to be inversely related to the distance to the mainland [@MacArthur1967], and as extinction should be inversely proportional to population size [@Hanski1999], the ratio $\alpha$ is also hypothesized to be related to the local area.
 
@@ -131,7 +131,7 @@ Then the deviation of the observed value of the real web is calculated
 
 $$deviation = \frac{metric_{observed} - metric_{mid}}{metric_{high} - metric_{low}}$$
 
-A deviation value outside of [−0.5, 0.5] indicates that the value is outside of the 99% confidence interval. 
+A deviation value outside of [-0.5, 0.5] indicates that the value is outside of the 99% confidence interval. 
 
 ### Motifs
 
@@ -158,7 +158,7 @@ where $k_i$ is the degree of species $i$ (i.e. the number of links), $k_{is}$ is
 
 To determine each species' role the $dz-PC$ parameter space was divided into four areas, modified from @Guimera2005, using the same scheme as @Kortsch2015. Two thresholds were used to define the species’ roles: $PC=0.625$ and $dz=2.5$. If a species had at least 60% of links within its module then $PC<0.625$, and if it also had $dz\ge 2.5$, thus it was classified as a module hub. This parameter space defines species with a relatively high number of links, the majority within its module. If a species had $PC<0.625$ and $dz<2.5$, then it was called a peripheral or specialist; this refers to a species with relatively few links, mostly within its module. Species that had $PC\ge0.625$ and $dz<2.5$ were considered module connectors, since they have relatively few links, mostly between modules. Finally, if a species had $PC\ge0.625$ and $dz\ge 2.5$, then it was classified as a super-generalist or hub-connector because it has high between- and within-module connectivity. 
 
-We estimated the roles for empirical networks and for 20 realizations of the fitted assembly model networks. To test if the proportion of species’ roles changed between the empircal and each of the realizations of the model we performed a Pearson's Chi-squared test with simulated p-value based on 10000 Monte Carlo replicates. 
+We estimated the roles for empirical networks and for 20 realizations of each assembly model network. To test if the proportion of species’ roles changed between the empircal and each of the realizations of the model we performed a Pearson's Chi-squared test with simulated p-value based on 10000 Monte Carlo replicates. 
 
 All analyses and simulations were performed in R version 4.0.3 [@RCoreTeam2017], using the igraph package version 1.2.6 [@Csardi2006] for motifs, the package multiweb for topological roles, $Q$ and other network metrics [@Saravia2019c], and the package meweasmo for the metaweb assembly model [@Saravia2020]. Source code and data are available at zenodo <https://doi.org/10.5281/zenodo.3370022> and GitHub <https://github.com/lsaravia/MetawebsAssembly/>.  
 
@@ -205,7 +205,7 @@ In the cases that the extension and the size of the metaweb are much higher than
 
 The metaweb proportions of topological roles could be shaped as the sum of local food webs; note that Lakes and Islands metawebs proportions are very different to local ones. As the local food webs in these metawebs have similar habitats of slightly different sizes, the metaweb could represent a general structure that through the simple assembly model gives local food webs. The case of the Antarctic metaweb is singular because there is a much bigger difference in the sizes of the local food webs and the sum of them is not similar to the metaweb. Thus, it seems to be more probable than the roles of Antarctic local food webs are different from the metaweb. -->
 
-In this work, we assumed that the metaweb influences the structure of local webs through the assembly process, but local webs are a fundamental part of the metaweb and there should be also an influence going in the other direction [@Araujo2014;@Ricklefs1987]. This means that the structure of the metaweb could be already shaped by stability constraints of the local food webs, probably at evolutionary time scales. This mechanism would be that species that migrate to the local food web might produce unstable configurations which trigger local extinctions. Then this extinction triggered by local stability needs to be repeated over all local food webs. This seems a very unlikely event, given that local food webs have different species and different stability constraints. Thus, besides local food webs could have an influence in the structure of the metaweb these changes will not preclude that local "non-Darwinian" selection acts.
+In this work, we assumed that the metaweb influences the structure of local webs through the assembly process, but local webs are a fundamental part of the metaweb and there should be also an influence going in the other direction [@Araujo2014;@Ricklefs1987]. This means that the structure of the metaweb could be already shaped by stability constraints of the local food webs, probably at evolutionary time scales. This mechanism would be that species that migrate to the local food web might produce unstable configurations which trigger local extinctions. Then this extinction triggered by local stability needs to be repeated over all local food webs. This seems a very unlikely event, given that local food webs have different species and different stability constraints. Thus, besides local food webs could influence the structure of the metaweb these changes will not preclude that local "non-Darwinian" selection acts.
 
 A recent experimental study detected that biotic interactions were present but weak or transient and that community structure depends more strongly on regional environmental factors [@Hacker2019], also there is evidence that food web structure depends strongly on colonization processes [@Fahimipour2014]. These are in line with our results that show differences of topological roles with seemingly different local habitats and almost no influence of stability constraints on local food web structure.  
 
