@@ -16,7 +16,8 @@ We performed exploratory simulations to determine if the last 100 time steps of 
 |$e$          | 0.001| 0.5|
 |$se$         | 0.100| 0.9|
 
-Table: Range of parameters used in latin hypercubic sampling to simulate the metaweb assembly model.
+Table: Range of parameters used in latin hypercubic sampling to simulate the metaweb assembly model. The range of each parameter is divided into into $n=150000$ equal partitions and random data points are chosen such that each partition in each dimension is sampled once, i.e., ensuring coverage of the entire range.
+<!-- NPK: LEO DON'T FORGET TO PUT THE n VALUE IN IF YOU WANT THE NEW CAPTION -->
 
 After fitting the model as explained in the main text we performed an additional validation of the model by doing simulations with the fitted parameters and checked that the number of species $S_e$ and connectance $C_e$ were inside the 99% confidence interval (CI) generated with 1000 simulations of the model (Table S4, Figures S3 & S4). Only in two cases (Bridge_brook_lake, Lak_Chub_pond) the connectance was higher than the CI. 
 

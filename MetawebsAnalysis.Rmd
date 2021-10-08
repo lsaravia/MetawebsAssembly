@@ -321,6 +321,8 @@ Have_df <- ga %>% filter(grepl("Piechnik",link.citation )) %>% dplyr::select(con
 require(igraph)
 dtot1 <- as.matrix(Have_df %>% dplyr::select(res.taxonomy,con.taxonomy))
 have1  <- graph_from_edgelist(dtot1, directed  = T)
+have1 <- igraph::simplify(have1,remove.loops = FALSE)                            ## !! Delete all duplicated links 
+
 
 df_list <- Have_df %>% group_split(foodweb.name)
 ig_list <- lapply(df_list, function(fw) {
@@ -330,6 +332,7 @@ ig_list <- lapply(df_list, function(fw) {
 names(ig_list) <- paste0("Isl_",fw_name$foodweb.name)
 ig_list <- c(ig_list, list(Isl_Meta=have1))
 
+multiweb::calc_topological_indices(ig_list)
 ```
 
 
