@@ -649,7 +649,7 @@ ggplot(simMetaWebAssembly %>% filter(Metaweb == metaweb_name), aes(S,L))+ geom_p
 
 ## Make the fit Islands
 
-```{r fitMetaWebIslands, eval=TRUE,echo=F,message=T,warning=T}
+```{r fitMetaWebIslands, eval=FALSE,echo=F,message=T,warning=T}
 #
 #
 # Use this tolerance = tol to display a more detailed plot 
@@ -673,6 +673,8 @@ fittedMetaWeb <- bind_rows(fittedMetaWeb, fmw)
 # })
 # fittedMetaWeb_gof <- bind_rows(fittedMetaWeb_gof,fmw)
 
+# Table S2 for the Appendices 
+#
 knitr::kable(fittedMetaWeb %>% filter(model=="Prob") %>% dplyr::select( Metaweb,Network,  everything(), -min_dist, -model_type,-fit_type,-model) %>% arrange(Network), digits = 4)
 
 rm(netnames,fmw,X,dfA,AAdf,AAdf1,AAdf2,AAdf3,arguments,sim,sel,g3,gg,ravg,sel,redl,ig_list,web)
@@ -912,14 +914,18 @@ save.image()
 
 # Islands Metaweb assembly model 
 
-```{r IslMetaWebAssembly, eval=TRUE,echo=F,message=FALSE,warning=T}
+```{r IslMetaWebAssemblyNew, eval=TRUE,echo=F,message=FALSE,warning=T}
+
 if(!exists("websAssemblyModel")) websAssemblyModel <- tibble()
 if(!exists("websAssemblyModelSim")) websAssemblyModelSim <- tibble()
-
-websTbl <- websTbl %>% mutate(ismeta = if_else(grepl("_Meta",Network),TRUE,FALSE), Metaweb=if_else(is.na(Metaweb),"Isl",Metaweb)) 
+#
+# Correct WebsTbl
+#
+#websTbl <- websTbl %>% mutate(ismeta = if_else(grepl("_Meta",Network),TRUE,FALSE), Metaweb=if_else(is.na(Metaweb),"Isl",Metaweb)) 
 
 websAssemblyModel <- websAssemblyModel %>% filter(!grepl("Isl_",Network)) 
-websAssemblyModel <- websAssemblyModelSim %>% filter(!grepl("Isl_",Network)) 
+websAssemblyModelSim <- websAssemblyModelSim %>% filter(!grepl("Isl_",Network)) 
+websAssemblyModelSim %>% count(Network)
 
 A <- get.adjacency(Isl_Meta,sparse=F)
 net_name <- pull( websTbl %>% filter(!ismeta,Metaweb=="Isl") %>% dplyr::select(Network) )
@@ -930,7 +936,7 @@ lapply(net_name, function(fw){
     message(paste("\ncalc_modularity_metaWebAssembly", fw, model_name))
 
     f <- fittedMetaWeb %>% filter(Network == fw, model==model_name)
-    tbl <- calc_modularity_metaWebAssembly(websTbl, fw, A, f$m[1], f$a[1], f$se[1],10)
+    tbl <- calc_modularity_metaWebAssembly(websTbl, fw, A, f$m[1], f$a[1], f$se[1],1000)
     sim <- tbl$sim
 
     tblMdlWeb <- tbl$su %>% mutate(Network=fw,model=model_name) %>% inner_join(dplyr::select(websTbl,Network:Modularity)) %>%
@@ -940,6 +946,7 @@ lapply(net_name, function(fw){
     websAssemblyModelSim <<-websAssemblyModelSim %>% bind_rows(sim %>% mutate(Network=fw,model=model_name))  
 })
 save.image()
+
 
 ```
 
@@ -982,6 +989,7 @@ save.image()
 #
 net_name <- pull( websTbl %>% filter(!ismeta) %>% dplyr::select(Network) )
 model_name <- "Prob"
+# websAssemblyModelSim <- websAssemblyModelSim %>% filter(model!="No SecExt")
 
 # Add Conecctance to summary table websAssemblyModel
 #
@@ -990,7 +998,11 @@ if( !("C" %in% names(websAssemblyModelSim)) ) {
   websAssemblyModel <- websAssemblyModelSim %>% group_by(model,Network) %>% group_modify( ~{ qq <- quantile(.x$C,c(0.005,0.995))
                                                                         ss <- quantile(.x$Size,c(0.005,0.995))
                                                                         tibble(Clow = qq[1],Chigh=qq[2],Slow=ss[1],Shigh=ss[2])
-                                                                        }) %>% inner_join( websAssemblyModel )
+                                                                        }) %>% inner_join( websAssemblyModel, by=c("Network","model") )
+  names(websAssemblyModel)
+  websAssemblyModel <- websAssemblyModel %>% select(!(Clow.y:Shigh.y)) 
+  names(websAssemblyModel)[3:6] <- c("Clow",  "Chigh", "Slow",  "Shigh")
+  
 }
 require(RColorBrewer)
 col <- brewer.pal(8,"Dark2")
@@ -1117,6 +1129,8 @@ save.image()
 if(!exists("websAssemblyModelQSS")) websAssemblyModelQSS <- tibble()
 if(!exists("websAssemblyModelSimQSS")) websAssemblyModelSimQSS <- tibble()
 
+websAssemblyModelSimQSS %>% count(Network,model)
+
 websAssemblyModelQSS <- websAssemblyModelQSS %>% filter(!grepl("Isl_",Network)) 
 websAssemblyModelSimQSS <- websAssemblyModelSimQSS %>% filter(!grepl("Isl_",Network)) 
 
@@ -1142,6 +1156,19 @@ lapply(net_name, function(fw){
     websAssemblyModelSimQSS <<-websAssemblyModelSimQSS %>% bind_rows(sim %>% mutate(Network=fw,model=model_name))  
 })
 save.image()
+
+if( FALSE ) { 
+  websAssemblyModel <- websAssemblyModelSimQSS %>% group_by(model,Network) %>% group_modify( ~{ qq <- quantile(.x$QSS,c(0.005,0.995))
+                                                                        ss <- quantile(.x$MEing,c(0.005,0.995))
+                                                                        tibble(mdlQSS=mean(.x$QSS),QSSlow = qq[1],QSShigh=qq[2],mdlMEing=mean(.x$MEing),
+                                                                               MEingLow=ss[1],MEingHigh=ss[2])
+                                                                        }) %>% inner_join( websAssemblyModel, by=c("Network","model") )
+  names(websAssemblyModel)
+  websAssemblyModel <- websAssemblyModel %>% select(-(mdlMEing.y:MEingHigh.y), -(mdlQSS.y:QSShigh.y)) 
+  names(websAssemblyModel)[3:8] <- c("mdlQSS",    "QSSlow",    "QSShigh",   "mdlMEing",  "MEingLow",  "MEingHigh")
+  websAssemblyModel <- websAssemblyModel %>% select(-QSS,-MEing) %>% inner_join(websTbl %>% select(Network,QSS,MEing), by=c("Network"))  
+   
+}
 
 
 ```

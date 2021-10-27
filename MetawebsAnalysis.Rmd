@@ -90,6 +90,11 @@ w_modul <- lapply(1:100, function(x){
 webs_modul <- bind_rows(w_modul) %>% group_by(Network) %>% summarise(sdMod=sd(Modularity), Modularity=mean(Modularity) )
 
 rm(w_modul,loc_list)
+
+# Update websTbl
+#
+websTbl <- websTbl %>% select(-sdMod,-Modularity) %>% left_join(webs_modul)
+
 save.image()
 
 ```
