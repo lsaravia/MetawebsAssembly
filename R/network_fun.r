@@ -1147,7 +1147,7 @@ compare_with_ER <- function(redl, network_name,nsims=1000,rnd_seed=123){
   
   message(paste("\n calc_QSS1 -", network_name))
   
-  websTbl <- bind_cols(websTbl, calc_QSS(redl,10000,48,negative=-1,positive=1))
+  websTbl <- bind_cols(websTbl, calc_QSS(redl,10000,48,negative=-1,positive=1) %>% rename(QSS1=QSS,MEing1=MEing))
     
   return(list(su=websTbl,sim=sim))
 }

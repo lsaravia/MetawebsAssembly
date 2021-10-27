@@ -314,24 +314,70 @@ require(readr)
 #
 # Extract Islands from GATEWAy database
 #
-ga <- readr::read_csv("~/Dropbox/Projects/MetaWebsAssembly/Data/283_2_FoodWebDataBase_2018_12_10.csv",col_types = "icccccccccccccddddddccccccccddddddcddccddciicc")
+# ga <- readr::read_csv("~/Dropbox/Projects/MetaWebsAssembly/Data/283_2_FoodWebDataBase_2018_12_10.csv",col_types = "icccccccccccccddddddccccccccddddddcddccddciicc")
+# 
+# fw_name <- ga %>% filter(grepl("Piechnik",link.citation )) %>% distinct(foodweb.name)                
+# Have_df <- ga %>% filter(grepl("Piechnik",link.citation )) %>% dplyr::select(con.taxonomy,con.taxonomy.level,res.taxonomy,res.taxonomy,foodweb.name)
+# require(igraph)
+# dtot1 <- as.matrix(Have_df %>% dplyr::select(res.taxonomy,con.taxonomy))
+# have1  <- graph_from_edgelist(dtot1, directed  = T)
+# have1 <- igraph::simplify(have1,remove.loops = FALSE)                            ## !! Delete all duplicated links 
+# 
+# 
+# df_list <- Have_df %>% group_split(foodweb.name)
+# ig_list <- lapply(df_list, function(fw) {
+#   d1 <- as.matrix(fw %>% dplyr::select(res.taxonomy,con.taxonomy))
+#   graph_from_edgelist(d1, directed  = T)
+# })
+# names(ig_list) <- paste0("Isl_",fw_name$foodweb.name)
+# ig_list <- c(ig_list, list(Isl_Meta=have1))
 
-fw_name <- ga %>% filter(grepl("Piechnik",link.citation )) %>% distinct(foodweb.name)                
-Have_df <- ga %>% filter(grepl("Piechnik",link.citation )) %>% dplyr::select(con.taxonomy,con.taxonomy.level,res.taxonomy,res.taxonomy,foodweb.name)
-require(igraph)
-dtot1 <- as.matrix(Have_df %>% dplyr::select(res.taxonomy,con.taxonomy))
-have1  <- graph_from_edgelist(dtot1, directed  = T)
-have1 <- igraph::simplify(have1,remove.loops = FALSE)                            ## !! Delete all duplicated links 
+
+#
+# Read the Gravel's Dataset
+#
+
+require(tidyverse)
+
+# Select t0 
+#
+island <- read_delim("Data/presence_SW_trophic.txt",delim=" ")
+island <- island %>% dplyr::select(ID,Order,Family,Genus,Species,contains("t0")) %>% pivot_longer(cols = contains("t0"),names_to = "Site",values_to = "Presence") %>%
+  filter(Presence==1) %>% mutate(species=if_else(is.na(Family), Order, paste(Genus,Species))) %>% mutate( species=if_else(grepl("sp_",Species),Genus,species)) %>% 
+  mutate( species=if_else(grepl("Gen_",Genus),Family,species)) 
+  
+
+island %>% group_by(Site) %>% summarise(sum(Presence))
+
+#
+#
+metaweb <- read_delim("Data/metaweb_SW_trophic.txt",delim=" ")
+metamat <- as.matrix(metaweb %>% dplyr::select(V1:V287)) 
+dim(metamat)
+rownames(metamat) <- metaweb$ID
+colnames(metamat) <- metaweb$ID
 
 
-df_list <- Have_df %>% group_split(foodweb.name)
+ig_meta <- graph_from_adjacency_matrix(metamat, mode="directed") ### NEED TO ADD NAMES LIKE LOCAL FOOD WEBS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+meta_edges <- tibble(prey=as_edgelist(ig_meta)[,1],pred=as_edgelist(ig_meta)[,2]) %>% mutate(prey=as.numeric(prey),pred=as.numeric(pred))
+
+df_list <- island %>% group_split(Site)
+
 ig_list <- lapply(df_list, function(fw) {
-  d1 <- as.matrix(fw %>% dplyr::select(res.taxonomy,con.taxonomy))
-  graph_from_edgelist(d1, directed  = T)
-})
-names(ig_list) <- paste0("Isl_",fw_name$foodweb.name)
-ig_list <- c(ig_list, list(Isl_Meta=have1))
 
+    e1 <- fw %>% inner_join(meta_edges, by=c("ID" = "prey"), keep=TRUE) %>% dplyr::select(ID,species,prey,pred) 
+    e2 <- fw %>% dplyr::select(ID,species) %>% inner_join(e1, by=c("ID" = "pred"), keep=TRUE) %>% mutate(pred=as.character(pred),prey=as.character(prey))
+      # with species names 
+    e3  <- graph_from_edgelist(as.matrix(e2 %>% dplyr::select(prey,pred)), directed  = T)
+    
+    # Check that species without interactions
+    # 
+    # fw %>% anti_join(tibble(species = V(e3)$name)) %>% inner_join(e1,by=c("ID" = "prey"), keep=TRUE) %>% select(pred) %>% inner_join(fw, by=c("pred"="ID"), keep=TRUE) 
+})
+
+
+names(ig_list) <- paste0("Isl_",island %>% group_by(Site) %>% group_keys() %>% deframe() %>% str_remove("_t0"))
+ig_list <- c(ig_list, list(Isl_Meta=ig_meta))
 multiweb::calc_topological_indices(ig_list)
 ```
 
@@ -340,6 +386,7 @@ multiweb::calc_topological_indices(ig_list)
 
 ```{r qssIslands, eval=FALSE,echo=TRUE,message=FALSE }
 
+websTbl <- websTbl %>% filter(!grepl("Isl_",Network))
 lapply(names(ig_list), function(fw){
     res <- compare_with_ER(ig_list[[fw]], fw,1000)
     simulations_ER <<- bind_rows(simulations_ER, res$sim)
@@ -366,6 +413,7 @@ names(loc_list)
 w_modul <- lapply(1:100, function(x){
   calc_modularity(loc_list,8)  %>% mutate(Network=names(loc_list))
 })
+webs_modul <- webs_modul %>% filter(!grepl("Isl_",Network))
 webs_modul <- bind_rows(w_modul) %>% group_by(Network) %>% summarise(sdMod=sd(Modularity), Modularity=mean(Modularity) ) %>% bind_rows(webs_modul)
 
 rm(w_modul,loc_list)
@@ -381,6 +429,8 @@ save.image()
 #
 # Motif
 #
+motif_ER <- motif_ER %>% filter(!grepl("Isl_",Network))
+all_motif_freq <- all_motif_freq %>% filter(!grepl("Isl_",Network))
 
 lapply(names(ig_list), function(fw){
     res <- calc_compare_motif(ig_list[[fw]], fw,1000)

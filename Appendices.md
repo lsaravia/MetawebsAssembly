@@ -5,9 +5,6 @@
 
 We performed exploratory simulations to determine if the last 100 time steps of 1000 simulated were enough to avoid the transient period and sample the attractor of the model. Figures S1 and S2 show that there are no differences in the dynamics after 1000 or 3000 time steps and that the transient is well over after 1000 time steps. We repeated these exploratory simulations with the three metawebs obtaining similar results.  
 
-![Windowed averages of a simulation of the Meta-web assembly model with the Antarctic metaweb and parameters near the fitted to Potter Cove food web, where $mS$ and $mC$ are windowed averages of the number of species and connectance, error bars are the standard deviation, and the dashed is line the overall mean using a window of 50 time steps. The parameters were $c$=0.02, $e$=0.05, $se$=0.70.](Figures/Metaweb_steady_state_Potter.png)
-
-![Windowed averages of a simulation of the Meta-web assembly model with the Antarctic metaweb and parameters near the fitted to Weddell Sea food web. Where $mS$ and $mC$ are windowed averages of the number of species and connectance, error bars are the standard deviation, and the dashed is line the overall mean using a window of 50 time steps. The parameters were $c$=0.03, $e$=0.016, $se$=0.10.](Figures/Metaweb_steady_state_Weddell.png)
 
 
 | Parameter   | Low  |High|
@@ -17,10 +14,12 @@ We performed exploratory simulations to determine if the last 100 time steps of 
 |$se$         | 0.100| 0.9|
 
 Table: Range of parameters used in latin hypercubic sampling to simulate the metaweb assembly model. The range of each parameter is divided into into $n=150000$ equal partitions and random data points are chosen such that each partition in each dimension is sampled once, i.e., ensuring coverage of the entire range.
-<!-- NPK: LEO DON'T FORGET TO PUT THE n VALUE IN IF YOU WANT THE NEW CAPTION -->
 
 After fitting the model as explained in the main text we performed an additional validation of the model by doing simulations with the fitted parameters and checked that the number of species $S_e$ and connectance $C_e$ were inside the 99% confidence interval (CI) generated with 1000 simulations of the model (Table S4, Figures S3 & S4). Only in two cases (Bridge_brook_lake, Lak_Chub_pond) the connectance was higher than the CI. 
 
+![Windowed averages of a simulation of the Meta-web assembly model with the Antarctic metaweb and parameters near the fitted to Potter Cove food web, where $mS$ and $mC$ are windowed averages of the number of species and connectance, error bars are the standard deviation, and the dashed is line the overall mean using a window of 50 time steps. The parameters were $c$=0.02, $e$=0.05, $se$=0.70.](Figures/Metaweb_steady_state_Potter.png)
+
+![Windowed averages of a simulation of the Meta-web assembly model with the Antarctic metaweb and parameters near the fitted to Weddell Sea food web. Where $mS$ and $mC$ are windowed averages of the number of species and connectance, error bars are the standard deviation, and the dashed is line the overall mean using a window of 50 time steps. The parameters were $c$=0.03, $e$=0.016, $se$=0.10.](Figures/Metaweb_steady_state_Weddell.png)
 
 
 \newpage
@@ -32,11 +31,12 @@ After fitting the model as explained in the main text we performed an additional
 |:-------|:-------------------|------:|------:|------:|--------:|---------:|------:|--------:|--------:|
 |Ant     |Potter              | 0.0188| 0.0552| 0.7648|  93.5050|  346.0792| 0.0396|   0.3412|   0.0349|
 |Ant     |Weddell             | 0.0271| 0.0164| 0.1016| 450.3663| 2312.5446| 0.0114|   1.6509|   0.0973|
-|Isl     |FloridaIslandE1     | 0.0837| 0.0011| 0.7574| 208.3069| 3516.1188| 0.0810|  74.3415|   0.0089|
-|Isl     |FloridaIslandE2     | 0.1930| 0.4310| 0.1386|  58.8713|  297.5743| 0.0859|   0.4477|   0.0037|
-|Isl     |FloridaIslandE3     | 0.2467| 0.0015| 0.1536| 210.1386| 3641.1188| 0.0825| 165.8384|   0.0041|
-|Isl     |FloridaIslandE7     | 0.1099| 0.2167| 0.4400|  54.0297|  301.1386| 0.1032|   0.5069|   0.0008|
-|Isl     |FloridaIslandE9     | 0.1288| 0.2053| 0.7716|  55.8812|  358.7921| 0.1149|   0.6276|   0.0028|
+|Isl     |E1                  | 0.0102| 0.0319| 0.4055|  25.2673|  116.2970| 0.1822| 0.3209|   0.0108|
+|Isl     |E2                  | 0.0189| 0.0397| 0.5517|  28.3267|  161.1089| 0.2008| 0.4752|   0.3226|
+|Isl     |E3                  | 0.0259| 0.0764| 0.6145|  23.7030|  115.9307| 0.2063| 0.3389|   0.1973|
+|Isl     |E7                  | 0.0259| 0.0764| 0.6145|  23.7030|  115.9307| 0.2063| 0.3389|   0.0143|
+|Isl     |E9                  | 0.0210| 0.0293| 0.4132|  33.0099|  205.0693| 0.1882| 0.7167|   0.0851|
+|Isl     |ST2                 | 0.0189| 0.0397| 0.5517|  28.3267|  161.1089| 0.2008| 0.4752|   0.1426|
 |Lak     |Alford_lake         | 0.0375| 0.0735| 0.7522|  56.5545|  224.9406| 0.0703|   0.5095|   0.0102|
 |Lak     |Balsam_lake         | 0.0239| 0.0503| 0.3548|  49.7426|  196.7723| 0.0795|   0.4749|   0.2383|
 |Lak     |Beaver_lake         | 0.0163| 0.0363| 0.4049|  52.3366|  210.6634| 0.0769|   0.4492|   0.1167|

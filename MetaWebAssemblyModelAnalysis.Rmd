@@ -16,9 +16,8 @@ editor_options:
 if(file.exists(".RData")) load(".RData")
 
 needed_packages <- c(
-    "ggplot2"
+    "tidyverse"
   , "igraph"
-  , "dplyr"
   , "stringr"
   , "devtools"
   , "ks"
@@ -63,26 +62,55 @@ Ant_Meta <- redl
 
 ## Read the Islands data set 
 
-```{r readIslands, eval=FALSE,echo=TRUE,message=FALSE }
+```{r readIslands, eval=TRUE,echo=TRUE,message=FALSE }
 
 #
-# Extract Weddell Sea from GATEWAy database
+# Read the Gravel's Dataset
 #
-ga <- readr::read_csv("~/Dropbox/Projects/MetaWebsAssembly/Data/283_2_FoodWebDataBase_2018_12_10.csv",col_types = "icccccccccccccddddddccccccccddddddcddccddciicc")
 
-fw_name <- ga %>% filter(grepl("Piechnik",link.citation )) %>% distinct(foodweb.name)                
-Have_df <- ga %>% filter(grepl("Piechnik",link.citation )) %>% dplyr::select(con.taxonomy,con.taxonomy.level,res.taxonomy,res.taxonomy,foodweb.name)
-require(igraph)
-dtot1 <- as.matrix(Have_df %>% dplyr::select(res.taxonomy,con.taxonomy))
-have1  <- graph_from_edgelist(dtot1, directed  = T)
+require(tidyverse)
 
-df_list <- Have_df %>% group_split(foodweb.name)
+# Select t0 
+#
+island <- read_delim("Data/presence_SW_trophic.txt",delim=" ")
+island <- island %>% dplyr::select(ID,Order,Family,Genus,Species,contains("t0")) %>% pivot_longer(cols = contains("t0"),names_to = "Site",values_to = "Presence") %>%
+  filter(Presence==1) %>% mutate(species=if_else(is.na(Family), Order, paste(Genus,Species))) %>% mutate( species=if_else(grepl("sp_",Species),Genus,species)) %>% 
+  mutate( species=if_else(grepl("Gen_",Genus),Family,species)) 
+  
+
+island %>% group_by(Site) %>% summarise(sum(Presence))
+
+#
+#
+metaweb <- read_delim("Data/metaweb_SW_trophic.txt",delim=" ")
+metamat <- as.matrix(metaweb %>% dplyr::select(V1:V287)) 
+dim(metamat)
+rownames(metamat) <- metaweb$ID
+colnames(metamat) <- metaweb$ID
+
+
+ig_meta <- graph_from_adjacency_matrix(metamat, mode="directed") 
+
+meta_edges <- tibble(prey=as_edgelist(ig_meta)[,1],pred=as_edgelist(ig_meta)[,2]) %>% mutate(prey=as.numeric(prey),pred=as.numeric(pred))
+
+df_list <- island %>% group_split(Site)
+
 ig_list <- lapply(df_list, function(fw) {
-  d1 <- as.matrix(fw %>% dplyr::select(res.taxonomy,con.taxonomy))
-  graph_from_edgelist(d1, directed  = T)
+
+    e1 <- fw %>% inner_join(meta_edges, by=c("ID" = "prey"), keep=TRUE) %>% dplyr::select(ID,species,prey,pred) 
+    e2 <- fw %>% dplyr::select(ID,species) %>% inner_join(e1, by=c("ID" = "pred"), keep=TRUE) %>% mutate(pred=as.character(pred),prey=as.character(prey))
+      # with species names 
+    e3  <- graph_from_edgelist(as.matrix(e2 %>% dplyr::select(prey,pred)), directed  = T)
+    
+    # Check that species without interactions
+    # 
+    # fw %>% anti_join(tibble(species = V(e3)$name)) %>% inner_join(e1,by=c("ID" = "prey"), keep=TRUE) %>% select(pred) %>% inner_join(fw, by=c("pred"="ID"), keep=TRUE) 
 })
-names(ig_list) <- paste0("Isl_",fw_name$foodweb.name)
-ig_list <- c(ig_list, list(Isl_Meta=have1))
+
+
+names(ig_list) <- paste0("Isl_",island %>% group_by(Site) %>% group_keys() %>% deframe() %>% str_remove("_t0"))
+ig_list <- c(ig_list, list(Isl_Meta=ig_meta))
+multiweb::calc_topological_indices(ig_list)
 
 redl <- ig_list[["Isl_Meta"]] 
 
@@ -545,13 +573,13 @@ save.image()
 # Islands Metaweb Simulate a grid of parameters to select the best options
 
 
-```{r IslandSimulations150000tf1000, eval=FALSE,echo=F,message=T,warning=T}
+```{r IslandSimulations150000tf1001, eval=FALSE,echo=F,message=T,warning=T}
 
 metaweb_name <-  "Isl_Meta"
 
 # Check redl is the metaweb
 # 
-stopifnot(  sum(degree(redl,mode="in")==0) == websTbl %>% filter(Network==metaweb_name) %>% select(Basal) )
+stopifnot(  sum(degree(redl,mode="in")==0) == websTbl %>% filter(Network==metaweb_name) %>% dplyr::select(Basal) )
 
 metaweb_name <- str_sub(metaweb_name,1,3)
 
@@ -571,6 +599,7 @@ dimA <- nrow(A)
 
 require(lhs)
 
+simMetaWebAssembly <- simMetaWebAssembly %>% filter(Metaweb!=metaweb_name)
 # simulations with probability of secondary extinction == 1
 #
 # Discrete time
@@ -620,10 +649,12 @@ ggplot(simMetaWebAssembly %>% filter(Metaweb == metaweb_name), aes(S,L))+ geom_p
 
 ## Make the fit Islands
 
-```{r fitMetaWebIslands, eval=FALSE,echo=F,message=T,warning=T}
+```{r fitMetaWebIslands, eval=TRUE,echo=F,message=T,warning=T}
 #
 #
 # Use this tolerance = tol to display a more detailed plot 
+metaweb_name <- "Isl"
+fittedMetaWeb <- fittedMetaWeb %>% filter(Metaweb != metaweb_name)
 
 netnames <- names(ig_list)
 netnames <- netnames[ netnames != "Isl_Meta" ] 
@@ -881,9 +912,14 @@ save.image()
 
 # Islands Metaweb assembly model 
 
-```{r IslMetaWebAssembly, eval=FALSE,echo=F,message=FALSE,warning=T}
+```{r IslMetaWebAssembly, eval=TRUE,echo=F,message=FALSE,warning=T}
 if(!exists("websAssemblyModel")) websAssemblyModel <- tibble()
 if(!exists("websAssemblyModelSim")) websAssemblyModelSim <- tibble()
+
+websTbl <- websTbl %>% mutate(ismeta = if_else(grepl("_Meta",Network),TRUE,FALSE), Metaweb=if_else(is.na(Metaweb),"Isl",Metaweb)) 
+
+websAssemblyModel <- websAssemblyModel %>% filter(!grepl("Isl_",Network)) 
+websAssemblyModel <- websAssemblyModelSim %>% filter(!grepl("Isl_",Network)) 
 
 A <- get.adjacency(Isl_Meta,sparse=F)
 net_name <- pull( websTbl %>% filter(!ismeta,Metaweb=="Isl") %>% dplyr::select(Network) )
@@ -1077,9 +1113,12 @@ save.image()
 
 # Islands Metaweb assembly model QSS
 
-```{r IslQSSMetaWebAssembly, eval=FALSE,echo=F,message=FALSE,warning=T}
+```{r IslQSSMetaWebAssembly, eval=TRUE,echo=F,message=FALSE,warning=T}
 if(!exists("websAssemblyModelQSS")) websAssemblyModelQSS <- tibble()
 if(!exists("websAssemblyModelSimQSS")) websAssemblyModelSimQSS <- tibble()
+
+websAssemblyModelQSS <- websAssemblyModelQSS %>% filter(!grepl("Isl_",Network)) 
+websAssemblyModelSimQSS <- websAssemblyModelSimQSS %>% filter(!grepl("Isl_",Network)) 
 
 A <- get.adjacency(Isl_Meta,sparse=F)
 net_name <- pull( websTbl %>% filter(!ismeta,Metaweb=="Isl") %>% dplyr::select(Network) )
@@ -1506,7 +1545,7 @@ ggsave("Figures/Motif_Zscores_Assembly.pdf",width=8,height=7,units="in",dpi=600)
 
 # Topological roles with meta-web assembly model 
 
-```{r MetaWebTopologicalRoles, eval=TRUE,echo=F,message=F,warning=T}
+```{r MetaWebTopologicalRoles, eval=FALSE,echo=F,message=F,warning=T}
 if(!exists("topoRoles_metaWebAssembly")) {
   topoRoles_metaWebAssembly <- tibble()
   hub_conn_Assembly <- tibble()
