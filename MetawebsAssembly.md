@@ -120,34 +120,11 @@ In summary, this model considers colonization-extinction and secondary extinctio
 
 We selected properties related to stability and resilience like: trophic coherence that is based on the distances between the trophic positions of species and measures how well species fall into discrete trophic levels [@Johnson2014;@Johnson2017]; mean trophic level, historically used as an ecosystem health indicator [@Pauly1998], predicting that food webs with higher trophic levels are less stable [@Borrelli2014]; modularity, that measures the existence of groups of prey and predators that interact more strongly with each other than with species belonging to other modules and it prevents the propagation of perturbations throughout the network, increasing its persistence [@Stouffer2011]; and a measure of local stability using the eingenvalues of randomly parameterised networks. 
 
-To describe food webs as networks each species is represented as a node or vertex and the trophic interactions are represented as edges or links between nodes. These links are directed, from the prey to the predator, as the flow of energy and matter. Two nodes are neighbours if they are connected by an edge and the degree $k_i$ of node $i$ is the number of neighbours it has. The food web can be represented by an adjacency matrix $A=(a_{ij})$ where $a_{ij}=1$ if species $j$ predates on species $i$, else is 0. Then $k_i^{in}=\sum_j{a_{ji}}$ is the number of preys of species $i$ or its in-degree, and $k_i^{out}=\sum_j{a_{ij}}$ is the number of predators of $i$ or its out-degree. The total number of edges is $L=\sum_{ij}a_{ij}$. 
+We first calculated trophic coherence [@Johnson2014], that is related to stability in the sense that small perturbations could get amplified or vanished, which is called local linear stability [@May1972;@Rohr2014]. A food web is more coherent when $Q$ is closer to zero, thus the maximal coherence is achieved when $Q = 0$, and corresponds to a layered network in which every node has an integer trophic level [@Johnson2014; @Johnson2017]. To compare coherence and trophic level we generated 1000 null model networks with the fitted parameters of the metaweb assembly model. Then we calculated the 99% confidence interval using the 0.5% and 99.5% quantiles of the distribution of $Q$. We also calculated the CI for the mean trophic level.
 
-We first calculated a property called trophic coherence [@Johnson2014], that is related to stability in the sense that small perturbations could get amplified or vanished, which is called local linear stability [@May1972;@Rohr2014]. We first needed to estimate the trophic level of a node $i$, defined as the average trophic level of its preys plus 1. That is:
+Another property related to stability is modularity, since the impacts of a perturbation are retained within modules minimizing impacts on the food web [@Fortuna2010; @Grilli2016]. It measures how strongly sub-groups of species interact between them compared with the strength of interaction with other sub-groups [@Newman2004]. These sub-groups are called modules. To find the best partition, we used a stochastic algorithm based on simulated annealing [@Reichardt2006]. Simulated annealing allows maximizing modularity without getting trapped in local maxima configurations [@Guimera2005]. As the simulated annealing algorithm is stochastic we estimated modularity as the mean of 100 repetitions.  To assess the significance of our networks we calculated the 99% confidence intervals based on 1000 null model networks as previously described. 
 
-\begin{align}
-tp_i= 1 + \frac{1}{k_i^{in}}\sum_{j}{a_{ij} tp_j}
-\end{align}
-
-where $k_i^{in}=\sum_{j}a_{ji}$ is the number of preys of species $i$, basal species that do not have preys (then $k_i^{in}=0$) are assigned a $tp=1$. Then the trophic difference associated to each edge is defined as $x_{ij}=tp_i - tp_j$. The distribution of trophic differences, $p(x)$, has a mean $L^{-1} \sum_{ij} a_{ij} x_{ij} = 1$ by definition. Then the trophic coherence is measured by:
-
-\begin{align}
-Q = \sqrt{\frac{1}{L} \sum_{ij}a_{ij}x_{ij}^2 - 1}
-\end{align}
-
-
-that is the standard deviation of the distribution of all trophic distances. A food web is more coherent when $Q$ is closer to zero, thus the maximal coherence is achieved when $Q = 0$, and corresponds to a layered network in which every node has an integer trophic level [@Johnson2014; @Johnson2017]. To compare coherence and trophic level we generated 1000 null model networks with the fitted parameters of the metaweb assembly model. Then we calculated the 99% confidence interval using the 0.5% and 99.5% quantiles of the distribution of $Q$. We also calculated the CI for the mean trophic level.
-
-Another property related to stability is modularity, since the impacts of a perturbation are retained within modules minimizing impacts on the food web [@Fortuna2010; @Grilli2016]. It measures how strongly sub-groups of species interact between them compared with the strength of interaction with other sub-groups [@Newman2004]. These sub-groups are called modules. To find the best partition, we used a stochastic algorithm based on simulated annealing [@Reichardt2006]. Simulated annealing allows maximizing modularity without getting trapped in local maxima configurations [@Guimera2005]. The index of modularity was defined as: 
-
-\begin{align}
-M = \sum_s \left(\frac{I_s}{L} - \left(\frac{d_s}{2L}\right)^2 \right)
-\end{align}
-
-where $s$ is the number of modules, $I_s$ is the number of links between species in the module $s$, $d_s$ is the sum of degrees for all species in module $s$ and $L$ is the total number of links for the network. As the simulated annealing algorithm is stochastic we estimated modularity as the mean of 100 repetitions.  To assess the significance of our networks we calculated the 99% confidence intervals based on 1000 null model networks as previously described. 
-
-
-Finally, we calculated the average of the maximal real part of the eigenvalues of the jacobian [@Grilli2016] for randomly parametrized systems, keeping fixed the predator-prey (sign) structure. This is a measure related to quasi sign-stability (QSS) that is the proportion of randomly parametrized systems that are locally stable [@Allesina2008a]. The Jacobian $J$, so-called community matrix [@May1973], represents the population-level effect of a change in one species’ density on any other species, including the dependence on its own density (self-regulation), at an equilibrium. A system is locally stable if the Jacobian $J$ has all its eigenvalues negative, thus the maximal eigenvalue has to be less than zero for a system to be locally stable. The signs of the elements of $J$ are given by the predator-prey structure of the food web, but the magnitude of the elements are unknown. Following previous analysis [@Monteiro2016;@Borrelli2015a], we estimated the unknown magnitudes by drawing the predator-prey interactions from a uniform distribution ranging from -10 to 0, the prey-predator interactions from 0 to 0.1, and from 0 to -1 for the self-regulation effect. This implies that the predator effect on the prey is bigger than the effect of the prey on the predator, and that the self-regulation or self-damping effect, that scales the dynamic's return time, is generally smaller than the predator-prey effect. Besides other parametrizations are possible they give very similar results (not shown). We sampled 1000 jacobians to estimate the maximal real part of the eigenvalues and withhold the average, we repeat this procedure for each of the 1000 null model networks and estimated the 99% confidence intervals as described earlier.
-
+Finally, we calculated the average of the maximal real part of the eigenvalues of the jacobian [@Grilli2016] for randomly parametrized systems, keeping fixed the predator-prey (sign) structure. This is a measure related to quasi sign-stability (QSS) that is the proportion of randomly parametrized systems that are locally stable [@Allesina2008a]. We sampled 1000 jacobians to estimate the maximal real part of the eigenvalues and withhold the average, we repeat this procedure for each of the 1000 null model networks and estimated the 99% confidence intervals as described earlier. 
 
 To show the results graphically we calculated the deviation for each metric, which correspond to the 99% confidence intervals for the metric’s value in the assembly null model. We define the mid-point
 
@@ -157,7 +134,7 @@ Then the deviation of the observed value of the real web is calculated
 
 $$deviation = \frac{metric_{observed} - metric_{mid}}{metric_{high} - metric_{low}}$$
 
-A deviation value outside of [-0.5, 0.5] indicates that the value is outside of the 99% confidence interval. 
+A deviation value outside of [-0.5, 0.5] indicates that the value is outside of the 99% confidence interval. See the Supporting Information for formulas and more details about these metrics.
 
 ### Motifs
 
@@ -171,22 +148,11 @@ The four three-species motifs are: apparent competition, where two preys share a
 
 To detect the process of habitat filtering or dispersal limitation in local food webs we calculated topological roles, which characterize how many trophic links are conducted within their module and/or between modules [@Guimera2005; @Kortsch2015]. Theoretical and empirical results suggest these roles are related to species traits, such as niche breadth, environmental tolerance, apex position in local communities and motility [@Borthagaray2014;@Guimera2010;@Rezende2009;@Kortsch2015;@Dupont2009]. 
 
-We determined topological roles using the method of functional cartography [@Guimera2005], which is based on module membership (See modularity). The roles are characterized by two parameters: the standardized within-module degree $dz$ and the among-module connectivity participation coefficient $PC$.  The within-module degree is a z-score that measures how well a species is connected to other species within its module:
-
-$$dz_i = \frac{k_{is}-\bar{k_s} }{\sigma_{ks}}$$ 
-
-
-where $k_{is}$ is the number of links of species $i$ within its own module $s$, $\bar{k_s}$ and $\sigma_{ks}$ are the average and standard deviation of $k_{is}$ over all species in $s$. The participation coefficient $PC$ estimates the distribution of the links of species $i$ among modules; thus it can be defined as:
-
-$$PC_i =  1 - \sum_s \frac{k_{is}}{k_i}$$ 
-
-where $k_i$ is the degree of species $i$ (i.e. the number of links), $k_{is}$ is the number of links of species $i$ to species in module $s$. Due to the stochastic nature of the module detection algorithm, we made repeated runs of the algorithm (starting from 100 runs) until there were no statistical differences between the distributions of $PC_i$ and $dz_i$ in successive repetitions; to test such statistical difference we used the k-sample Anderson-Darling test [@Scholz1987]. Then we calculated the mean and 95% confidence interval of $dz$ and $PC$.
-
-To determine each species' role the $dz-PC$ parameter space was divided into four areas, modified from @Guimera2005, using the same scheme as @Kortsch2015. Two thresholds were used to define the species’ roles: $PC=0.625$ and $dz=2.5$. If a species had at least 60% of links within its module then $PC<0.625$, and if it also had $dz\ge 2.5$, thus it was classified as a module hub. This parameter space defines species with a relatively high number of links, the majority within its module. If a species had $PC<0.625$ and $dz<2.5$, then it was called a peripheral or specialist; this refers to a species with relatively few links, mostly within its module. Species that had $PC\ge0.625$ and $dz<2.5$ were considered module connectors, since they have relatively few links, mostly between modules. Finally, if a species had $PC\ge0.625$ and $dz\ge 2.5$, then it was classified as a super-generalist or hub-connector because it has high between- and within-module connectivity. 
+We determined topological roles using the method of functional cartography [@Guimera2005], which is based on module membership (See Supporting Information for more details). There are four roles: *Hub connectors* that have a high number of between module links; *Module connectors* have a low number of links mostly between modules;  *Module hubs* have a high number of links inside its module; *Module specialists* have a low number of links inside its module.
 
 We estimated the roles for empirical networks and for 20 realizations of each assembly model network. To test if the proportion of species’ roles changed between the empirical and each of the realizations of the model we performed a Pearson's Chi-squared test with simulated p-value based on 10000 Monte Carlo replicates. 
 
-All analyses and simulations were performed in R version 4.0.3 [@RCoreTeam2017], using the igraph package version 1.2.6 [@Csardi2006] for motifs, the package multiweb for topological roles, $Q$ and other network metrics [@Saravia2019c], and the package meweasmo for the metaweb assembly model [@Saravia2020]. Source code and data are available at zenodo <https://doi.org/10.5281/zenodo.3370022> and GitHub <https://github.com/lsaravia/MetawebsAssembly/>.  
+All analyses and simulations were performed in R version 4.1.1 [@RCoreTeam2017], using the igraph package version 1.2.6 [@Csardi2006] for motifs, the package multiweb for topological roles, $Q$ and other network metrics [@Saravia2019c], and the package meweasmo for the metaweb assembly model [@Saravia2020]. 
 
 ## Results
 

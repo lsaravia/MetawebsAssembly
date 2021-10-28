@@ -1,5 +1,57 @@
 # Supplementary Information
 
+## Formulas for the network properties
+
+To describe food webs as networks each species is represented as a node or vertex and the trophic interactions are represented as edges or links between nodes. These links are directed, from the prey to the predator, as the flow of energy and matter. Two nodes are neighbours if they are connected by an edge and the degree $k_i$ of node $i$ is the number of neighbours it has. The food web can be represented by an adjacency matrix $A=(a_{ij})$ where $a_{ij}=1$ if species $j$ predates on species $i$, else is 0. Then $k_i^{in}=\sum_j{a_{ji}}$ is the number of preys of species $i$ or its in-degree, and $k_i^{out}=\sum_j{a_{ij}}$ is the number of predators of $i$ or its out-degree. The total number of edges is $L=\sum_{ij}a_{ij}$. 
+
+### Trophic coherence
+
+We first needed to estimate the trophic level of a node $i$, defined as the average trophic level of its preys plus 1. That is:
+
+\begin{align}
+tp_i= 1 + \frac{1}{k_i^{in}}\sum_{j}{a_{ij} tp_j}
+\end{align}
+
+where $k_i^{in}=\sum_{j}a_{ji}$ is the number of preys of species $i$, basal species that do not have preys (then $k_i^{in}=0$) are assigned a $tp=1$. Then the trophic difference associated to each edge is defined as $x_{ij}=tp_i - tp_j$. The distribution of trophic differences, $p(x)$, has a mean $L^{-1} \sum_{ij} a_{ij} x_{ij} = 1$ by definition. Then the trophic coherence is measured by:
+
+\begin{align}
+Q = \sqrt{\frac{1}{L} \sum_{ij}a_{ij}x_{ij}^2 - 1}
+\end{align}
+
+
+that is the standard deviation of the distribution of all trophic distances.
+
+### Modularity
+
+The index of modularity was defined as: 
+
+\begin{align}
+M = \sum_s \left(\frac{I_s}{L} - \left(\frac{d_s}{2L}\right)^2 \right)
+\end{align}
+
+where $s$ is the number of modules, $I_s$ is the number of links between species in the module $s$, $d_s$ is the sum of degrees for all species in module $s$ and $L$ is the total number of links for the network.
+
+
+### Average of the maximal real part of the eigenvalues of the jacobian (MEing)
+
+The Jacobian $J$, so-called community matrix [@May1973], represents the population-level effect of a change in one species’ density on any other species, including the dependence on its own density (self-regulation), at an equilibrium. A system is locally stable if the Jacobian $J$ has all its eigenvalues negative, thus the maximal eigenvalue has to be less than zero for a system to be locally stable. The signs of the elements of $J$ are given by the predator-prey structure of the food web, but the magnitude of the elements are unknown. Following previous analysis [@Monteiro2016;@Borrelli2015a], we estimated the unknown magnitudes by drawing the predator-prey interactions from a uniform distribution ranging from -10 to 0, the prey-predator interactions from 0 to 0.1, and from 0 to -1 for the self-regulation effect. This implies that the predator effect on the prey is bigger than the effect of the prey on the predator, and that the self-regulation or self-damping effect, that scales the dynamic's return time, is generally smaller than the predator-prey effect. Besides other parametrizations are possible they give very similar results (not shown).
+
+
+### Topological roles
+
+The roles are characterized by two parameters: the standardized within-module degree $dz$ and the among-module connectivity participation coefficient $PC$.  The within-module degree is a z-score that measures how well a species is connected to other species within its module:
+
+$$dz_i = \frac{k_{is}-\bar{k_s} }{\sigma_{ks}}$$ 
+
+
+where $k_{is}$ is the number of links of species $i$ within its own module $s$, $\bar{k_s}$ and $\sigma_{ks}$ are the average and standard deviation of $k_{is}$ over all species in $s$. The participation coefficient $PC$ estimates the distribution of the links of species $i$ among modules; thus it can be defined as:
+
+$$PC_i =  1 - \sum_s \frac{k_{is}}{k_i}$$ 
+
+where $k_i$ is the degree of species $i$ (i.e. the number of links), $k_{is}$ is the number of links of species $i$ to species in module $s$. Due to the stochastic nature of the module detection algorithm, we made repeated runs of the algorithm (starting from 100 runs) until there were no statistical differences between the distributions of $PC_i$ and $dz_i$ in successive repetitions; to test such statistical difference we used the k-sample Anderson-Darling test [@Scholz1987]. Then we calculated the mean and 95% confidence interval of $dz$ and $PC$.
+
+To determine each species' role the $dz-PC$ parameter space was divided into four areas, modified from @Guimera2005, using the same scheme as @Kortsch2015. Two thresholds were used to define the species’ roles: $PC=0.625$ and $dz=2.5$. If a species had at least 60% of links within its module then $PC<0.625$, and if it also had $dz\ge 2.5$, thus it was classified as a module hub. This parameter space defines species with a relatively high number of links, the majority within its module. If a species had $PC<0.625$ and $dz<2.5$, then it was called a peripheral or specialist; this refers to a species with relatively few links, mostly within its module. Species that had $PC\ge0.625$ and $dz<2.5$ were considered module connectors, since they have relatively few links, mostly between modules. Finally, if a species had $PC\ge0.625$ and $dz\ge 2.5$, then it was classified as a super-generalist or hub-connector because it has high between- and within-module connectivity. 
+
 
 ## Meta-web assembly model, steady state and additional checks 
 
@@ -20,6 +72,11 @@ After fitting the model as explained in the main text we performed an additional
 ![Windowed averages of a simulation of the Meta-web assembly model with the Antarctic metaweb and parameters near the fitted to Potter Cove food web, where $mS$ and $mC$ are windowed averages of the number of species and connectance, error bars are the standard deviation, and the dashed is line the overall mean using a window of 50 time steps. The parameters were $c$=0.02, $e$=0.05, $se$=0.70.](Figures/Metaweb_steady_state_Potter.png)
 
 ![Windowed averages of a simulation of the Meta-web assembly model with the Antarctic metaweb and parameters near the fitted to Weddell Sea food web. Where $mS$ and $mC$ are windowed averages of the number of species and connectance, error bars are the standard deviation, and the dashed is line the overall mean using a window of 50 time steps. The parameters were $c$=0.03, $e$=0.016, $se$=0.10.](Figures/Metaweb_steady_state_Weddell.png)
+
+
+## References
+
+<div id="refs"></div>
 
 
 \newpage
