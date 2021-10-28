@@ -914,7 +914,7 @@ save.image()
 
 # Islands Metaweb assembly model 
 
-```{r IslMetaWebAssemblyNew, eval=TRUE,echo=F,message=FALSE,warning=T}
+```{r IslMetaWebAssemblyNew, eval=FALSE,echo=F,message=FALSE,warning=T}
 
 if(!exists("websAssemblyModel")) websAssemblyModel <- tibble()
 if(!exists("websAssemblyModelSim")) websAssemblyModelSim <- tibble()
@@ -1125,7 +1125,7 @@ save.image()
 
 # Islands Metaweb assembly model QSS
 
-```{r IslQSSMetaWebAssembly, eval=TRUE,echo=F,message=FALSE,warning=T}
+```{r IslQSSMetaWebAssembly, eval=FALSE,echo=F,message=FALSE,warning=T}
 if(!exists("websAssemblyModelQSS")) websAssemblyModelQSS <- tibble()
 if(!exists("websAssemblyModelSimQSS")) websAssemblyModelSimQSS <- tibble()
 
@@ -1441,10 +1441,12 @@ save.image()
 
 # Motif Islands compared to  metaWeb assembly model 
 
-```{r IslMotifMetaWebAssembly, eval=FALSE,echo=F,message=FALSE,warning=T}
+```{r Isl_Motif_MetaWebAssembly, eval=FALSE,echo=F,message=FALSE,warning=T}
 
 #if(!exists("websAssemblyModelQSS")) 
 #motif_AssemblyModel <- tibble()
+motif_AssemblyModel <- motif_AssemblyModel %>% filter(!grepl("Isl_",Network)) 
+motif_AssemblyModel %>% count(Network)
 
 A <- get.adjacency(Isl_Meta,sparse=F)
 net_name <- pull( websTbl %>% filter(!ismeta,Metaweb=="Isl") %>% dplyr::select(Network) )
@@ -1460,7 +1462,7 @@ lapply(net_name, function(fw){
     tbl <- calc_motif_metaWebAssembly(f, fw, A, f$m[1], f$a[1], f$se[1],1000)
     tictoc::toc()
 
-    tblMdlWeb <- tbl %>% mutate(Network=fw,model=model_name) %>% select(Network, model, everything())
+    tblMdlWeb <- tbl %>% mutate(Network=fw,model=model_name) %>% dplyr::select(Network, model, everything())
 
     motif_AssemblyModel <<- motif_AssemblyModel %>% bind_rows(tblMdlWeb) 
 })
@@ -1572,7 +1574,7 @@ ggsave("Figures/Motif_Zscores_Assembly.pdf",width=8,height=7,units="in",dpi=600)
 
 # Topological roles with meta-web assembly model 
 
-```{r MetaWebTopologicalRoles, eval=FALSE,echo=F,message=F,warning=T}
+```{r MetaWeb_TopologicalRoles, eval=TRUE,echo=F,message=F,warning=T}
 if(!exists("topoRoles_metaWebAssembly")) {
   topoRoles_metaWebAssembly <- tibble()
   hub_conn_Assembly <- tibble()
@@ -1586,12 +1588,23 @@ if(!exists("topoRoles_metaWebAssembly")) {
 #set.seed(4334)
 model_name <- "Prob"
 
-foreach( rr=20:21 ) %do%
+#
+# Re-run Islands
+#
+topoRoles_metaWebAssembly <- topoRoles_metaWebAssembly %>% filter(!grepl("Isl_",Network)) 
+hub_conn_Assembly <- hub_conn_Assembly %>% filter(!grepl("Isl_",Network)) 
+topoRoles_metaWebAssembly %>% count(Network)
+hub_conn_Assembly  %>% count(Network)
+
+# Islands
+#
+foreach( rr=0:21 ) %do%
 {
-  # Antarctic 
-  #
-  A <- get.adjacency(Ant_Meta,sparse=F)
-  net_name <- pull( websTbl %>% filter(!ismeta,Metaweb=="Ant") %>% dplyr::select(Network) )
+  
+  
+  A <- get.adjacency(Isl_Meta,sparse=F)
+  net_name <- pull( websTbl %>% filter(!ismeta,Metaweb=="Isl") %>% dplyr::select(Network) )
+  model_name <- "Prob"
   
   lapply(net_name, function(fw){
   
@@ -1607,13 +1620,11 @@ foreach( rr=20:21 ) %do%
   })
   
   save.image()
-  
-  # Islands
+
+  # Antarctic 
   #
-  
-  A <- get.adjacency(Isl_Meta,sparse=F)
-  net_name <- pull( websTbl %>% filter(!ismeta,Metaweb=="Isl") %>% dplyr::select(Network) )
-  model_name <- "Prob"
+  A <- get.adjacency(Ant_Meta,sparse=F)
+  net_name <- pull( websTbl %>% filter(!ismeta,Metaweb=="Ant") %>% dplyr::select(Network) )
   
   lapply(net_name, function(fw){
   
@@ -1661,44 +1672,47 @@ foreach( rr=20:21 ) %do%
 
 # Check repetitions 
 #
-load(".RData")
+#load(".RData")
 hub_conn_Assembly <- hub_conn_Assembly %>% filter(!rep  %in% c(13,16))
 #topoRoles_metaWebAssembly <- topoRoles_metaWebAssembly %>% filter(!rep  %in% c(13,16))
 knitr::kable(hub_conn_Assembly %>% count(rep))
 
-topoRoles_metaWebAssembly %>% count(rep)
-hub_conn_Assembly %>% count(rep) 
+topoRoles_metaWebAssembly %>% distinct(Network)
+hub_conn_Assembly %>% distinct(Network) 
 # Antarctic
 #
 # Topological Roles proportions test and plot
 #
 # Comparison of model with empirical  
 #
-topoRoles_metaWebAssembly_chi2 <- tibble()
+topoRoles_metaWebAssembly_chi2 %>% distinct(Network)
+topoRoles_metaWebAssembly_chi2 <- topoRoles_metaWebAssembly_chi2 %>% filter(!grepl("Ant_",Network))
+                                         
 foreach( rr=unique(hub_conn_Assembly$rep) ) %do% {
   
   hc <- hub_conn %>% filter(grepl("Ant",Network)) %>% bind_rows(
-    hub_conn_Assembly %>% filter(grepl("Ant",Network),rep==rr) %>% select(type,node,Network) %>% mutate(model="Assembly")) %>% 
-    mutate(model=ifelse(is.na(model),"Empirical",model)) %>% group_by(Network,model,type) %>% summarise(count=n()) %>% mutate(total=sum(count),Freq=count/total) %>% inner_join(websTbl %>% select(Network,Size))
+    hub_conn_Assembly %>% filter(grepl("Ant",Network),rep==rr) %>% dplyr::select(type,node,Network) %>% mutate(model="Assembly")) %>% 
+    mutate(model=ifelse(is.na(model),"Empirical",model)) %>% group_by(Network,model,type) %>% summarise(count=n()) %>% mutate(total=sum(count),Freq=count/total) %>% inner_join(websTbl %>% dplyr::select(Network,Size))
   str_length(hc$Network)
   hc <-  hc %>% ungroup() %>% mutate(Network = ifelse(str_length(Network) > 8, str_sub(Network,5), paste0(str_sub(Network,5),"web"))) %>% mutate(Network = fct_reorder(Network, -Size))
    
   require(tidyverse)
   tt1 <- hc %>% group_by(Network) %>% group_modify( ~{ 
     ct <- .x %>% pivot_wider(model:count,names_from="type",values_from = "count",values_fill = list(count = 0)) 
+    print(ct)
     cc <- chisq.test(ct[,-1],simulate.p.value = TRUE, B=10000)
     tibble(Size=unique(.x$Size),chi2=cc$statistic,pvalue = cc$p.value,method=cc$method)
     }) %>% arrange(desc(Size)) %>% mutate(meta="Ant", rep=rr)
   
   topoRoles_metaWebAssembly_chi2 <- bind_rows(topoRoles_metaWebAssembly_chi2,tt1)
 }
-tt <- topoRoles_metaWebAssembly_chi2 %>% filter(meta=="Ant") %>% group_by(meta,rep) %>% slice()
+tt <- topoRoles_metaWebAssembly_chi2 %>% filter(meta=="Ant",rep==rr) %>% group_by(meta,rep) %>% slice()
 
 #
 # Plot
 #
 
-hc <- inner_join(hc, tt1 %>% select(Network,pvalue)) %>% mutate(net_name=if_else(pvalue<0.01, if_else(!grepl("Meta",Network), paste0(Network, ' *'),as.character(Network)),as.character(Network)))
+hc <- inner_join(hc, tt %>% dplyr::select(Network,pvalue)) %>% mutate(net_name=if_else(pvalue<0.01, if_else(!grepl("Meta",Network), paste0(Network, ' *'),as.character(Network)),as.character(Network)))
 
 (gP2 <- ggplot(hc,aes(x=model,y=Freq,fill=type)) + 
   geom_bar(stat="identity", position=position_dodge()) + 
@@ -1716,22 +1730,25 @@ ggsave("Figures/Ant_TopoRoles_ByNetwork_Model.png",width=8,height=5,units="in",d
 
 ```{r Isl_plotsMetaWebTopologicalRoles, eval=FALSE,echo=F,message=T,warning=T}
 
+topoRoles_metaWebAssembly_chi2 <- topoRoles_metaWebAssembly_chi2 %>% filter(meta != "Isl")
+
 # islands
 #
 # Comparison of model with empirical  
 # 
 foreach( rr=unique(hub_conn_Assembly$rep) ) %do% {
-
-  hc <- hub_conn %>% filter(grepl("Isl",Network)) %>% bind_rows(
-    hub_conn_Assembly %>% filter(grepl("Isl",Network),rep==rr) %>% select(type,node,Network) %>% mutate(model="Assembly")) %>% 
-    mutate(model=ifelse(is.na(model),"Empirical",model)) %>% group_by(Network,model,type) %>% summarise(count=n()) %>% 
-    mutate(total=sum(count),Freq=count/total) %>% inner_join(websTbl %>% select(Network,Size))
   
-  hc <-  hc %>% ungroup() %>% mutate(Network = ifelse(str_length(Network) > 8, str_sub(Network,18), paste0(str_sub(Network,5),"web"))) #%>% mutate(Network = fct_reorder2(Network, -Size, Network))
+  hc <- hub_conn %>% filter(grepl("Isl",Network)) %>% bind_rows(
+    hub_conn_Assembly %>% filter(grepl("Isl",Network),rep==rr) %>% dplyr::select(type,node,Network) %>% mutate(model="Assembly")) %>% 
+    mutate(model=ifelse(is.na(model),"Empirical",model)) %>% group_by(Network,model,type) %>% summarise(count=n()) %>% 
+    mutate(total=sum(count),Freq=count/total) %>% inner_join(websTbl %>% dplyr::select(Network,Size))
+  
+  hc <-  hc %>% ungroup() %>%  mutate(Network = ifelse(str_length(Network) <8, str_sub(Network,5), paste0(str_sub(Network,5),"web"))) %>% mutate(Network = fct_reorder2(Network, -Size, Network)) 
  
 
   tt0 <- hc %>% group_by(Network) %>% group_modify( ~{ 
     ct <- .x %>% pivot_wider(model:count,names_from="type",values_from = "count",values_fill = list(count = 0)) 
+    print(ct)
     cc <- chisq.test(ct[,-1],simulate.p.value = TRUE, B=10000)
     #ct <- 
     #print(ct)
@@ -1745,7 +1762,12 @@ tt <- topoRoles_metaWebAssembly_chi2 %>% filter(meta=="Isl")
 #
 # Plot
 # 
-hc <- inner_join(hc, tt0 %>% select(Network,pvalue)) %>% mutate(net_name=if_else(pvalue<0.01, if_else(!grepl("Meta",Network), paste0(Network, ' *'),as.character(Network)),as.character(Network)))
+hc <- inner_join(hc, tt0 %>% dplyr::select(Network,pvalue)) %>% mutate(net_name=if_else(pvalue<0.01, if_else(!grepl("Meta",Network), paste0(Network, ' *'),as.character(Network)),as.character(Network)))
+t <- hc %>% filter(Network=="Metaweb")
+t[1,3] <- "hubcon"
+t[1,4] <- 0
+t[1,6] <- 0
+hc <- bind_rows(hc,t[1,])
 
 
 (gP3 <- ggplot(hc,aes(x=model,y=Freq,fill=type)) + 
@@ -1753,12 +1775,14 @@ hc <- inner_join(hc, tt0 %>% select(Network,pvalue)) %>% mutate(net_name=if_else
   scale_fill_brewer(palette = "Paired",name="") + 
   xlab("") + ylab("") + theme_bw() + 
     theme(legend.position="bottom", legend.direction="horizontal",   strip.background = element_blank(), strip.placement = "outside") + 
-    facet_wrap(vars(fct_reorder2(net_name, -Size, Network ))))
+    facet_wrap(vars(fct_reorder(net_name, -Size ))))
 
-ggsave("Figures/Isl_TopoRoles_ByNetwork_Model.png",width=8,height=5,units="in",dpi=600)
+ggsave("Figures/Isl_TopoRoles_ByNetwork_Model.pdf",width=8,height=5,units="in",dpi=600)
 
 tt0 %>% summarize(sign = pvalue<0.01) %>% filter(sign) 
-topoRoles_metaWebAssembly_chi2 <- bind_rows(tt1,tt0)
+#topoRoles_metaWebAssembly_chi2 <- bind_rows(tt1,tt0)
+
+unique(topoRoles_metaWebAssembly_chi2$Network)
 ```
 
 * There is total correspondence with model
@@ -1795,8 +1819,8 @@ tt <- topoRoles_metaWebAssembly_chi2 %>% filter(meta=="Lak") %>% group_by(Networ
 #
 # Summary of results percent of significant results at p=0.01 
 #
-hc <- topoRoles_metaWebAssembly_chi2 %>% mutate(sign= if_else(pvalue<0.01, TRUE,FALSE)) %>%
-  group_by(meta,Network,sign)  %>% summarise(n=n()) %>% mutate(total=sum(n),Freq=n/total) %>% filter(sign==TRUE,Network!="Metaweb")
+hc <- topoRoles_metaWebAssembly_chi2 %>% filter(Network!="Metaweb") %>% mutate(sign= if_else(pvalue<0.01, TRUE,FALSE)) %>%
+  group_by(rep,sign)  %>% summarise(n=n()) %>% mutate(total=sum(n),Freq=n/total) %>% filter(sign==TRUE)
 
 knitr::kable(hc, digits=2)
 
@@ -1811,7 +1835,7 @@ knitr::kable(hc, digits=2)
 #
 # Add an asterisk to the significant ones
 #
-hc <- inner_join(hc, tt %>% select(Network,pvalue)) %>% mutate(net_name=if_else(pvalue<0.01, if_else(!grepl("Meta",Network), paste0(Network, ' *'),Network),Network)) %>% mutate(net_name=if_else(str_length(net_name)>18,str_sub(net_name,1,-6),net_name))
+hc <- inner_join(hc, tt %>% dplyr::select(Network,pvalue)) %>% mutate(net_name=if_else(pvalue<0.01, if_else(!grepl("Meta",Network), paste0(Network, ' *'),Network),Network)) %>% mutate(net_name=if_else(str_length(net_name)>18,str_sub(net_name,1,-6),net_name))
 
 
 (gP4 <- ggplot(hc,aes(x=model,y=Freq,fill=type)) + 
@@ -1831,12 +1855,12 @@ save.image()
 # Make a table
 #
 
-knitr::kable(topoRoles_metaWebAssembly_chi2%>% select( Network,meta,Size, chi2,pvalue),digits = 4)
-topoRoles_metaWebAssembly_chi2 %>% summarize(sign = pvalue<0.05) %>% filter(sign, !grepl("Meta",Network)) 
+knitr::kable(topoRoles_metaWebAssembly_chi2 %>% filter(rep==21,Network!="Metaweb") %>% mutate(Network=if_else(pvalue<0.01, paste0(Network, ' *'),Network)) %>% dplyr::select( Network,meta,Size, chi2,pvalue),digits = 4)
+topoRoles_metaWebAssembly_chi2 %>% filter(rep==21,!grepl("Meta",Network)) %>% summarize(sign = pvalue<0.05) %>% filter(sign, ) 
 
 
 #
-# Combined Antarctic Island Plot
+# Combined Antarctic Island Plot 
 #
 require(cowplot)
 gP5 <- plot_grid(gP2 +  theme(legend.position="none"),

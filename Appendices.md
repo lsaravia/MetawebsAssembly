@@ -293,11 +293,12 @@ Table: Empirical local food web values and 99% CIs for network properties: troph
 | :------- | :------------------- | --------: | -----:     | ------:     | --------: | -----:     | ------:     | --------: | -----:     | ------:     | --------: | -----:     | ------:     |
 | Ant      | Potter               | 973       | 297        | 7481        | 2123      | 191        | 2129        | 620       | 53         | 1153        | 139       | 3          | 750         |
 | Ant      | Weddell              | 47573     | 21422      | 80409       | 7575*     | 8577       | 24632       | 3846      | 3810       | 11999       | 1156*     | 1509       | 7476        |
-| Isl      | FloridaIslandE1      | 23085     | 10368      | 23575       | 115120    | 47790      | 118085      | 11179     | 6660       | 12437       | 16118     | 8944       | 17573       |
-| Isl      | FloridaIslandE2      | 613       | 93         | 1678        | 2647      | 514        | 7252        | 387       | 35         | 968         | 310       | 36         | 1383        |
-| Isl      | FloridaIslandE3      | 23175     | 20126      | 23575       | 118404*   | 98359      | 118085      | 12065     | 10512      | 12437       | 17130     | 14484      | 17573       |
-| Isl      | FloridaIslandE7      | 524       | 81         | 1735        | 2212      | 370        | 7018        | 402       | 47         | 1042        | 405       | 40         | 1436        |
-| Isl      | FloridaIslandE9      | 653       | 78         | 2453        | 2871      | 402        | 10223       | 470       | 54         | 1333        | 704       | 51         | 1936        |
+| Isl      | E1                   | 140       | 319        | 53          | 69        | 5          | 804         | 3         | 1528       | 2           | 555       | 2          | 805         |
+| Isl      | E2                   | 372       | 783        | 163         | 300       | 33         | 1982        | 51        | 4173       | 19          | 1222      | 33         | 1708        |
+| Isl      | E3                   | 184       | 418        | 96          | 150       | 13         | 1135        | 18        | 2550       | 6           | 733       | 9          | 975         |
+| Isl      | E7                   | 100       | 199        | 58          | 54        | 10         | 1083        | 16        | 1942       | 7           | 676       | 9          | 907         |
+| Isl      | E9                   | 377       | 506        | 293         | 180       | 207        | 3970        | 287       | 9734       | 143         | 2604      | 168        | 3865        |
+| Isl      | ST2                  | 183       | 592        | 110         | 195       | 34         | 2116        | 65        | 4857       | 33          | 1277      | 44         | 1794        |
 | Lak      | Alford_lake          | 360       | 19         | 1037        | 2059      | 176        | 3600        | 306       | 55         | 1525        | 170       | 0          | 433         |
 | Lak      | Balsam_lake          | 445       | 26         | 855         | 2232      | 152        | 3112        | 403       | 39         | 1336        | 233       | 0          | 363         |
 | Lak      | Beaver_lake          | 391       | 10         | 857         | 2011      | 66         | 2788        | 765       | 24         | 1229        | 235       | 0          | 329         |
@@ -351,133 +352,139 @@ Table: Empirical local food web values and 99% CIs for network properties: troph
 
 Table: Motif counts for the empirical food webs and 99% CIs based on 1000 assembly model networks, where EC is exploitative competition, AC apparent competition, TT tri-trophic chain and OM is omnivory. Quantities marked with '*' are significant at 1% level. Only 1 network showed significant under-representation and 9 networks over-representation for at least one motif. 
 
-|Metaweb |Network             | Size|      chi2| pvalue|
-|:----|:-------------------|----:|---------:|------:|
-|Ant  |Weddell             |  435|   23.3577| 0.0003*|
-|Ant  |Potter              |   92|   21.3429| 0.0001*|
-|Isl  |E3                  |  211|    3.0768| 0.4339|
-|Isl  |E1                  |  210|    0.3572| 0.9850|
-|Isl  |E2                  |   59|    3.5984| 0.3026|
-|Isl  |E9                  |   56|    6.7691| 0.0148|
-|Isl  |E7                  |   54|    1.5924| 0.4295|
-|Lak  |Bridge brook lake   |   75|    3.3781| 0.2529|
-|Lak  |Hoel lake           |   72|    3.8121| 0.0847|
-|Lak  |Connera lake        |   65|    1.6687| 0.5011|
-|Lak  |Long Lake           |   65|   16.0644| 0.0001*|
-|Lak  |Big hope lake       |   61|   13.4552| 0.0007*|
-|Lak  |Alford lake         |   56|    3.3363| 0.3304|
-|Lak  |Beaver lake         |   56|    2.2095| 0.5351|
-|Lak  |Chub pond           |   54|    1.1128| 0.4668|
-|Lak  |Burntbridge lake    |   53|    0.8862| 0.8029|
-|Lak  |Stink Lake          |   53|    2.0000| 1.0000|
-|Lak  |Little Rainbow Lake |   52|    2.0065| 0.7288|
-|Lak  |Balsam lake         |   50|    3.2709| 0.3198|
-|Lak  |Rat Lake            |   50|    7.0667| 0.0184|
-|Lak  |Horseshoe Lake      |   49|    0.8528| 1.0000|
-|Lak  |Gull lake           |   45|    0.8916| 1.0000|
-|Lak  |Grass lake          |   44|    4.6074| 0.2103|
-|Lak  |Safford Lake        |   44|    3.6056| 0.0897|
-|Lak  |Razorback Lake      |   42|    1.5594| 0.5021|
-|Lak  |Buck pond           |   41|    1.9042| 1.0000|
-|Lak  |Helldiver pond      |   41|    1.5808| 0.5128|
-|Lak  |Lost Lake East      |   41|    2.1565| 0.2310|
-|Lak  |Squaw Lake          |   41|    0.7267| 1.0000|
-|Lak  |Goose lake          |   40|    1.0630| 0.4851|
-|Lak  |Falls lake          |   39|    0.8771| 1.0000|
-|Lak  |Lower Sister Lake   |   37|    2.8668| 0.2599|
-|Lak  |Chub lake           |   36|    3.7050| 0.1606|
-|Lak  |Cascade lake        |   35|   18.8867| 0.0001*|
-|Lak  |Indian Lake         |   35|    1.8944| 0.7453|
-|Lak  |Loon Lake           |   35|    1.3402| 0.8283|
-|Lak  |Oswego Lake         |   33|    1.1566| 0.4657|
-|Lak  |Constable lake      |   32|    0.0506| 1.0000|
-|Lak  |Fawn lake           |   32|    0.1304| 1.0000|
-|Lak  |Whipple Lake        |   32|    2.8355| 0.3149|
-|Lak  |Lost Lake           |   31|    0.1525| 0.7855|
-|Lak  |Twelfth Tee Lake    |   31|    1.1683| 0.4744|
-|Lak  |Brandy lake         |   30|    2.0703| 0.6864|
-|Lak  |Owl Lake            |   30|    2.0048| 0.7394|
-|Lak  |Sand Lake           |   29|    2.3968| 0.5064|
-|Lak  |Wolf Lake           |   27|    0.6926| 0.6199|
-|Lak  |Twin Lake West      |   26|    4.7582| 0.0537|
-|Lak  |High pond           |   24|    0.7980| 1.0000|
-|Lak  |Russian Lake        |   24|    1.9385| 0.2839|
-|Lak  |Emerald lake        |   22|    0.0000| 1.0000|
-|Lak  |Federation lake     |   22|    0.9783| 1.0000|
-|Lak  |Rock Lake           |   22|    0.1431| 1.0000|
-|Lak  |South Lake          |   22|    0.2337| 1.0000|
-|Lak  |Deep lake           |   19|    5.0592| 0.0360|
-|Lak  |Gull lake north     |   16|    0.0000| 1.0000|
-|Lak  |Brook trout lake    |   15|    1.0000| 0.4123|
-|Lak  |Twin Lake East      |   13|    1.0400| 1.0000|
 
-Table: Comparison of empirical proportions of topological roles with one assembly model realization. This corresponds to the run 0 (See table S8). In this case only Potter, Weddell, Long Lake, Big hope lake, Cascade lake food webs, 9% of the total (5/57), are significantly different from the metaweb assembly model at p=0.01 level. 
+| Metaweb | Network              | Size  | chi2     | pvalue  |
+| :----   | :------------------- | ----: | -------: | ------: |
+| Ant     | Weddell              | 435   | 10.3035  | 0.0154  |
+| Ant     | Potter *             | 92    | 31.6872  | 0.0001  |
+| Lak     | Bridge brook lake    | 75    | 3.4161   | 0.2468  |
+| Lak     | Hoel lake            | 72    | 5.3088   | 0.0336  |
+| Lak     | Connera lake         | 65    | 1.8070   | 0.4988  |
+| Lak     | Long Lake            | 65    | 2.6933   | 0.2448  |
+| Lak     | Big hope lake *      | 61    | 8.2453   | 0.0066  |
+| Lak     | Alford lake          | 56    | 5.8061   | 0.0274  |
+| Lak     | Beaver lake          | 56    | 0.0043   | 1.0000  |
+| Lak     | Chub pond            | 54    | 2.5568   | 0.2533  |
+| Lak     | Burntbridge lake     | 53    | 1.0865   | 1.0000  |
+| Lak     | Stink Lake           | 53    | 0.0050   | 1.0000  |
+| Lak     | Little Rainbow Lake  | 52    | 3.6207   | 0.4073  |
+| Lak     | Balsam lake          | 50    | 2.3808   | 0.3181  |
+| Lak     | Rat Lake             | 50    | 1.6422   | 1.0000  |
+| Lak     | Horseshoe Lake       | 49    | 2.0846   | 0.2474  |
+| Lak     | Gull lake            | 45    | 0.8418   | 1.0000  |
+| Lak     | Grass lake           | 44    | 0.6712   | 0.5803  |
+| Lak     | Safford Lake         | 44    | 1.4234   | 1.0000  |
+| Lak     | Razorback Lake       | 42    | 1.0630   | 0.4915  |
+| Lak     | Buck pond            | 41    | 2.2905   | 0.2155  |
+| Lak     | Helldiver pond       | 41    | 2.2745   | 0.2324  |
+| Lak     | Lost Lake East *     | 41    | 7.4108   | 0.0091  |
+| Lak     | Squaw Lake           | 41    | 1.0646   | 0.4853  |
+| Lak     | Goose lake           | 40    | 0.3210   | 1.0000  |
+| Lak     | Falls lake           | 39    | 1.6289   | 1.0000  |
+| Lak     | Lower Sister Lake    | 37    | 1.9420   | 0.5159  |
+| Lak     | Chub lake            | 36    | 7.7269   | 0.0103  |
+| Lak     | Cascade lake         | 35    | 3.0000   | 0.2517  |
+| Lak     | Indian Lake          | 35    | 3.1660   | 0.4562  |
+| Lak     | Loon Lake            | 35    | 4.5957   | 0.0901  |
+| Lak     | Oswego Lake          | 33    | 4.9993   | 0.1499  |
+| Lak     | Constable lake       | 32    | 0.9161   | 1.0000  |
+| Lak     | Fawn lake            | 32    | 4.0809   | 0.1646  |
+| Lak     | Whipple Lake         | 32    | 0.9860   | 1.0000  |
+| Lak     | Lost Lake            | 31    | 0.5501   | 1.0000  |
+| Lak     | Twelfth Tee Lake     | 31    | 3.6631   | 0.2399  |
+| Lak     | Brandy lake          | 30    | 1.0548   | 0.7450  |
+| Lak     | Owl Lake             | 30    | 4.0127   | 0.1167  |
+| Lak     | Sand Lake            | 29    | 3.2464   | 0.5009  |
+| Lak     | Wolf Lake            | 27    | 0.8318   | 1.0000  |
+| Lak     | Twin Lake West       | 26    | 1.1540   | 0.4867  |
+| Lak     | High pond            | 24    | 2.0017   | 1.0000  |
+| Lak     | Russian Lake         | 24    | 1.5074   | 1.0000  |
+| Lak     | Emerald lake         | 22    | 3.6808   | 0.4125  |
+| Lak     | Federation lake      | 22    | 0.9370   | 1.0000  |
+| Lak     | Rock Lake            | 22    | 4.1000   | 0.2333  |
+| Lak     | South Lake           | 22    | 0.0219   | 1.0000  |
+| Lak     | Deep lake            | 19    | 1.4714   | 0.4967  |
+| Lak     | Gull lake north      | 16    | 0.6748   | 1.0000  |
+| Lak     | Brook trout lake     | 15    | 2.9156   | 0.1389  |
+| Lak     | Twin Lake East       | 13    | 1.1285   | 0.4802  |
+| Isl     | E9                   | 33    | 3.8293   | 0.0693  |
+| Isl     | E2 *                 | 31    | 13.3309  | 0.0002  |
+| Isl     | ST2 *                | 30    | 7.8048   | 0.0075  |
+| Isl     | E1                   | 25    | 0.1963   | 1.0000  |
+| Isl     | E7 *                 | 24    | 9.7222   | 0.0041  |
+| Isl     | E3                   | 24    | 2.1797   | 0.2304  |
 
-
-| run|  significant | total| Freq|
-|---:|--:|-----:|----:|
-|   0|  5|    57| 0.09|
-|   1|  4|    57| 0.07|
-|   2|  7|    57| 0.12|
-|   3|  6|    57| 0.11|
-|   4|  5|    57| 0.09|
-|   5|  2|    57| 0.04|
-|   6|  3|    57| 0.05|
-|   7|  5|    57| 0.09|
-|   8|  9|    57| 0.16|
-|   9|  3|    57| 0.05|
-|  10|  6|    57| 0.11|
-|  11|  5|    57| 0.09|
-|  12|  1|    57| 0.02|
-|  13|  3|    57| 0.05|
-|  14|  3|    57| 0.05|
-|  15|  4|    57| 0.07|
-|  16|  6|    57| 0.11|
-|  17|  6|    57| 0.11|
-|  18|  3|    57| 0.05|
-|  19|  4|    57| 0.07| 
-
-Table: Comparison of empirical proportions of topological roles with 20 different assembly model realizations at 0.01 significance level. The number of significant results varies between 1 and 7, which represents a maximun of 12% significant results.
+Table: Comparison of empirical proportions of topological roles with one assembly model realization corresponding to Figure 6, run 19 of table S8. In this case only  10% of the total (6/58), are significantly different from the metaweb assembly model at p=0.01 level. 
 
 
-|meta |Network             | significant  | total| Freq|
-|:----|:-------------------|--:|-----:|----:|
-|Ant  |Potter              | 20|    20| 1.00|
-|Ant  |Weddell             | 10|    20| 0.50|
-|Isl  |E2                  |  6|    20| 0.30|
-|Isl  |E7                  |  4|    20| 0.20|
-|Isl  |E9                  |  6|    20| 0.30|
-|Lak  |Alford lake         |  1|    20| 0.05|
-|Lak  |Beaver lake         |  1|    20| 0.05|
-|Lak  |Big hope lake       |  4|    20| 0.20|
-|Lak  |Brandy lake         |  1|    20| 0.05|
-|Lak  |Bridge brook lake   |  3|    20| 0.15|
-|Lak  |Buck pond           |  1|    20| 0.05|
-|Lak  |Burntbridge lake    |  2|    20| 0.10|
-|Lak  |Cascade lake        |  1|    20| 0.05|
-|Lak  |Chub lake           |  2|    20| 0.10|
-|Lak  |Chub pond           |  1|    20| 0.05|
-|Lak  |Connera lake        |  1|    20| 0.05|
-|Lak  |Federation lake     |  1|    20| 0.05|
-|Lak  |Goose lake          |  1|    20| 0.05|
-|Lak  |Gull lake           |  3|    20| 0.15|
-|Lak  |Helldiver pond      |  1|    20| 0.05|
-|Lak  |Hoel lake           |  1|    20| 0.05|
-|Lak  |Horseshoe Lake      |  1|    20| 0.05|
-|Lak  |Little Rainbow Lake |  1|    20| 0.05|
-|Lak  |Long Lake           |  2|    20| 0.10|
-|Lak  |Loon Lake           |  1|    20| 0.05|
-|Lak  |Lost Lake           |  1|    20| 0.05|
-|Lak  |Lost Lake East      |  3|    20| 0.15|
-|Lak  |Oswego Lake         |  2|    20| 0.10|
-|Lak  |Razorback Lake      |  2|    20| 0.10|
-|Lak  |Sand Lake           |  1|    20| 0.05|
-|Lak  |Stink Lake          |  1|    20| 0.05|
-|Lak  |Twelfth Tee Lake    |  1|    20| 0.05|
-|Lak  |Twin Lake West      |  2|    20| 0.10|
-|Lak  |Wolf Lake           |  1|    20| 0.05|
 
-Table: Comparison of empirical proportions of topological roles with 20 different assembly model realizations at 0.01 significance level.  Only Potter Cove is different in 100% of the comparisons, Weddell is different 50% of the times, and the other food webs showed differences less often. 
+| run  | Number of significant | total  | Freq  |
+| ---: | --:                   | -----: | ----: |
+| 0    | 6                     | 58     | 0.10  |
+| 1    | 5                     | 58     | 0.09  |
+| 2    | 8                     | 58     | 0.14  |
+| 3    | 7                     | 58     | 0.12  |
+| 4    | 6                     | 58     | 0.10  |
+| 5    | 3                     | 58     | 0.05  |
+| 6    | 3                     | 58     | 0.05  |
+| 7    | 6                     | 58     | 0.10  |
+| 8    | 9                     | 58     | 0.16  |
+| 9    | 5                     | 58     | 0.09  |
+| 10   | 8                     | 58     | 0.14  |
+| 11   | 6                     | 58     | 0.10  |
+| 12   | 4                     | 58     | 0.07  |
+| 13   | 5                     | 58     | 0.09  |
+| 14   | 7                     | 58     | 0.12  |
+| 15   | 7                     | 58     | 0.12  |
+| 16   | 8                     | 58     | 0.14  |
+| 17   | 10                    | 58     | 0.17  |
+| 18   | 4                     | 58     | 0.07  |
+| 19   | 6                     | 58     | 0.10  |
+
+Table: Comparison of empirical proportions of topological roles with 20 different assembly model realizations at 0.01 significance level. The number of significant results varies between 3 and 10, which represents betwenn 5% and 17% significant results.
+
+
+| meta  | Network              | significant | total  | Freq  |
+| :---- | :------------------- | --:         | -----: | ----: |
+| Ant   | Potter               | 20          | 20     | 1.00  |
+| Ant   | Weddell              | 10          | 20     | 0.50  |
+| Isl   | E1                   | 3           | 20     | 0.15  |
+| Isl   | E2                   | 11          | 20     | 0.55  |
+| Isl   | E3                   | 10          | 20     | 0.50  |
+| Isl   | E7                   | 8           | 20     | 0.40  |
+| Isl   | E9                   | 12          | 20     | 0.60  |
+| Isl   | ST2                  | 5           | 20     | 0.25  |
+| Lak   | Alford lake          | 1           | 20     | 0.05  |
+| Lak   | Beaver lake          | 1           | 20     | 0.05  |
+| Lak   | Big hope lake        | 4           | 20     | 0.20  |
+| Lak   | Brandy lake          | 1           | 20     | 0.05  |
+| Lak   | Bridge brook lake    | 3           | 20     | 0.15  |
+| Lak   | Buck pond            | 1           | 20     | 0.05  |
+| Lak   | Burntbridge lake     | 2           | 20     | 0.10  |
+| Lak   | Cascade lake         | 1           | 20     | 0.05  |
+| Lak   | Chub lake            | 2           | 20     | 0.10  |
+| Lak   | Chub pond            | 1           | 20     | 0.05  |
+| Lak   | Connera lake         | 1           | 20     | 0.05  |
+| Lak   | Federation lake      | 1           | 20     | 0.05  |
+| Lak   | Goose lake           | 1           | 20     | 0.05  |
+| Lak   | Gull lake            | 3           | 20     | 0.15  |
+| Lak   | Helldiver pond       | 1           | 20     | 0.05  |
+| Lak   | Hoel lake            | 1           | 20     | 0.05  |
+| Lak   | Horseshoe Lake       | 1           | 20     | 0.05  |
+| Lak   | Little Rainbow Lake  | 1           | 20     | 0.05  |
+| Lak   | Long Lake            | 2           | 20     | 0.10  |
+| Lak   | Loon Lake            | 1           | 20     | 0.05  |
+| Lak   | Lost Lake            | 1           | 20     | 0.05  |
+| Lak   | Lost Lake East       | 3           | 20     | 0.15  |
+| Lak   | Oswego Lake          | 2           | 20     | 0.10  |
+| Lak   | Razorback Lake       | 2           | 20     | 0.10  |
+| Lak   | Sand Lake            | 1           | 20     | 0.05  |
+| Lak   | Stink Lake           | 1           | 20     | 0.05  |
+| Lak   | Twelfth Tee Lake     | 1           | 20     | 0.05  |
+| Lak   | Twin Lake West       | 2           | 20     | 0.10  |
+| Lak   | Wolf Lake            | 1           | 20     | 0.05  |
+
+Table: Comparison of empirical proportions of topological roles with 20 different assembly model realizations at 0.01 significance level.  Only Potter Cove is different in 100% of the comparisons, Island E9 is different 60% of the times, and the other food webs showed differences less often. 
 
 
 \newpage

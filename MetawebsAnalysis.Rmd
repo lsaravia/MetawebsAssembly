@@ -35,7 +35,7 @@ require(tidyverse)
 
 # Read the Antarctic Metawebs files with New Weddell without False Basal species 2020/10/08 
 
-```{r readAnt, eval=TRUE,echo=FALSE,message=FALSE }
+```{r readAnt, eval=FALSE,echo=FALSE,message=FALSE }
 #
 dn <- list.files("Data",pattern = "^[MWP].*\\.dat$")
 dn <- paste0("Data/", dn)
@@ -200,7 +200,7 @@ The role is described by two parameters: (i) the standardized within-module degr
 connectivity participation coefficient PC. The z-score reflects how well a species is connected to other species inside the module relative to other species within its own module. The PC parameter estimates the distribution of a species’ connections across the modules.
 
 
-```{r topologicalRoles, eval=TRUE,echo=F,message=FALSE,warning=T}
+```{r topologicalRoles, eval=FALSE,echo=F,message=FALSE,warning=T}
 
 source("R/network_fun.r")
 
@@ -500,7 +500,11 @@ chisq.test(x,simulate.p.value = T, B=10000)
 
 # Islands Topological Roles
 
-```{r IslandsTopologicalRoles, eval=FALSE,echo=F,message=FALSE,warning=T}
+```{r IslandsTopologicalRoles, eval=TRUE,echo=F,message=FALSE,warning=T}
+unique(topo_roles$Network)
+topo_roles <- topo_roles %>% filter(!grepl("Isl_",Network)) 
+unique(hub_conn$Network)
+hub_conn <- hub_conn %>% filter(!grepl("Isl_",Network)) 
 
 #
 # Add the modulos object to a vector  
