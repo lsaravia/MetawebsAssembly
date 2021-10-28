@@ -1,5 +1,5 @@
 OPTS= -H margins.sty --bibliography MetawebsAssembly.bib --citeproc --csl=journal-of-animal-ecology.csl --pdf-engine=xelatex 
-all: MetawebsAssembly.docx	MetawebsAssembly.pdf Appendices.pdf CoverLetter.pdf MetawebsAssembly_bioRxiv.pdf JAE_review_reply.pdf
+all: MetawebsAssembly.docx	MetawebsAssembly.pdf Appendices.pdf CoverLetter.pdf MetawebsAssembly_bioRxiv.pdf JAE_review_reply.pdf AbstractSpanish.pdf
 
 
 %.pdf:%.md

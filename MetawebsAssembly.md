@@ -29,10 +29,6 @@ Leonardo A. Saravia ^1^ ^2^ ^6^, Tomás I. Marina ^3^, Nadiah P. Kristensen ^5^,
 <!-- 1. the background -->
 1. Local food webs result from a sequence of colonisations and extinctions by species from the regional pool or metaweb, i.e., the assembly process. Assembly is theorised to be a selective process: whether or not certain species or network structures can persist is partly determined by local processes including habitat filtering and dynamical constraints. Consequently, local food web structure should reflect these processes.
 
-<!-- NPK: previous version
-1. Local food webs can be studied as the realization of a sequence of colonizing and extinction events, where a regional pool of species ---called the metaweb--- acts as a source for new species. These are shaped by evolutionary and biogeographical processes at larger spatial and temporal scales than local webs. Food webs are thus the result of assembly processes that are influenced by migration, habitat filtering, stochastic factors, and dynamical constraints.
--->
-
 <!-- 2. the goal of the study -->
 2. The goal of this study was to test evidence for these selective processes by comparing the structural properties of real food webs to the expected distribution given the metaweb. We were particularly interested in ecological dynamics; if the network properties commonly associated with dynamical stability are indeed the result of stability constraints, then they should deviate from expectation in the direction predicted by theory.
 
@@ -41,30 +37,11 @@ Leonardo A. Saravia ^1^ ^2^ ^6^, Tomás I. Marina ^3^, Nadiah P. Kristensen ^5^,
 <!-- 3. what was done in the study -->
 3. To create a null expectation, we used the novel approach of randomly assembling model webs by drawing species and interactions from the empirical metaweb. The assembly model permitted colonisation and extinction, and required a consumer species to have at least one prey, but had no habitat type nor population dynamical constraints. Three data sets were used: (1) the marine Antarctic metaweb, with 2 local food-webs; (2) the 50 lakes of the Adirondacks; and (3) the arthropod community from Florida Keys' classic defaunation experiment. 
 
-<!-- NPK: previous version
-2. We compared the structure of empirical local food webs to webs resulting from a probabilistic assembly null model. The assembly model has no population dynamics but colonization and extinction events with the restriction that consumer species do have preys. **The novelty of the model arises in the implementation of a statistical procedure to fit parameter values (colonization, extinction, secondary extinction) suited to each local food web.** We used for comparison several network properties including trophic coherence, modularity, motifs, topological roles, and others. We hypothesized that the structure of empirical food webs should differ from model webs in a way that reflected dynamical stability and other local constraints. Three data sets were used: (1) the marine Antarctic metaweb, with 2 local food-webs; (2) the 50 lakes of the Adirondacks; and (3) the arthropod community from Florida Keys' classic defaunation experiment.
--->
-
 <!-- 4. what was found -->
 4. Contrary to our expectations, we found that there were almost no differences between empirical webs and those resulting from the null assembly model. Few empirical food webs showed significant differences with network properties, motif representations and topological roles. Network properties associated with stability did not deviate from expectation in the direction predicted by theory.
 
-<!-- NPK: previous version
-3. Contrary to our expectation, we found that there were almost no differences between empirical webs and those resulting from the assembly null model. Few empirical food webs showed significant differences with network properties, motif representations and topological roles, compared to the assembly null model.
--->
-
 <!-- 5. what this means in a broad context -->
 5. Our results suggest that --- for the commonly used metrics we considered --- local food web structure is not strongly influenced by dynamical nor habitat restrictions. Instead, the structure is inherited from the metaweb. This suggests that the network properties typically attributed as causes or consequences of ecological stability are instead a by-product of the assembly process (i.e., spandrels), and may potentially be too coarse to detect the true signal of dynamical constraint. 
-
-<!-- NPK: Alternative wording if you want to remove last two sentences above:
-
-... Instead, the structure is inherited from the metaweb. This suggests that the network properties typically attributed as causes or consequences of ecological stability are instead a by-product of the assembly process (i.e., spandrels), and may potentially be too coarse to detect the true signal of dynamical constraint. 
-
--->
-
-<!-- NPK: previous version merged above
-4. Our results suggest that there are not strong dynamical or habitat restrictions upon food web structure at local scales. Instead, the structure of local webs is inherited from the metaweb without modifications.
-5. Recently, it has been found in competitive and mutualistic networks that structures that are often attributed as causes or consequences of ecological stability are probably a by-product of the assembly processes (i.e. spandrels). We extended these results to trophic networks suggesting that this could be a more general phenomenon.
--->
 
 
 ## Introduction
