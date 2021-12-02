@@ -642,7 +642,7 @@ external factors at the regional scale with local biotic interactions playing a 
 
 @Bellmore2015
 
-Here, we show that spatial complexity can
+Here, we show that spatial complexity can 
 reduce the strength of consumer–resource interactions in natural food webs. By sequentially
 aggregating food webs of individual aquatic habitat patches across a ﬂoodplain mosaic, we
 found that increasing spatial complexity resulted in decreases in the strength of interactions
@@ -673,4 +673,8 @@ proportion of strong interactions in the meta-food web.
 * -------------------------------------> Sarracenia  ----> Posible metacommunity data
 
 
+
+----------------
+
+@Hines2019 -----> Grassland invertebrate species metaweb
 
