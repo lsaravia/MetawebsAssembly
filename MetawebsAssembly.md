@@ -95,7 +95,7 @@ $$distance = \sqrt{ ((S_e - S_m) / S_e )^2 + ((C_e - C_m)/ C_e)^2 }$$
 
 Then we used the parameters with the minimal distance to simulate the model and compare with the network properties described in the following section. The fitted parameters for all local food webs are presented in table S2.
 
-<!--In summary, this model considers colonization-extinction and secondary extinctions events constrained by network structure, with no consideration of population dynamics and interaction strength. Then, this simple model acts as a null model: if we observe a deviation from a network property obtained with the null model then those mechanisms that are excluded from the model may be acting [@DeBello2012]. -->
+In summary, this model considers colonization-extinction and secondary extinctions events constrained by network structure, with no consideration of population dynamics and interaction strength. Then, this simple model acts as a null model: if we observe a deviation from a network property obtained with the null model then those mechanisms that are excluded from the model may be acting [@DeBello2012].
 
 ![Schematic diagram of the metaweb assembly null model: species migrate from the metaweb with a probability $c$ to a local network carrying their potential links; here they have a probability of extinction $e$. Additionally, predators become extinct if their preys are locally extinct with probability $se$. We simulate 1000 local networks and calculate network properties. From the distribution of these topological properties we calculate 1% confidence intervals to compare with empirical networks](Figures/MetaWebAssemblyModelFigure.pdf)
 
