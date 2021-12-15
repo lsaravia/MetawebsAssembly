@@ -1,6 +1,6 @@
 # Ecological network assembly: how the regional metaweb influences local food webs 
 
-Leonardo A. Saravia ^1^ ^2^ ^6^, Tomás I. Marina ^3^, Nadiah P. Kristensen ^5^, Marleen De Troch ^4^,  Fernando R. Momo ^1^ ^2^
+Leonardo A. Saravia ^1^ ^3^ ^6^, Tomás I. Marina ^3^, Nadiah P. Kristensen ^5^, Marleen De Troch ^4^,  Fernando R. Momo ^1^ ^2^
 
 1. Instituto de Ciencias, Universidad Nacional de General Sarmiento, J.M. Gutierrez 1159 (1613), Los Polvorines, Buenos Aires, Argentina.
 
@@ -43,6 +43,19 @@ Leonardo A. Saravia ^1^ ^2^ ^6^, Tomás I. Marina ^3^, Nadiah P. Kristensen ^5^,
 <!-- 5. what this means in a broad context -->
 5. Our results suggest that --- for the commonly used metrics we considered --- local food web structure is not strongly influenced by dynamical nor habitat restrictions. Instead, the structure is inherited from the metaweb. This suggests that the network properties typically attributed as causes or consequences of ecological stability are instead a by-product of the assembly process (i.e., spandrels), and may potentially be too coarse to detect the true signal of dynamical constraint. 
 
+## Translated Abstract
+
+1. Las redes tróficas locales son el resultado de una secuencia de eventos de colonización y extinción de especies que provienen del conjunto regional de especies o metaweb, es decir, el proceso de ensamble. Se teoriza que el ensamble es un proceso selectivo: si ciertas especies o estructuras de red pueden persistir o no está determinado en parte por procesos locales, incluido el filtrado del hábitat y las limitaciones dinámicas. En consecuencia, la estructura de la red trófica local debe reflejar estos procesos.
+
+2. El objetivo de este estudio fue analizar la evidencia de estos procesos selectivos comparando las propiedades estructurales de redes tróficas empíricas (locales) con la distribución esperada dada la metaweb. Nuestro particular interés fue la dinámica ecológica: si las propiedades de la red comúnmente asociadas con la estabilidad dinámica son el resultado de restricciones de estabilidad, entonces deberían desviarse de las expectativas en la dirección predicha por la teoría.
+
+3. Para crear una expectativa nula utilizamos el enfoque novedoso de ensamblar redes utilizando un modelo estocástico o “modelo de ensamble nulo” que extrae especies e interacciones de una metaweb empírica. El modelo de ensamble incluye colonización y extinción, y requiere que los consumidores tengan al menos una presa, pero no tiene restricciones acerca del tipo de hábitat ni de dinámica de poblaciones. Se utilizaron tres conjuntos de datos: (1) la metaweb antártica marina, con 2 redes tróficas locales; (2) los 50 lagos de Adirondacks; y (3) la comunidad de artrópodos del experimento clásico de defaunación de los Cayos de la Florida.
+
+4. Contrariamente a lo esperado, encontramos que casi no hubo diferencias entre las redes empíricas (locales) y las resultantes del modelo de ensamble nulo. Pocas redes tróficas empíricas mostraron diferencias significativas con las propiedades de la red, los motivos y los roles topológicos. Las propiedades de la red asociadas con la estabilidad no se desviaron de las expectativas en la dirección predicha por la teoría.
+
+5. Nuestros resultados sugieren que ---para las métricas de uso común que consideramos--- la estructura de la red trófica local no está fuertemente influenciada por restricciones dinámicas o de hábitat. En cambio, la estructura se hereda de la metaweb. Esto sugiere que las propiedades de la red típicamente atribuidas como causas o consecuencias de la estabilidad ecológica son, en cambio, un subproducto del proceso de ensamble y podrían no tener la suficiente potencia para detectar la verdadera señal de restricción dinámica.
+
+
 
 ## Introduction
 
@@ -58,10 +71,7 @@ There is some evidence that real food webs possess stabilizing structural proper
 
 To test the hypothesis that dynamical selective processes are responsible for food web structure, we need an appropriate null model [@Lau2017]. Here, we propose that the metaweb itself can be used to create that baseline for comparison. We conceive of the metaweb as the source of food-web structural diversity, from which local food web structure is drawn, and upon which local processes can act. Although the metaweb is also a consequence of local assembly processes (being the sum of local webs), it contains species co-occurrences and network structures that never occur in a local web, including those presumably precluded by local dynamics. Therefore, if there are local selective processes that determine the structure of local food webs, then comparing local webs to the metaweb may allow us to separate the larger evolutionary and biogeographical processes from the theorized local selective process. For example, we would expect to find that the structural properties that confer stability are over-represented in local food webs compared to the metaweb.
 
-In this study, we developed a null model independent of dynamic stability processes and compared the resulting structure to real food webs using network properties. To create null food webs, we made the most minimal possible assumption about the metacommunity process: any species from the metaweb can colonize and persist in a local web given at least one prey (food) item available. Thus the model considers colonization-extinction and secondary extinctions events constrained by network structure, so it does not include dynamical stability and local habitats constraints that are thought to drive the assembly process. We cannot directly compare the metaweb properties with the local webs properties since they are dependent on size, number of links and/or connectance [@Dunne2002a; @Poisot2014]. The comparison of the local networks with the networks generated by the null model takes into account this issue. If real food web structure differs from null models and in the direction predicted by theory, then that is evidence in favour of the hypothesis that food web structure is constrained by dynamics.
-
-
-<!--In this study, we used three empirical metawebs as the basis for the null model, to test for signals of the selective process in 58 local food webs. To create null food webs, we made the most minimal assumption about the metacommunity process possible: any species can colonize from the metaweb and persist in a local web provided that it has at least one prey (food) item available. This null model, therefore, lacks any of the restrictions related to dynamical stability and local habitats that are thought to drive the selection processes of interest. We compared the observed structural network properties of real food webs to those of the null models, including global properties like modularity and mean trophic level, sub-network properties like motifs, and topological roles that estimate the role of species regarding the network modular structure. If real food web structure differs from null models and in the direction predicted by theory, then that is evidence in favour of the hypothesis that food web structure is constrained by dynamics.-->
+In this study, we developed a null model independent of dynamic stability processes and compared the resulting structure to real food webs using network properties. We cannot directly compare the metaweb properties with the local webs properties since they are dependent on size, number of links and/or connectance [@Dunne2002a; @Poisot2014]. Therefore, we compared the real networks to networks generated by the null model, which takes into account this issue. To create null food webs, we made the most minimal assumption possible about the metacommunity process: any species from the metaweb can colonize and persist in a local web given at least one prey (food) item available. Thus the model considers colonization-extinction and secondary extinctions events constrained by network structure, so it does not include dynamical stability and local habitats constraints that are thought to drive the assembly process. If the real food web structure differs from null models and in the direction predicted by theory, then that is evidence in favour of the hypothesis that food web structure is constrained by dynamics.
 
 
 ## Methods
@@ -70,7 +80,8 @@ We compiled three metawebs with their corresponding local food webs, with a tota
 
 The second metaweb was collected from pelagic organisms of 50 lakes of the Adirondacks region [@Havens1992], which were sampled once during summer 1984 [@Sutherland1989]. @Havens1992 determined the potential predator–prey interactions among 211 species from previous diet studies; species that lacked a trophic link were deleted and feeding links were assumed when the species involved were present in a particular lake. The so-called Lakes metaweb considers 211 species, 8426 links and a connectance of 0.19, this was obtained from the GATEWAy database [@Brose2019].   
 
-The third metaweb comes from a well-known defaunation experiment performed in the Florida Keys in the 1960’s [@Simberloff1969; @Piechnik2008], where six islands of 11–25 meters in diameter were defaunated with insecticide. The arthropods were censused before the experiment and after it approximately once every 3 weeks during the first year and again 2 years after defaunation. For the metaweb and local webs we used only the first census that represent a complete community. @Piechnik2008 determined the trophic interactions among 155 species (5114 links,connectance 0.21) using published information and expert opinions. This dataset was obtained directly from the authors of @Gravel2011.
+The third metaweb comes from a well-known defaunation experiment performed in the Florida Keys in the 1960’s [@Simberloff1969; @Piechnik2008], where six islands of 11–25 meters in diameter were defaunated with insecticide. The arthropods were censused before the experiment and after it approximately once every 3 weeks during the first year and again 2 years after defaunation. For the metaweb and local webs we used only the first census that represent a complete community. @Piechnik2008 determined the trophic interactions among 155 species (5114 links,connectance 0.21) using published information and expert opinions. This dataset was obtained directly from the authors of @Gravel2011. As this is a modelling study that uses already published data no ethical approval was needed. 
+
 
 
 ### Metaweb Assembly Null Model
@@ -156,7 +167,7 @@ The proportions of topological roles were similar to the metaweb assembly model;
 ![Motifs' abundance comparison for local empirical networks (dots) and assembly null model networks. We ran 1000 simulations of the metaweb assembly model fitted to local networks to build the 99% confidence intervals of the metric and calculated the deviation; a value outside -0.5,0.5 interval (vertical dotted lines) indicates that the value is outside of the 99% confidence interval. Colors represent metawebs to which local food webs belong, where *Ant* is the Antarctic, *Isl* is the Islands, and *Lak* the lakes metaweb.](Figures/Motif_Zscores_Assembly.pdf){ width=100% }
 
 
-![Topological roles proportions for local empirical networks and metawebs compared with assembly null model for the Antarctic (A) and Islands metawebs (B). The topological roles are: *Hub connectors* have a high number of between module links; *Module connectors* have a low number of links mostly between modules;  *Module hubs* have a high number of links inside its module; *Module specialists* have a low number of links inside its module. Plots marked with '*' are different from the null model at 1% level](Figures/Ant_Isl_TopoRoles_ByNetwork_Model.png)
+![Topological roles proportions for local empirical networks and metawebs compared with assembly null model for the Antarctic (A) and Islands metawebs (B). The topological roles are: *Hub connectors* have a high number of between module links; *Module connectors* have a low number of links mostly between modules;  *Module hubs* have a high number of links inside its module; *Module specialists* have a low number of links inside its module. Plots marked with '*' are different from the null model at 1% level](Figures/Ant_Isl_TopoRoles_ByNetwork_Model.pdf)
 
 ## Discussion
 
@@ -185,6 +196,10 @@ In conclusion, we found that the commonly used metrics of network structure do n
 ## Acknowledgements
 
 We are grateful to the National University of General Sarmiento for financial support (Project 30/1139). LAS would like to thank Susanne Kortsch that shared with us her source code for topological analysis and figures. This work was partially supported by a grant from CONICET (PIO 144-20140100035-CO). 
+
+## Conflict of Interest
+
+All authors declare no conflict of interest.
 
 ## Authors’ contributions
 
