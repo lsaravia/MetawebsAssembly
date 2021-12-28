@@ -207,7 +207,7 @@ LAS, TIM, MDT and FRM conceived the ideas and designed methodology; TIM and LAS 
 
 ## Data Availability Statement
 
-The source code and data is available at zenodo <https://doi.org/10.5281/zenodo.3370022> and Github <https://github.com/lsaravia/MetawebsAssembly/>.  
+The source code and data is available at zenodo [@Saravia2021] and Github <https://github.com/lsaravia/MetawebsAssembly/>.  
 
 
 ## References
